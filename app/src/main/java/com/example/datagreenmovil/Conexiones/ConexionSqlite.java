@@ -681,7 +681,6 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
             }
         } catch (Exception ex) {
             throw new Exception(ex);
-            //Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

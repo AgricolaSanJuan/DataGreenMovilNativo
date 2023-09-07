@@ -35,7 +35,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_01000000_conmutador_001);
-
+        Toast.makeText(this, "AEAAA", Toast.LENGTH_SHORT).show();
         validarPermisosAndroid();
         //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
 

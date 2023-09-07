@@ -5,6 +5,8 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="black">#FF000000</color>
 
+    <color name="redError">#ED0000</color>
+
     <color name="verde">#FF00AF90</color>
     <color name="azul">#FF00C2EC</color>
     <color name="gris">#FF7A7A7A</color>
