@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,12 +11,12 @@
         android:id="@+id/c024_lly_StatusSuperior_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/c024_lly_Cuerpo_v"
+        app:layout_constraintBottom_toTopOf="@+id/c024_lly_Cabecera_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/c024_textView1"
@@ -56,6 +56,363 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/c024_lly_Cabecera_v"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_r_blanco"
+        android:orientation="vertical"
+        android:padding="2dp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="28dp">
+
+        <LinearLayout
+            android:id="@+id/c024_lly_IdFecha_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="center|left"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/c024_txv_Id_Etq_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="Id: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txv_Id_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="."
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:text="Fecha: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Fecha_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:padding="7dp"
+                android:text="01/01/1990"
+                android:textAlignment="center"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_Proveedor_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center|left"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/c024_txt_Proveedor_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:text="Proveedor: "
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Proveedor_Ruc_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_RazonSocial_v"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/c024_txt_Proveedor_RazonSocial_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_Vehiculo_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center|left"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="Vehiculo: "
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Vehiculo_Placa_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_Pasajeros_v"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:gravity="center|right|end"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="CAPACIDAD: "
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Vehiculo_NroPasajeros_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_Ruta_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center|left"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/c024_txt_Ruta_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="Ruta: "
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Ruta_Id_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_DescripcionRuta_v"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/c024_txt_Ruta_Descripcion_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_Conductor_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center|left"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="Conductor: "
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Conductor_NroBrevete_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_NombreConductor_v"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/c024_txt_Conductor_Nombre_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c024_lly_Observacion_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center|left"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/auxiliar_02"
+                android:text="Observacion: "
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/c024_txt_Observacion_v"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/auxiliar_02"
+                android:gravity="center"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/c024_lly_Cuerpo_v"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -63,426 +420,78 @@
         app:layout_constraintBottom_toTopOf="@+id/c024_lly_StatusInferior_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c024_lly_StatusSuperior_v">
+        app:layout_constraintTop_toBottomOf="@+id/c024_lly_Cabecera_v">
 
-        <LinearLayout
-            android:id="@+id/c024_lly_Cabecera_v"
+        <ListView
+            android:id="@+id/lvPasajeros"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/c024_lly_Controles_v"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/c024_lly_StatusInferior_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c024_fab_Volver_v"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
-            android:orientation="vertical"
-            android:padding="2dp">
+            android:clickable="true"
+            android:onClick="onClick"
+            app:backgroundTint="@color/azulOscuro"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_keyboard_backspace"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_editor_absoluteX="0dp" />
 
-            <LinearLayout
-                android:id="@+id/c024_lly_IdFecha_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c024_txv_Id_Etq_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Id: "
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txv_Id_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:text="Fecha: "
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Fecha_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:onClick="onClick"
-                    android:padding="7dp"
-                    android:text="01/01/1990"
-                    android:textAlignment="center"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_Proveedor_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:id="@+id/c024_txt_Proveedor_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:text="Proveedor: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Proveedor_Ruc_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_RazonSocial_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:orientation="horizontal"
-                android:padding="7dp"
-                >
-
-                <TextView
-                    android:id="@+id/c024_txt_Proveedor_RazonSocial_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_Vehiculo_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Vehiculo: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Vehiculo_Placa_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_Pasajeros_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|right|end"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/textView42"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="CAPACIDAD: "
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Vehiculo_NroPasajeros_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_Ruta_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:id="@+id/c024_txt_Ruta_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Ruta: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Ruta_Id_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_DescripcionRuta_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c024_txt_Ruta_Descripcion_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_Conductor_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Conductor: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Conductor_NroBrevete_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_NombreConductor_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c024_txt_Conductor_Nombre_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c024_lly_Observacion_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Observacion: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c024_txt_Observacion_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c024_fab_Guardar_v"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:background="@color/azulOscuro"
+            android:clickable="true"
+            android:foregroundTint="@color/alerta"
+            android:onClick="onClick"
+            app:backgroundTint="@color/azulOscuro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/c024_fab_Volver_v"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_save"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="48dp" />
 
-        <LinearLayout
-            android:id="@+id/c024_lly_Controles_v"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c024_fab_AgregarPersonas_v"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/c024_fab_Volver_v"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="onClick"
-                app:backgroundTint="@color/azulOscuro"
-                app:srcCompat="@drawable/i_keyboard_backspace" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/c024_fab_Guardar_v"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/azulOscuro"
-                android:clickable="true"
-                android:foregroundTint="@color/alerta"
-                android:onClick="onClick"
-                app:backgroundTint="@color/azulOscuro"
-                app:srcCompat="@drawable/i_save" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/c024_fab_AgregarPersonas_v"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="onClick"
-                app:backgroundTint="@color/azulOscuro"
-                app:srcCompat="@drawable/i_person_add" />
-        </LinearLayout>
-    </LinearLayout>
+            android:clickable="true"
+            android:onClick="onClick"
+            android:visibility="visible"
+            app:backgroundTint="@color/azulOscuro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/c024_fab_Volver_v"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_person_add"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/c024_lly_StatusInferior_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c024_lly_Cuerpo_v">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/c024_textView3"
@@ -542,4 +551,4 @@
             android:text="]" />
 
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

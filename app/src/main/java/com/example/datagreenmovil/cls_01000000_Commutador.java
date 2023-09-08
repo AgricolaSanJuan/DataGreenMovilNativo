@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -35,7 +36,6 @@ public class cls_01000000_Commutador extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_01000000_conmutador_001);
-        Toast.makeText(this, "AEAAA", Toast.LENGTH_SHORT).show();
         validarPermisosAndroid();
         //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
 
@@ -378,7 +378,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
         }
     }
 
-    private void procesoCargaOnline2() {
+    private void procesoCargaOnline2() throws Exception {
         try{
             //rsQuerys=objSqlite.obtenerQuerys();
             if(!objSqlite.equipoHabilitado()){
@@ -404,7 +404,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             }
             //objConfLocal.STATUS=Status.OK;
         }catch (Exception ex){
-            ex.getMessage();
+            throw ex;
         }
     }
 

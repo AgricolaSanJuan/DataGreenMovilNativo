@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/c007_cly_Principal_v"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c007_lly_StatusSuperior_v">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -572,7 +572,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c007_fab_Agregar_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -586,7 +586,7 @@
 
         <!--        fin-->
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/c007_rvw_Detalle_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -606,7 +606,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/c007_rvw_Detalle_v">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/c007_fab_volver_v"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -619,7 +619,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/c007_fab_Guardar_v"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -699,4 +699,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

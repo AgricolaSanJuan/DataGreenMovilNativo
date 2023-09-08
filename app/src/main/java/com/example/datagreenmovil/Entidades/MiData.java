@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.service.autofill.FillEventHistory;
-import android.support.annotation.RequiresApi;
 
 import java.io.Serializable;
 import java.sql.ResultSet;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -273,7 +273,7 @@
                         android:textColor="@color/blanco" />
                 </LinearLayout>
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c006_fab_LimpiarInput_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -387,7 +387,7 @@
             android:orientation="vertical"
             android:padding="2dp">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/c006_rvw_Lista_v"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -399,7 +399,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c006_fab_Atras_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -412,7 +412,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c006_fab_CerrarPallet_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -425,7 +425,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c006_fab_NuevoPallet_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -505,4 +505,4 @@
             android:text="]" />
 
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

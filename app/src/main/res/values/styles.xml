@@ -10,12 +10,7 @@
 <!--        <item name="borderWidth">1dp</item>-->
         <!--<item name="borderWidth">2dp</item>-->
     </style>
-    <style name="Boton" parent="Theme.Design.Light">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:backgroundTint">@color/verde</item>
-    </style>
-<!--<style name="radioButton" parent="Theme.AppCompat.Light">-->
+    <!--<style name="radioButton" parent="Theme.AppCompat.Light">-->
 <!--&lt;!&ndash;    <item name="android:buttonTint">@color/alerta</item>&ndash;&gt;-->
 <!--&lt;!&ndash;    <item name="android:textColor">@color/gris</item>&ndash;&gt;-->
 <!--&lt;!&ndash;    <item name="colorControlNormal">@color/gris</item>&ndash;&gt;-->
@@ -23,23 +18,5 @@
 <!--    <item name="android:colorPrimary">@color/verdeClaro</item>-->
 <!--    <item name="show"-->
 <!--</style>-->
-    <style name="Divisor">
-        <item name="android:background">@color/grisAux</item>
-        <item name="android:layout_marginStart">20dp</item>
-        <item name="android:layout_marginEnd">20dp</item>
-        <item name="layout_constraintBottom_toBottomOf">parent</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintTop_toBottomOf">parent</item>
-    </style>
 
-    <style name="Divisor.H" parent="Divisor">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-    </style>
-
-    <style name="Divisor.V" parent="Divisor">
-        <item name="android:layout_width">1dp</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
 </resources>

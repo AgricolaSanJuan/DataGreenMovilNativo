@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -219,13 +219,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/c005_rcv_Reciclador_v"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="onClick">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -234,7 +234,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c005_fab_MainTareos_Volver_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -248,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c005_fab_MainTareos_Opciones_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c005_fab_MainTareos_NuevoTareo_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -343,4 +343,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

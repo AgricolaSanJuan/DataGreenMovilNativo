@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -143,7 +143,7 @@
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/c008_rcv_TareosReportes_RCV1_v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/c008_rcv_TareosReportes_RCV2_v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/c008_rcv_TareosReportes_RCV3_v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c008_fab_TareosReportesActivity_Volver_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -275,4 +275,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,7 @@ package com.example.datagreenmovil.Entidades;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.cls_05010000_Edicion;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PopUpObservacion extends Dialog {
 

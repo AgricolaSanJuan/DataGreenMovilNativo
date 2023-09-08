@@ -32,7 +32,7 @@
                 android:fontFamily="@font/principal"
                 android:text="Titulo" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/c017_fab_Cerrar_v"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

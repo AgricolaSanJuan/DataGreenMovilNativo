@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
     <color name="black">#FF000000</color>
 
     <color name="redError">#ED0000</color>
 
     <color name="verde">#FF00AF90</color>
-    <color name="azul">#FF00C2EC</color>
     <color name="gris">#FF7A7A7A</color>
     <color name="verdeOscuro">#FF005540</color>
     <color name="azulOscuro">#FF004055</color>
@@ -19,21 +15,9 @@
     <color name="alerta">#FFEE3366</color>
 <!--    <color name="alertaSuave">#FFF6A2B8</color>-->
     <color name="alertaSuave">#ffF9C8D6</color>
-    <color name="amarillo">#FFF5F100</color>
-<!--GRIStRANSPARENTE #99DDDDDD-->
+    <!--GRIStRANSPARENTE #99DDDDDD-->
     <color name="grisAux">#FFA3A3A3</color>
-    <color name="grisTransparente">#CCA3A3A3</color>
-    <color name="blancoTransparente">#CCFFFFFF</color>
-    <color name="blancoMasTransparente">#C0FFFFFF</color>
-    <color name="verdeTransparente">#BB8CFFBB</color>
-    <color name="azulTransparente">#BB8CBBFF</color>
     <!-- <color name="claro">#FFDCFAFA</color>-->
     <color name="blanco">#FFFFFFFF</color>
     <color name="grisMasClaro">#FFDDDDDD</color>
-    <color name="nuevoVerde">#FF77FFEE</color>
-    <color name="nuevoAzul">#FF77EEFF</color>
-    <color name="verdeClaroTransparente">#558CFFBB</color>
-    <color name="nuevoAzulTransparente">#7777EEFF</color>
-    <color name="AzulAux">#FF0090AF</color>
-    <color name="Transparente">#00FFFFFF</color>
 </resources>

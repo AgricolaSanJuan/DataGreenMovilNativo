@@ -12,12 +12,10 @@ ACCESO A BASE DE DATOS SQL: https://www.youtube.com/watch?v=OOm03ezazAI (NO OLVI
 
 <resources>
     <string name="app_name">DataGreen Movil</string>
-    <string name="version">1.0</string>
     <string name="btn_login">Ingresar</string>
     <string name="txt_usuario">Usuario:</string>
     <string name="txt_password">Contraseña:</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--
     <string-array name="ModulosDisponibles">
         <item>Tareos</item>

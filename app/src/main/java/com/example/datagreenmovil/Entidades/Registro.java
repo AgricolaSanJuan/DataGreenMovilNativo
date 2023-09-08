@@ -1,7 +1,8 @@
 package com.example.datagreenmovil.Entidades;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;

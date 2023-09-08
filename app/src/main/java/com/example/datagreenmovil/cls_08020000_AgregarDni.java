@@ -5,8 +5,8 @@ import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.media.MediaPlayer;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -58,6 +59,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 //                objRex.Set("IdServicioTransporte", s_IdRex);
 //                objRex.Set("Item", i_Items);
             }
+            Toast.makeText(this, s_IdRex, Toast.LENGTH_SHORT).show();
             objSql = new ConexionBD(objConfLocal);
             objSqlite = new ConexionSqlite(this,objConfLocal);
             objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");

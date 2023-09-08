@@ -1,12 +1,13 @@
 package com.example.datagreenmovil;
 
+import android.app.Application;
 import android.app.Dialog;
-import android.content.ContentProvider;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,8 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -28,6 +31,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class cls_03000000_Login extends AppCompatActivity {
     //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -125,6 +130,10 @@ public class cls_03000000_Login extends AppCompatActivity {
         return true;
     }
 
+    public void cambiarContrasenia(View view){
+        dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this,true);
+        dlg_PopUp.show();
+    }
     public void onClick(View view) {
         try {
             int idControlClickeado = view.getId();
@@ -203,9 +212,25 @@ public class cls_03000000_Login extends AppCompatActivity {
                     dlg_PopUp.show();
                 }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
                     iniciarSesion(validacion.getString(2),validacion.getString(3));
-                    abrirMenuModulos();
+
+                    SweetAlertDialog sd = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+
+                    sd
+                    .setTitleText("Correcto")
+                    .setContentText("Bienvenido!");
+
+                    sd.show();
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            sd.hide();
+                            abrirMenuModulos();
+                        }
+                    }, 1500);
                 }
-                Funciones.notificar(this, "Error de inicio de sesion.");
+//                Funciones.notificar(this, "Error de inicio de sesion.");
             }
         }catch (Exception ex){
              Funciones.mostrarError(this,ex);

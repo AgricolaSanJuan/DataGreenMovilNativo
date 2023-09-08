@@ -2,7 +2,7 @@ package com.example.datagreenmovil;
 
 import android.app.Dialog;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;

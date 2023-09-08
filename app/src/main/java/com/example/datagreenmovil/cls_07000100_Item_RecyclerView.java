@@ -1,6 +1,6 @@
 package com.example.datagreenmovil;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class cls_07000100_Item_RecyclerView extends AppCompatActivity {

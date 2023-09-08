@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.StrictMode;
-import android.support.v4.content.res.FontResourcesParserCompat;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 

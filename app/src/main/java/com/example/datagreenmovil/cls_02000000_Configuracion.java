@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -17,7 +15,8 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -166,6 +165,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         pbSync.post(()-> pbSync.setProgress(100));
       }
       finally {
+        pbSync.post(()->pbSync.setProgress(0));
         pbSync.post(()-> pbSync.setVisibility(View.INVISIBLE));
       }
     });
