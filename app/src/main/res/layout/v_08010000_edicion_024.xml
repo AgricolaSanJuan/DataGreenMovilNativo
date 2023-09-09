@@ -477,7 +477,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:onClick="onClick"
-            android:visibility="visible"
+            android:visibility="gone"
             app:backgroundTint="@color/azulOscuro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/c024_fab_Volver_v"

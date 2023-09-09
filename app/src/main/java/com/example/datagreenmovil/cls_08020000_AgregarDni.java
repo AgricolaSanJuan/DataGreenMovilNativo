@@ -1,20 +1,39 @@
 package com.example.datagreenmovil;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Rect;
+import android.graphics.SurfaceTexture;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.MediaPlayer;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Size;
 import android.view.MenuItem;
+import android.view.Surface;
+import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -25,6 +44,7 @@ import com.example.datagreenmovil.Logica.Funciones;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class cls_08020000_AgregarDni extends AppCompatActivity {
@@ -39,9 +59,13 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     LinearLayout c025_lly_IngresoDni;
     TextView c025_txv_Contador, c025_txv_DniMarcado, c025_txv_NombreMarcado, c025_txv_ApellidoMarcado, c025_txv_IngresoDni;
     Button c025_btn_1, c025_btn_2, c025_btn_3, c025_btn_4, c025_btn_5, c025_btn_6, c025_btn_7, c025_btn_8, c025_btn_9, c025_btn_0, c025_btn_X, c025_btn_Ok;
+    TextureView tvLector;
     Rex objRex;
     String s_DniMarcado = "", s_IdRex;
     int i_Items, i_Capacidad;
+
+    private CameraDevice cameraDevice;
+    private CameraCaptureSession cameraCaptureSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +77,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             if(getIntent().getExtras()!=null){
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
                 s_IdRex =(String) getIntent().getSerializableExtra("IdRegistro");
-
-//                objRex = new Rex(objSqlite,"trx_ServiciosTransporte_Detalle");
-//                objRex.Set("IdEmpresa",objConfLocal.get("ID_EMPRESA"));
-//                objRex.Set("IdServicioTransporte", s_IdRex);
-//                objRex.Set("Item", i_Items);
             }
-            Toast.makeText(this, s_IdRex, Toast.LENGTH_SHORT).show();
+
             objSql = new ConexionBD(objConfLocal);
             objSqlite = new ConexionSqlite(this,objConfLocal);
             objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
@@ -67,13 +86,13 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             referenciarControles();
             setearControles();
             Funciones.mostrarEstatusGeneral(this.getBaseContext(),
-                    objConfLocal,
-                    txv_PushTituloVentana,
-                    txv_PushRed,
-                    txv_NombreApp,
-                    txv_PushVersionApp,
-                    txv_PushVersionDataBase,
-                    txv_PushIdentificador
+                objConfLocal,
+                txv_PushTituloVentana,
+                txv_PushRed,
+                txv_NombreApp,
+                txv_PushVersionApp,
+                txv_PushVersionDataBase,
+                txv_PushIdentificador
             );
             //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
@@ -84,6 +103,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             if (objRex.Get("IdServicioTransporte") != null && !objRex.Get("IdServicioTransporte").equals("")){
                 mostrarValoresRexActual();
             }
+            openCamera();
         }catch (Exception ex){
             Funciones.mostrarError(this,ex);
         }
@@ -127,6 +147,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         c025_btn_0 = findViewById(R.id.c025_btn_0_v);
         c025_btn_X = findViewById(R.id.c025_btn_X_v);
         c025_btn_Ok = findViewById(R.id.c025_btn_Ok_v);
+
+        tvLector = findViewById(R.id.tvLector);
     }
 
     public void mostrarMenuUsuario(View v) {
@@ -161,13 +183,13 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             } else if (idControlClickeado == R.id.c025_txv_PushRed_v) {
                 objSql.probarConexion(objConfLocal);
                 Funciones.mostrarEstatusGeneral(this.getBaseContext(),
-                        objConfLocal,
-                        txv_PushTituloVentana,
-                        txv_PushRed,
-                        txv_NombreApp,
-                        txv_PushVersionApp,
-                        txv_PushVersionDataBase,
-                        txv_PushIdentificador
+                    objConfLocal,
+                    txv_PushTituloVentana,
+                    txv_PushRed,
+                    txv_NombreApp,
+                    txv_PushVersionApp,
+                    txv_PushVersionDataBase,
+                    txv_PushIdentificador
                 );
             } else if (idControlClickeado == R.id.c025_txv_PushVersionApp_v || idControlClickeado == R.id.c025_txv_PushVersionDataBase_v) {
                 Funciones.popUpStatusVersiones(this);
@@ -253,13 +275,13 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 i_Items++;
                 Notificacion.start();
                 Funciones.mostrarEstatusGeneral(this.getBaseContext(),
-                        objConfLocal,
-                        txv_PushTituloVentana,
-                        txv_PushRed,
-                        txv_NombreApp,
-                        txv_PushVersionApp,
-                        txv_PushVersionDataBase,
-                        txv_PushIdentificador
+                    objConfLocal,
+                    txv_PushTituloVentana,
+                    txv_PushRed,
+                    txv_NombreApp,
+                    txv_PushVersionApp,
+                    txv_PushVersionDataBase,
+                    txv_PushIdentificador
                 );
 //                List<String> p = new ArrayList<>();
 //                p.add(s_dniMarcado);
@@ -345,11 +367,168 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 //            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            LocalDateTime now = LocalDateTime.now();
 //            fechaHoraActual = dtf.format(now);
-            objRex.Set("IdEmpresa",objConfLocal.get("ID_EMPRESA"));
-            objRex.Set("IdServicioTransporte",s_IdRex);
+        objRex.Set("IdEmpresa",objConfLocal.get("ID_EMPRESA"));
+        objRex.Set("IdServicioTransporte",s_IdRex);
 //        }
         i_Items = obtenerItems(s_IdRex);
         i_Capacidad = obtenerCapacidad(s_IdRex);
     }
 
+//    VIEW CAMERA IN SURFACE VIEW
+
+    private static final int REQUEST_CAMERA_PERMISSION = 200;
+
+    private void requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        } else {
+            // El permiso ya está concedido, puedes abrir la cámara.
+            openCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permiso concedido, puedes abrir la cámara.
+                openCamera();
+            } else {
+                // Permiso denegado, muestra un mensaje de error o cierra la aplicación.
+            }
+        }
+    }
+    private void openCamera() {
+        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
+            String cameraId = cameraManager.getCameraIdList()[0]; // Puedes cambiar esto para usar la cámara frontal o trasera según tus necesidades.
+
+            // Configurar el TextureView para mostrar la vista previa de la cámara.
+            tvLector = findViewById(R.id.tvLector);
+            tvLector.setSurfaceTextureListener(textureListener);
+
+            // Abrir la cámara.
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                cameraManager.openCamera(cameraId, stateCallback, null);
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+            // Configurar la vista previa de la cámara aquí.
+            try {
+                SurfaceTexture texture = tvLector.getSurfaceTexture();
+                texture.setDefaultBufferSize(width, height);
+
+                // Configurar el tamaño de la vista previa para que coincida con el tamaño de TextureView.
+//                Size previewSize = chooseOptimalSize(width, height);
+//                texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
+
+                // Configurar la solicitud de captura de la cámara.
+                final CaptureRequest.Builder captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                captureRequestBuilder.addTarget(new Surface(texture));
+
+                // Crear una sesión de captura para mostrar la vista previa.
+                cameraDevice.createCaptureSession(Collections.singletonList(new Surface(texture)),
+                    new CameraCaptureSession.StateCallback() {
+                        @Override
+                        public void onConfigured(@NonNull CameraCaptureSession session) {
+                            if (cameraDevice == null) {
+                                return;
+                            }
+                            cameraCaptureSession = session;
+                            try {
+                                session.setRepeatingRequest(captureRequestBuilder.build(), null, null);
+                            } catch (CameraAccessException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onConfigureFailed(@NonNull CameraCaptureSession session) {
+                            // Manejar un error en la configuración de la sesión.
+                        }
+                    }, null);
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+            // Manejar cambios en el tamaño de la vista previa si es necesario.
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+            // Liberar recursos cuando la vista previa se destruye.
+            return false;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+            // Manejar actualizaciones de la vista previa si es necesario.
+        }
+    };
+
+    private CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
+        @Override
+        public void onOpened(@NonNull CameraDevice camera) {
+            cameraDevice = camera;
+        }
+
+        @Override
+        public void onDisconnected(@NonNull CameraDevice camera) {
+            cameraDevice.close();
+        }
+
+        @Override
+        public void onError(@NonNull CameraDevice camera, int error) {
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+    };
+
+    private Size chooseOptimalSize(int width, int height) {
+        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
+            String cameraId = cameraManager.getCameraIdList()[0]; // Puedes cambiar esto para usar la cámara frontal o trasera según tus necesidades.
+
+            CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
+            StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+
+            // Obtener los tamaños admitidos para la vista previa de la cámara.
+            Size[] outputSizes = map.getOutputSizes(SurfaceTexture.class);
+
+            // Elegir un tamaño que coincida con la relación de aspecto del TextureView.
+            float targetRatio = (float) width / height;
+            Size selectedSize = null;
+            float minDiff = Float.MAX_VALUE;
+
+            for (Size size : outputSizes) {
+                float supportedRatio = (float) size.getWidth() / size.getHeight();
+                float diff = Math.abs(targetRatio - supportedRatio);
+                if (diff < minDiff) {
+                    selectedSize = size;
+                    minDiff = diff;
+                }
+            }
+
+            if (selectedSize != null) {
+                return selectedSize;
+            }
+
+            // Si no se encuentra un tamaño adecuado, simplemente elige el primero de la lista.
+            return outputSizes[0];
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

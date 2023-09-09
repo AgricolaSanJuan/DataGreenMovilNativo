@@ -20,4 +20,10 @@
     <!-- <color name="claro">#FFDCFAFA</color>-->
     <color name="blanco">#FFFFFFFF</color>
     <color name="grisMasClaro">#FFDDDDDD</color>
+
+    <color name="primary">#315fa9</color>
+    <color name="info">#58ace2</color>
+    <color name="success">#71bf44</color>
+    <color name="warning">#d0d717</color>
+    <color name="danger">#ff213c</color>
 </resources>

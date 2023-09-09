@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +93,7 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 //            holder.mainLayout.setBackgroundColor(ContextCompat.getColor(Context, holder.txv_IdEstado.getText().equals("PE") ? R.color.alerta : R.color.verdeClaro));
       holder.c023_cly_Principal.setBackground(ResourcesCompat.getDrawable(contextoLocal.getResources(), holder.c023_txv_IdEstado.getText().equals("PE") ? R.drawable.bg_item_recyclerview_alerta : R.drawable.bg_item_recyclerview_normal, null));
 
+
       holder.c023_cly_Principal.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -119,26 +121,18 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         }
       });
 
+      holder.btnAddPasajero2.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          Intent nuevaActividad = new Intent(contextoLocal, cls_08020000_AgregarDni.class);
+          nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
+          nuevaActividad.putExtra("IdRegistro", holder.c023_txv_Id.getText().toString());
+          contextoLocal.startActivity(nuevaActividad);
 
-      holder.c023_cbx_Seleccion.setOnClickListener(new View.OnClickListener() {
-
-        public void openAgregarDNI(View view) {
-          Toast.makeText(contextoLocal, "fino", Toast.LENGTH_SHORT).show();
-          Funciones.abrirActividad(contextoLocal, cls_08010000_Edicion.class, objConfLocal, null);
-//                Intent nuevaActividad = new Intent(this,cls_08010000_Edicion.class);
-//                nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
-//                nuevaActividad.putParcelableArrayListExtra("objRex",objRex);
-//                this.startActivity(nuevaActividad);
-          servicioTransporte.moveToPosition(holder.getAdapterPosition());
-//          if (servicioTransporte.getString(servicioTransporte.getColumnIndex("Id"))) {
-            Intent nuevaActividad = new Intent(contextoLocal, cls_08020000_AgregarDni.class);
-            nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
-            nuevaActividad.putExtra("IdRegistro", objRex.Get("Id"));
-            contextoLocal.startActivity(nuevaActividad);
-//          } else
-//            Funciones.notificar(this, "Antes de agregar Dni debe de guardar el registro actual.");
+//          Toast.makeText(contextoLocal, , Toast.LENGTH_SHORT).show();
         }
-
+      });
+      holder.c023_cbx_Seleccion.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
                     /*
@@ -157,6 +151,8 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
                     }*/
 //          Toast.makeText(view.getContext(), objRex.Get("Id"), Toast.LENGTH_SHORT).show();
           String idSeleccionado = holder.c023_txv_Id.getText().toString();
+          Log.i("ID",idSeleccionado);
+          Toast.makeText(contextoLocal, idSeleccionado, Toast.LENGTH_SHORT).show();
           if (holder.c023_cbx_Seleccion.isChecked() && !idsSelecciones.contains(idSeleccionado)) {
             idsSelecciones.add(idSeleccionado);
           } else if (!holder.c023_cbx_Seleccion.isChecked() && idsSelecciones.contains(idSeleccionado)) {
@@ -190,6 +186,7 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         c023_txv_Conductor,
         c023_txv_Observacion;
     CheckBox c023_cbx_Seleccion;
+    Button btnAddPasajero2;
     ConstraintLayout c023_cly_Principal;
 
     public MyViewHolder(@NonNull View itemView) {
@@ -210,6 +207,7 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       c023_txv_Observacion = itemView.findViewById(R.id.c023_txv_Observacion_v);
       c023_cbx_Seleccion = itemView.findViewById(R.id.c023_cbx_Seleccionado_v);
       c023_cly_Principal = itemView.findViewById(R.id.c023_cly_Principal_v);
+      btnAddPasajero2 = itemView.findViewById(R.id.btnAddPasajeros);
     }
   }
 

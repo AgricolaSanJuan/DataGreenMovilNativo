@@ -1,6 +1,7 @@
 package com.example.datagreenmovil;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -277,11 +279,23 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   }
 
   public void openAgregarDNI(View view) {
-    Funciones.abrirActividad(this, cls_08010000_Edicion.class, objConfLocal, s_IdRex);
-//                Intent nuevaActividad = new Intent(this,cls_08010000_Edicion.class);
-//                nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
-//                nuevaActividad.putParcelableArrayListExtra("objRex",objRex);
-//                this.startActivity(nuevaActividad);
+//    Funciones.abrirActividad(this, cls_08020000_AgregarDni.class, objConfLocal, objRex.Get("Id"));
+
+
+//    Intent nuevaActividad = new Intent(this, cls_08020000_AgregarDni.class);
+//    nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
+//    nuevaActividad.putExtra("IdRegistro", objRex.Get("Id"));
+//    startActivity(nuevaActividad);
+
+
+//    servicioTransporte.moveToPosition(holder.getAdapterPosition());
+//          if (servicioTransporte.getString(servicioTransporte.getColumnIndex("Id"))) {
+//    Intent nuevaActividad = new Intent(contextoLocal, cls_08020000_AgregarDni.class);
+//    nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
+
+//    contextoLocal.startActivity(nuevaActividad);
+//          } else
+//            Funciones.notificar(this, "Antes de agregar Dni debe de guardar el registro actual.");
   }
 
   public void onClick(View view) {
@@ -325,7 +339,8 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
 //                throw new IllegalStateException("Click sin programacion: " + view.getId());
       } else if (idControlClickeado == R.id.c022_fab_NuevoRegistro_v) {
         //s_IdRex = null;
-        Toast.makeText(this, "Esta accion se movió al boton de la lista.", Toast.LENGTH_LONG).show();
+        Funciones.abrirActividad(this,cls_08010000_Edicion.class,objConfLocal,s_IdRex);
+//        Toast.makeText(this, "Esta accion se movió al boton de la lista.", Toast.LENGTH_LONG).show();
       } else throw new IllegalStateException("Click sin programacion: " + view.getId());
     } catch (Exception ex) {
       Funciones.mostrarError(this, ex);
