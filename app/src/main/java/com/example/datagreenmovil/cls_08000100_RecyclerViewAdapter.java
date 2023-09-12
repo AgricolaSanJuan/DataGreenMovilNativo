@@ -152,7 +152,6 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 //          Toast.makeText(view.getContext(), objRex.Get("Id"), Toast.LENGTH_SHORT).show();
           String idSeleccionado = holder.c023_txv_Id.getText().toString();
           Log.i("ID",idSeleccionado);
-          Toast.makeText(contextoLocal, idSeleccionado, Toast.LENGTH_SHORT).show();
           if (holder.c023_cbx_Seleccion.isChecked() && !idsSelecciones.contains(idSeleccionado)) {
             idsSelecciones.add(idSeleccionado);
           } else if (!holder.c023_cbx_Seleccion.isChecked() && idsSelecciones.contains(idSeleccionado)) {

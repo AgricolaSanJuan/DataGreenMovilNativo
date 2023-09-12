@@ -58,7 +58,7 @@
     <LinearLayout
         android:id="@+id/c002_lly_Cuerpo_v"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/c002_lly_StatusInferior_v"
@@ -67,9 +67,9 @@
         app:layout_constraintTop_toBottomOf="@+id/c002_lly_StatusSuperior_v">
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:id="@+id/settingsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <LinearLayout

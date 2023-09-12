@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -121,10 +122,6 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
 
         actualizarValoresDeConfiguracionAuxiliar();
         Boolean resultConexion = probarNuevaConexion();
-
-        if (!!resultConexion) {
-          runOnUiThread(() -> Funciones.notificar(this, "Conexion Realizada con Éxito"));
-        }
 
         pbSync.post(()-> pbSync.setProgress(5));
         Cursor c = null;
@@ -262,7 +259,13 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
       //...
       else if (idControlClickeado == R.id.c002_btnProbarConexion_v) {
         actualizarValoresDeConfiguracionAuxiliar();
-        probarNuevaConexion();
+        Boolean statusConexion = probarNuevaConexion();
+        if(statusConexion == true){
+          Swal.success(ctx, "Exito!", "Conexion realizada con écito!",1500);
+        }else{
+          Swal.error(ctx, "Oops!", "Algo falló en la conexion, comunicate con soporte técnico.", 2500);
+        }
+        Toast.makeText(this, statusConexion.toString(), Toast.LENGTH_SHORT).show();
       } else if (idControlClickeado == R.id.c002_btnRegistrar_v) {
         if (clAux.get("RED_CONFIGURADA").equals("TRUE")) {
           if (registrarDispositivo()) {
@@ -383,7 +386,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         clAux.set("RED_CONFIGURADA", "FALSE");
         clAux.set("ESTADO_RED", "OFFLINE");
 
-        Swal.error(this,"Oops!","Imposible conectar con servidor.", 1500);
+//        Swal.error(this,"Oops!","Imposible conectar con servidor.", 1500);
 
         status = false;
       }

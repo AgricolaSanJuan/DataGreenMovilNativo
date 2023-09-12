@@ -270,11 +270,12 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         abrirActividadReportes();
         finish();
         return true;
-      } else if (idControlClickeado == R.id.opc_05000000_configuraciones) {
-        Intent settingsTransporte = new Intent(this, SettingsTransporte.class);
-        startActivity(settingsTransporte);
-        return true;
       }
+//      else if (idControlClickeado == R.id.opc_05000000_configuraciones) {
+//        Intent settingsTransporte = new Intent(this, SettingsTransporte.class);
+//        startActivity(settingsTransporte);
+//        return true;
+//      }
     } catch (Exception ex) {
       Funciones.mostrarError(this, ex);
       return false;

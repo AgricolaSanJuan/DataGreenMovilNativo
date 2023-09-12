@@ -411,6 +411,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         mostrarValoresRexActual();
 
         Swal.success(this, "Correcto","El registro se ha guardado correctamente", 1500);
+        finish();
 //                Funciones.notificar(this, "Registro guardado correctamente.");
         return true;
       } else {

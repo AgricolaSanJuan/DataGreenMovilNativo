@@ -17,6 +17,7 @@ import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class cls_04000000_Modulos extends AppCompatActivity {
 
             Cursor c = objSqlite.obtenerModulos();
             inflarRecyclerViewModulos(c);
+            Swal.success(this,"Hola!", "Bienvenido a Data Green!",1500);
         }
         catch(Exception ex){
              Funciones.mostrarError(this,ex);

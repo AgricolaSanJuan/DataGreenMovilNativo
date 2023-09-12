@@ -69,9 +69,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
 
       if (check()) {
-        if (existeSesion()) {
-          abrirMenuModulos();
-        } else {
+
           Intent i;
           i = new Intent(this, cls_03000000_Login.class);
 //                i=new Intent(this, cls_00000000_Plantilla_Base.class);
@@ -89,8 +87,12 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
 //                objSqlite.guardarConfiguracionLocal(objConfLocal);
           i.putExtra("ConfiguracionLocal", objConfLocal);
+//        if (existeSesion()) {
+//          abrirMenuModulos();
+//        } else {
           startActivity(i);
-        }
+//        }
+
         finish();
       } else {
         abrirConfiguraciones();

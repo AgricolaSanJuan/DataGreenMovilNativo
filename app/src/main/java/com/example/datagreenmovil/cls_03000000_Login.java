@@ -213,10 +213,7 @@ public class cls_03000000_Login extends AppCompatActivity {
                     dlg_PopUp.show();
                 }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
                     iniciarSesion(validacion.getString(2),validacion.getString(3));
-
-                    Swal.success(this,"Correcto", "Bienvenido!",1500);
                     abrirMenuModulos();
-
                 }
 //                Funciones.notificar(this, "Error de inicio de sesion.");
             }

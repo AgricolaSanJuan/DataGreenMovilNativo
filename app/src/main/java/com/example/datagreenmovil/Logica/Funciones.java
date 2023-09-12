@@ -585,7 +585,8 @@ public class Funciones {
             try {
               if (objSqlite.cambiarContrasenia(IdUsuarioActual, generarMD5(IdUsuarioActual + nuevaContrasenia))) {
 //                notificar(actividad, "Contraseña guardada con exito.");
-                Swal.success(context, "Correcto","La contraseña se ha guardado con éxito.",1500);
+//                Swal.success(context, "Correcto","La contraseña se ha guardado con éxito.",1500);
+                Toast.makeText(context, "La contraseña se ha guardado con éxito.", Toast.LENGTH_SHORT).show();
               }
 
 
@@ -676,7 +677,9 @@ public class Funciones {
           if (validarNuevaContrasenia(nuevaContrasenia, confirmacionNuevaContrasenia)) {
             try {
               if (objSqlite.cambiarContrasenia(IdUsuarioActual, generarMD5(IdUsuarioActual + nuevaContrasenia))) {
-                Swal.success(context, "Correcto","La contraseña se ha guardado con éxito.",1500);
+                Toast.makeText(context, "La contraseña se ha guardado con éxito.", Toast.LENGTH_SHORT).show();
+//                Swal.success(actividad.getBaseContext(), "Correcto","",1500);
+                popUp.hide();
               }
 
             } catch (Exception e) {
