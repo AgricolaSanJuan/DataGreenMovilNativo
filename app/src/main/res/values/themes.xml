@@ -11,7 +11,7 @@
         <item name="android:textColorSecondary">@color/azulOscuro</item>
         <item name="android:textColor">@color/gris</item>
 
-<!--        <item name="radioButtonStyle">@style/radioButton</item>-->
+        <!--        <item name="radioButtonStyle">@style/radioButton</item>-->
 
         <!-- MI CONFIGURACION PERSONAL-->
         <item name="colorPrimary">@color/verde</item>
@@ -23,12 +23,17 @@
         <item name="android:statusBarColor">@color/verdeClaro</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- ocultar action bar-->
-       <item name="android:windowActionBar">false</item>
-       <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 
         <!--<item name="buttonStyle">@style/Boton</item>-->
         <item name="floatingActionButtonStyle">@style/fab_Boton</item>
 
-<!--        <item name="buttonStyle">@style/Boton</item>-->
+        <!--        <item name="buttonStyle">@style/Boton</item>-->
+    </style>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DataGreenMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 </resources>

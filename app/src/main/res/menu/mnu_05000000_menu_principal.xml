@@ -8,4 +8,7 @@
         android:title="Eliminar" />
     <item android:id="@+id/opc_05000000_reporte"
         android:title="Reporte" />
+    <item android:id="@+id/opc_05000000_configuraciones"
+        android:title="Configuraciones"
+        />
 </menu>

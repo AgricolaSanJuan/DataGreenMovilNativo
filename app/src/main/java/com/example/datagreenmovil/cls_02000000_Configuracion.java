@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -31,6 +33,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class cls_02000000_Configuracion extends AppCompatActivity implements View.OnTouchListener {
   //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -378,10 +382,13 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
       } else {
         clAux.set("RED_CONFIGURADA", "FALSE");
         clAux.set("ESTADO_RED", "OFFLINE");
-        Funciones.notificar(this, "Imposible conectar con servidor.");
+
+        Swal.error(this,"Oops!","Imposible conectar con servidor.", 1500);
+
         status = false;
       }
     } catch (Exception ex) {
+
       Funciones.mostrarError(this, ex);
     }
     return status;

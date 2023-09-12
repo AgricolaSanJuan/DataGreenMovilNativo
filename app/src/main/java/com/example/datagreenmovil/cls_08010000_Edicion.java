@@ -28,6 +28,7 @@ import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.PopUpObservacion;
 import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
@@ -408,19 +409,8 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         );
         obtenerRexActual();
         mostrarValoresRexActual();
-        SweetAlertDialog sd = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
-        sd
-            .setTitleText("Correcto")
-            .setContentText("El registro se ha guardado correctamente");
-        sd.show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-          @Override
-          public void run() {
-            finish();
-            sd.hide();
-          }
-        }, 1500);
+
+        Swal.success(this, "Correcto","El registro se ha guardado correctamente", 1500);
 //                Funciones.notificar(this, "Registro guardado correctamente.");
         return true;
       } else {

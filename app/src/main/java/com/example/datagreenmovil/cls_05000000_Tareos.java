@@ -369,6 +369,10 @@ public class cls_05000000_Tareos extends AppCompatActivity {
         return true;
     }
 
+    public void abrirConfiguraciones(MenuItem item){
+        Toast.makeText(this, item.getItemId(), Toast.LENGTH_SHORT).show();
+    }
+
     private void abrirActividadReportes() {
         Intent nuevaActividad = new Intent(this, cls_05020000_Reportes.class);
         nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);

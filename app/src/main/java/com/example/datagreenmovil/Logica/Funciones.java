@@ -583,21 +583,9 @@ public class Funciones {
           confirmacionNuevaContrasenia = c018_etx_ConfirmacionContraseniaNueva.getText().toString();
           if (validarNuevaContrasenia(nuevaContrasenia, confirmacionNuevaContrasenia)) {
             try {
-              SweetAlertDialog sd = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
-              sd
-                  .setTitleText("Correcto")
-                  .setContentText("La contraseña se ha guardado con éxito.");
               if (objSqlite.cambiarContrasenia(IdUsuarioActual, generarMD5(IdUsuarioActual + nuevaContrasenia))) {
 //                notificar(actividad, "Contraseña guardada con exito.");
-                Handler handler = new Handler();
-                sd.show();
-                handler.postDelayed(new Runnable() {
-                  @Override
-                  public void run() {
-                    popUp.dismiss();
-                    sd.hide();
-                  }
-                }, 1500);
+                Swal.success(context, "Correcto","La contraseña se ha guardado con éxito.",1500);
               }
 
 
@@ -688,23 +676,7 @@ public class Funciones {
           if (validarNuevaContrasenia(nuevaContrasenia, confirmacionNuevaContrasenia)) {
             try {
               if (objSqlite.cambiarContrasenia(IdUsuarioActual, generarMD5(IdUsuarioActual + nuevaContrasenia))) {
-                SweetAlertDialog sd = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
-                sd
-                    .setTitleText("Correcto")
-                    .setContentText("La contraseña se ha guardado con éxito.");
-                if (objSqlite.cambiarContrasenia(IdUsuarioActual, generarMD5(IdUsuarioActual + nuevaContrasenia))) {
-//                notificar(actividad, "Contraseña guardada con exito.");
-                  Handler handler = new Handler();
-                  sd.show();
-                  handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                      popUp.dismiss();
-                      sd.hide();
-                    }
-                  }, 2000);
-
-                }
+                Swal.success(context, "Correcto","La contraseña se ha guardado con éxito.",1500);
               }
 
             } catch (Exception e) {

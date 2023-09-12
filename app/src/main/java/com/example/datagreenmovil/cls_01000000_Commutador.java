@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -24,32 +26,34 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class cls_01000000_Commutador extends AppCompatActivity {
-    ConexionSqlite objSqlite; //= new ConexionSqlite(this, null);
-    ConfiguracionLocal objConfLocal; // = new ConfiguracionLocal();
-    //ConexionSqlite objSqlite = new ConexionSqlite(this, objConfLocal);
-    ConexionBD objSql; // = new ConexionBD(objConfLocal);
-    Querys objQuerys;
-    //ResultSet rsQuerys;
-    Dialog dlg_PopUp;
+  ConexionSqlite objSqlite; //= new ConexionSqlite(this, null);
+  ConfiguracionLocal objConfLocal; // = new ConfiguracionLocal();
+  //ConexionSqlite objSqlite = new ConexionSqlite(this, objConfLocal);
+  ConexionBD objSql; // = new ConexionBD(objConfLocal);
+  Querys objQuerys;
+  //ResultSet rsQuerys;
+  Dialog dlg_PopUp;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.v_01000000_conmutador_001);
-        validarPermisosAndroid();
-        //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.v_01000000_conmutador_001);
+    validarPermisosAndroid();
+    //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
 
-        try{
+    try {
 //            int w = Resources.getSystem().getDisplayMetrics().widthPixels;
 //            int h = Resources.getSystem().getDisplayMetrics().heightPixels;
 //            Toast.makeText(cls_01000000_Commutador.this.getBaseContext(), String.valueOf(w) + 'x' + String.valueOf(h), Toast.LENGTH_LONG).show();;
 
-            objSqlite = new ConexionSqlite(this,null);
-            objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal());
-            objSqlite = new ConexionSqlite(this,objConfLocal); //getApplicationContext()
-            //PENDIENTE: REDEFINIR CONCEPTO DE QUERYS -> LIST<QUERY>
-            //SE ESPERA PODER USAR objQuerys.Query("NOMBRE DE QUERY") -> RETORNA STRING
-            objQuerys = new Querys(objSqlite.obtenerQuerys());
+      objSqlite = new ConexionSqlite(this, null);
+      objConfLocal = new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal());
+      objSqlite = new ConexionSqlite(this, objConfLocal); //getApplicationContext()
+      //PENDIENTE: REDEFINIR CONCEPTO DE QUERYS -> LIST<QUERY>
+      //SE ESPERA PODER USAR objQuerys.Query("NOMBRE DE QUERY") -> RETORNA STRING
+      objQuerys = new Querys(objSqlite.obtenerQuerys());
+
+      //        LLEVA DIRECTAMENTE SI EXISTE LA SESION
 
 //            String t=objConfLocal.get("TOKEN_EXPIRA");
 //            try{
@@ -63,41 +67,46 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //                Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
 //            }
 
-            if(check()){
-                Intent i;
-                i=new Intent(this, cls_03000000_Login.class);
+
+      if (check()) {
+        if (existeSesion()) {
+          abrirMenuModulos();
+        } else {
+          Intent i;
+          i = new Intent(this, cls_03000000_Login.class);
 //                i=new Intent(this, cls_00000000_Plantilla_Base.class);
 
 //                OBTENER RESOLUCION PANTALLA
-                int valor = Resources.getSystem().getDisplayMetrics().widthPixels;
-                objConfLocal.set("ANCHO_PANTALLA",String.valueOf(valor));
-                valor = Resources.getSystem().getDisplayMetrics().heightPixels;
-                objConfLocal.set("ALTO_PANTALLA",String.valueOf(valor));
+          int valor = Resources.getSystem().getDisplayMetrics().widthPixels;
+          objConfLocal.set("ANCHO_PANTALLA", String.valueOf(valor));
+          valor = Resources.getSystem().getDisplayMetrics().heightPixels;
+          objConfLocal.set("ALTO_PANTALLA", String.valueOf(valor));
 
-                //OBTENER VERSION APP
-                //int versionCode = BuildConfig.VERSION_CODE;
-                String versionApp = BuildConfig.VERSION_NAME;
-                objConfLocal.set("VERSION_APP",versionApp);
+          //OBTENER VERSION APP
+          //int versionCode = BuildConfig.VERSION_CODE;
+          String versionApp = BuildConfig.VERSION_NAME;
+          objConfLocal.set("VERSION_APP", versionApp);
 
 //                objSqlite.guardarConfiguracionLocal(objConfLocal);
-                i.putExtra("ConfiguracionLocal",objConfLocal);
-                startActivity(i);
-                finish();
-            }else{
-                abrirConfiguraciones();
-            }
+          i.putExtra("ConfiguracionLocal", objConfLocal);
+          startActivity(i);
+        }
+        finish();
+      } else {
+        abrirConfiguraciones();
+      }
             /*
             Intent i;
             i=new Intent(this,cls_03000000_Login.class);
             i.putExtra("ConfiguracionLocal",objConfLocal);
             startActivity(i);
             finish();*/
-        }catch (Exception ex){
+    } catch (Exception ex) {
 //            StackTraceElement z = new Exception().getStackTrace()[0];
 //            Toast.makeText(this,z.getFileName()+"\n"+z.getMethodName()+"\n"+ex.getMessage(), Toast.LENGTH_LONG).show();
-             Funciones.mostrarError(this,ex);
-            finish();
-        }
+      Funciones.mostrarError(this, ex);
+      finish();
+    }
 
 
 //        objSql = new ConexionBD();
@@ -113,10 +122,22 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //        }
 //        realizarValidaciones();
 
-    }
+  }
 
-    private void abrirUltimaActividad() {
-        Toast.makeText(this,"UltimaActividadAbierta: ", Toast.LENGTH_LONG).show();
+  public void abrirMenuModulos() {
+    try {
+//            objSqlite.guardarConfiguracionLocal(objConfLocal);
+      Intent intent = new Intent(this, cls_04000000_Modulos.class);
+      intent.putExtra("ConfiguracionLocal", objConfLocal);
+      startActivity(intent);
+      finish();
+    } catch (Exception ex) {
+      Funciones.mostrarError(this, ex);
+    }
+  }
+
+  private void abrirUltimaActividad() {
+    Toast.makeText(this, "UltimaActividadAbierta: ", Toast.LENGTH_LONG).show();
 //        Intent i;
 //        switch (objConfLocal.ACTIVIDAD_ACTUAL){
 //            case "cls_04000000_Modulos":
@@ -128,58 +149,63 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //        i.putExtra("ConfiguracionLocal",objConfLocal);
 //        startActivity(i);
 //        finish();
-        //Toast.makeText(this,ex.getMessage(), Toast.LENGTH_LONG).show();
-    }
+    //Toast.makeText(this,ex.getMessage(), Toast.LENGTH_LONG).show();
+  }
 
-    private boolean check(){
-        try {
+  private boolean existeSesion() {
+    return objConfLocal.get("ID_USUARIO_ACTUAL")!="!ID_USUARIO_ACTUAL" ? true : false;
+  }
+
+  private boolean check() {
+
+    try {
 //            objConfLocal= new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal());
-            objSql = new ConexionBD(objConfLocal);
-            objSqlite=new ConexionSqlite(this,objConfLocal);
-            if (!objSqlite.existeBDLocal()){
+      objSql = new ConexionBD(objConfLocal);
+      objSqlite = new ConexionSqlite(this, objConfLocal);
+      if (!objSqlite.existeBDLocal()) {
 //                Funciones.notificar(this,"No existe base de datos local.");
 //                abrirConfiguraciones();
-                //objSqlite.crearBaseSqlite();
-                return false;
-            }
-            if(!objSqlite.existenTablas()){
+        //objSqlite.crearBaseSqlite();
+        return false;
+      }
+      if (!objSqlite.existenTablas()) {
 //                Funciones.notificar(this,"No existe tablas en base de datos local.");
 //                abrirConfiguraciones();
-                return false;
-                //objQuerys = new Querys(objSql.obtenerQuerys());
-                //objSqlite.crearTablas(objQuerys);
-            }
-            if(!objSqlite.existeDataLocal()){
+        return false;
+        //objQuerys = new Querys(objSql.obtenerQuerys());
+        //objSqlite.crearTablas(objQuerys);
+      }
+      if (!objSqlite.existeDataLocal()) {
 //                Funciones.notificar(this,"No existe data local.");
 //                abrirConfiguraciones();
-                //descargarData();
-                //objSqlite.guardarConfiguracionLocal(objConfLocal);
-                return false;
-            }
+        //descargarData();
+        //objSqlite.guardarConfiguracionLocal(objConfLocal);
+        return false;
+      }
 
-            //objConfLocal.actualizarConfiguraciones(objSql.obtenerConfiguracionesDispositivoMovil());
-            if (!objSqlite.existeConfiguracionLocal()){
-                Funciones.notificar(this, "No existe configuracion local.");
+      //objConfLocal.actualizarConfiguraciones(objSql.obtenerConfiguracionesDispositivoMovil());
+      if (!objSqlite.existeConfiguracionLocal()) {
+        Funciones.notificar(this, "No existe configuracion local.");
 //                abrirConfiguraciones();
-                //realizarConfiguracionLocal();
-                return false;
-            }
+        //realizarConfiguracionLocal();
+        return false;
+      }
 
-            if (objSql.hayConexion()){
-                objConfLocal.set("ESTADO_RED","ONLINE");
-                procesoCargaOnline1();
-                procesoCargaOnline2();
-            }else{
-                objConfLocal.set("ESTADO_RED","OFFLINE");
-                procesoCargaOffline1();
-            }
-            return true;
-        } catch (Exception ex) {
-             Funciones.mostrarError(this,ex);
-            return false;
-        }
+      if (objSql.hayConexion()) {
+        objConfLocal.set("ESTADO_RED", "ONLINE");
+        procesoCargaOnline1();
+        procesoCargaOnline2();
+      } else {
+        objConfLocal.set("ESTADO_RED", "OFFLINE");
+        procesoCargaOffline1();
+      }
+      return true;
+    } catch (Exception ex) {
+      Funciones.mostrarError(this, ex);
+      return false;
+    }
 
-        ////////////////////////////////////////
+    ////////////////////////////////////////
         /*
         if(!objSqlite.equipoRegistrado()){
             objConfLocal.set("ID_DISPOSITIVO",objSql.registrarEquipo(objConfLocal));
@@ -200,21 +226,21 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             realizarConfiguracionLocal();
         }else {
         }*/
-    }
+  }
 
-    private void abrirConfiguraciones() {
-        try{
-            Intent intent = new Intent(this, cls_02000000_Configuracion.class );
+  private void abrirConfiguraciones() {
+    try {
+      Intent intent = new Intent(this, cls_02000000_Configuracion.class);
 //            objSqlite.guardarConfiguracionLocal(objConfLocal);
-            intent.putExtra("ConfiguracionLocal",objConfLocal);
-            //intent.putExtra("Conexion",objSql);
-            //intent.putExtra("Sqlite",objSqlite);
-            startActivity(intent);
-            finish();
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
-        }
+      intent.putExtra("ConfiguracionLocal", objConfLocal);
+      //intent.putExtra("Conexion",objSql);
+      //intent.putExtra("Sqlite",objSqlite);
+      startActivity(intent);
+      finish();
+    } catch (Exception ex) {
+      Funciones.mostrarError(this, ex);
     }
+  }
 
 //    private void realizarValidaciones() {
 //        try {
@@ -347,44 +373,44 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //        //objConfLocal= objSqlite.procesoCarga1(objConfLocal);
 //    }
 
-    private void procesoCargaOnline1() {
-        try{
+  private void procesoCargaOnline1() {
+    try {
 //            if(!objSqlite.existenTablas()){
 //                //rsQuerys=objSql.obtenerQuerys();
 //                objQuerys = new Querys(objSql.obtenerQuerys());
 //                objSqlite.crearTablas(objQuerys);
 //            }
-            if(!objSqlite.equipoRegistrado()){
-                objConfLocal.set("ID_DISPOSITIVO",objSql.registrarEquipo(objConfLocal));
-            }
-            objConfLocal = objSql.obtenerVersionesDisponibles(objConfLocal);
-            if(objSql.hayActualizacionBDLocal(objConfLocal)){
-                actualizarBDLocal();
-            }
-            if(!objSqlite.existeDataLocal()){
-                descargarData();
-                objSqlite.guardarConfiguracionLocal(objConfLocal);
-            }else{
-                if(objSql.hayActualizacionDataLocal(objConfLocal)){
-                    actualizarDataLocal();
-                }
-            }
-            cargarQuerys();
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
-//            objConfLocal.set("MENSAJE",ex.getMessage());
-            //PENDIENTE: REVISAR SI ES UTIL LA CLASE STATUS;
-            //objConfLocal.STATUS=Status.ERROR;
+      if (!objSqlite.equipoRegistrado()) {
+        objConfLocal.set("ID_DISPOSITIVO", objSql.registrarEquipo(objConfLocal));
+      }
+      objConfLocal = objSql.obtenerVersionesDisponibles(objConfLocal);
+      if (objSql.hayActualizacionBDLocal(objConfLocal)) {
+        actualizarBDLocal();
+      }
+      if (!objSqlite.existeDataLocal()) {
+        descargarData();
+        objSqlite.guardarConfiguracionLocal(objConfLocal);
+      } else {
+        if (objSql.hayActualizacionDataLocal(objConfLocal)) {
+          actualizarDataLocal();
         }
+      }
+      cargarQuerys();
+    } catch (Exception ex) {
+      Funciones.mostrarError(this, ex);
+//            objConfLocal.set("MENSAJE",ex.getMessage());
+      //PENDIENTE: REVISAR SI ES UTIL LA CLASE STATUS;
+      //objConfLocal.STATUS=Status.ERROR;
     }
+  }
 
-    private void procesoCargaOnline2() throws Exception {
-        try{
-            //rsQuerys=objSqlite.obtenerQuerys();
-            if(!objSqlite.equipoHabilitado()){
-                finalizarAplicacion();
-            }
-            if(!objSql.horaActualizada()){
+  private void procesoCargaOnline2() throws Exception {
+    try {
+      //rsQuerys=objSqlite.obtenerQuerys();
+      if (!objSqlite.equipoHabilitado()) {
+        finalizarAplicacion();
+      }
+      if (!objSql.horaActualizada()) {
 //                dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this);
 //                dlg_PopUp.show();
 //                Funciones.mostrarPopUp(this,
@@ -393,58 +419,58 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //                        "El equipo tiene configurada una fecha u hora distinta al servidor, corregir.",
 //                        false,
 //                        true);
-                //finalizarAplicacion();
-                Funciones.notificar(this,"El dispositivo móvil tiene configurada una fecha u hora distinta al servidor, corregir.");
+        //finalizarAplicacion();
+        Funciones.notificar(this, "El dispositivo móvil tiene configurada una fecha u hora distinta al servidor, corregir.");
+      }
+      if (objSql.hayActualizacionSoftware(objConfLocal)) {
+        actualizarApp();
+      }
+      if (objSqlite.existeDataPendiente()) {
+        eviarDataPendiente();
+      }
+      //objConfLocal.STATUS=Status.OK;
+    } catch (Exception ex) {
+      throw ex;
+    }
+  }
+
+  private void cargarQuerys() {
+
+  }
+
+  private void actualizarDataLocal() {
+  }
+
+  private void descargarData() throws Exception {
+    try {
+      Funciones.notificar(this, "Descargando Data.");
+      //rsQuerys=objSql.obtenerQuerys();
+      objQuerys = new Querys(objSql.obtenerQuerys());
+      HashMap<String, String> hmQuerys = objQuerys.obtQuerysParaDescarga("01"); //PENDIENTE OBTENER DINAMICAMENTE;
+      Iterator<Map.Entry<String, String>> it = hmQuerys.entrySet().iterator();
+      ResultSet rsAux;
+      ResultSetMetaData m;
+      String q;
+      while (it.hasNext()) {
+        Map.Entry<String, String> set = (Map.Entry<String, String>) it.next();
+        Toast.makeText(this, set.getKey(), Toast.LENGTH_LONG).show();
+        rsAux = objSql.doItBaby(set.getValue(), null);
+        m = rsAux.getMetaData();
+        //q = "INSERT INTO " + rsQuerys.getString("TablaObjetivo") + " VALUES(";
+        while (rsAux.next()) {
+          q = "INSERT INTO " + set.getKey() + " VALUES(";
+          for (Integer i = 0; i < m.getColumnCount(); i++) {
+            if (i > 0) {
+              q = q + ",";
             }
-            if(objSql.hayActualizacionSoftware(objConfLocal)){
-                actualizarApp();
-            }
-            if(objSqlite.existeDataPendiente()){
-                eviarDataPendiente();
-            }
-            //objConfLocal.STATUS=Status.OK;
-        }catch (Exception ex){
-            throw ex;
+            q = q + "'" + rsAux.getString(i + 1) + "'";
+          }
+          q = q + ")";
+          //m.getColumnCount()
+          //rsQuerys.getString("Valor")
+          objSqlite.doItBaby(q, null, "INSERT");
         }
-    }
-
-    private void cargarQuerys() {
-
-    }
-
-    private void actualizarDataLocal() {
-    }
-
-    private void descargarData()throws Exception {
-        try{
-            Funciones.notificar(this,"Descargando Data.");
-            //rsQuerys=objSql.obtenerQuerys();
-            objQuerys = new Querys(objSql.obtenerQuerys());
-            HashMap<String, String> hmQuerys = objQuerys.obtQuerysParaDescarga("01"); //PENDIENTE OBTENER DINAMICAMENTE;
-            Iterator<Map.Entry<String, String>> it = hmQuerys.entrySet().iterator();
-            ResultSet rsAux;
-            ResultSetMetaData m;
-            String q;
-            while(it.hasNext()){
-                Map.Entry<String, String> set = (Map.Entry<String, String>) it.next();
-                Toast.makeText(this, set.getKey(), Toast.LENGTH_LONG).show();
-                rsAux = objSql.doItBaby(set.getValue(),null);
-                m=rsAux.getMetaData();
-                //q = "INSERT INTO " + rsQuerys.getString("TablaObjetivo") + " VALUES(";
-                while (rsAux.next()){
-                    q = "INSERT INTO " + set.getKey() + " VALUES(";
-                    for (Integer i=0; i<m.getColumnCount(); i++){
-                        if(i>0){
-                            q = q +",";
-                        }
-                        q = q + "'" + rsAux.getString(i+1) + "'";
-                    }
-                    q = q + ")";
-                    //m.getColumnCount()
-                    //rsQuerys.getString("Valor")
-                    objSqlite.doItBaby(q,null,"INSERT");
-                }
-            }
+      }
             /*
             ResultSet rsAux;
             ResultSetMetaData m;
@@ -471,58 +497,58 @@ public class cls_01000000_Commutador extends AppCompatActivity {
                     }
                 }
             }*/
-        }catch(Exception ex){
-             Funciones.mostrarError(this,ex);
-        }
+    } catch (Exception ex) {
+      Funciones.mostrarError(this, ex);
     }
+  }
 
-    private void actualizarBDLocal() {
-        //DESTRUIR BD LOCAL
-        //CONSTRUIR BD LOCAL
-        if (!objSqlite.existeBDLocal()){
-            objSqlite.destruirBaseSqlite();
+  private void actualizarBDLocal() {
+    //DESTRUIR BD LOCAL
+    //CONSTRUIR BD LOCAL
+    if (!objSqlite.existeBDLocal()) {
+      objSqlite.destruirBaseSqlite();
 //            objSqlite.crearBaseSqlite();
-        }
     }
+  }
 
-    private void eviarDataPendiente() {
-    }
+  private void eviarDataPendiente() {
+  }
 
-    private void actualizarApp() {
-    }
+  private void actualizarApp() {
+  }
 
-    private void finalizarAplicacion() {
+  private void finalizarAplicacion() {
 //        finish();
-        Funciones.notificar(this, "FINnnn.");
-    }
+    Funciones.notificar(this, "FINnnn.");
+  }
 
-    private void procesoCargaOffline1() {
-        try{
-            if(!objSqlite.equipoRegistrado()){
-                finalizarAplicacion();
-            }
-            if(!objSqlite.existenTablas()){
-                finalizarAplicacion();
-            }
-            if(!objSqlite.existeDataLocal()){
-                finalizarAplicacion();
-            }
-            activarModoOffline();
-            cargarQuerys();
-            if(!objSqlite.equipoHabilitado()){
-                finalizarAplicacion();
-            }
-            //objConfLocal.STATUS=Status.OK;
-            Funciones.notificar(this, "Modo OffLine Activado.");
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+  private void procesoCargaOffline1() {
+    try {
+      if (!objSqlite.equipoRegistrado()) {
+        finalizarAplicacion();
+      }
+      if (!objSqlite.existenTablas()) {
+        finalizarAplicacion();
+      }
+      if (!objSqlite.existeDataLocal()) {
+        finalizarAplicacion();
+      }
+      activarModoOffline();
+      cargarQuerys();
+      if (!objSqlite.equipoHabilitado()) {
+        finalizarAplicacion();
+      }
+      //objConfLocal.STATUS=Status.OK;
+      Funciones.notificar(this, "Modo OffLine Activado.");
+    } catch (Exception ex) {
+      Funciones.mostrarError(this, ex);
 //            objConfLocal.set("MENSAJE",ex.getMessage());
-            //objConfLocal.STATUS=Status.ERROR;
-        }
+      //objConfLocal.STATUS=Status.ERROR;
     }
+  }
 
-    private void activarModoOffline() {
-    }
+  private void activarModoOffline() {
+  }
 
 //    private void realizarConfiguracionLocal() {
 //        //AQUI DEBERIAN DESPLEGARSE EL ACTIVITY DE CONFIGURACION BASICA //aparece nombre final de valores de configuraicon
@@ -622,29 +648,29 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //        return "0000000000000";
 //    }
 
-    //PENDIENTE: REALIZAR VALIDACIONES SEGUIDAS, ACTUALMENTE SOLO VALIDA 1 Y LUEGO SE CIERRA
-    private void validarPermisosAndroid() {
-        int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.READ_PHONE_STATE
-        };
-        if (!tienePermisos(this, PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
+  //PENDIENTE: REALIZAR VALIDACIONES SEGUIDAS, ACTUALMENTE SOLO VALIDA 1 Y LUEGO SE CIERRA
+  private void validarPermisosAndroid() {
+    int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+        android.Manifest.permission.READ_PHONE_STATE
+    };
+    if (!tienePermisos(this, PERMISSIONS)) {
+      ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+    }
 //        Toast.makeText(this,"Permisos Ok.", Toast.LENGTH_SHORT).show();
-    }
+  }
 
-    public static boolean tienePermisos(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
+  public static boolean tienePermisos(Context context, String... permissions) {
+    if (context != null && permissions != null) {
+      for (String permission : permissions) {
+        if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+          return false;
         }
-        return true;
+      }
     }
+    return true;
+  }
     /*
     private String obtenerIdUnico() {
         //Hacemos la validación de métodos, ya que el método getDeviceId() ya no se admite para android Oreo en adelante, debemos usar el método getImei()

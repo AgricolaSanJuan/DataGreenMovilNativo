@@ -12,7 +12,6 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -21,7 +20,6 @@ import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -29,6 +27,7 @@ import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.ResultSet;
@@ -269,6 +268,11 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         return true;
       } else if (idControlClickeado == R.id.opc_05000000_reporte) {
         abrirActividadReportes();
+        finish();
+        return true;
+      } else if (idControlClickeado == R.id.opc_05000000_configuraciones) {
+        Intent settingsTransporte = new Intent(this, SettingsTransporte.class);
+        startActivity(settingsTransporte);
         return true;
       }
     } catch (Exception ex) {
@@ -339,7 +343,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
 //                throw new IllegalStateException("Click sin programacion: " + view.getId());
       } else if (idControlClickeado == R.id.c022_fab_NuevoRegistro_v) {
         //s_IdRex = null;
-        Funciones.abrirActividad(this,cls_08010000_Edicion.class,objConfLocal,s_IdRex);
+        Funciones.abrirActividad(this, cls_08010000_Edicion.class, objConfLocal, s_IdRex);
 //        Toast.makeText(this, "Esta accion se movió al boton de la lista.", Toast.LENGTH_LONG).show();
       } else throw new IllegalStateException("Click sin programacion: " + view.getId());
     } catch (Exception ex) {

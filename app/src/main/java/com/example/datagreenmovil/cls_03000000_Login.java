@@ -26,6 +26,7 @@ import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -213,22 +214,9 @@ public class cls_03000000_Login extends AppCompatActivity {
                 }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
                     iniciarSesion(validacion.getString(2),validacion.getString(3));
 
-                    SweetAlertDialog sd = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+                    Swal.success(this,"Correcto", "Bienvenido!",1500);
+                    abrirMenuModulos();
 
-                    sd
-                    .setTitleText("Correcto")
-                    .setContentText("Bienvenido!");
-
-                    sd.show();
-
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            sd.hide();
-                            abrirMenuModulos();
-                        }
-                    }, 1500);
                 }
 //                Funciones.notificar(this, "Error de inicio de sesion.");
             }

@@ -145,11 +145,6 @@
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
-                <TextureView
-                    android:id="@+id/tvLector"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>
