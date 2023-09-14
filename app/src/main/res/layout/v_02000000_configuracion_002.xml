@@ -5,18 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_principal"
-    tools:context=".cls_02000000_Configuracion">
+    tools:context=".cls_02000000_Configuracion"
+    android:id="@+id/configMain">
 
     <LinearLayout
         android:id="@+id/c002_lly_StatusSuperior_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/c002_lly_Cuerpo_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/c000_textView1"
@@ -58,8 +57,9 @@
     <LinearLayout
         android:id="@+id/c002_lly_Cuerpo_v"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="5dp"
+        android:gravity="top"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/c002_lly_StatusInferior_v"
         app:layout_constraintEnd_toEndOf="parent"
@@ -390,8 +390,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c002_lly_Cuerpo_v">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/c000_textView3"

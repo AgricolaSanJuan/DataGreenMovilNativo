@@ -58,7 +58,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
 
   Rex objRex = null;
   ArrayList<String> al_RegistrosSeleccionados = new ArrayList<>();
-  String s_ListarDesde = LocalDate.now().plusDays(-7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+  String s_ListarDesde = LocalDate.now().plusDays(-0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
   String s_ListarHasta = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;
   String s_ListarIdEstado = "PE";
   String s_IdRex = "";
