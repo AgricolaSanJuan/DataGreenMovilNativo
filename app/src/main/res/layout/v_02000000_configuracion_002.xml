@@ -302,15 +302,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10px"
-                        android:layout_marginBottom="10px"
                         android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/c002_btnProbarConexion_v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/vmr"
                             android:onClick="onClick"
@@ -320,7 +318,7 @@
                             android:id="@+id/c002_btnRegistrar_v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/vmr"
                             android:onClick="onClick"
@@ -351,7 +349,7 @@
                                 android:id="@+id/c002_bntSincronizar_v"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
+                                android:layout_marginRight="10dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/vmr"
                                 android:onClick="sincronizar"
@@ -361,7 +359,7 @@
                                 android:id="@+id/c002_btnMas_v"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
+                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/vmr"
                                 android:onClick="onClick"
@@ -376,9 +374,6 @@
                     android:id="@+id/c002_btnGuardar_v"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="10px"
-                    android:layout_marginBottom="10px"
                     android:fontFamily="@font/vmr"
                     android:onClick="onClick"
                     android:text="Guardar" />

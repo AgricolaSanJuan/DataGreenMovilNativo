@@ -132,7 +132,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         }
         objSqlite.close();
         pbSync.post(()-> pbSync.setProgress(15));
-        ctx.deleteDatabase("DataGreenMovil.db");
+        this.deleteDatabase("DataGreenMovil.db");
         objSqlite = new ConexionSqlite(getBaseContext(), objConfLocal);
         objQuerys = new Querys(objSql.obtenerQuerys());
         objSqlite.crearTablas(objQuerys);
@@ -288,17 +288,19 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         }
       } else if (idControlClickeado == R.id.c002_bntSincronizar_v) {
       } else if (idControlClickeado == R.id.c002_btnMas_v) {
-        flagR++;
-        if (flagR == 10) {
-          Funciones.notificar(this, "Estas a punto de borrar la base de datos.");
-        }
-        if (flagR == 20) {
-          objSqlite.close();
-          this.deleteDatabase("DataGreenMovil.db");
-          objSqlite = new ConexionSqlite(this, objConfLocal);
-          flagR = 0;
-          Funciones.notificar(this, "Base de datos borrada correctamente.");
-        }
+//        flagR++;
+//        if (flagR == 10) {
+//          Funciones.notificar(this, "Estas a punto de borrar la base de datos.");
+//        }
+//        if (flagR == 20) {
+//          objSqlite.close();
+//          this.deleteDatabase("DataGreenMovil.db");
+//          objSqlite = new ConexionSqlite(this, objConfLocal);
+//          flagR = 0;
+//          Funciones.notificar(this, "Base de datos borrada correctamente.");
+//        }
+//        objConfLocal.set("ID_DISPOSITIVO","");
+//        objConfLocal.get("ID_DISPOSITIVO");
 
       } else if (idControlClickeado == R.id.c002_btnGuardar_v) {
         objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
@@ -448,7 +450,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
       if (touchCounter == 3) {
         etxHost.setText("192.168.30.99");
         etxInstancia.setText("MSSQLSERVER17");
-        etxNombreBD.setText("dgm_20230817");
+        etxNombreBD.setText("DataGreenMovil");
         etxUsuario.setText("sa");
         etx_Password.setText("A20200211sj");
         touchCounter = 0;
