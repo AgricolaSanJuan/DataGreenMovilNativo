@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="45dp"
+        android:height="45dp"
+        android:drawable="@drawable/rounded_background" />
+
+    <!-- Ajusta el tamaño y la posición del icono según tus necesidades -->
+    <item
+        android:width="35dp"
+        android:height="35dp"
+        android:drawable="@drawable/baseline_lock_reset_24"
+        android:gravity="center" />
+</layer-list>

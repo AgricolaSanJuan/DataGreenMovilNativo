@@ -870,7 +870,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         q = q.replace("@NombreTabla", nombreTabla);
         doItBaby(q, null, "WRITE");
       }
-      ActualizarDataPendiente(objCl, false);
+//      ActualizarDataPendiente(objCl, false);
       if (!nombreTabla.contains("_Detalle")) {
         ActualizarCorrelativos(objCl, nombreTabla, valores.Get("Id"));
       }

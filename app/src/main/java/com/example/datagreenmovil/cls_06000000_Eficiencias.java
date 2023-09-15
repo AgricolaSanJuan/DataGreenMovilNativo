@@ -411,10 +411,10 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             } else if (!validarNroCajas()) {
                 throw new Exception("El limite de cajas se ha superado.");
             }
-            else if (!validarCodigoLibre()) {
-                //Toast.makeText(this,mensajeError,Toast.LENGTH_LONG).show();
-                throw new Exception(mensajeError);
-            }
+//            else if (!validarCodigoLibre()) {
+//                //Toast.makeText(this,mensajeError,Toast.LENGTH_LONG).show();
+//                throw new Exception(mensajeError);
+//            }
             idLaborActual = obtenerLabor();
             if (!validarLaborLibre()) {
                 throw new Exception(mensajeError);
@@ -690,7 +690,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             StackTraceElement z = new Exception().getStackTrace()[0];
             String detalleError = z.getFileName() + "\n" + z.getMethodName() + "\n" + z.getLineNumber() + ": \n" + ex.getMessage();
             ex.printStackTrace();
-            c006_txv_Info.setText(ex.getMessage());
+            c006_txv_Info.setText(detalleError);
 //            Toast.makeText(this,detalleError, Toast.LENGTH_LONG).show();
             return false;
         }

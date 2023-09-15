@@ -4,9 +4,4 @@
 
     <!-- Color de fondo del círculo -->
     <solid android:color="@color/success" />
-
-    <!-- Tamaño del círculo (ajusta el radio según tus necesidades) -->
-    <size
-        android:width="40dp"
-        android:height="40dp" />
 </shape>

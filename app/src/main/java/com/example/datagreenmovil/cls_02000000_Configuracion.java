@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -70,8 +71,11 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
     private GestureDetector gestureDetector;
     private ProgressBar pbSync;
     private int touchCounter;
-
     private Context ctx;
+    private EditText txtPasswordUnlock;
+    public Boolean mostrarBotones = false;
+
+    private LinearLayout lly_main_config_buttons;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -457,6 +461,21 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         return true;
     }
 
+    public void desbloquearConfiguraciones(View view) {
+        if(txtPasswordUnlock.getText().toString() == "114422"){
+            mostrarControles(true);
+        }else{
+            mostrarControles(false);
+        }
+    }
+
+    public void mostrarControles(Boolean mostrar){
+        if(mostrar){
+            lly_main_config_buttons.setVisibility(View.VISIBLE);
+        }else{
+            lly_main_config_buttons.setVisibility(View.INVISIBLE);
+        }
+    }
     // Define la clase GestureListener para manejar el gesto
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
