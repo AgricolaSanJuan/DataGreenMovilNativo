@@ -6,10 +6,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 public class SyncDBService extends JobService {
   @Override
   public boolean onStartJob(JobParameters params) {
+    Log.i("StartJOB","INICIADO");
     // Verificar la conectividad a Internet aquí.
     new InternetCheckTask().execute(params);
     return true;
@@ -41,6 +44,7 @@ public class SyncDBService extends JobService {
     private boolean isConnectedToInternet() {
       ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
       if (connectivityManager != null) {
+        Toast.makeText(SyncDBService.this, "hay internet", Toast.LENGTH_SHORT).show();
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
       }

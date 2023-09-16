@@ -38,6 +38,8 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent dataGreenUpdateService = new Intent(this, DataGreenUpdateService.class);
+        startService(dataGreenUpdateService);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_01000000_conmutador_001);
         validarPermisosAndroid();
@@ -111,9 +113,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             Funciones.mostrarError(this, ex);
             finish();
         }
-
-
-//        objSql = new ConexionBD();
+        //        objSql = new ConexionBD();
 //        objSqlite = new ConexionSqlite(this);
 
 //        objSqlite.SqliteDB= objSqlite.getWritableDatabase();
