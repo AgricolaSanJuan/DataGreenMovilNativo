@@ -38,8 +38,11 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        INICIAMOS EL SERVICIO QUE NOS INDICA SI LA APLICACION TIENE UNA ACTUALIZACIÓN
         Intent dataGreenUpdateService = new Intent(this, DataGreenUpdateService.class);
         startService(dataGreenUpdateService);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_01000000_conmutador_001);
         validarPermisosAndroid();
@@ -655,15 +658,21 @@ public class cls_01000000_Commutador extends AppCompatActivity {
     //PENDIENTE: REALIZAR VALIDACIONES SEGUIDAS, ACTUALMENTE SOLO VALIDA 1 Y LUEGO SE CIERRA
     private void validarPermisosAndroid() {
         int PERMISSION_ALL = 1;
-        int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         String[] PERMISSIONS = {
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.READ_PHONE_STATE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.MANAGE_EXTERNAL_STORAGE
+
         };
         if (!tienePermisos(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_ALL);
+//            ActivityCompat.requestPermissions(this, new String[]{
+//                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    android.Manifest.permission.READ_PHONE_STATE,
+//                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+//                    android.Manifest.permission.MANAGE_EXTERNAL_STORAGE}, PERMISSION_ALL);
         }
 //        Toast.makeText(this,"Permisos Ok.", Toast.LENGTH_SHORT).show();
     }

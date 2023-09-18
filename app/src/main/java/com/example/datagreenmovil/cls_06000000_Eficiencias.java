@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,7 +42,7 @@ import java.util.List;
 public class cls_06000000_Eficiencias extends AppCompatActivity {
     //OBJETOS PRINCIPALES:
     ConexionSqlite objSqlite;
-//    ConexionBD objSql;
+    //    ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
     ConexionBD objSql;
 
@@ -59,14 +60,14 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
 //    HashMap<String, MiData> hmDataParaControles =new HashMap<>();
 //    HashMap<String, Tabla> hmTablas =new HashMap<>();
     String codigoActual="", codSel="", codPes="", codEmp="", idLaborActual="", mensajeError="", idPalletActual="", dataCodigoLeido;
-//    List<String> codigosHoy = new ArrayList<String>();
+    //    List<String> codigosHoy = new ArrayList<String>();
     String idLinea ="";
 //    final MediaPlayer Notificacion = MediaPlayer.create(this, R.raw.notificacion), Alerta = MediaPlayer.create(this, R.raw.alerta);
 
     //CONTROLES ESPECIFICOS
     RecyclerView c006_rvw_Lista;
     FloatingActionButton c006_fab_Atras, c006_fab_CerrarPallet, c006_fab_NuevoPallet, c006_fab_LimpiarInput;
-//    Spinner c006_spi_Estado, c006_spi_Pallet;
+    //    Spinner c006_spi_Estado, c006_spi_Pallet;
     EditText c006_etx_Codigo;
     TextView c006_txv_Fecha_Key, c006_txv_Estado_Key, c006_txv_Pallet_Key, c006_txv_Pallet_Val, c006_txv_Seleccion, c006_txv_Pesado, c006_txv_Empaque, c006_txv_Item, c006_txv_Info;
     LinearLayout c026_lly_Fecha, c006_lly_Estado, c006_lly_Pallet;
@@ -131,7 +132,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             //Toast.makeText(cls_06000000_Eficiencias.super.getBaseContext(), fecha, Toast.LENGTH_SHORT).show();
             //listarTareos(estado,desde,hasta);
         } catch (Exception ex) {
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -238,32 +239,47 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
 //    }
 
     private void setearEditTextCodigo(){
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        c006_etx_Codigo.addTextChangedListener(new TextWatcher() {
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                codigoActual=s.toString();
-                if(codigoActual.length()==10 && procesarCodigo()){
-                        c006_etx_Codigo.setText("");
-                }
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            public void afterTextChanged(Editable s) {
-//                if (s.length() > 0) {
-//                    codigoActual=s.toString();
-//                    if(codigoActual.length()==10 && procesarCodigo()){
-//                        c006_etx_Codigo.setText("");
-//                    }
-//                    char lastCharacter = s.charAt(s.length() - 1);
-//                    if (lastCharacter == '\n') {
-//                        //String barcode = s.subSequence(0, s.length() - 1).toString();
-//                        c006_etx_Codigo.setText("");
-//                        c006_etx_Codigo.requestFocus();
-//                    }
-//                }
+        c006_etx_Codigo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+
+                codigoActual = textView.getText().toString();
+                if(codigoActual.length()==10 && procesarCodigo()){
+                    textView.setText("");
+                    textView.requestFocus();
+                }
+                return true;
             }
         });
+
+
+//        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+//        c006_etx_Codigo.addTextChangedListener(new TextWatcher() {
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                codigoActual=s.toString();
+//                if(codigoActual.length()==10 && procesarCodigo()){
+//                    c006_etx_Codigo.setText("");
+//                }
+//            }
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            public void afterTextChanged(Editable s) {
+////                if (s.length() > 0) {
+////                    codigoActual=s.toString();
+////                    if(codigoActual.length()==10 && procesarCodigo()){
+////                        c006_etx_Codigo.setText("");
+////                    }
+////                    char lastCharacter = s.charAt(s.length() - 1);
+////                    if (lastCharacter == '\n') {
+////                        //String barcode = s.subSequence(0, s.length() - 1).toString();
+////                        c006_etx_Codigo.setText("");
+////                        c006_etx_Codigo.requestFocus();
+////                    }
+////                }
+//            }
+//        });
 //        c006_etx_Codigo.setOnKeyListener(new View.OnKeyListener() {
 //            @Override
 //            public boolean onKey(View view, int i, KeyEvent e) {
@@ -608,7 +624,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
                 return false; //rs.getString(1).toString().equals("SI");
             }
         }catch(Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
         return false;
     }
@@ -640,7 +656,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             }
             return false;
         }catch(Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
             return false;
         }
     }
@@ -713,7 +729,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             }
         }
         catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
         return "0";
     }
@@ -827,7 +843,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
 //                    throw new IllegalStateException("Click sin programacion: " + view.getId());
 //            }
         } catch (Exception ex) {
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -977,7 +993,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
                     return false;
             }
         }catch(Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
             return false;
         }
         return false;
@@ -1023,7 +1039,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             //arl_Pallets = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"),p,"READ"));
             arl_Pallets = objSql.arrayParaXaPopUpBuscarEnLista(objSql.doItBaby("sp_Dgm_Gen_ObtenerPallets",p));
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -1093,7 +1109,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             c006_rvw_Lista.setLayoutManager(new LinearLayoutManager(this));
             //reciclador.setAdapter(miAdaptador);
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -1104,4 +1120,3 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
         startActivity(nuevaActividad);
     }
 }
-

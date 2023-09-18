@@ -92,7 +92,6 @@
                     android:layout_margin="2dp"
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:clickable="true"
-                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center|left"
                     android:onClick="onClick"
@@ -129,7 +128,6 @@
                     android:layout_margin="2dp"
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:clickable="true"
-                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center|left"
                     android:onClick="onClick"
@@ -169,7 +167,6 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/bg_redondeado_gris_transparente"
                 android:clickable="true"
-                android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center|left"
                 android:onClick="onClick"
@@ -245,7 +242,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:clickable="true"
-                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center|left"
                     android:orientation="horizontal">
@@ -265,10 +261,12 @@
                         android:id="@+id/c006_etx_Codigo_v"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:focusable="auto"
                         android:fontFamily="@font/monoespaciada_principal"
                         android:gravity="bottom"
+                        android:imeOptions="actionNone"
                         android:inputType="text"
-                        android:nextFocusForward="@id/c006_fab_LimpiarInput_v"
+                        android:selectAllOnFocus="true"
                         android:textAllCaps="true"
                         android:textColor="@color/blanco" />
                 </LinearLayout>
@@ -390,7 +388,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/c006_rvw_Lista_v"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:focusable="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"

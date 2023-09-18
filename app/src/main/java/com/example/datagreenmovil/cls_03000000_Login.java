@@ -2,8 +2,6 @@ package com.example.datagreenmovil;
 
 import android.app.Application;
 import android.app.Dialog;
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -52,13 +50,11 @@ public class cls_03000000_Login extends AppCompatActivity {
     EditText etx_Usuario;// = (EditText) findViewById(R.id.etx_Usuario_v);
     EditText etx_Password;// = (EditText) findViewById(R.id.etx_Password_v);
     Spinner c003_spi_Empresa;
-    Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.v_03000000_login_003);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -69,6 +65,7 @@ public class cls_03000000_Login extends AppCompatActivity {
         objSqlite = new ConexionSqlite(this,objConfLocal);
 //        objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
         objConfLocal.set("ULTIMA_ACTIVIDAD","Login");
+
         referenciarControles();
         setearControles();
         Funciones.mostrarEstatusGeneral(this.getBaseContext(),
@@ -80,17 +77,11 @@ public class cls_03000000_Login extends AppCompatActivity {
                 txv_PushVersionDataBase,
                 txv_PushIdentificador
         );
-
-
-
         cargarControles();
         //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
         //...
 
-
-        serviceIntent = new Intent(this, DataGreenUpdateService.class);
-        startService(serviceIntent);
     }
 
     //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -169,7 +160,6 @@ public class cls_03000000_Login extends AppCompatActivity {
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...
             else if (idControlClickeado == R.id.c003_btn_Login_v) {
-                stopService(serviceIntent);
                 intentaLogin();
             } else throw new IllegalStateException("Click sin programacion: " + view.getId());
         } catch (Exception ex) {
@@ -185,7 +175,7 @@ public class cls_03000000_Login extends AppCompatActivity {
             Tabla t = new Tabla(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Empresas"),null,"READ"));
             Funciones.cargarSpinner(cls_03000000_Login.this,c003_spi_Empresa,t,0,1);
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -225,10 +215,10 @@ public class cls_03000000_Login extends AppCompatActivity {
                     iniciarSesion(validacion.getString(2),validacion.getString(3));
                     abrirMenuModulos();
                 }
-//                Funciones.notificar(this, "Error de inicio de sesion.");
+                Funciones.notificar(this, "Error de inicio de sesion.");
             }
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -251,7 +241,7 @@ public class cls_03000000_Login extends AppCompatActivity {
             startActivity(intent);
             finish();
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
     public void abrirMenuConfiguracion(View vista){
@@ -262,7 +252,7 @@ public class cls_03000000_Login extends AppCompatActivity {
             startActivity(intent);
             //finish();
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
@@ -283,7 +273,7 @@ public class cls_03000000_Login extends AppCompatActivity {
                 public void onNothingSelected(AdapterView<?> parent) {}
             });
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 }
