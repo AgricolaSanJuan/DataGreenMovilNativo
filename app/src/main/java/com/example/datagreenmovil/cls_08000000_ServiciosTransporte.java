@@ -7,6 +7,7 @@ import android.database.Cursor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -445,7 +446,10 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         if (objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) {
           if (objSql.existeId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id)) {
             String nuevoId = objSql.obtenerNuevoId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), objConfLocal.get("ID_DISPOSITIVO"));
+            SQLiteDatabase sqlite = objSqlite.getReadableDatabase();
+            sqlite.execSQL("pragma foreign_keys=ON;");
             objSqlite.ActualizarId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id, nuevoId); //PROBAR
+            sqlite.execSQL("pragma foreign_keys=OFF;");
             id = nuevoId;
             objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", id); //PROBAR
           }

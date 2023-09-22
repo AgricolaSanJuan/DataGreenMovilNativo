@@ -1040,9 +1040,9 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       //update tabla set id =? where idempresa=? and id=?
       //p.add(f.Item(1));
       if (tabla.equals("trx_Tareos")) {
-        Cursor c = doItBaby(obtQuery("ACTUALIZAR ID trx_Tareos"), p, "WRITE");
+         doItBaby(obtQuery("ACTUALIZAR ID trx_Tareos"), p, "WRITE");
       } else if (tabla.equals("trx_ServiciosTransporte")) {
-        Cursor c = doItBaby(obtQuery("ACTUALIZAR ID trx_ServiciosTransporte"), p, "WRITE");
+        doItBaby(obtQuery("ACTUALIZAR ID trx_ServiciosTransporte"), p, "WRITE");
       }
     } catch (Exception ex) {
       throw ex;
