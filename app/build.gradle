@@ -13,8 +13,8 @@ android {
         applicationId "com.example.datagreenmovil"
         minSdk 23
         targetSdk 32
-        versionCode 2
-        versionName "1.3.4"
+        versionCode 3
+        versionName "1.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

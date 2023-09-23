@@ -240,10 +240,10 @@ public class DataGreenUpdateService extends Service {
                 }
                 // Realizar acciones cuando hay conexión a Internet
                 // Iniciar la tarea para obtener la respuesta de la API
-                Toast.makeText(context, "Conexión a Internet disponible", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Conexión a Internet disponible", Toast.LENGTH_SHORT).show();
             } else {
                 // Realizar acciones cuando no hay conexión a Internet
-                Toast.makeText(context, "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
             }
         }
     }

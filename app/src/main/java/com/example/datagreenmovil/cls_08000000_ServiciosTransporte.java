@@ -447,9 +447,9 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
           if (objSql.existeId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id)) {
             String nuevoId = objSql.obtenerNuevoId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), objConfLocal.get("ID_DISPOSITIVO"));
             SQLiteDatabase sqlite = objSqlite.getReadableDatabase();
-            sqlite.execSQL("pragma foreign_keys=ON;");
+            sqlite.execSQL("PRAGMA FOREIGN_KEYS=1;");
             objSqlite.ActualizarId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id, nuevoId); //PROBAR
-            sqlite.execSQL("pragma foreign_keys=OFF;");
+            sqlite.execSQL("PRAGMA FOREIGN_KEYS=0;");
             id = nuevoId;
             objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", id); //PROBAR
           }
