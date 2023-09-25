@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_r_grismasclaro"
         android:orientation="vertical"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +71,9 @@
             android:id="@+id/c010_lly_CultivoVariedad_v"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,7 +136,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,7 +169,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -195,7 +202,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -267,6 +276,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/monoespaciada_principal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="Observacion..."
             android:textSize="16sp" />
 

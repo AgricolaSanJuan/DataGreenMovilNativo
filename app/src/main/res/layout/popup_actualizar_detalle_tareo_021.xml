@@ -1,259 +1,305 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="15dp">
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bordes_verticales" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/c021_txv_Titulo_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/principal"
+            android:text="Actualizar Detalle De Tareo"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="32dp"
+            tools:layout_conversion_absoluteWidth="352dp" />
 
-            <Space
-                android:layout_width="@dimen/bordes_horizontales"
-                android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/c021_imv_Cerrar_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_close"
+            tools:layout_conversion_absoluteHeight="40dp"
+            tools:layout_conversion_absoluteWidth="40dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="IdTareo: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_Titulo_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_Titulo_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="79dp" />
 
-                    <TextView
-                        android:id="@+id/c021_txv_Titulo_v"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/principal"
-                        android:text="Actualizar Detalle De Tareo"
-                        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/c021_txv_IdTareo_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="00100000001"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textView20"
+            app:layout_constraintTop_toTopOf="@+id/textView20"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="190dp" />
 
-                    <ImageView
-                        android:id="@+id/c021_imv_Cerrar_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/i_close" />
-                </LinearLayout>
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Item: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/c021_txv_Item_v"
+            app:layout_constraintTop_toTopOf="@+id/c021_txv_IdTareo_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="53dp" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/bordes_verticales"
-                    android:layout_weight="1" />
+        <TextView
+            android:id="@+id/c021_txv_Item_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView22"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="69dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="IdTareo: "
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/c021_txv_Dni_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="00000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView20"
+            app:layout_constraintTop_toBottomOf="@+id/textView20"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                    <TextView
-                        android:id="@+id/c021_txv_IdTareo_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="00100000001"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/c021_txv_NombreTrabajador_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Nombre Trabajador"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_Dni_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_Dni_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                    <TextView
-                        android:id="@+id/textView22"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="Item: "
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/c021_txv_Actividad_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Id Actividad - Actividad"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_NombreTrabajador_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_NombreTrabajador_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                    <TextView
-                        android:id="@+id/c021_txv_Item_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="1"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/c021_txv_Labor_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Id Labor - Labor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_Actividad_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_Actividad_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                </LinearLayout>
+        <TextView
+            android:id="@+id/c021_txv_Consumidor_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Id Consumidor - Consumidor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_Labor_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_Labor_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/bordes_verticales" />
 
-                <TextView
-                    android:id="@+id/c021_txv_Dni_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="00000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/c021_txv_Mensaje_v"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Horas: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_Consumidor_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_Consumidor_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="66dp" />
 
-                <TextView
-                    android:id="@+id/c021_txv_NombreTrabajador_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Nombre Trabajador"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/c021_txv_Actividad_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Id Actividad - Actividad"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+        <EditText
+            android:id="@+id/c021_etx_Horas_v"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:background="@drawable/bg_r_grismasclaro"
+            android:fontFamily="@font/monoespaciada_principal"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/c021_txv_Mensaje_v"
+            app:layout_constraintEnd_toEndOf="@+id/textView22"
+            app:layout_constraintStart_toEndOf="@+id/c021_txv_Mensaje_v"
+            app:layout_constraintTop_toTopOf="@+id/c021_txv_Mensaje_v"
+            tools:layout_conversion_absoluteHeight="40dp"
+            tools:layout_conversion_absoluteWidth="131dp" />
 
-                <TextView
-                    android:id="@+id/c021_txv_Labor_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Id Labor - Labor"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Rdtos: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/c021_txv_Mensaje_v"
+            app:layout_constraintTop_toBottomOf="@+id/c021_txv_Mensaje_v"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="64dp" />
 
-                <TextView
-                    android:id="@+id/c021_txv_Consumidor_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Id Consumidor - Consumidor"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+        <EditText
+            android:id="@+id/c021_etx_Rdtos_v"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:background="@drawable/bg_r_grismasclaro"
+            android:fontFamily="@font/monoespaciada_principal"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView26"
+            app:layout_constraintEnd_toEndOf="@+id/textView22"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/textView26"
+            app:layout_constraintTop_toTopOf="@+id/textView26"
+            tools:layout_conversion_absoluteHeight="40dp"
+            tools:layout_conversion_absoluteWidth="131dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Observacion:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView26"
+            app:layout_constraintTop_toBottomOf="@+id/textView26"
+            tools:layout_conversion_absoluteHeight="25dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                    <TextView
-                        android:id="@+id/c021_txv_Mensaje_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="Horas: "
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/c021_etx_Horas_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_r_grismasclaro"
-                        android:ems="10"
-                        android:fontFamily="@font/monoespaciada_principal"
-                        android:inputType="numberDecimal"
-                        android:textSize="20sp" />
+        <EditText
+            android:id="@+id/c021_etx_Observacion_v"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_r_grismasclaro"
+            android:ems="10"
+            android:fontFamily="@font/auxiliar_02"
+            android:gravity="start|top"
+            android:hint="Escribe algo..."
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:maxLines="3"
+            android:minLines="3"
+            android:padding="7dp"
+            android:textColorHint="@color/grisAux"
+            app:layout_constraintEnd_toStartOf="@+id/c021_txv_Item_v"
+            app:layout_constraintStart_toStartOf="@+id/textView27"
+            app:layout_constraintTop_toBottomOf="@+id/textView27"
+            tools:layout_conversion_absoluteHeight="78dp"
+            tools:layout_conversion_absoluteWidth="392dp" />
 
-                    <TextView
-                        android:id="@+id/textView26"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="Rdtos: "
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c021_fab_Ok_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/c021_etx_Observacion_v"
+            app:srcCompat="@drawable/i_done"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="56dp" />
 
-                    <EditText
-                        android:id="@+id/c021_etx_Rdtos_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_r_grismasclaro"
-                        android:ems="10"
-                        android:fontFamily="@font/monoespaciada_principal"
-                        android:inputType="numberDecimal"
-                        android:textSize="20sp" />
 
-                </LinearLayout>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="10dp"
+            tools:layout_editor_absoluteX="402dp"
+            tools:layout_editor_absoluteY="0dp" />
 
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Observacion:"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/c021_etx_Observacion_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_r_grismasclaro"
-                    android:ems="10"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="start|top"
-                    android:hint="Escribe algo..."
-                    android:inputType="textMultiLine"
-                    android:lines="3"
-                    android:maxLines="3"
-                    android:minLines="3"
-                    android:padding="7dp"
-                    android:textColorHint="@color/grisAux" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_conversion_absoluteHeight="10dp"
+            tools:layout_conversion_absoluteWidth="411dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="407dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/c021_fab_Ok_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        app:srcCompat="@drawable/i_done" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="@dimen/bordes_horizontales"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bordes_verticales" />
-
-    </LinearLayout>
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
