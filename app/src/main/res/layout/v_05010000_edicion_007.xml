@@ -66,14 +66,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c007_lly_StatusSuperior_v">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:clickable="true"
-            android:onClick="onClick"
-            app:srcCompat="@drawable/i_crop" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/c007_fab_Sincronizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="onClick"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foregroundGravity="fill"
+                android:onClick="onClick"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/c007_fab_Sincronizar"
+                app:srcCompat="@drawable/i_crop" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:id="@+id/c007_lly_Cabecera_v"
             android:layout_width="match_parent"

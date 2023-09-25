@@ -22,6 +22,8 @@ import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 
+import org.json.JSONArray;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -1178,6 +1180,15 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     } catch (Exception ex) {
       throw ex;
     }
+  }
+
+  public void syncData(Context ctx, List<String> lista1, JSONArray jsonArray){
+    SQLiteDatabase SqliteDB;
+
+    SqliteDB = getReadableDatabase();
+
+    Cursor c = SqliteDB.rawQuery("select * from mst_usuarios;", null);
+
   }
 
   public void insertInto(Context ctx, HashMap<String, String> paramsBus, String tableName) {

@@ -7,10 +7,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +31,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,7 +54,13 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 //import com.example.datagreenmovil.Logica.InterfazDialog;
 
 
@@ -498,7 +512,58 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 //                    //lloObservaciones.setVisibility(View.GONE);
 //                    lloObservaciones.setLayoutParams(new LinearLayout.LayoutParams(llyFechaTurno.getWidth(), 250));
 //                }
-            } else if (idControlClickeado == R.id.c007_fab_volver_v) {
+            } else if (idControlClickeado == R.id.c007_fab_Sincronizar){
+
+//                OPENSQL CONNECTION
+                String StringConnection = "jdbc:jtds:sqlserver://" + objConfLocal.get("RED_HOST") +";instance="+ objConfLocal.get("RED_INSTANCIA") + ";databaseName="+ objConfLocal.get("RED_NOMBRE_DB") +";user="+ objConfLocal.get("RED_USUARIO") +";password="+ objConfLocal.get("RED_PASSWORD") +";";
+                Connection connection = DriverManager.getConnection(StringConnection);
+
+                String query = "select * from mst_Vehiculos WHERE Id='A5J-960'";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+
+//                OPEN SQLITE CONNECTION
+
+
+
+//                sqLiteDatabase.execSQL("select * from mst_usuarios;");
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                List<String> columns = new ArrayList<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    columns.add(columnName);
+                }
+
+
+//                resultSet.getMetaData();
+
+                //POR AQUI NOS QUEDAMOS
+                JSONArray jsonArray = new JSONArray();
+                while (resultSet.next()) {
+                    JSONObject jsonObject = new JSONObject();
+                    for (String col:columns
+                         ) {
+                        jsonObject.put(col, resultSet.getString(col));
+                    }
+                    jsonArray.put(jsonObject);
+                }
+
+
+
+                ConexionSqlite sqliteConn = new ConexionSqlite(this, objConfLocal);
+                sqliteConn.syncData(this, columns, jsonArray);
+
+                Log.i("RESPONSE",columns.toString());
+
+
+                // Cierra la conexión
+                resultSet.close();
+                statement.close();
+                connection.close();
+
+            }else if (idControlClickeado == R.id.c007_fab_volver_v) {
                 finish();
             } /*else if (idControlClickeado == R.id.controlTest) {
                 PopUpCalendario d = new PopUpCalendario(this, controlTest);
