@@ -146,7 +146,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
                 objQuerys = new Querys(objSql.obtenerQuerys());
                 objSqlite.crearTablas(objQuerys);
                 pbSync.post(() -> pbSync.setProgress(30));
-                descargarData();
+//                descargarData();
                 pbSync.post(() -> pbSync.setProgress(90));
                 if (objSqlite.existeConfiguracionLocal() && c.getString(0).equals("1")) {
                     runOnUiThread(() -> Funciones.notificar(getBaseContext(), "Existe data pendiente de transferir. Imposible sincronizar."));

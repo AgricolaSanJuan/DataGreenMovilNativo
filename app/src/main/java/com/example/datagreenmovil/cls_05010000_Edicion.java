@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -55,6 +56,7 @@ import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
+import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -514,55 +516,47 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 //                }
             } else if (idControlClickeado == R.id.c007_fab_Sincronizar){
 
-//                OPENSQL CONNECTION
-                String StringConnection = "jdbc:jtds:sqlserver://" + objConfLocal.get("RED_HOST") +";instance="+ objConfLocal.get("RED_INSTANCIA") + ";databaseName="+ objConfLocal.get("RED_NOMBRE_DB") +";user="+ objConfLocal.get("RED_USUARIO") +";password="+ objConfLocal.get("RED_PASSWORD") +";";
-                Connection connection = DriverManager.getConnection(StringConnection);
+                SyncDBSQLToSQLite sqlitesync = new SyncDBSQLToSQLite();
 
-                String query = "select * from mst_Vehiculos WHERE Id='A5J-960'";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-
-//                OPEN SQLITE CONNECTION
-
-
-
-//                sqLiteDatabase.execSQL("select * from mst_usuarios;");
-                ResultSetMetaData metaData = resultSet.getMetaData();
-                int columnCount = metaData.getColumnCount();
-
-                List<String> columns = new ArrayList<>();
-                for (int i = 1; i <= columnCount; i++) {
-                    String columnName = metaData.getColumnName(i);
-                    columns.add(columnName);
+//                SINCRONIZAMOS VEHICULOS
+                try {
+                    sqlitesync.sincronizar(this, objConfLocal, "mst_conductores", "mst_conductores");
+                    Log.i("SINCRONIZACION: ","VEHICULOS SINCRONIZADOS");
+                }catch (Exception e){
+                    throw e;
                 }
 
-
-//                resultSet.getMetaData();
-
-                //POR AQUI NOS QUEDAMOS
-                JSONArray jsonArray = new JSONArray();
-                while (resultSet.next()) {
-                    JSONObject jsonObject = new JSONObject();
-                    for (String col:columns
-                         ) {
-                        jsonObject.put(col, resultSet.getString(col));
-                    }
-                    jsonArray.put(jsonObject);
+//                SINCRONIZAMOS CONDUCTORES
+                try {
+                    sqlitesync.sincronizar(this, objConfLocal, "mst_Vehiculos", "mst_vehiculos");
+                    Log.i("SINCRONIZACION: ","CONDUCTORES SINCRONIZADOS");
+                }catch (Exception e){
+                    throw e;
                 }
 
+//                SINCRONIZAMOS PERSONAS
+                try {
+                    sqlitesync.sincronizar(this, objConfLocal, "mst_personas", "mst_personas");
+                    Log.i("SINCRONIZACION: ","PERSONAS SINCRONIZADOS");
+                }catch (Exception e){
+                    throw e;
+                }
 
+//                SINCRONIZAMOS USUARIOS
+                try {
+                    sqlitesync.sincronizar(this, objConfLocal, "mst_usuarios", "mst_usuarios");
+                    Log.i("SINCRONIZACION: ","USUARIOS SINCRONIZADOS");
+                }catch (Exception e){
+                    throw e;
+                }
 
-                ConexionSqlite sqliteConn = new ConexionSqlite(this, objConfLocal);
-                sqliteConn.syncData(this, columns, jsonArray);
-
-                Log.i("RESPONSE",columns.toString());
-
-
-                // Cierra la conexión
-                resultSet.close();
-                statement.close();
-                connection.close();
-
+//                SINCRONIZAMOS CONSUMIDORES
+                try {
+                    sqlitesync.sincronizar(this, objConfLocal, "mst_consumidores", "mst_consumidores");
+                    Log.i("SINCRONIZACION: ","CONSUMIDORES SINCRONIZADOS");
+                }catch (Exception e){
+                    throw e;
+                }
             }else if (idControlClickeado == R.id.c007_fab_volver_v) {
                 finish();
             } /*else if (idControlClickeado == R.id.controlTest) {

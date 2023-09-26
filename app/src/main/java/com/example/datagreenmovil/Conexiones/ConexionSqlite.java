@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,8 +22,10 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -136,6 +139,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     } catch (Exception ex) {
       throw ex;
 //            return null;
+    }finally{
     }
   }
 
@@ -1182,12 +1186,15 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     }
   }
 
-  public void syncData(Context ctx, List<String> lista1, JSONArray jsonArray){
+  public void syncData(Context ctx, List<String> listaColumnas, List<String> listaRegistros, String tableName) {
     SQLiteDatabase SqliteDB;
-
-    SqliteDB = getReadableDatabase();
-
-    Cursor c = SqliteDB.rawQuery("select * from mst_usuarios;", null);
+    SqliteDB = getWritableDatabase();
+    try{
+      for (int i = 0; i < listaRegistros.size(); i ++){
+      SqliteDB.execSQL("INSERT OR IGNORE INTO "+tableName+" VALUES ("+listaRegistros.get(i)+");");
+      }
+    }catch (SQLiteException e){
+    }
 
   }
 
