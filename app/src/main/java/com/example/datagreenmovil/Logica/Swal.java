@@ -18,7 +18,7 @@ public class Swal {
       public void run() {
         sd.hide();
       }
-    }, (long) delay);
+    }, delay.longValue());
   }
 
   public static void success(Context ctx, String title, String body, Number delay) {
@@ -33,7 +33,7 @@ public class Swal {
       public void run() {
         sd.hide();
       }
-    }, (long) delay);
+    }, delay.longValue());
   }
 
   public static void info(Context ctx, String title, String body, Number delay) {
@@ -48,7 +48,7 @@ public class Swal {
       public void run() {
         sd.hide();
       }
-    }, (long) delay);
+    }, delay.longValue());
   }
 
   public static void warning(Context ctx, String title, String body, Number delay) {
@@ -63,6 +63,6 @@ public class Swal {
       public void run() {
         sd.hide();
       }
-    }, (long) delay);
+    }, delay.longValue());
   }
 }

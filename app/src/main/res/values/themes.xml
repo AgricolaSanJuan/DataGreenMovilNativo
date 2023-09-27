@@ -36,4 +36,13 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+
+    <style name="Theme.DataGreenMovil.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.DataGreenMovil.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DataGreenMovil.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

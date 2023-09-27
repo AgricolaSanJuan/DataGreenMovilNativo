@@ -383,7 +383,8 @@ public class Funciones {
   private static String obtenerImei(Activity act) {
     try {
 //            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 100);
+//                ActivityCompat.requestPermissions
+//                (this, new String[]{Manifest.permission.READ_PHONE_STATE}, 100);
 //            }
       TelephonyManager telephonyManager = (TelephonyManager) act.getSystemService(Context.TELEPHONY_SERVICE);
       String r = telephonyManager.getDeviceId();
