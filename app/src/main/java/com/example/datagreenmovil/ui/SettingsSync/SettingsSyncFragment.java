@@ -23,9 +23,6 @@ public class SettingsSyncFragment extends Fragment {
 
         binding = FragmentSettingsSyncBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textSlideshow;
-        settingsLocalViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

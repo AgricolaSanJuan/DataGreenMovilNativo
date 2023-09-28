@@ -1,22 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SettingsSync.SettingsSyncFragment">
 
-    <TextView
-        android:id="@+id/text_slideshow"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp">
+
+        <Switch
+            android:id="@+id/todasTablas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="20dp"
+            android:text="Todas las tablas"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:text="General"
+            android:textAlignment="textEnd"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/todasTablas"
+            app:layout_constraintTop_toBottomOf="@+id/todasTablas" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupGeneral"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:chipSpacingHorizontal="20dp"
+            app:chipSpacingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/textView37"
+            app:singleSelection="false">
+
+            <Switch
+                android:id="@+id/switchEmpresasVsModulos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Empresas vs Modulos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchDispositivosMoviles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dispositivos Moviles"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchEmpresas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Empresas"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchEstados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estados"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchOpcionesConfiguracion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Opciones de configuracion"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchQuerysSqlite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Querys SQLite"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchTablas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tablas"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchUsuarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Usuarios"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchCorrelativos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Correlativos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personas"
+                android:textSize="18dp" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Tareos"
+            android:textAlignment="textEnd"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/chipGroupGeneral"
+            app:layout_constraintStart_toStartOf="@+id/chipGroupGeneral"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroupGeneral" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupTareos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:chipSpacingHorizontal="20dp"
+            app:chipSpacingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/textView39"
+            app:singleSelection="false">
+
+            <Switch
+                android:id="@+id/switchLabores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="Labores"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchModulos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Modulos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchConsumidores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Consumidores"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchCultivos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cultivos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchDias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dias"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchVariedades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Variedades"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchTurnos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Turnos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchActividades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Actividades"
+                android:textSize="18dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Transportes"
+            android:textAlignment="textEnd"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/chipGroupTareos"
+            app:layout_constraintStart_toStartOf="@+id/chipGroupTareos"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroupTareos" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:chipSpacingHorizontal="20dp"
+            app:chipSpacingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/textView40"
+            app:singleSelection="false">
+
+            <Switch
+                android:id="@+id/switchVehiculos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="Vehiculos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchConductores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conductores"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchRutas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rutas"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchProveedores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Proveedores"
+                android:textSize="18dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

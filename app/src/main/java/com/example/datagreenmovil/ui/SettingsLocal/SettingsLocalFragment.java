@@ -44,6 +44,7 @@ import com.example.datagreenmovil.databinding.FragmentSettingsLocalBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -59,6 +60,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     ProgressBar pbSync;
     Button btnProbarConexion, btnGenerarBD, btnGuardar;
     Integer touchCounter = 0;
+    Bundle args;
     private GestureDetector gestureDetector;
     private FragmentSettingsLocalBinding binding;
     public Context ctx;
@@ -101,6 +103,12 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         txv_PushRed = binding.c002TxvPushRedV;
         txv_NombreApp = binding.c002TxvNombreAppV;
 
+        if (getActivity().getIntent().getExtras() != null) {
+            objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
+            Toast.makeText(ctx, "POR FIN!", Toast.LENGTH_SHORT).show();
+        }
+
+        Log.i("LOCAL", objConfLocal.get("RED_HOST"));
         Funciones.mostrarEstatusGeneral(root.getContext(),
                 objConfLocal,
                 txv_PushTituloVentana,
@@ -322,56 +330,69 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
         executor.execute(() -> {
             try {
+
+                clAux = new ConfiguracionLocal();
+                objConfLocal = clAux;
+                objSql = new ConexionBD(objConfLocal);
                 pbSync.post(() -> pbSync.setVisibility(View.VISIBLE));  // Mostrar ProgressBar en el hilo principal
 
                 actualizarValoresConfiguracionAuxiliar(ctx);
-                Boolean resultConexion = probarNuevaConexion();
 
                 pbSync.post(() -> pbSync.setProgress(5));
-                Cursor c = null;
-
-                if (objSqlite.existeConfiguracionLocal() && c.getString(0).equals("1")) {
-                    c = objSqlite.doItBaby(objSqlite.obtQuery("EXISTE DATA PENDIENTE"), null, "READ");
-                    c.moveToFirst();
-                }
-                objSqlite.close();
+//                Cursor c;
+//                c = objSqlite.doItBaby(objSqlite.obtQuery("EXISTE DATA PENDIENTE"), null, "READ");
+//                c.moveToFirst();
+//                if (objSqlite.existeConfiguracionLocal() && c.getString(0).equals("1")) {
+//                    Funciones.notificar(ctx,"Existe data pendiente de transferir. Imposible sincronizar.");
+//                }else{
+//                objSqlite.close();
+//                }
                 pbSync.post(() -> pbSync.setProgress(15));
-//                ctx.deleteDatabase("DataGreenMovil.db");
+                ctx.deleteDatabase("DataGreenMovil.db");
                 objSqlite = new ConexionSqlite(ctx, objConfLocal);
                 objQuerys = new Querys(objSql.obtenerQuerys());
                 objSqlite.crearTablas(objQuerys);
 
+                probarNuevaConexion();
+
+                SyncDBSQLToSQLite syncDBSQLToSQLite = new SyncDBSQLToSQLite();
+                syncDBSQLToSQLite.sincronizar(ctx, objConfLocal, "mst_QuerysSqlite", "mst_QuerysSqlite");
+                syncDBSQLToSQLite.sincronizar(ctx, objConfLocal, "mst_OpcionesConfiguracion", "mst_OpcionesConfiguracion");
+                syncDBSQLToSQLite.sincronizar(ctx, objConfLocal, "trx_ConfiguracionesDispositivosMoviles", "trx_ConfiguracionesDispositivosMoviles");
+
+
                 pbSync.post(() -> pbSync.setProgress(30));
 //                descargarData();
                 pbSync.post(() -> pbSync.setProgress(90));
-                if (objSqlite.existeConfiguracionLocal() && c.getString(0).equals("1")) {
-                    getActivity().runOnUiThread(() -> Funciones.notificar(ctx, "Existe data pendiente de transferir. Imposible sincronizar."));
-                } else {
-                    if (clAux.get("RED_CONFIGURADA").equals("TRUE")) {
+                if (clAux.get("RED_CONFIGURADA").equals("TRUE")) {
+                    try {
                         if (registrarDispositivo()) {
+                            getActivity().runOnUiThread(()->{
+                                Toast.makeText(ctx, "RED FINA", Toast.LENGTH_SHORT).show();
+                            });
                             objConfLocal = clAux;
-                            objSql = cnAux;
-                            getActivity().runOnUiThread(() -> Funciones.mostrarEstatusGeneral(ctx,
-                                    objConfLocal,
-                                    txv_PushTituloVentana,
-                                    txv_PushRed,
-                                    txv_NombreApp,
-                                    txv_PushVersionApp,
-                                    txv_PushVersionDataBase,
-                                    txv_PushIdentificador
-                            ));
-                            mostrarValoresDocumentoActual();
+                                objSql = cnAux;
+                                getActivity().runOnUiThread(() -> Funciones.mostrarEstatusGeneral(ctx,
+                                        objConfLocal,
+                                        txv_PushTituloVentana,
+                                        txv_PushRed,
+                                        txv_NombreApp,
+                                        txv_PushVersionApp,
+                                        txv_PushVersionDataBase,
+                                        txv_PushIdentificador
+                                ));
+                                Toast.makeText(ctx, "REGISTRADO", Toast.LENGTH_SHORT).show();
+                                mostrarValoresDocumentoActual();
+                            }
+                        }catch (Exception e){
+                            Toast.makeText(ctx, e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                }
                 pbSync.post(() -> pbSync.setProgress(90));
-
-
 
                 pbSync.post(() -> pbSync.setProgress(100));
             } catch (Exception e) {
-                getActivity().runOnUiThread(() -> Funciones.notificar(ctx, e.getMessage()));
-                pbSync.post(() -> pbSync.setProgress(100));
+                Log.d("ERROR", e.toString());
             } finally {
                 pbSync.post(() -> pbSync.setProgress(0));
                 pbSync.post(() -> pbSync.setVisibility(View.INVISIBLE));

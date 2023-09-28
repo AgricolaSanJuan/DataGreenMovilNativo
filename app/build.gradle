@@ -63,6 +63,7 @@ dependencies {
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.5.2'
@@ -72,6 +73,9 @@ dependencies {
 
 //    JSON PERMISSIONS
     implementation 'org.json:json:20230618'
+
+    implementation 'com.google.code.gson:gson:2.8.8'
+
 
 //    SWEET ALERT
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'

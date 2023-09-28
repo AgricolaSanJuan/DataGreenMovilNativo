@@ -29,15 +29,9 @@
         tools:replace="android:appComponentFactory">
         <activity
             android:name=".SettingsActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.DataGreenMovil.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.DataGreenMovil.NoActionBar"/>
 
         <service
             android:name=".DataGreenUpdateService"
@@ -124,6 +118,11 @@
         <activity
             android:name=".cls_01000000_Commutador"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

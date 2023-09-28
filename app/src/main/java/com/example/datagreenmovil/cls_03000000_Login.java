@@ -247,7 +247,7 @@ public class cls_03000000_Login extends AppCompatActivity {
     public void abrirMenuConfiguracion(View vista){
         try{
 //            objSqlite.guardarConfiguracionLocal(objConfLocal);
-            Intent intent = new Intent(this, cls_02000000_Configuracion.class );
+            Intent intent = new Intent(this, SettingsActivity.class );
             intent.putExtra("ConfiguracionLocal",objConfLocal);
             startActivity(intent);
             //finish();
@@ -256,6 +256,9 @@ public class cls_03000000_Login extends AppCompatActivity {
         }
     }
 
+
+
+//
 
     private void setearSpinnerEmpresas() {
         try{

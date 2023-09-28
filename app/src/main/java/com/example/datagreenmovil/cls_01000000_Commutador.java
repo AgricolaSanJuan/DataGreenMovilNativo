@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import java.sql.ResultSetMetaData;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import android.content.SharedPreferences;
+import com.google.gson.Gson;
 
 public class cls_01000000_Commutador extends AppCompatActivity {
     ConexionSqlite objSqlite; //= new ConexionSqlite(this, null);
@@ -76,7 +79,6 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
 
             if (check()) {
-
                 Intent i;
                 i = new Intent(this, cls_03000000_Login.class);
 //                i=new Intent(this, cls_00000000_Plantilla_Base.class);
@@ -237,7 +239,14 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
     private void abrirConfiguraciones() {
         try {
-            Intent intent = new Intent(this, cls_02000000_Configuracion.class);
+
+            SharedPreferences.Editor editor = getSharedPreferences("MiPreferencia", MODE_PRIVATE).edit();
+            Gson gson = new Gson();
+            String objConfLocalJson = gson.toJson(objConfLocal);
+            editor.putString ("objConfLocal", objConfLocalJson);
+            editor.apply();
+
+            Intent intent = new Intent(this, SettingsActivity.class);
 //            objSqlite.guardarConfiguracionLocal(objConfLocal);
             intent.putExtra("ConfiguracionLocal", objConfLocal);
             //intent.putExtra("Conexion",objSql);

@@ -5,9 +5,12 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
+import com.example.datagreenmovil.ui.SettingsLocal.SettingsLocalFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -29,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarSettings.toolbar);
+                setSupportActionBar(binding.appBarSettings.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
