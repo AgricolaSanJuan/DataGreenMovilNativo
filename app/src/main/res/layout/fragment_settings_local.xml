@@ -310,15 +310,18 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
+                            android:backgroundTint="@color/verde"
                             android:fontFamily="@font/vmr"
                             android:onClick="abrirMenuConfiguracion"
                             android:text="Probar" />
+
                         <Button
                             android:id="@+id/c002_btnGenerarDB_v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"
+                            android:backgroundTint="@color/verde"
                             android:fontFamily="@font/vmr"
                             android:onClick="sincronizarBD"
                             android:text="GENERAR DB" />
@@ -362,6 +365,7 @@
                     android:id="@+id/c002_btnGuardar_v"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/verde"
                     android:fontFamily="@font/vmr"
                     android:onClick="onClick"
                     android:text="Guardar" />

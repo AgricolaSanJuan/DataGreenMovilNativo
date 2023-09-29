@@ -36,6 +36,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
@@ -105,7 +108,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
         if (getActivity().getIntent().getExtras() != null) {
             objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
-            Toast.makeText(ctx, "POR FIN!", Toast.LENGTH_SHORT).show();
         }
 
         Log.i("LOCAL", objConfLocal.get("RED_HOST"));
@@ -139,11 +141,12 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
                     objSqlite.guardarConfiguracionLocal(objConfLocal);
+                    NavController navController = Navigation.findNavController(requireView());
+                    navController.navigate(R.id.nav_settings_sync);
+                    Swal.info(ctx, "Vamos allá!", "Ahora debes sincronizar la información.",5000);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-
-                Funciones.notificar(ctx, "Configuracion guardada correctamente.");
             }
         });
 
@@ -367,9 +370,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 if (clAux.get("RED_CONFIGURADA").equals("TRUE")) {
                     try {
                         if (registrarDispositivo()) {
-                            getActivity().runOnUiThread(()->{
-                                Toast.makeText(ctx, "RED FINA", Toast.LENGTH_SHORT).show();
-                            });
                             objConfLocal = clAux;
                                 objSql = cnAux;
                                 getActivity().runOnUiThread(() -> Funciones.mostrarEstatusGeneral(ctx,

@@ -22,7 +22,8 @@ public class SyncDBSQLToSQLite {
     public String sincronizar(Context ctx, ConfiguracionLocal objConfLocal, String tableName, String tableOriginName) throws SQLException {
 
         //                OPENSQL CONNECTION
-        String StringConnection = "jdbc:jtds:sqlserver://" + objConfLocal.get("RED_HOST") +";instance="+ objConfLocal.get("RED_INSTANCIA") + ";databaseName="+ objConfLocal.get("RED_NOMBRE_DB") +";user="+ objConfLocal.get("RED_USUARIO") +";password="+ objConfLocal.get("RED_PASSWORD") +";";
+
+        String StringConnection = "jdbc:jtds:sqlserver://192.168.30.99;instance=MSSQLSERVER17;databaseName=DataGreenMovil;user=sa;password=A20200211sj;";
         Connection connection = DriverManager.getConnection(StringConnection);
 
         String query = "select * from "+tableOriginName+"";

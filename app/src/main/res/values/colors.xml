@@ -9,22 +9,22 @@
 
     <color name="redError">#ED0000</color>
 
-    <color name="verde">#FF00AF90</color>
-    <color name="gris">#FF7A7A7A</color>
-    <color name="verdeOscuro">#FF005540</color>
-    <color name="azulOscuro">#FF004055</color>
-    <color name="grisOscuro">#FF3D3D3D</color>
-    <color name="verdeClaro">#FF8CFFBB</color>
-    <color name="azulClaro">#FF8CBBFF</color>
-    <color name="grisClaro">#FFADADAD</color>
-    <color name="alerta">#FFEE3366</color>
+    <color name="verde">#00AF90</color>
+    <color name="gris">#7A7A7A</color>
+    <color name="verdeOscuro">#005540</color>
+    <color name="azulOscuro">#004055</color>
+    <color name="grisOscuro">#3D3D3D</color>
+    <color name="verdeClaro">#8CFFBB</color>
+    <color name="azulClaro">#8CBBFF</color>
+    <color name="grisClaro">#ADADAD</color>
+    <color name="alerta">#EE3366</color>
 <!--    <color name="alertaSuave">#FFF6A2B8</color>-->
-    <color name="alertaSuave">#ffF9C8D6</color>
+    <color name="alertaSuave">#F9C8D6</color>
     <!--GRIStRANSPARENTE #99DDDDDD-->
-    <color name="grisAux">#FFA3A3A3</color>
+    <color name="grisAux">#A3A3A3</color>
     <!-- <color name="claro">#FFDCFAFA</color>-->
-    <color name="blanco">#FFFFFFFF</color>
-    <color name="grisMasClaro">#FFDDDDDD</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="grisMasClaro">#DDDDDD</color>
 
 
 </resources>

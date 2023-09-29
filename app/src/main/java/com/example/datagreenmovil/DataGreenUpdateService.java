@@ -219,7 +219,6 @@ public class DataGreenUpdateService extends Service {
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);
         }
-        Toast.makeText(this, "CANCELADO", Toast.LENGTH_SHORT).show();
     }
 
     private class NetworkChangeReceiver extends BroadcastReceiver {

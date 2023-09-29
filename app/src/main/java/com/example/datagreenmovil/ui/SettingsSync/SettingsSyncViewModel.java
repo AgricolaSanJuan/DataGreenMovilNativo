@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SettingsLocalViewModel extends ViewModel {
+public class SettingsSyncViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SettingsLocalViewModel() {
+    public SettingsSyncViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is SettingsSync fragment");
     }
