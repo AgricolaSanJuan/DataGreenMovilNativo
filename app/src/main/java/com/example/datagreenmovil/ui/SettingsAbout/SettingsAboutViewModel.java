@@ -1,4 +1,4 @@
-package com.example.datagreenmovil.ui.Settings;
+package com.example.datagreenmovil.ui.SettingsAbout;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -2,6 +2,7 @@ package com.example.datagreenmovil.Conexiones;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -49,6 +50,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
 
   //    public SQLiteDatabase SqliteDB;
   private static final int DATABASE_VERSION = 1;
+  SharedPreferences sharedPreferences;
   private static final String DATABASE_NOMBRE = "DataGreenMovil.db"; //="Prueba.db";
   //private static  final String DATABASE_TABLA="Tareos";
   private static ConfiguracionLocal objConfLocal;
@@ -59,6 +61,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     //objConfLocal = new ConfiguracionLocal();
     //        SqliteDB =;
     objConfLocal = cl;
+    sharedPreferences = context.getSharedPreferences("objConfLocal", context.MODE_PRIVATE);
   }
 
 
@@ -221,7 +224,10 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
   public Cursor obtenerModulos() throws Exception {
     Cursor r;
     List<String> p = new ArrayList<String>();
-    p.add(objConfLocal.get("ID_EMPRESA"));
+//    SE DEJO DE USAR objConfLocal Y SE EMPEZO A USAR SHARED PREFERENCES
+//    p.add(objConfLocal.get("ID_EMPRESA"));
+    p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+    //SHARED PREFERENCES
     r = doItBaby(obtQuery("OBTENER MODULOS X EMPRESA"), p, "READ");
     return r;
   }
@@ -279,7 +285,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       //021 -> EQUIPO_CONFIGURADO;
       //String q = "SELECT Valor FROM trx_ConfiguracionesDispositivosMoviles WHERE IdEmpresa='" + objConfLocal.get("ID_EMPRESA") + "' AND MacDIspositivoMovil='" + objConfLocal.get("MAC") + "' AND ImeiDIspositivoMovil='" + objConfLocal.get("IMEI") + "' AND IdOpcionConfiguracion='021';";
       //PENDIENTE: SE COLOCAN VALORES EN DURO, MEJORAR!
-      String q = "SELECT Valor FROM trx_ConfiguracionesDispositivosMoviles WHERE IdEmpresa='" + objConfLocal.get("ID_EMPRESA") + "' AND MacDIspositivoMovil='" + objConfLocal.get("MAC") + "' AND ImeiDIspositivoMovil='" + objConfLocal.get("IMEI") + "' AND IdOpcionConfiguracion='021';";
+      String q = "SELECT Valor FROM trx_ConfiguracionesDispositivosMoviles WHERE IdEmpresa='" + sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA") + "' AND MacDIspositivoMovil='" + sharedPreferences.getString("MAC","!MAC") + "' AND ImeiDIspositivoMovil='" + sharedPreferences.getString("IMEI","!IMEI") + "' AND IdOpcionConfiguracion='021';";
       Cursor c = doItBaby(q, null, "READ");
       return c.moveToFirst() && c.getString(0).equals("TRUE");
     } catch (Exception ex) {
@@ -402,7 +408,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     try {
       //PENDIENTE:
       //String q = "SELECT Permisos FROM mst_Usuarios WHERE IdEmpresa='"+objConfLocal.IDEMPRESA+"' AND Id='"+u+"' AND Suma='"+s+"';";
-      String q = "SELECT Permisos FROM mst_Usuarios WHERE IdEmpresa='" + objConfLocal.get("ID_EMPRESA") + "' AND Id='" + u + "' AND Suma='" + s + "';";
+      String q = "SELECT Permisos FROM mst_Usuarios WHERE IdEmpresa='" + sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA") + "' AND Id='" + u + "' AND Suma='" + s + "';";
       Cursor c = doItBaby(q, null, "READ");
       if (c.moveToFirst()) {
         return c.getString(0);
@@ -643,7 +649,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       //LA SIGUIENTE LINEA PODRÍA PERMITIR QUE SE BORRE DATA DE OTRAS EMPRESAS EN UNA ACTUALIZACION DE SQLITE
       //String q = "SELECT Valor FROM trx_ConfiguracionesDispositivosMoviles WHERE IdEmpresa='" + objConfLocal.get("ID_EMPRESA") + "' AND MacDIspositivoMovil='" + objConfLocal.get("MAC") + "' AND ImeiDIspositivoMovil='" + objConfLocal.get("IMEI") + "' AND IdOpcionConfiguracion='028';";
       //POR TAL MOTIVO SE REEMPLAZA POR ESTA LINEA QUE YA NO TIENE EL FILTRO DE EMPRESA
-      String q = "SELECT Valor FROM trx_ConfiguracionesDispositivosMoviles WHERE MacDIspositivoMovil='" + objConfLocal.get("MAC") + "' AND ImeiDIspositivoMovil='" + objConfLocal.get("IMEI") + "' AND IdOpcionConfiguracion='028';";
+      String q = "SELECT Valor FROM trx_ConfiguracionesDispositivosMoviles WHERE MacDIspositivoMovil='" + sharedPreferences.getString("MAC","!MAC") + "' AND ImeiDIspositivoMovil='" + sharedPreferences.getString("IMEI", "!IMEI") + "' AND IdOpcionConfiguracion='028';";
       Cursor c = doItBaby(q, null, "READ");
       return c.moveToFirst() && c.getString(0) == "TRUE";
     } catch (Exception ex) {
@@ -862,7 +868,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         //--PASO 0: VALIDAR SI ES REGISTRO NUEVO
 //                if (valores.Get("Id").length() == 0 || valores.Get("Id") == null ){
         if (!nombreTabla.contains("_Detalle")) {
-          valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, objConfLocal.get("ID_EMPRESA")), 'A'));
+          valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA")), 'A'));
         }
 //                }
         //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
@@ -914,9 +920,9 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     //NO TODAS LAS TABLAS DEBERIA TENER LA MISMA LONGITUD DE CADENA EN EL ID
     String q;
     q = "SELECT Correlativo FROM trx_Correlativos WHERE IdEmpresa = '@IdEmpresa' AND MacDispositivoMovil = '@MacDispositivoMovil' AND ImeiDispositivoMovil = '@ImeiDispositivoMovil' AND IdTabla = '@IdTabla';";
-    q = q.replace("@IdEmpresa", objConfLocal.get("ID_EMPRESA"));
-    q = q.replace("@MacDispositivoMovil", objConfLocal.get("MAC"));
-    q = q.replace("@ImeiDispositivoMovil", objConfLocal.get("IMEI"));
+    q = q.replace("@IdEmpresa", sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+    q = q.replace("@MacDispositivoMovil", sharedPreferences.getString("MAC","!MAC"));
+    q = q.replace("@ImeiDispositivoMovil", sharedPreferences.getString("IMEI","!IMEI"));
 
     try {
       q = q.replace("@IdTabla", Objects.requireNonNull(obtenerIdTabla(nombreTabla)));
@@ -924,7 +930,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       if (c.moveToFirst()) {
         return c.getString(0);
       } else {
-        String parteIdDispostivo = objConfLocal.get("ID_DISPOSITIVO");
+        String parteIdDispostivo = sharedPreferences.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO");
         StringBuilder parteCorrelativa = new StringBuilder();
         for (int i = 0; i < longitud - 1; i++) {
           parteCorrelativa.append("0");
@@ -933,7 +939,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         return parteIdDispostivo + parteCorrelativa;
       }
     } catch (Exception EX) {
-      String parteIdDispostivo = objConfLocal.get("ID_DISPOSITIVO");
+      String parteIdDispostivo = sharedPreferences.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO");
       StringBuilder parteCorrelativa = new StringBuilder();
       for (int i = 0; i < longitud; i++) {
         parteCorrelativa.append("0");
@@ -1067,9 +1073,9 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       LocalDateTime now = LocalDateTime.now();
       fechaHora = dtf.format(now);
       List<String> l = new ArrayList<>();
-      l.add(objConfLocal_l.get("ID_EMPRESA"));
-      l.add(objConfLocal_l.get("MAC"));
-      l.add(objConfLocal_l.get("IMEI"));
+      l.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+      l.add(sharedPreferences.getString("MAC","!MAC"));
+      l.add(sharedPreferences.getString("IMEI","!IMEI"));
       l.add(idTabla);
       l.add(idCorrelativo);
       l.add(objConfLocal_l.get("ID_USUARIO_ACTUAL"));
@@ -1088,8 +1094,12 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       c.moveToFirst();
       if (c.getString(0).equals("1")) {
         objConfLocal.set("EXISTE_DATA_PENDIENTE", "TRUE");
+        sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","TRUE");
+        sharedPreferences.edit().apply();
       } else {
         objConfLocal.set("EXISTE_DATA_PENDIENTE", "FALSE");
+        sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","FALSE");
+        sharedPreferences.edit().apply();
       }
       guardarConfiguracionLocal(objConfLocal);
     } catch (Exception ex) {
@@ -1103,8 +1113,10 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       c.moveToFirst();
       if (c.getString(0).equals("1")) {
         objConfLocal.set("EXISTE_DATA_PENDIENTE", "TRUE");
+        sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","TRUE").apply();
       } else {
         objConfLocal.set("EXISTE_DATA_PENDIENTE", "FALSE");
+        sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","FALSE").apply();
       }
       guardarConfiguracionLocal(objConfLocal);
       return new ConfiguracionLocal(obtenerConfiguracionLocal());

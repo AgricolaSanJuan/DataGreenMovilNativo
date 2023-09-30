@@ -1,6 +1,7 @@
 package com.example.datagreenmovil.ui.SettingsSync;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class SettingsSyncFragment extends Fragment {
     Boolean stateTareos = false;
     Boolean stateTransportes = false;
     ConfiguracionLocal objConfLocal;
+    SharedPreferences sharedPreferences;
     Context ctx;
     List<String> tablasSeleccionadas = new ArrayList<>();
 
@@ -361,7 +363,7 @@ public class SettingsSyncFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ctx = context;
-        objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
+        sharedPreferences = getActivity().getSharedPreferences("objConfLocal",ctx.MODE_PRIVATE);
     }
 
     @Override

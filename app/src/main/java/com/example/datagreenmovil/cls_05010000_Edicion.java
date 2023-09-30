@@ -520,7 +520,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
 //                SINCRONIZAMOS VEHICULOS
                 try {
-                    sqlitesync.sincronizar(this, objConfLocal, "mst_conductores", "mst_conductores");
+                    // sqlitesync.sincronizar(this, objConfLocal, "mst_conductores", "mst_conductores");
                     Log.i("SINCRONIZACION: ","VEHICULOS SINCRONIZADOS");
                 }catch (Exception e){
                     throw e;
@@ -528,7 +528,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
 //                SINCRONIZAMOS CONDUCTORES
                 try {
-                    sqlitesync.sincronizar(this, objConfLocal, "mst_Vehiculos", "mst_vehiculos");
+                    // sqlitesync.sincronizar(this, objConfLocal, "mst_Vehiculos", "mst_vehiculos");
                     Log.i("SINCRONIZACION: ","CONDUCTORES SINCRONIZADOS");
                 }catch (Exception e){
                     throw e;
@@ -536,7 +536,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
 //                SINCRONIZAMOS PERSONAS
                 try {
-                    sqlitesync.sincronizar(this, objConfLocal, "mst_personas", "mst_personas");
+                    // sqlitesync.sincronizar(this, objConfLocal, "mst_personas", "mst_personas");
                     Log.i("SINCRONIZACION: ","PERSONAS SINCRONIZADOS");
                 }catch (Exception e){
                     throw e;
@@ -544,7 +544,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
 //                SINCRONIZAMOS USUARIOS
                 try {
-                    sqlitesync.sincronizar(this, objConfLocal, "mst_usuarios", "mst_usuarios");
+                    // sqlitesync.sincronizar(this, objConfLocal, "mst_usuarios", "mst_usuarios");
                     Log.i("SINCRONIZACION: ","USUARIOS SINCRONIZADOS");
                 }catch (Exception e){
                     throw e;
@@ -552,7 +552,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
 //                SINCRONIZAMOS CONSUMIDORES
                 try {
-                    sqlitesync.sincronizar(this, objConfLocal, "mst_consumidores", "mst_consumidores");
+                    // sqlitesync.sincronizar(this, objConfLocal, "mst_consumidores", "mst_consumidores");
                     Log.i("SINCRONIZACION: ","CONSUMIDORES SINCRONIZADOS");
                 }catch (Exception e){
                     throw e;

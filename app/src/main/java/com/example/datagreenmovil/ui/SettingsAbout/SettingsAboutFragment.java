@@ -1,4 +1,4 @@
-package com.example.datagreenmovil.ui.Settings;
+package com.example.datagreenmovil.ui.SettingsAbout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -239,13 +239,6 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
     private void abrirConfiguraciones() {
         try {
-
-            SharedPreferences.Editor editor = getSharedPreferences("MiPreferencia", MODE_PRIVATE).edit();
-            Gson gson = new Gson();
-            String objConfLocalJson = gson.toJson(objConfLocal);
-            editor.putString ("objConfLocal", objConfLocalJson);
-            editor.apply();
-
             Intent intent = new Intent(this, SettingsActivity.class);
 //            objSqlite.guardarConfiguracionLocal(objConfLocal);
             intent.putExtra("ConfiguracionLocal", objConfLocal);
