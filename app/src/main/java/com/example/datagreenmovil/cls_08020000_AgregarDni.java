@@ -65,7 +65,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 s_IdRex = (String) getIntent().getSerializableExtra("IdRegistro");
             }
 
-            objSql = new ConexionBD(objConfLocal);
+            objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, objConfLocal);
             objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
 

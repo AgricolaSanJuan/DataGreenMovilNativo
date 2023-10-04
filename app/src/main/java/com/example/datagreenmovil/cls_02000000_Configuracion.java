@@ -97,7 +97,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         if (getIntent().getExtras() != null) {
             objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
         }
-        objSql = new ConexionBD(objConfLocal);
+        objSql = new ConexionBD(this);
         objSqlite = new ConexionSqlite(this, objConfLocal);
         objConfLocal.set("ULTIMA_ACTIVIDAD", "Configuracion");
 
@@ -396,7 +396,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
     private Boolean probarNuevaConexion() {
         Boolean status = false;
         try {
-            cnAux = new ConexionBD(clAux);
+            cnAux = new ConexionBD(this);
 
             if (cnAux.hayConexion()) {
                 clAux.set("RED_CONFIGURADA", "TRUE");

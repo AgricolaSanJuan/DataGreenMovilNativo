@@ -84,6 +84,7 @@ ACCESO A BASE DE DATOS SQL: https://www.youtube.com/watch?v=OOm03ezazAI (NO OLVI
     <string name="menu_home">CONFIGURACION LOCAL</string>
     <string name="menu_gallery">SINCRONIZACION</string>
     <string name="menu_slideshow">ACERCA DE</string>
+    <string name="title_activity_tareos">TareosActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!--
     <string-array name="ModulosDisponibles">

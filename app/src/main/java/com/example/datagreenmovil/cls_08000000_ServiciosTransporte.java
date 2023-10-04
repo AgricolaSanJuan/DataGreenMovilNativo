@@ -2,6 +2,7 @@ package com.example.datagreenmovil;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -22,6 +24,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
@@ -30,6 +39,10 @@ import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -45,6 +58,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
   //    AlertDialog.Builder builderDialogoCerrarSesion;
   Dialog dlg_PopUp;
+  SharedPreferences sharedPreferences;
   //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
   //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
   //...
@@ -75,7 +89,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       if (getIntent().getExtras() != null) {
         objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
       }
-      objSql = new ConexionBD(objConfLocal);
+      objSql = new ConexionBD(this);
       objSqlite = new ConexionSqlite(this, objConfLocal);
       objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
       objRex = new Rex(objSqlite, "trx_ServiciosTransporte");
@@ -249,10 +263,10 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       int idControlClickeado = item.getItemId();
       if (idControlClickeado == R.id.opc_05000000_transferir) {
         if (transferirRegistros()) {
-          al_RegistrosSeleccionados.clear();
-          listarRegistros();
-          Funciones.notificar(this, "Proceso finalizado correctamente.");
-          return true;
+//          al_RegistrosSeleccionados.clear();
+//          listarRegistros();
+//          Funciones.notificar(this, "Proceso finalizado correctamente.");
+//          return true;
         }
         Funciones.notificar(this, objConfLocal.get("MENSAJE"));
         return false;
@@ -435,69 +449,110 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
 
 
   private boolean transferirRegistros() {
-    try {
-      List<String> pSqlite = new ArrayList<String>();
-      String pSql = "";
-      ResultSet rS;
-      for (String id : al_RegistrosSeleccionados) {
-        pSqlite.add(objConfLocal.get("ID_EMPRESA"));
-        pSqlite.add(id);
-        objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte"), pSqlite, "READ"));
-        if (objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) {
-          if (objSql.existeId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id)) {
-            String nuevoId = objSql.obtenerNuevoId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), objConfLocal.get("ID_DISPOSITIVO"));
-            SQLiteDatabase sqlite = objSqlite.getReadableDatabase();
-            sqlite.execSQL("PRAGMA FOREIGN_KEYS=1;");
-            objSqlite.ActualizarId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id, nuevoId); //PROBAR
-            sqlite.execSQL("PRAGMA FOREIGN_KEYS=0;");
-            id = nuevoId;
-            objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", id); //PROBAR
-          }
-          pSql = obtenerParametrosDeCabecera(id, "TRANSFERIR trx_ServiciosTransporte");
-          rS = objSql.doItBaby(objSqlite.obtQuery("TRANSFERIR trx_ServiciosTransporte") + pSql, null);
-          rS.next();
-          if (rS.getString("Resultado").equals("1")) {
-            if (transferirDetalle(id)) {
-              pSqlite.clear();
-              //pSqlite.add(rS.getString("Detalle"));
-              pSqlite.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
-              pSqlite.add(objConfLocal.get("ID_EMPRESA"));
-              pSqlite.add(id);
-              objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
-              //return true;
-            } else {
-              List<String> p = new ArrayList<>();
-              p.add(id);
-              objSql.doItBaby(objSqlite.obtQuery("ROLLBACK trx_ServiciosTransporte"), p); //PROBAR
-              return false;
-            }
-//                    if (!id.equals(rS.getString("IdTrx")) && rS.getString("IdTrx").length()>0){
-//                        objSqlite.ActualizarId("trx_ServiciosTransporte",objConfLocal.get("ID_EMPRESA"), id,rS.getString("IdTrx")); //PROBAR
-//                    }
+    try{
+      SQLiteDatabase database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
-          } else {
-            //Toast.makeText(this,rS.getString("Detalle"),Toast.LENGTH_SHORT).show();
-            objConfLocal.set("MENSAJE", rS.getString("Detalle"));
-            return false;
-          }
-        } else {
-          Funciones.notificar(this, "El registro. [" + id + "] no se puede transferir porque ya fue transferido anteriormente.");
-        }
-      }
-      objConfLocal = objSqlite.ActualizarDataPendiente(objConfLocal, true);
-      Funciones.mostrarEstatusGeneral(this.getBaseContext(),
-          objConfLocal,
-          txv_PushTituloVentana,
-          txv_PushRed,
-          txv_NombreApp,
-          txv_PushVersionApp,
-          txv_PushVersionDataBase,
-          txv_PushIdentificador);
-      return true;
-    } catch (Exception ex) {
-      Funciones.mostrarError(this, ex);
-      return false;
+      Cursor results = database.rawQuery("select * from mst_usuarios",null);
+      results.moveToFirst();
+      Log.i("venimos finos",results.getString(0));
+//      quedamos
+
+//      RequestQueue requestQueue = Volley.newRequestQueue(this);
+//      String url = "http://192.168.30.107:8000/api/get-users";
+//
+//      JSONObject params = new JSONObject();
+//      try {
+//        params.put("clave", "valor1");
+//        // Agrega otros campos según las expectativas del servidor
+//      } catch (JSONException e) {
+//        e.printStackTrace();
+//      }
+//
+//      JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+//              new Response.Listener<JSONObject>() {
+//                @Override
+//                public void onResponse(JSONObject response) {
+//                    Log.i("RESPONSE",response.toString());
+//                }
+//              },
+//              new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                  Log.e("ERROR", error.toString());
+//                }
+//              });
+//
+//// Agregar la solicitud a la cola de solicitudes
+//      requestQueue.add(stringRequest);
+    }catch (Exception e){
+
     }
+    return true;
+
+
+//    try {
+//      List<String> pSqlite = new ArrayList<String>();
+//      String pSql = "";
+//      ResultSet rS;
+//      for (String id : al_RegistrosSeleccionados) {
+//        pSqlite.add(objConfLocal.get("ID_EMPRESA"));
+//        pSqlite.add(id);
+//        objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte"), pSqlite, "READ"));
+//        if (objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) {
+//          if (objSql.existeId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id)) {
+//            String nuevoId = objSql.obtenerNuevoId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), objConfLocal.get("ID_DISPOSITIVO"));
+//            SQLiteDatabase sqlite = objSqlite.getReadableDatabase();
+//            sqlite.execSQL("PRAGMA FOREIGN_KEYS=1;");
+//            objSqlite.ActualizarId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id, nuevoId); //PROBAR
+//            sqlite.execSQL("PRAGMA FOREIGN_KEYS=0;");
+//            id = nuevoId;
+//            objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", id); //PROBAR
+//          }
+//          pSql = obtenerParametrosDeCabecera(id, "TRANSFERIR trx_ServiciosTransporte");
+//          rS = objSql.doItBaby(objSqlite.obtQuery("TRANSFERIR trx_ServiciosTransporte") + pSql, null);
+//          rS.next();
+//          if (rS.getString("Resultado").equals("1")) {
+//            if (transferirDetalle(id)) {
+//              pSqlite.clear();
+//              //pSqlite.add(rS.getString("Detalle"));
+//              pSqlite.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
+//              pSqlite.add(objConfLocal.get("ID_EMPRESA"));
+//              pSqlite.add(id);
+//              objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
+//              //return true;
+//            } else {
+//              List<String> p = new ArrayList<>();
+//              p.add(id);
+//              objSql.doItBaby(objSqlite.obtQuery("ROLLBACK trx_ServiciosTransporte"), p); //PROBAR
+//              return false;
+//            }
+////                    if (!id.equals(rS.getString("IdTrx")) && rS.getString("IdTrx").length()>0){
+////                        objSqlite.ActualizarId("trx_ServiciosTransporte",objConfLocal.get("ID_EMPRESA"), id,rS.getString("IdTrx")); //PROBAR
+////                    }
+//
+//          } else {
+//            //Toast.makeText(this,rS.getString("Detalle"),Toast.LENGTH_SHORT).show();
+//            objConfLocal.set("MENSAJE", rS.getString("Detalle"));
+//            return false;
+//          }
+//        } else {
+//          Funciones.notificar(this, "El registro. [" + id + "] no se puede transferir porque ya fue transferido anteriormente.");
+//        }
+//      }
+//      objConfLocal = objSqlite.ActualizarDataPendiente(objConfLocal, true);
+//      Funciones.mostrarEstatusGeneral(this.getBaseContext(),
+//          objConfLocal,
+//          txv_PushTituloVentana,
+//          txv_PushRed,
+//          txv_NombreApp,
+//          txv_PushVersionApp,
+//          txv_PushVersionDataBase,
+//          txv_PushIdentificador);
+//      return true;
+//    } catch (Exception ex) {
+//      Funciones.mostrarError(this, ex);
+//      return false;
+//    }
   }
 
   private boolean transferirDetalle(String id) {

@@ -64,7 +64,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
             if(getIntent().getExtras()!=null){
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
             }
-            objSql = new ConexionBD(objConfLocal);
+            objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this,objConfLocal);
 //            objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
             objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");

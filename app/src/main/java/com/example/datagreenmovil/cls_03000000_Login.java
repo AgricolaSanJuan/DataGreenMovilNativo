@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -45,7 +46,8 @@ public class cls_03000000_Login extends AppCompatActivity {
     //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
     //...
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     Querys objQuerys;
     EditText etx_Usuario;// = (EditText) findViewById(R.id.etx_Usuario_v);
     EditText etx_Password;// = (EditText) findViewById(R.id.etx_Password_v);
@@ -61,10 +63,13 @@ public class cls_03000000_Login extends AppCompatActivity {
         if(getIntent().getExtras()!=null){
             objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
         }
-        objSql = new ConexionBD(objConfLocal);
+        objSql = new ConexionBD(this);
         objSqlite = new ConexionSqlite(this,objConfLocal);
 //        objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
         objConfLocal.set("ULTIMA_ACTIVIDAD","Login");
+
+        sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         referenciarControles();
         setearControles();
@@ -209,13 +214,14 @@ public class cls_03000000_Login extends AppCompatActivity {
             }else{
                 if(/*validacion.moveToFirst() &&*/ validacion.getString(0).equals("0")){
                     objConfLocal.set("ID_USUARIO_ACTUAL",usuario);
+                    editor.putString("ID_USUARIO_ACTUAL",usuario).apply();
                     dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this);
                     dlg_PopUp.show();
                 }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
                     iniciarSesion(validacion.getString(2),validacion.getString(3));
                     abrirMenuModulos();
                 }
-                Funciones.notificar(this, "Error de inicio de sesion.");
+//                Funciones.notificar(this, "Error de inicio de sesion.");
             }
         }catch (Exception ex){
             Funciones.mostrarError(this,ex);
@@ -224,12 +230,16 @@ public class cls_03000000_Login extends AppCompatActivity {
 
     private void iniciarSesion(String columna1, String columna2) throws Exception {
         objConfLocal.set("ID_USUARIO_ACTUAL",etx_Usuario.getText().toString());
+        editor.putString("ID_USUARIO_ACTUAL", etx_Usuario.getText().toString()).apply();
         objConfLocal.set("NOMBRE_USUARIO_ACTUAL",columna2);
+        editor.putString("NOMBRE_USUARIO_ACTUAL",columna2).apply();
         int horasExpiracion = Integer.parseInt(objConfLocal.get("DURACION_TOKEN_HORAS"));
         LocalDateTime ldt_TokenExpira = LocalDateTime.now().plusHours(horasExpiracion);
         String str_tokenExpira = ldt_TokenExpira.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         objConfLocal.set("TOKEN_EXPIRA",str_tokenExpira);
+        editor.putString("TOKEN_EXPIRA",str_tokenExpira).apply();
         objConfLocal.set("MODULOS_PERMITIDOS",columna1);
+        editor.putString("MODULOS_PERMITIDOS", columna1).apply();
         objSqlite.guardarConfiguracionLocal(objConfLocal);
     }
 

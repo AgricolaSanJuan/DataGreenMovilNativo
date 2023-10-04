@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -730,8 +731,10 @@ public class Funciones {
                                            TextView txv_PushVersionApp,
                                            TextView txv_PushVersionDataBase,
                                            TextView txv_PushIdentificador) {
+    SharedPreferences confLocal = context.getSharedPreferences("objConfLocal",Context.MODE_PRIVATE);
+
     //PUSH TITULO VENTANA
-    if (cl.get("EXISTE_DATA_PENDIENTE").equals("TRUE")) {
+    if ( confLocal.getString("EXISTE_DATA_PENDIENTE","FALSE").equals("TRUE")) {
       txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.black, null));
       txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
     } else {
@@ -739,8 +742,8 @@ public class Funciones {
       txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     }
     //PUSH ESTADO RED
-    txv_PushRed.setText(cl.get("ESTADO_RED"));
-    if (cl.get("ESTADO_RED").equals("ONLINE")) {
+    txv_PushRed.setText(confLocal.getString("ESTADO_RED","OFFLINE"));
+    if (confLocal.getString("ESTADO_RED","OFFLINE").equals("ONLINE")) {
       txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verdeClaro, null));
       txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
@@ -748,11 +751,11 @@ public class Funciones {
       txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
     }
     //NOMBRE APP
-    txv_NombreApp.setText(cl.get("NOMBRE_APP"));
+    txv_NombreApp.setText(confLocal.getString("NOMBRE_APP","!NOMBRE_APP"));
     //VERSION APP
-    String versionApp = " v: " + cl.get("VERSION_APP");
+    String versionApp = " v: " + confLocal.getString("VERSION_APP","!VERSION_APP");
     txv_PushVersionApp.setText(versionApp);
-    if (cl.get("VERSION_APP").equals(cl.get("VERSION_APP_DISPONIBLE"))) {
+    if (versionApp.equals(confLocal.getString("VERSION_APP_DISPONIBLE","!VERSION_APP_DISPONIBLE"))) {
       txv_PushVersionApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
       txv_PushVersionApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
@@ -760,9 +763,9 @@ public class Funciones {
       txv_PushVersionApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
     }
     //VERSION DATABASE
-    String versionDB = " v: " + cl.get("VERSION_DB_SQLITE");
+    String versionDB = " v: " +  confLocal.getString("VERSION_DB_SQLITE","");
     txv_PushVersionDataBase.setText(versionDB);
-    if (cl.get("VERSION_DB_SQLITE").equals(cl.get("VERSION_DB_DISPONIBLE"))) {
+    if (versionDB.equals(confLocal.getString("VERSION_DB_DISPONIBLE","!VERSION_DB_DISPONIBLE"))) {
       txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
       txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
@@ -770,7 +773,7 @@ public class Funciones {
       txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
     }
     //IDENTIFICADOR
-    String identificador = cl.get("ID_DISPOSITIVO") + " " + cl.get("NOMBRE_USUARIO_ACTUAL");
+    String identificador = confLocal.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO") + " " + confLocal.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL");
     txv_PushIdentificador.setText(identificador);
   }
 
@@ -782,7 +785,7 @@ public class Funciones {
                                            TextView txv_PushRed
   ) {
     //PUSH TITULO VENTANA
-    if (cl.get("EXISTE_DATA_PENDIENTE").equals("TRUE")) {
+    if (("EXISTE_DATA_PENDIENTE").equals("TRUE")) {
       txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.black, null));
       txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
     } else {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.datagreenmovil">
+    package="com.example.datagreenmovil" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission
@@ -26,12 +26,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataGreenMovil"
         android:usesCleartextTraffic="true"
-        tools:replace="android:appComponentFactory">
+        tools:replace="android:appComponentFactory" >
+        <activity
+            android:name=".TareosActivity"
+            android:exported="true"
+            android:theme="@style/Theme.DataGreenMovil.NoActionBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.DataGreenMovil.NoActionBar"/>
+            android:theme="@style/Theme.DataGreenMovil.NoActionBar" />
 
         <service
             android:name=".DataGreenUpdateService"
@@ -42,7 +52,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.datagreenmovil.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -51,17 +61,17 @@
         <receiver
             android:name=".BroadcastConnectivityChange"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".SyncDBService"
+            android:name=".Services.SyncDBService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".SyncDBService"
+            android:name=".Services.SyncDBService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
@@ -117,7 +127,7 @@
             android:parentActivityName=".cls_04000000_Modulos" />
         <activity
             android:name=".cls_01000000_Commutador"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

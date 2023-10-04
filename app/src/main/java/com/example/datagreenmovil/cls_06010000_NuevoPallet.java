@@ -80,7 +80,7 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
             }
             objSqlite = new ConexionSqlite(this,objConfLocal);
             objConfLocal.set("ULTIMA_ACTIVIDAD","NuevoPallet");
-            objConexion = new ConexionBD(objConfLocal);
+            objConexion = new ConexionBD(this);
 
             referenciarControles();
             obtenerDataParaControles();

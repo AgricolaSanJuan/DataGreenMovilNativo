@@ -78,7 +78,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         //objRex = (Rex) getIntent().getParcelableExtra("objRex");
         s_IdRex = (String) getIntent().getSerializableExtra("s_IdRex");
       }
-      objSql = new ConexionBD(objConfLocal);
+      objSql = new ConexionBD(this);
       objSqlite = new ConexionSqlite(this, objConfLocal);
       objConfLocal.set("ULTIMA_ACTIVIDAD", "ServicioTransporteEdicion");
       referenciarControles();

@@ -1,6 +1,7 @@
 package com.example.datagreenmovil;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class cls_04000000_Modulos extends AppCompatActivity {
     ConfiguracionLocal objConfLocal;
     TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
     Dialog dlg_PopUp;
+    SharedPreferences sharedPreferences;
     //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
     //...
@@ -47,10 +49,12 @@ public class cls_04000000_Modulos extends AppCompatActivity {
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
 
             }
-            objSql = new ConexionBD(objConfLocal);
+            sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
+            objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this,objConfLocal);
 //            objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
             objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
+            sharedPreferences.edit().putString("ULTIMA_ACTIVIDAD","PlantillaBase");
 
             referenciarControles();
             setearControles();
@@ -155,7 +159,7 @@ public class cls_04000000_Modulos extends AppCompatActivity {
     //...
 
     private void inflarRecyclerViewModulos(Cursor c) {
-        modulos = obtenerModulosPermitidos(c,objConfLocal.get("MODULOS_PERMITIDOS"));
+        modulos = obtenerModulosPermitidos(c,sharedPreferences.getString("MODULOS_PERMITIDOS","!MODULOS_PERMITIDOS"));
         cls_04010000_Item_ListView miAdaptador = new cls_04010000_Item_ListView(this,modulos,objConfLocal);
         reciclador.setAdapter(miAdaptador);
         reciclador.setLayoutManager(new LinearLayoutManager(this));

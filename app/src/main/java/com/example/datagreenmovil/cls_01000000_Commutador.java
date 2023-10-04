@@ -38,6 +38,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
     Querys objQuerys;
     //ResultSet rsQuerys;
     Dialog dlg_PopUp;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_01000000_conmutador_001);
+        sharedPreferences = getSharedPreferences("objConfLocal",MODE_PRIVATE);
         validarPermisosAndroid();
         //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
 
@@ -62,6 +64,11 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             //PENDIENTE: REDEFINIR CONCEPTO DE QUERYS -> LIST<QUERY>
             //SE ESPERA PODER USAR objQuerys.Query("NOMBRE DE QUERY") -> RETORNA STRING
             objQuerys = new Querys(objSqlite.obtenerQuerys());
+            //OBTENER VERSION APP
+            //int versionCode = BuildConfig.VERSION_CODE;
+            String versionApp = BuildConfig.VERSION_NAME;
+            objConfLocal.set("VERSION_APP", versionApp);
+            sharedPreferences.edit().putString("VERSION_APP",versionApp).apply();
 
             //        LLEVA DIRECTAMENTE SI EXISTE LA SESION
 
@@ -86,15 +93,12 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //                OBTENER RESOLUCION PANTALLA
                 int valor = Resources.getSystem().getDisplayMetrics().widthPixels;
                 objConfLocal.set("ANCHO_PANTALLA", String.valueOf(valor));
+                sharedPreferences.edit().putString("ANCHO_PANTALLA",String.valueOf(valor)).apply();
                 valor = Resources.getSystem().getDisplayMetrics().heightPixels;
                 objConfLocal.set("ALTO_PANTALLA", String.valueOf(valor));
+                sharedPreferences.edit().putString("ALTO_PANTALLA",String.valueOf(valor)).apply();
 
-                //OBTENER VERSION APP
-                //int versionCode = BuildConfig.VERSION_CODE;
-                String versionApp = BuildConfig.VERSION_NAME;
-                objConfLocal.set("VERSION_APP", versionApp);
-
-//                objSqlite.guardarConfiguracionLocal(objConfLocal);
+                //                objSqlite.guardarConfiguracionLocal(objConfLocal);
                 i.putExtra("ConfiguracionLocal", objConfLocal);
 //        if (existeSesion()) {
 //          abrirMenuModulos();
@@ -169,7 +173,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
         try {
 //            objConfLocal= new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal());
-            objSql = new ConexionBD(objConfLocal);
+            objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, objConfLocal);
             if (!objSqlite.existeBDLocal()) {
 //                Funciones.notificar(this,"No existe base de datos local.");
@@ -202,10 +206,12 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
             if (objSql.hayConexion()) {
                 objConfLocal.set("ESTADO_RED", "ONLINE");
+                sharedPreferences.edit().putString("ESTADO_RED","ONLINE").apply();
                 procesoCargaOnline1();
                 procesoCargaOnline2();
             } else {
                 objConfLocal.set("ESTADO_RED", "OFFLINE");
+                sharedPreferences.edit().putString("ESTADO_RED","OFFLINE").apply();
                 procesoCargaOffline1();
             }
             return true;
@@ -391,6 +397,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //            }
             if (!objSqlite.equipoRegistrado()) {
                 objConfLocal.set("ID_DISPOSITIVO", objSql.registrarEquipo(objConfLocal));
+                sharedPreferences.edit().putString("ID_DISPOSITIVO",objSql.registrarEquipo(objConfLocal)).apply();
             }
             objConfLocal = objSql.obtenerVersionesDisponibles(objConfLocal);
             if (objSql.hayActualizacionBDLocal(objConfLocal)) {

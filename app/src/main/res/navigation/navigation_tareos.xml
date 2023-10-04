@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_tareos"
+    app:startDestination="@+id/nav_tareos_main">
+
+    <fragment
+        android:id="@+id/nav_tareos_main"
+        android:name="com.example.datagreenmovil.ui.TareosMain.TareosMainFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_tareos_main" />
+
+    <fragment
+        android:id="@+id/nav_tareos_settings"
+        android:name="com.example.datagreenmovil.ui.TareosSettings.TareosSettingsFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_tareos_settings" />
+
+</navigation>

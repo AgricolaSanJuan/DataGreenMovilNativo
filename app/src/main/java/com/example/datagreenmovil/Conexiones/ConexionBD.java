@@ -2,6 +2,7 @@ package com.example.datagreenmovil.Conexiones;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -36,6 +37,9 @@ import javax.xml.transform.Result;
 public class ConexionBD implements Serializable {
     ConfiguracionLocal objConfLocal;
     Connection objConexion;
+    SharedPreferences confLocal;
+    SharedPreferences.Editor editor;
+    Context ctx;
 
 
 
@@ -49,7 +53,12 @@ public class ConexionBD implements Serializable {
     public ConexionBD(ConfiguracionLocal cl) {
         objConfLocal = cl;
     }
-
+    public ConexionBD(Context context) {
+//        objConfLocal = cl;
+        ctx = context;
+        confLocal = ctx.getSharedPreferences("objConfLocal", ctx.MODE_PRIVATE);
+        editor = confLocal.edit();
+    }
     public Status validarConexionBasePrincipal() throws Exception  {
         try{
             if (!hayConexion()){
@@ -148,7 +157,7 @@ public class ConexionBD implements Serializable {
     }
 
     public boolean hayActualizacionBDLocal(ConfiguracionLocal cl) throws Exception {
-            return !cl.get("VERSION_DB_SQLITE").equals(cl.get("VERSION_DB_DISPONIBLE"));
+        return !cl.get("VERSION_DB_SQLITE").equals(cl.get("VERSION_DB_DISPONIBLE"));
     }
 
     /*private boolean hayActualizacionSoftware() throws Exception {
@@ -202,7 +211,7 @@ public class ConexionBD implements Serializable {
                 //cl.ID_EQUIPO=r.getString(1);
                 return rS.getString(2);
             }else{
-              throw new Exception(rS.getString(2));
+                throw new Exception(rS.getString(2));
             }
             //return cl;
         }catch (Exception ex){
@@ -239,42 +248,42 @@ public class ConexionBD implements Serializable {
         }
     }
 
-/*
-    public ConfiguracionLocal obtenerConfiguracionGeneral(ConfiguracionLocal cl) throws Exception{
-        try{
-            List<String> p = new ArrayList<String>();
-            p.add("002"); //ID DE DISPOSITIVO COMO PARAMETRO;
-            ResultSet rS;
-            rS = doItBaby("sp_Dgm_Gen_ObtenerConfiguracionDispositivoMovil",p);
-            Map<String,String> conf = new HashMap<>();
-            //KW: RECORRER RESULTSET
-            while(rS.next()){
-                conf.put(rS.getString("Clave"),rS.getString("Valor"));
+    /*
+        public ConfiguracionLocal obtenerConfiguracionGeneral(ConfiguracionLocal cl) throws Exception{
+            try{
+                List<String> p = new ArrayList<String>();
+                p.add("002"); //ID DE DISPOSITIVO COMO PARAMETRO;
+                ResultSet rS;
+                rS = doItBaby("sp_Dgm_Gen_ObtenerConfiguracionDispositivoMovil",p);
+                Map<String,String> conf = new HashMap<>();
+                //KW: RECORRER RESULTSET
+                while(rS.next()){
+                    conf.put(rS.getString("Clave"),rS.getString("Valor"));
+                }
+                return agregarValoresConfiguracion(cl,conf);
+    //            if(Integer.parseInt(rS.getString(1))==1){
+    //                //cl.ID_EQUIPO=r.getString(1);
+    //                return rS.getString(2);
+    //            }else{
+    //                throw new Exception(rS.getString(2));
+    //            }
+                //return cl;
+            }catch (Exception ex){
+                throw ex;
             }
-            return agregarValoresConfiguracion(cl,conf);
-//            if(Integer.parseInt(rS.getString(1))==1){
-//                //cl.ID_EQUIPO=r.getString(1);
-//                return rS.getString(2);
-//            }else{
-//                throw new Exception(rS.getString(2));
-//            }
-            //return cl;
-        }catch (Exception ex){
-            throw ex;
         }
-    }
 
-    private ConfiguracionLocal agregarValoresConfiguracion(ConfiguracionLocal cl, Map<String, String> conf) {
-        cl.TOKEN = conf.containsKey("TOKEN") ? Boolean.parseBoolean(conf.get("TOKEN")) :  cl.TOKEN;
-        cl.ULTIMA_SESION_ABIERTA = conf.containsKey("ULTIMA_SESION_ABIERTA") ? LocalDateTime.parse(conf.get("ULTIMA_SESION_ABIERTA"),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) :  cl.ULTIMA_SESION_ABIERTA;
-        cl.TOKEN_EXPIRA = conf.containsKey("TOKEN_EXPIRA") ? LocalDateTime.parse(conf.get("TOKEN_EXPIRA"),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) :  cl.TOKEN_EXPIRA;
-        cl.ACTIVIDAD_ACTUAL = conf.containsKey("ACTIVIDAD_ACTUAL") ? conf.get("ACTIVIDAD_ACTUAL") :  cl.ACTIVIDAD_ACTUAL;
-        cl.EQUIPO_HABILITADO = conf.containsKey("EQUIPO_HABILITADO") ? Boolean.parseBoolean(conf.get("EQUIPO_HABILITADO")) :  cl.EQUIPO_HABILITADO;
-        cl.RED_CONFIGURADA = conf.containsKey("RED_CONFIGURADA") ? Boolean.parseBoolean(conf.get("RED_CONFIGURADA")) :  cl.RED_CONFIGURADA;
-        cl.RECORDAR_USUARIO = conf.containsKey("RECORDAR_USUARIO") ? Boolean.parseBoolean(conf.get("RECORDAR_USUARIO")) :  cl.RECORDAR_USUARIO;
-        return cl;
-    }
-*/
+        private ConfiguracionLocal agregarValoresConfiguracion(ConfiguracionLocal cl, Map<String, String> conf) {
+            cl.TOKEN = conf.containsKey("TOKEN") ? Boolean.parseBoolean(conf.get("TOKEN")) :  cl.TOKEN;
+            cl.ULTIMA_SESION_ABIERTA = conf.containsKey("ULTIMA_SESION_ABIERTA") ? LocalDateTime.parse(conf.get("ULTIMA_SESION_ABIERTA"),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) :  cl.ULTIMA_SESION_ABIERTA;
+            cl.TOKEN_EXPIRA = conf.containsKey("TOKEN_EXPIRA") ? LocalDateTime.parse(conf.get("TOKEN_EXPIRA"),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) :  cl.TOKEN_EXPIRA;
+            cl.ACTIVIDAD_ACTUAL = conf.containsKey("ACTIVIDAD_ACTUAL") ? conf.get("ACTIVIDAD_ACTUAL") :  cl.ACTIVIDAD_ACTUAL;
+            cl.EQUIPO_HABILITADO = conf.containsKey("EQUIPO_HABILITADO") ? Boolean.parseBoolean(conf.get("EQUIPO_HABILITADO")) :  cl.EQUIPO_HABILITADO;
+            cl.RED_CONFIGURADA = conf.containsKey("RED_CONFIGURADA") ? Boolean.parseBoolean(conf.get("RED_CONFIGURADA")) :  cl.RED_CONFIGURADA;
+            cl.RECORDAR_USUARIO = conf.containsKey("RECORDAR_USUARIO") ? Boolean.parseBoolean(conf.get("RECORDAR_USUARIO")) :  cl.RECORDAR_USUARIO;
+            return cl;
+        }
+    */
     public Connection abrirConexion() throws Exception{
         Connection cn = null;
         try{
@@ -338,7 +347,7 @@ public class ConexionBD implements Serializable {
 //        r.getRow();
             return r.getString(1);
         }catch(Exception ex){
-         throw new Exception(ex.getMessage());
+            throw new Exception(ex.getMessage());
         }
     }
 
@@ -404,9 +413,13 @@ public class ConexionBD implements Serializable {
             if (this.hayConexion()) {
                 objCL.set("RED_CONFIGURADA","TRUE");
                 objCL.set("ESTADO_RED","ONLINE");
+                editor.putString("RED_CONFIGURADA","TRUE").apply();
+                editor.putString("ESTADO_RED","ONLINE").apply();
             }else{
                 objCL.set("RED_CONFIGURADA","FALSE");
                 objCL.set("ESTADO_RED","OFFLINE");
+                editor.putString("RED_CONFIGURADA","FALSE").apply();
+                editor.putString("ESTADO_RED","OFFLINE").apply();
             }
         } catch (Exception e) {
             //Toast.makeText(this.getBaseContext(),e.getMessage(),Toast.LENGTH_LONG).show();

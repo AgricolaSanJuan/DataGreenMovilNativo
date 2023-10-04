@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
-import com.example.datagreenmovil.SyncDBService;
 import com.example.datagreenmovil.databinding.FragmentSettingsSyncBinding;
 
 import java.sql.SQLException;
@@ -73,17 +72,17 @@ public class SettingsSyncFragment extends Fragment {
                     binding.progressBar.setVisibility(View.VISIBLE);
                 });
                 SyncDBSQLToSQLite syncDBSQLToSQLite = new SyncDBSQLToSQLite();
-                Boolean sync;
                 for(int i = 0; i < tablasSeleccionadas.size(); i ++){
+//                    try {
                     try {
-                        syncDBSQLToSQLite.sincronizar(ctx, objConfLocal, tablasSeleccionadas.get(i).toString(), tablasSeleccionadas.get(i).toString());
-                    } catch (Exception e) {
-                        Log.e("ERROR",e.toString());
+                        syncDBSQLToSQLite.sincronizarData(ctx,tablasSeleccionadas.get(i).toString());
+                    } catch (SQLException e) {
+                        Log.e("ERRORSQL",e.toString());
                     }
                 }
                 getActivity().runOnUiThread(()->{
                     binding.progressBar.setVisibility(View.GONE);
-                    Swal.success(ctx, "Sincronización completada!","Se realizo la sincronización en las tablas seleccionadas", 8000);
+                            Swal.success(ctx, "Sincronización completada!","Se realizo la sincronización en las tablas seleccionadas", 8000);
                 });
             });
 

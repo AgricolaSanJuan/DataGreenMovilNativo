@@ -1,6 +1,9 @@
 package com.example.datagreenmovil.Entidades;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Logica.Funciones;
@@ -22,7 +25,10 @@ public class Tareo {
     private double totalHoras;
     private double totalRdtos;
     private String observaciones;
+    private Context ctx;
     ArrayList<TareoDetalle> detalle = new ArrayList<>();
+    SharedPreferences sharedPreferences;
+
 
     public Tareo() {
         this.id ="";
@@ -50,16 +56,18 @@ public class Tareo {
 
 
     public Tareo(String idTareo, ConexionSqlite objSqlite, ConfiguracionLocal objConfLocal) throws Exception {
+        sharedPreferences = ctx.getSharedPreferences("objConfLocal",ctx.MODE_PRIVATE);
+        Log.i("AQUIII","FINO");
         try {
             if (idTareo == null || idTareo.length() == 0){
                 //idTareo = new Tareo(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER ULTIMO trx_Tareos"),null,"READ",""),objConfLocal.get("ID_USUARIO_ACTUAL"));
-                this.idEmpresa = objConfLocal.get("ID_EMPRESA");
+                this.idEmpresa = sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA");
                 List<String> p = new ArrayList<>();
-                p.add(objConfLocal.get("ID_EMPRESA"));
-                p.add(objConfLocal.get("MAC"));
-                p.add(objConfLocal.get("IMEI"));
+                p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+                p.add(sharedPreferences.getString("MAC","!MAC"));
+                p.add(sharedPreferences.getString("IMEI","IMEI"));
                 this.id = Funciones.siguienteCorrelativo(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER ULTIMO trx_Tareos"),p,"READ",""),'A');
-                this.idUsuario=objConfLocal.get("ID_USUARIO_ACTUAL");
+                this.idUsuario=sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
                 this.fecha= LocalDate.now();
                 this.idTurno="";
                 this.idEstado="PE";
@@ -71,7 +79,7 @@ public class Tareo {
             }else{
                 Cursor c;
                 List<String> p = new ArrayList<>();
-                p.add(objConfLocal.get("ID_EMPRESA"));
+                p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
                 p.add(idTareo);
                 c = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_Tareos X ID") ,p,"READ");
                 c.moveToFirst();
@@ -190,6 +198,10 @@ public class Tareo {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+    public void setCtx(Context ctx){
+        this.ctx = ctx;
+    }
+    public Context getCtx(){ return ctx;}
 
     public List<TareoDetalle> getDetalle() { return detalle; }
 
