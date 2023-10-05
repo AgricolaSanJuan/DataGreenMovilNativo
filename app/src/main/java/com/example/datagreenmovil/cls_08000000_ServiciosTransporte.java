@@ -1,6 +1,7 @@
 package com.example.datagreenmovil;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -44,11 +47,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -58,7 +63,9 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
   //    AlertDialog.Builder builderDialogoCerrarSesion;
   Dialog dlg_PopUp;
+  Context ctx;
   SharedPreferences sharedPreferences;
+  ArrayList<String> idsSeleccionados;
   //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
   //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
   //...
@@ -85,6 +92,9 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     setContentView(R.layout.v_08000000_servicios_transporte_022);
     this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
+    ctx = this;
+    idsSeleccionados = new ArrayList<>();
+    sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
     try {
       if (getIntent().getExtras() != null) {
         objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
@@ -380,10 +390,24 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       p.add(s_ListarHasta);
       c_Registros = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte X ESTADO Y RANGO FECHA"), p, "READ");
       if (c_Registros.moveToFirst()) {
+        idsSeleccionados = new ArrayList<String>();
         cls_08000100_RecyclerViewAdapter miAdaptador = new cls_08000100_RecyclerViewAdapter(this, c_Registros, objConfLocal, al_RegistrosSeleccionados);
         c022_rcv_Reciclador.setAdapter(miAdaptador);
         c022_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
-
+        miAdaptador.setOnItemClickListener(new cls_08000100_RecyclerViewAdapter.OnItemClickListener() {
+          @Override
+          public void onItemClick(CheckBox cbxIdServicio, TextView txtIdServicio) {
+            if(cbxIdServicio.isChecked()){
+              idsSeleccionados.add(txtIdServicio.getText().toString());
+              Swal.info(ctx, "asd",txtIdServicio.getText().toString(),18000);
+            }else {
+              idsSeleccionados.remove(txtIdServicio.getText().toString());
+            }
+            Log.i("IDS", idsSeleccionados.toString());
+            // Manejar el evento de clic aquí
+            // Puedes acceder al elemento en la posición "position" si es necesario
+          }
+        });
       } else {
         c022_rcv_Reciclador.setAdapter(null);
         c022_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
@@ -452,40 +476,63 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     try{
       SQLiteDatabase database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
-      Cursor results = database.rawQuery("select * from mst_usuarios",null);
-      results.moveToFirst();
-      Log.i("venimos finos",results.getString(0));
-//      quedamos
+      Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='027000000001'", null);
+      resultsUnidad.moveToFirst();
+      String unidad = "";
+        for(int i = 0; i<resultsUnidad.getColumnCount();i++){
+          unidad += "'"+resultsUnidad.getString(i)+(i == resultsUnidad.getColumnCount() -1 ? "'" : "', ");
+      }
 
-//      RequestQueue requestQueue = Volley.newRequestQueue(this);
-//      String url = "http://192.168.30.107:8000/api/get-users";
-//
-//      JSONObject params = new JSONObject();
-//      try {
-//        params.put("clave", "valor1");
-//        // Agrega otros campos según las expectativas del servidor
-//      } catch (JSONException e) {
-//        e.printStackTrace();
-//      }
-//
-//      JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-//              new Response.Listener<JSONObject>() {
-//                @Override
-//                public void onResponse(JSONObject response) {
-//                    Log.i("RESPONSE",response.toString());
-//                }
-//              },
-//              new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                  Log.e("ERROR", error.toString());
-//                }
-//              });
-//
-//// Agregar la solicitud a la cola de solicitudes
-//      requestQueue.add(stringRequest);
+      Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='027000000001'",null);      JSONArray pasajeros = new JSONArray();
+      String servicioTransporte = "";
+      while(results.moveToNext()){
+        servicioTransporte = results.getString(1);
+        JSONObject elemento = new JSONObject();
+        elemento.put("IdServicioTransporte",servicioTransporte);
+        elemento.put(results.getColumnName(0), results.getString(0));
+        elemento.put(results.getColumnName(1), results.getString(1));
+        elemento.put(results.getColumnName(2), results.getString(2));
+        elemento.put(results.getColumnName(3), results.getString(3));
+        elemento.put(results.getColumnName(4), results.getString(4));
+        pasajeros.put(elemento);
+      }
+//        pasajeros.put(dni);
+      Log.i("venimos finos",unidad);
+      Log.i("venimos finos",pasajeros.toString());
+
+      RequestQueue requestQueue = Volley.newRequestQueue(this);
+      String url = "http://192.168.30.107:8000/api/get-users";
+
+      JSONObject params = new JSONObject();
+      try {
+        params.put("unidad", unidad);
+        params.put("pasajeros", pasajeros);
+        params.put("idServicioTransporte",servicioTransporte);
+        params.put("idDispositivo",sharedPreferences.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO"));
+        params.put("idEmpresa", sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+        // Agrega otros campos según las expectativas del servidor
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      Log.i("params", params.toString());
+
+      JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+              new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("RESPONSE",response.toString());
+                }
+              },
+              new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                  Log.e("ERROR", error.toString());
+                }
+              });
+
+// Agregar la solicitud a la cola de solicitudes
+      requestQueue.add(stringRequest);
     }catch (Exception e){
-
     }
     return true;
 

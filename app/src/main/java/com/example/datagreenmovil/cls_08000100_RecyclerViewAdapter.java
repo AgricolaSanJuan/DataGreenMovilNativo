@@ -23,9 +23,20 @@ import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_08000100_RecyclerViewAdapter.MyViewHolder> {
+
+  public interface OnItemClickListener {
+    void onItemClick(CheckBox cbxIdServicio, TextView idServicio);
+  }
+  private OnItemClickListener listener;
+  // Método para establecer el listener
+  public void setOnItemClickListener(OnItemClickListener listener) {
+    this.listener = listener;
+  }
 
   //String idTareoActual;
   android.content.Context contextoLocal;
@@ -134,30 +145,36 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       });
       holder.c023_cbx_Seleccion.setOnClickListener(new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
-                    /*
-                    tareos.moveToPosition(holder.getAdapterPosition());
-                    String moduloSeleccionado = ; //ModulosPermitidos[position];
-                    switch (moduloSeleccionado){
-                        case "Tareos":
-                            Intent intent = new Intent(Context, cls_05010000_Edicion.class);
-                            //CON PUTEXTRAS SE PUEDEN AGREGAR PARAMETROS AQUI PARA PASARLOS A LA ACTIVIDAD QUE SE VA A ABRRIR
-
-                            //intent.putExtra("ConfiguracionLocal",objConfLocal);
-
-                            Context.startActivity(intent);
-                        default:
-                            //return getResources().getStringArray(R.array.DEFAULT);
-                    }*/
-//          Toast.makeText(view.getContext(), objRex.Get("Id"), Toast.LENGTH_SHORT).show();
-          String idSeleccionado = holder.c023_txv_Id.getText().toString();
-          Log.i("ID",idSeleccionado);
-          if (holder.c023_cbx_Seleccion.isChecked() && !idsSelecciones.contains(idSeleccionado)) {
-            idsSelecciones.add(idSeleccionado);
-          } else if (!holder.c023_cbx_Seleccion.isChecked() && idsSelecciones.contains(idSeleccionado)) {
-            idsSelecciones.remove(idSeleccionado);
+        public void onClick(View v) {
+          if (listener != null) {
+            listener.onItemClick(holder.c023_cbx_Seleccion, holder.c023_txv_Id);
           }
         }
+//        @Override
+//        public void onClick(View view) {
+//                    /*
+//                    tareos.moveToPosition(holder.getAdapterPosition());
+//                    String moduloSeleccionado = ; //ModulosPermitidos[position];
+//                    switch (moduloSeleccionado){
+//                        case "Tareos":
+//                            Intent intent = new Intent(Context, cls_05010000_Edicion.class);
+//                            //CON PUTEXTRAS SE PUEDEN AGREGAR PARAMETROS AQUI PARA PASARLOS A LA ACTIVIDAD QUE SE VA A ABRRIR
+//
+//                            //intent.putExtra("ConfiguracionLocal",objConfLocal);
+//
+//                            Context.startActivity(intent);
+//                        default:
+//                            //return getResources().getStringArray(R.array.DEFAULT);
+//                    }*/
+////          Toast.makeText(view.getContext(), objRex.Get("Id"), Toast.LENGTH_SHORT).show();
+//          String idSeleccionado = holder.c023_txv_Id.getText().toString();
+//          Log.i("ID",idSeleccionado);
+//          if (holder.c023_cbx_Seleccion.isChecked() && !idsSelecciones.contains(idSeleccionado)) {
+//            idsSelecciones.add(idSeleccionado);
+//          } else if (!holder.c023_cbx_Seleccion.isChecked() && idsSelecciones.contains(idSeleccionado)) {
+//            idsSelecciones.remove(idSeleccionado);
+//          }
+//        }
       });
     } catch (Exception ex) {
       throw ex;
