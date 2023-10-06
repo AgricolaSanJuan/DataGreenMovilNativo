@@ -395,7 +395,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
   private boolean guardarRegistro() {
     try {
       if (((objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) || !objRex.Existe("IdEstado")) &&
-          objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte", objRex)) {
+        objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte", objRex, this)) {
         //if (s_IdRex==null || s_IdRex.length()==0){}
         s_IdRex = (s_IdRex == null || s_IdRex.length() == 0) ? objRex.Get("Id") : s_IdRex;
         Funciones.mostrarEstatusGeneral(this.getBaseContext(),
@@ -410,8 +410,8 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         obtenerRexActual();
         mostrarValoresRexActual();
 
+//        finish();
         Swal.success(this, "Correcto","El registro se ha guardado correctamente", 1500);
-        finish();
 //                Funciones.notificar(this, "Registro guardado correctamente.");
         return true;
       } else {

@@ -268,7 +268,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             objRex.Set("FechaHora", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
 
                 try {
-                    if (objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex)) {
+                    if (objSqlite.GuardarRexDNI(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex, this)) {
                         i_Items++;
                     }
 

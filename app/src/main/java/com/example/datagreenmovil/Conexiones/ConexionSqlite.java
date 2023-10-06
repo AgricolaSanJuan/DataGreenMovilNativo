@@ -2,6 +2,7 @@ package com.example.datagreenmovil.Conexiones;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -21,6 +22,7 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -44,6 +46,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
 
   //    public SQLiteDatabase SqliteDB;
   private static final int DATABASE_VERSION = 1;
+  SharedPreferences sharedPreferences;
   private static final String DATABASE_NOMBRE = "DataGreenMovil.db"; //="Prueba.db";
   //private static  final String DATABASE_TABLA="Tareos";
   private static ConfiguracionLocal objConfLocal;
@@ -805,72 +808,62 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
   }
 
   public boolean GuardarRegistro(String nombreTabla, List<String> valores) throws Exception {
-    //--PASO 1: OBTENER LLAVES PRIMARIAS DE LA TABLA
-    String q = "SELECT P.pk PK, P.name Columna FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( (M.name) ) P ON M.name <> P.name WHERE P.pk > 0 AND M.name = '@NombreTabla' ORDER BY P.cid;";
+    String q="";
+    q = "INSERT OR REPLACE INTO @NombreTabla VALUES(" + concatenarColumnas(null, valores, ",") + ");";
     q = q.replace("@NombreTabla", nombreTabla);
-    Tabla tLLaves = new Tabla(doItBaby(q, null, "READ"));
-    //--PASO 2: OBTENER NUMERO DE REGISTROS COINCIDENTES CON LAS LLAVES PRIMARIAS, SI =0 ENTONCES EL REGISTRO ES NUEVO Y SE HACE INSERT, SI = 1 EL REGISTRO YA EXISTE Y SE HACE UPDATE
-    //q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves, valores, "A");
-    q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND");
-    q = q.replace("@NombreTabla", nombreTabla);
-    Tabla tRegistros = new Tabla(doItBaby(q, null, "READ"));
-    //--PASO 3: OBTENER ESTRUCTURA DE TABLA PARA CONCATENAR LA CONSULTA INSERT / UPDATE
-    q = "SELECT P.cid [Index], P.name Columna, P.type Tipo FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( (M.name) ) P ON M.name <> P.name WHERE M.name = '@NombreTabla' ORDER BY P.cid;";
-    q = q.replace("@NombreTabla", nombreTabla);
-    Tabla tEstructura = new Tabla(doItBaby(q, null, "READ"));
-    boolean esNuevo = tRegistros.Filas.get(0).Item.get(0).toString().equals("0");
-    //--PASO 4: GUARDAR
-    if (esNuevo) {
-      //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
-      //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
-      q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(null, valores, ",") + ");";
-      q = q.replace("@NombreTabla", nombreTabla);
-      doItBaby(q, null, "WRITE");
-    } else {
-      //PASO 4: --SI REGISTROS=1 => CONCATENAR UPDATE
-      q = "UPDATE @NombreTabla SET " + concatenarColumnas(tEstructura.toList(1), valores, ",") + " WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND");
-      q = q.replace("@NombreTabla", nombreTabla);
-      doItBaby(q, null, "WRITE");
-    }
+    doItBaby(q, null, "WRITE");
+//
+//
+//    //--PASO 1: OBTENER LLAVES PRIMARIAS DE LA TABLA
+//    String q = "SELECT P.pk PK, P.name Columna FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( (M.name) ) P ON M.name <> P.name WHERE P.pk > 0 AND M.name = '@NombreTabla' ORDER BY P.cid;";
+//    q = q.replace("@NombreTabla", nombreTabla);
+//    Tabla tLLaves = new Tabla(doItBaby(q, null, "READ"));
+//    //--PASO 2: OBTENER NUMERO DE REGISTROS COINCIDENTES CON LAS LLAVES PRIMARIAS, SI =0 ENTONCES EL REGISTRO ES NUEVO Y SE HACE INSERT, SI = 1 EL REGISTRO YA EXISTE Y SE HACE UPDATE
+//    //q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves, valores, "A");
+//    q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND");
+//    q = q.replace("@NombreTabla", nombreTabla);
+//    Tabla tRegistros = new Tabla(doItBaby(q, null, "READ"));
+//    //--PASO 3: OBTENER ESTRUCTURA DE TABLA PARA CONCATENAR LA CONSULTA INSERT / UPDATE
+//    q = "SELECT P.cid [Index], P.name Columna, P.type Tipo FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( (M.name) ) P ON M.name <> P.name WHERE M.name = '@NombreTabla' ORDER BY P.cid;";
+//    q = q.replace("@NombreTabla", nombreTabla);
+//    Tabla tEstructura = new Tabla(doItBaby(q, null, "READ"));
+//    boolean esNuevo = tRegistros.Filas.get(0).Item.get(0).toString().equals("0");
+//    //--PASO 4: GUARDAR
+//    if (esNuevo) {
+//      //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
+//      //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
+//      q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(null, valores, ",") + ");";
+//      q = q.replace("@NombreTabla", nombreTabla);
+//      doItBaby(q, null, "WRITE");
+//    } else {
+//      //PASO 4: --SI REGISTROS=1 => CONCATENAR UPDATE
+//      q = "UPDATE @NombreTabla SET " + concatenarColumnas(tEstructura.toList(1), valores, ",") + " WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND");
+//      q = q.replace("@NombreTabla", nombreTabla);
+//      doItBaby(q, null, "WRITE");
+//    }
     return true;
   }
 
-  public boolean GuardarRex(ConfiguracionLocal objCl, String nombreTabla, Rex valores) throws Exception {
-    try {
-      //--PASO 1: OBTENER LLAVES PRIMARIAS DE LA TABLA
-      String q = "SELECT P.pk PK, P.name Columna FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( (M.name) ) P ON M.name <> P.name WHERE P.pk > 0 AND M.name = '@NombreTabla' ORDER BY P.cid;";
-      q = q.replace("@NombreTabla", nombreTabla);
-      Tabla tLLaves = new Tabla(doItBaby(q, null, "READ"));
-      //--PASO 2: OBTENER NUMERO DE REGISTROS COINCIDENTES CON LAS LLAVES PRIMARIAS, SI =0 ENTONCES EL REGISTRO ES NUEVO Y SE HACE INSERT, SI = 1 EL REGISTRO YA EXISTE Y SE HACE UPDATE
-      //q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves, valores, "A");
-      q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND", false);
-      q = q.replace("@NombreTabla", nombreTabla);
-      Tabla tRegistros = new Tabla(doItBaby(q, null, "READ"));
-      //--PASO 3: OBTENER ESTRUCTURA DE TABLA PARA CONCATENAR LA CONSULTA INSERT / UPDATE
-      q = "SELECT P.cid [Index], P.name Columna, P.type Tipo FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( (M.name) ) P ON M.name <> P.name WHERE M.name = '@NombreTabla' ORDER BY P.cid;";
-      q = q.replace("@NombreTabla", nombreTabla);
-      Tabla tEstructura = new Tabla(doItBaby(q, null, "READ"));
-      boolean esNuevo = tRegistros.Filas.get(0).Item.get(0).toString().equals("0");
-      //--PASO 4: GUARDAR
-      if (esNuevo) {
-        //--PASO 0: VALIDAR SI ES REGISTRO NUEVO
-//                if (valores.Get("Id").length() == 0 || valores.Get("Id") == null ){
-        if (!nombreTabla.contains("_Detalle")) {
-          valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, objConfLocal.get("ID_EMPRESA")), 'A'));
-        }
-//                }
-        //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
-        //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
-        q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tEstructura.toList(1), valores, ",", true) + ");";
-        q = q.replace("@NombreTabla", nombreTabla);
-        doItBaby(q, null, "WRITE");
-      } else {
-        //PASO 4: --SI REGISTROS=1 => CONCATENAR UPDATE
-        q = "UPDATE @NombreTabla SET " + concatenarColumnas(tEstructura.toList(1), valores, ",", false) + " WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND", false);
-        q = q.replace("@NombreTabla", nombreTabla);
-        doItBaby(q, null, "WRITE");
-      }
-//      ActualizarDataPendiente(objCl, false);
+  public boolean GuardarRex(ConfiguracionLocal objCl, String nombreTabla, Rex valores, Context ctx) throws Exception {
+    Rex rexAux = valores;
+    String q = "";
+    try{
+    if (!nombreTabla.contains("_Detalle")) {
+          valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, "01", ctx), 'A'));
+    }
+////                }
+//        //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
+//        //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
+
+//      q = "INSERT INTO "+nombreTabla+" VALUES(" + concatenarColumnas(tEstructura.toList(1), valores, ",", true) + ");";
+    q = "INSERT OR REPLACE INTO "+nombreTabla+" VALUES('"+valores.Get("IdEmpresa")+"','"+valores.Get("Id")+"','"+valores.Get("Fecha")+"','"+valores.Get("IdVehiculo")+"'" +
+            ",'"+valores.Get("IdProveedor")+"','"+valores.Get("IdConductor")+"','"+valores.Get("IdRuta")+"','"+valores.Get("HoraPartida")+"'" +
+            ",'"+valores.Get("HoraRetorno")+"','"+valores.Get("Pasajeros")+"','"+valores.Get("Observacion")+"','"+valores.Get("IdEstado")+"','"+valores.Get("IdUsuarioCrea")+"'" +
+            ",'"+valores.Get("FechaHoraCreacion")+"','"+valores.Get("IdUsuarioActualiza")+"','"+valores.Get("FechaHoraActualizacion")+"');";
+//        q = q.replace("@NombreTabla", nombreTabla);
+    Log.i("INSERT",q);
+    doItBaby(q, null, "WRITE");
+    ActualizarDataPendiente(objCl, false);
       if (!nombreTabla.contains("_Detalle")) {
         ActualizarCorrelativos(objCl, nombreTabla, valores.Get("Id"));
       }
@@ -878,6 +871,121 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     } catch (Exception ex) {
       throw ex;
     }
+//    try {
+//      //--PASO 1: OBTENER LLAVES PRIMARIAS DE LA TABLA
+//      String q = "SELECT P.pk PK, P.name Columna FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( 'trx_ServiciosTransporte' ) P ON M.name <> P.name WHERE P.pk > 0 AND M.name = 'trx_ServiciosTransporte' ORDER BY P.cid;";
+////      q = q.replace("@NombreTabla", nombreTabla);
+//      Tabla tLLaves = new Tabla(doItBaby(q, null, "READ"));
+//      //--PASO 2: OBTENER NUMERO DE REGISTROS COINCIDENTES CON LAS LLAVES PRIMARIAS, SI =0 ENTONCES EL REGISTRO ES NUEVO Y SE HACE INSERT, SI = 1 EL REGISTRO YA EXISTE Y SE HACE UPDATE
+//      //q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves, valores, "A");
+//      q = "SELECT COUNT(*) Registros FROM "+nombreTabla+" WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND", false);
+////      q = q.replace("@NombreTabla", nombreTabla);
+//      Tabla tRegistros = new Tabla(doItBaby(q, null, "READ"));
+//      //--PASO 3: OBTENER ESTRUCTURA DE TABLA PARA CONCATENAR LA CONSULTA INSERT / UPDATE
+//      q = "SELECT P.cid [Index], P.name Columna, P.type Tipo FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( "+nombreTabla+" ) P ON M.name <> P.name WHERE M.name = '"+nombreTabla+"' ORDER BY P.cid;";
+////      q = q.replace("@NombreTabla", nombreTabla);
+//      Tabla tEstructura = new Tabla(doItBaby(q, null, "READ"));
+//      boolean esNuevo = tRegistros.Filas.get(0).Item.get(0).toString().equals("0");
+//      //--PASO 4: GUARDAR
+//      if (esNuevo) {
+//        //--PASO 0: VALIDAR SI ES REGISTRO NUEVO
+////                if (valores.Get("Id").length() == 0 || valores.Get("Id") == null ){
+//        if (!nombreTabla.contains("_Detalle")) {
+//          valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, objConfLocal.get("ID_EMPRESA")), 'A'));
+//        }
+////                }
+//        //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
+//        //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
+
+//        q = "INSERT INTO "+nombreTabla+" VALUES(" + concatenarColumnas(tEstructura.toList(1), valores, ",", true) + ");";
+
+
+////        q = q.replace("@NombreTabla", nombreTabla);
+//        doItBaby(q, null, "WRITE");
+//      } else {
+//        //PASO 4: --SI REGISTROS=1 => CONCATENAR UPDATE
+//        q = "UPDATE "+nombreTabla+" SET " + concatenarColumnas(tEstructura.toList(1), valores, ",", false) + " WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND", false);
+//        q = q.replace("@NombreTabla", nombreTabla);
+//        doItBaby(q, null, "WRITE");
+//      }
+////      ActualizarDataPendiente(objCl, false);
+//      if (!nombreTabla.contains("_Detalle")) {
+//        ActualizarCorrelativos(objCl, nombreTabla, valores.Get("Id"));
+//      }
+//      return true;
+//    } catch (Exception ex) {
+//      throw ex;
+//    }
+  }
+  public boolean GuardarRexDNI(ConfiguracionLocal objCl, String nombreTabla, Rex valores, Context ctx) throws Exception {
+    Rex rexAux = valores;
+    String q = "";
+    try{
+      if (!nombreTabla.contains("_Detalle")) {
+        valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, "01", ctx), 'A'));
+      }
+////                }
+//        //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
+//        //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
+
+//      q = "INSERT INTO "+nombreTabla+" VALUES(" + concatenarColumnas(tEstructura.toList(1), valores, ",", true) + ");";
+      q = "INSERT OR REPLACE INTO "+nombreTabla+" VALUES('"+valores.Get("IdEmpresa")+"','"+valores.Get("IdServicioTransporte")+"','"+valores.Get("Item")+"','"+valores.Get("NroDocumento")+"','"+valores.Get("FechaHora")+"');";
+//        q = q.replace("@NombreTabla", nombreTabla);
+      Log.i("INSERT",q);
+      doItBaby(q, null, "WRITE");
+      ActualizarDataPendiente(objCl, false);
+      if (!nombreTabla.contains("_Detalle")) {
+        ActualizarCorrelativos(objCl, nombreTabla, valores.Get("Id"));
+      }
+      return true;
+    } catch (Exception ex) {
+      throw ex;
+    }
+//    try {
+//      //--PASO 1: OBTENER LLAVES PRIMARIAS DE LA TABLA
+//      String q = "SELECT P.pk PK, P.name Columna FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( 'trx_ServiciosTransporte' ) P ON M.name <> P.name WHERE P.pk > 0 AND M.name = 'trx_ServiciosTransporte' ORDER BY P.cid;";
+////      q = q.replace("@NombreTabla", nombreTabla);
+//      Tabla tLLaves = new Tabla(doItBaby(q, null, "READ"));
+//      //--PASO 2: OBTENER NUMERO DE REGISTROS COINCIDENTES CON LAS LLAVES PRIMARIAS, SI =0 ENTONCES EL REGISTRO ES NUEVO Y SE HACE INSERT, SI = 1 EL REGISTRO YA EXISTE Y SE HACE UPDATE
+//      //q = "SELECT COUNT(*) Registros FROM @NombreTabla WHERE " + concatenarColumnas(tLLaves, valores, "A");
+//      q = "SELECT COUNT(*) Registros FROM "+nombreTabla+" WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND", false);
+////      q = q.replace("@NombreTabla", nombreTabla);
+//      Tabla tRegistros = new Tabla(doItBaby(q, null, "READ"));
+//      //--PASO 3: OBTENER ESTRUCTURA DE TABLA PARA CONCATENAR LA CONSULTA INSERT / UPDATE
+//      q = "SELECT P.cid [Index], P.name Columna, P.type Tipo FROM sqlite_master M LEFT OUTER JOIN pragma_table_info( "+nombreTabla+" ) P ON M.name <> P.name WHERE M.name = '"+nombreTabla+"' ORDER BY P.cid;";
+////      q = q.replace("@NombreTabla", nombreTabla);
+//      Tabla tEstructura = new Tabla(doItBaby(q, null, "READ"));
+//      boolean esNuevo = tRegistros.Filas.get(0).Item.get(0).toString().equals("0");
+//      //--PASO 4: GUARDAR
+//      if (esNuevo) {
+//        //--PASO 0: VALIDAR SI ES REGISTRO NUEVO
+////                if (valores.Get("Id").length() == 0 || valores.Get("Id") == null ){
+//        if (!nombreTabla.contains("_Detalle")) {
+//          valores.Set("Id", siguienteCorrelativo(ultimoCorrelativo(nombreTabla, objConfLocal.get("ID_EMPRESA")), 'A'));
+//        }
+////                }
+//        //--PASO 4: --SI RESGISTROS=0 => CONCATENAR INSERT
+//        //q = "INSERT INTO @NombreTabla VALUES(" + concatenarColumnas(tLLaves, valores, "L") + ");";
+
+//        q = "INSERT INTO "+nombreTabla+" VALUES(" + concatenarColumnas(tEstructura.toList(1), valores, ",", true) + ");";
+
+
+////        q = q.replace("@NombreTabla", nombreTabla);
+//        doItBaby(q, null, "WRITE");
+//      } else {
+//        //PASO 4: --SI REGISTROS=1 => CONCATENAR UPDATE
+//        q = "UPDATE "+nombreTabla+" SET " + concatenarColumnas(tEstructura.toList(1), valores, ",", false) + " WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND", false);
+//        q = q.replace("@NombreTabla", nombreTabla);
+//        doItBaby(q, null, "WRITE");
+//      }
+////      ActualizarDataPendiente(objCl, false);
+//      if (!nombreTabla.contains("_Detalle")) {
+//        ActualizarCorrelativos(objCl, nombreTabla, valores.Get("Id"));
+//      }
+//      return true;
+//    } catch (Exception ex) {
+//      throw ex;
+//    }
   }
 
   public static String siguienteCorrelativo(String ultimoId, char tipo) {
@@ -903,15 +1011,17 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     return parteDelCorrelativo + nuevoCaracter;
   }
 
-  private String ultimoCorrelativo(String nombreTabla, String idEmpresa) {
+  private String ultimoCorrelativo(String nombreTabla, String idEmpresa, Context ctx) {
+    sharedPreferences = ctx.getSharedPreferences("objConfLocal",Context.MODE_PRIVATE);
     int longitud = 9; //PENDIENTE MEJORAR ESTE VALOR, DEBERIA DE SALIR DE LA MISMA DEFINICION DE TABLAS GUARDADA EN LA BASE DE DATOS mst_Tablas
     //NO TODAS LAS TABLAS DEBERIA TENER LA MISMA LONGITUD DE CADENA EN EL ID
     String q;
     q = "SELECT Correlativo FROM trx_Correlativos WHERE IdEmpresa = '@IdEmpresa' AND MacDispositivoMovil = '@MacDispositivoMovil' AND ImeiDispositivoMovil = '@ImeiDispositivoMovil' AND IdTabla = '@IdTabla';";
+
     q = q.replace("@IdEmpresa", objConfLocal.get("ID_EMPRESA"));
     q = q.replace("@MacDispositivoMovil", objConfLocal.get("MAC"));
     q = q.replace("@ImeiDispositivoMovil", objConfLocal.get("IMEI"));
-
+    Log.i("ULTIMOCORRELATIVO",q);
     try {
       q = q.replace("@IdTabla", Objects.requireNonNull(obtenerIdTabla(nombreTabla)));
       Cursor c = doItBaby(q, null, "READ");
@@ -927,7 +1037,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         return parteIdDispostivo + parteCorrelativa;
       }
     } catch (Exception EX) {
-      String parteIdDispostivo = objConfLocal.get("ID_DISPOSITIVO");
+      String parteIdDispostivo = sharedPreferences.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO");
       StringBuilder parteCorrelativa = new StringBuilder();
       for (int i = 0; i < longitud; i++) {
         parteCorrelativa.append("0");
