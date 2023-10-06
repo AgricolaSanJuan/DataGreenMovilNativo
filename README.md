@@ -16,13 +16,14 @@
 
 #### Cambios Generales
 
-- **Fecha de Lanzamiento:** [Fecha de Lanzamiento]
+- **Fecha de Lanzamiento:** 06/10/2023
 - **Plataforma:** Android
 
 #### Cambios Funcionales
 
-- Se reparó la transferencia de servicios de transporte con los detalles de sus pasajeros.
-- Se lanzó la versión autodescargable de actualizaciones que apuntan al servidor 158.
+- Se genero una version alternativa para los dispositivos con android 6
+- Esta version solo es utilizable en Android 6 Marshmallow
+- Aun queda pendiente realizar ajustes para los inputs de fecha desde hasta y el filtrado
 
 ## Cómo Utilizar este Changelog
 
