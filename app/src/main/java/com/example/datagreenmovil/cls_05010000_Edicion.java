@@ -5,16 +5,13 @@ import android.app.Dialog;
 //import android.app.DialogFragment;
 //import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -32,11 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -55,14 +47,7 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
-import com.example.datagreenmovil.Logica.Swal;
-import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 //import com.example.datagreenmovil.Logica.InterfazDialog;
 
 
@@ -77,17 +62,18 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
     //...
 //    Querys objQuerys;
+    SharedPreferences sharedPreferences;
 
     //CONTROLES;
     //private ArrayAdapter<String>
 //    private HashMap<String, ClaveValor[]> hmDataParaControles = new HashMap<>();
 //    HashMap<String, MiData> hmNuevaDataParaControles =new HashMap<>();
     HashMap<String, Tabla> hmTablas =new HashMap<>();
-//    ArrayList<PopUpBuscarEnLista_Item> listaControl;
+    //    ArrayList<PopUpBuscarEnLista_Item> listaControl;
     //CONTROLES;
     private RecyclerView c007_rvw_Detalle;// = findViewById(R.id.c007_rvw_Detalle_v);
     private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera;
-//    private Spinner spiTurnos;
+    //    private Spinner spiTurnos;
 //    private Spinner spiCultivos;
 //    private Spinner spiVariedades;
 //    private Spinner spiActividades;
@@ -128,6 +114,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_05010000_edicion_007);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         try{
             if(getIntent().getExtras()!=null){
@@ -137,9 +124,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             objSql = new ConexionBD(objConfLocal);
             objSqlite = new ConexionSqlite(this,objConfLocal);
 //            objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
-            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
+//            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
 //            if (!tareoActual.getIdEstado().equals("TR")){
-                referenciarControles();
+            referenciarControles();
 //            }
             c007_txv_Fecha.setText(Funciones.malograrFecha(s_Fecha));
 //            setearControles();
@@ -155,15 +142,15 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...
-            tareoActual=new Tareo(IdDocumentoActual,objSqlite,objConfLocal);
+            tareoActual=new Tareo(IdDocumentoActual,objSqlite,objConfLocal, this);
             detalleActual.setIdEmpresa(tareoActual.getIdEmpresa());
 //            year = tareoActual.getFecha().getYear();
 //            month =  tareoActual.getFecha().getMonthValue();
 //            day =  tareoActual.getFecha().getDayOfMonth();
 //            if (!tareoActual.getIdEstado().equals("TR")){
-                obtenerDataParaControles();
-                cargarControles();
-                setearControles();
+            obtenerDataParaControles();
+            cargarControles();
+            setearControles();
 //            }
 //            lloObservaciones.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 //            c007_cly_Resumen.setVisibility(View.GONE);
@@ -179,15 +166,15 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 //                c007_fab_Guardar.setEnabled(false);
 //            }
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mostrarValoresDocumentoActual();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mostrarValoresDocumentoActual();
+//    }
 
     //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     private void setearControles() {
@@ -458,7 +445,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 detalleActual.setRdtos(Double.parseDouble(c007_etx_Rdtos.getText().length()>0? c007_etx_Rdtos.getText().toString():"0") );
                 detalleActual.setDni(c007_atv_NroDocumento.getText().toString());
                 List<String> p = new ArrayList<>();
-                p.add(objConfLocal.get("ID_EMPRESA"));
+                p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
                 p.add(detalleActual.getDni());
                 detalleActual.setIdPlanilla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER PLANILLA"),p,"READ",""));
                 detalleActual.setNombres(c007_atv_NombreTrabajador.getText().toString());
@@ -514,50 +501,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 //                    //lloObservaciones.setVisibility(View.GONE);
 //                    lloObservaciones.setLayoutParams(new LinearLayout.LayoutParams(llyFechaTurno.getWidth(), 250));
 //                }
-            } else if (idControlClickeado == R.id.c007_fab_Sincronizar){
-
-                SyncDBSQLToSQLite sqlitesync = new SyncDBSQLToSQLite();
-
-//                SINCRONIZAMOS VEHICULOS
-                try {
-                    // sqlitesync.sincronizar(this, objConfLocal, "mst_conductores", "mst_conductores");
-                    Log.i("SINCRONIZACION: ","VEHICULOS SINCRONIZADOS");
-                }catch (Exception e){
-                    throw e;
-                }
-
-//                SINCRONIZAMOS CONDUCTORES
-                try {
-                    // sqlitesync.sincronizar(this, objConfLocal, "mst_Vehiculos", "mst_vehiculos");
-                    Log.i("SINCRONIZACION: ","CONDUCTORES SINCRONIZADOS");
-                }catch (Exception e){
-                    throw e;
-                }
-
-//                SINCRONIZAMOS PERSONAS
-                try {
-                    // sqlitesync.sincronizar(this, objConfLocal, "mst_personas", "mst_personas");
-                    Log.i("SINCRONIZACION: ","PERSONAS SINCRONIZADOS");
-                }catch (Exception e){
-                    throw e;
-                }
-
-//                SINCRONIZAMOS USUARIOS
-                try {
-                    // sqlitesync.sincronizar(this, objConfLocal, "mst_usuarios", "mst_usuarios");
-                    Log.i("SINCRONIZACION: ","USUARIOS SINCRONIZADOS");
-                }catch (Exception e){
-                    throw e;
-                }
-
-//                SINCRONIZAMOS CONSUMIDORES
-                try {
-                    // sqlitesync.sincronizar(this, objConfLocal, "mst_consumidores", "mst_consumidores");
-                    Log.i("SINCRONIZACION: ","CONSUMIDORES SINCRONIZADOS");
-                }catch (Exception e){
-                    throw e;
-                }
-            }else if (idControlClickeado == R.id.c007_fab_volver_v) {
+            } else if (idControlClickeado == R.id.c007_fab_volver_v) {
                 finish();
             } /*else if (idControlClickeado == R.id.controlTest) {
                 PopUpCalendario d = new PopUpCalendario(this, controlTest);
@@ -607,7 +551,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             Funciones.cargarAutoCompleteTextView(this,c007_atv_NroDocumento,ClaveValor.obtenerValores(ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"),  0, 2)));
             Funciones.cargarAutoCompleteTextView(this,c007_atv_NombreTrabajador,ClaveValor.obtenerClaves(ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"),  0, 2)));
         }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this,ex);
         }
 
     }
@@ -852,7 +796,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     private void obtenerDataParaControles() throws Exception {
         try{
             List<String> p = new ArrayList<>();
-            p.add(objConfLocal.get("ID_EMPRESA"));
+            p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
             //PENDIENTE: CREAR ESTAS CONSULTAS EN QUERYS SQLITE
             arl_Turnos = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Turnos"),p,"READ"));
             arl_Actividades = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Actividades"),p,"READ"));
@@ -966,7 +910,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                        mostrarValoresDocumentoActual();
+//                        mostrarValoresDocumentoActual();
                         popUp.dismiss();
                     }
                 });

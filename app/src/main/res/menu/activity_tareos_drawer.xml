@@ -6,11 +6,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_tareos_main"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/i_grass"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_tareos_settings"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_item_sync"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Sincronizate manito" />
     </group>
 </menu>

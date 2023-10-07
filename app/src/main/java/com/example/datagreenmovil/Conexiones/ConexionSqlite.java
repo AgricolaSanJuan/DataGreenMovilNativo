@@ -1095,14 +1095,14 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       Cursor c = doItBaby(obtQuery("EXISTE DATA PENDIENTE"), null, "READ");
       c.moveToFirst();
       if (c.getString(0).equals("1")) {
-        objConfLocal.set("EXISTE_DATA_PENDIENTE", "TRUE");
+//        objConfLocal.set("EXISTE_DATA_PENDIENTE", "TRUE");
 
         sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","TRUE").apply();
       } else {
         objConfLocal.set("EXISTE_DATA_PENDIENTE", "FALSE");
         sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","FALSE").apply();
       }
-      guardarConfiguracionLocal(objConfLocal);
+//      guardarConfiguracionLocal(objConfLocal);
     } catch (Exception ex) {
       throw ex;
     }
@@ -1119,7 +1119,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         objConfLocal.set("EXISTE_DATA_PENDIENTE", "FALSE");
         sharedPreferences.edit().putString("EXISTE_DATA_PENDIENTE","FALSE").apply();
       }
-      guardarConfiguracionLocal(objConfLocal);
+//      guardarConfiguracionLocal(objConfLocal);
       return new ConfiguracionLocal(obtenerConfiguracionLocal());
     } catch (Exception ex) {
       throw ex;

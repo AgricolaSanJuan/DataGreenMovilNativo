@@ -55,8 +55,8 @@ public class Tareo {
     }
 
 
-    public Tareo(String idTareo, ConexionSqlite objSqlite, ConfiguracionLocal objConfLocal) throws Exception {
-        sharedPreferences = ctx.getSharedPreferences("objConfLocal",ctx.MODE_PRIVATE);
+    public Tareo(String idTareo, ConexionSqlite objSqlite, ConfiguracionLocal objConfLocal, Context context) throws Exception {
+        sharedPreferences = context.getSharedPreferences("objConfLocal",ctx.MODE_PRIVATE);
         Log.i("AQUIII","FINO");
         try {
             if (idTareo == null || idTareo.length() == 0){

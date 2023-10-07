@@ -180,7 +180,7 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
                 switch (moduloSeleccionado){
                     case "Tareos":
                         //Intent intent = new Intent(Context, cls_05010000_Edicion.class);
-                        intent = new Intent(Context, cls_05000000_Tareos.class);
+                        intent = new Intent(Context, TareosActivity.class);
                         //intent.putExtra("ConfiguracionLocal",objConfLocal);
                         //Context.startActivity(intent);
                         break;

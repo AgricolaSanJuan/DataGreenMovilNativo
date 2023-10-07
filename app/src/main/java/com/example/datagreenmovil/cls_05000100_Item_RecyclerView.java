@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_05000100_Item_RecyclerView.MyViewHolder> {
 
@@ -174,5 +175,9 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
         nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
         nuevaActividad.putExtra("IdDocumentoActual",id);
         Context.startActivity(nuevaActividad);
+    }
+
+    public List<String> retornarTareos(){
+        return tareosSeleccionados;
     }
 }
