@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -101,7 +102,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       }
       objSql = new ConexionBD(this);
       objSqlite = new ConexionSqlite(this, objConfLocal);
-      objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
+//      objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
       objRex = new Rex(objSqlite, "trx_ServiciosTransporte");
       referenciarControles();
 
@@ -399,7 +400,6 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
           public void onItemClick(CheckBox cbxIdServicio, TextView txtIdServicio) {
             if(cbxIdServicio.isChecked()){
               idsSeleccionados.add(txtIdServicio.getText().toString());
-              Swal.info(ctx, "asd",txtIdServicio.getText().toString(),18000);
             }else {
               idsSeleccionados.remove(txtIdServicio.getText().toString());
             }
@@ -476,14 +476,15 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     try{
       SQLiteDatabase database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
-      Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='027000000001'", null);
+      Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='"+ idsSeleccionados.get(0) +"'", null);
       resultsUnidad.moveToFirst();
       String unidad = "";
         for(int i = 0; i<resultsUnidad.getColumnCount();i++){
           unidad += "'"+resultsUnidad.getString(i)+(i == resultsUnidad.getColumnCount() -1 ? "'" : "', ");
       }
 
-      Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='027000000001'",null);      JSONArray pasajeros = new JSONArray();
+      Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idsSeleccionados.get(0) +"'",null);
+      JSONArray pasajeros = new JSONArray();
       String servicioTransporte = "";
       while(results.moveToNext()){
         servicioTransporte = results.getString(1);
@@ -501,7 +502,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       Log.i("venimos finos",pasajeros.toString());
 
       RequestQueue requestQueue = Volley.newRequestQueue(this);
-      String url = "http://192.168.30.107:8000/api/get-users";
+      String url = "http://192.168.30.222:8000/api/get-users";
 
       JSONObject params = new JSONObject();
       try {
@@ -516,17 +517,34 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       }
       Log.i("params", params.toString());
 
+      String idServicioTransporte = servicioTransporte;
       JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, params,
               new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Log.i("RESPONSE",response.toString());
+//                    Log.i("RESPONSE",response.toString());
+                  try {
+                    Log.i("DETALLE",response.getJSONArray("response").getJSONObject(0).getString("Detalle"));
+//                    if(!response.getJSONArray("response").getJSONObject(0).getString("Detalle").isEmpty()){
+//                      String nuevoId = response.getJSONArray("response").getJSONObject(0).getString("Detalle");
+//                      database.execSQL("update trx_serviciostransporte set Id = '"+nuevoId+"' where id='"+idServicioTransporte+"'");
+//                    }
+                  } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                  } catch (Exception e) {
+                    throw new RuntimeException(e);
+                  }
                 }
               },
               new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                  Log.e("ERROR", error.toString());
+                  if (error.networkResponse != null && error.networkResponse.data != null) {
+                    String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                    Log.e("ERROR", errorMessage);
+                  } else {
+                    Log.e("ERROR", "Error desconocido");
+                  }
                 }
               });
 
@@ -616,7 +634,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         rS = objSql.doItBaby(objSqlite.obtQuery("TRANSFERIR trx_ServiciosTransporte_Detalle") + pSql, null);
         rS.next();
         if (!rS.getString("Resultado").equals("1")) {
-          objConfLocal.set("MENSAJE", rS.getString("Detalle"));
+//          objConfLocal.set("MENSAJE", rS.getString("Detalle"));
           return false;
         }
       }

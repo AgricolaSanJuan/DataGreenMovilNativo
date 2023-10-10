@@ -40,7 +40,7 @@ public class cls_00000000_Plantilla_Base extends AppCompatActivity {
             }
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this,objConfLocal);
-            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
+//            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
 
             referenciarControles();
             setearControles();

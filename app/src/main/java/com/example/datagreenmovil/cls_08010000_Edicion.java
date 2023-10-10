@@ -80,7 +80,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
       }
       objSql = new ConexionBD(this);
       objSqlite = new ConexionSqlite(this, objConfLocal);
-      objConfLocal.set("ULTIMA_ACTIVIDAD", "ServicioTransporteEdicion");
+//      objConfLocal.set("ULTIMA_ACTIVIDAD", "ServicioTransporteEdicion");
       referenciarControles();
       obtenerDataParaControles();
       Funciones.mostrarEstatusGeneral(this.getBaseContext(),

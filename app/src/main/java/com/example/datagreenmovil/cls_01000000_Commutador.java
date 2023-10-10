@@ -67,7 +67,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             //OBTENER VERSION APP
             //int versionCode = BuildConfig.VERSION_CODE;
             String versionApp = BuildConfig.VERSION_NAME;
-            objConfLocal.set("VERSION_APP", versionApp);
+//            objConfLocal.set("VERSION_APP", versionApp);
             sharedPreferences.edit().putString("VERSION_APP",versionApp).apply();
 
             //        LLEVA DIRECTAMENTE SI EXISTE LA SESION
@@ -92,10 +92,10 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
 //                OBTENER RESOLUCION PANTALLA
                 int valor = Resources.getSystem().getDisplayMetrics().widthPixels;
-                objConfLocal.set("ANCHO_PANTALLA", String.valueOf(valor));
+//                objConfLocal.set("ANCHO_PANTALLA", String.valueOf(valor));
                 sharedPreferences.edit().putString("ANCHO_PANTALLA",String.valueOf(valor)).apply();
                 valor = Resources.getSystem().getDisplayMetrics().heightPixels;
-                objConfLocal.set("ALTO_PANTALLA", String.valueOf(valor));
+//                objConfLocal.set("ALTO_PANTALLA", String.valueOf(valor));
                 sharedPreferences.edit().putString("ALTO_PANTALLA",String.valueOf(valor)).apply();
 
                 //                objSqlite.guardarConfiguracionLocal(objConfLocal);
@@ -205,12 +205,12 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             }
 
             if (objSql.hayConexion()) {
-                objConfLocal.set("ESTADO_RED", "ONLINE");
+//                objConfLocal.set("ESTADO_RED", "ONLINE");
                 sharedPreferences.edit().putString("ESTADO_RED","ONLINE").apply();
                 procesoCargaOnline1();
                 procesoCargaOnline2();
             } else {
-                objConfLocal.set("ESTADO_RED", "OFFLINE");
+//                objConfLocal.set("ESTADO_RED", "OFFLINE");
                 sharedPreferences.edit().putString("ESTADO_RED","OFFLINE").apply();
                 procesoCargaOffline1();
             }
@@ -396,7 +396,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //                objSqlite.crearTablas(objQuerys);
 //            }
             if (!objSqlite.equipoRegistrado()) {
-                objConfLocal.set("ID_DISPOSITIVO", objSql.registrarEquipo(objConfLocal));
+//                objConfLocal.set("ID_DISPOSITIVO", objSql.registrarEquipo(objConfLocal));
                 sharedPreferences.edit().putString("ID_DISPOSITIVO",objSql.registrarEquipo(objConfLocal)).apply();
             }
             objConfLocal = objSql.obtenerVersionesDisponibles(objConfLocal);

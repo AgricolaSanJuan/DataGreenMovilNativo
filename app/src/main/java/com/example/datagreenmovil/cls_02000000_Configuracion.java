@@ -99,7 +99,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         }
         objSql = new ConexionBD(this);
         objSqlite = new ConexionSqlite(this, objConfLocal);
-        objConfLocal.set("ULTIMA_ACTIVIDAD", "Configuracion");
+//        objConfLocal.set("ULTIMA_ACTIVIDAD", "Configuracion");
 
 
         referenciarControles();
@@ -323,7 +323,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
 
 
             } else if (idControlClickeado == R.id.c002_btnGuardar_v) {
-                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
+//                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 objSqlite.guardarConfiguracionLocal(objConfLocal);
                 Funciones.notificar(this, "Configuracion guardada correctamente.");
             } else throw new IllegalStateException("Click sin programacion: " + view.getId());

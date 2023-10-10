@@ -92,7 +92,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             }
 //            objSql = new ConexionBD(objConfLocal);
             objSqlite = new ConexionSqlite(this,objConfLocal);
-            objConfLocal.set("ULTIMA_ACTIVIDAD","Eficiencias");
+//            objConfLocal.set("ULTIMA_ACTIVIDAD","Eficiencias");
             objSql = new ConexionBD(this);
 
             obtenerDataParaControles();

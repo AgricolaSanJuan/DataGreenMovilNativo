@@ -520,10 +520,10 @@ public class Funciones {
   }
 
   private static void cerrarSesion(ConfiguracionLocal objConfLocal, ConexionSqlite objSqlite, Activity actividad) throws Exception {
-    objConfLocal.set("ID_USUARIO_ACTUAL", "");
-    objConfLocal.set("NOMBRE_USUARIO_ACTUAL", "");
-    objConfLocal.set("TOKEN_EXPIRA", "");
-    objConfLocal.set("MODULOS_PERMITIDOS", "");
+//    objConfLocal.set("ID_USUARIO_ACTUAL", "");
+//    objConfLocal.set("NOMBRE_USUARIO_ACTUAL", "");
+//    objConfLocal.set("TOKEN_EXPIRA", "");
+//    objConfLocal.set("MODULOS_PERMITIDOS", "");
     objSqlite.guardarConfiguracionLocal(objConfLocal);
     Intent intent = new Intent(actividad, cls_01000000_Commutador.class);
     actividad.startActivity(intent);

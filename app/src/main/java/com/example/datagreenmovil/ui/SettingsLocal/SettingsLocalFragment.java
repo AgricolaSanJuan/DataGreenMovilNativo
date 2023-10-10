@@ -140,7 +140,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
             public void onClick(View view) {
                 objSqlite = new ConexionSqlite(context, objConfLocal);
                 editor.putString("EQUIPO_CONFIGURADO", "TRUE").apply();
-                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
+//                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
                     editor.putString("RED_HOST",binding.c002EtxHostV.getText().toString()).apply();
                     editor.putString("RED_INSTANCIA",binding.c002EtxInstanciaV.getText().toString()).apply();

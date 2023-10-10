@@ -67,7 +67,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, objConfLocal);
-            objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
+//            objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
 
             referenciarControles();
             setearControles();

@@ -67,7 +67,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this,objConfLocal);
 //            objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
-            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
+//            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
 
             referenciarControles();
             setearControles();

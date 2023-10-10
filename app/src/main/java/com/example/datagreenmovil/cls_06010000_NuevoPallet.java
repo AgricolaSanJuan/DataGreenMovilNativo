@@ -79,7 +79,7 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
             }
             objSqlite = new ConexionSqlite(this,objConfLocal);
-            objConfLocal.set("ULTIMA_ACTIVIDAD","NuevoPallet");
+//            objConfLocal.set("ULTIMA_ACTIVIDAD","NuevoPallet");
             objConexion = new ConexionBD(this);
 
             referenciarControles();
