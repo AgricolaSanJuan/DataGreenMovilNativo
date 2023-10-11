@@ -385,7 +385,6 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   //...
 
   public void listarRegistros() throws Exception {
-    SweetAlertDialog sd = Swal.confirm(ctx, "Estás seguro?","Esta accion no se podrá cambiar.");
     try {
       //BINGO! METODO PARA LISTAR EN RECYCLERVIEW DESDE CURSOR
       List<String> p = new ArrayList<String>();
@@ -402,32 +401,26 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         miAdaptador.setOnItemClickListener(new cls_08000100_RecyclerViewAdapter.OnItemClickListener() {
 
           @Override
-          public void onItemClick(Button buttonSelected, TextView txtIdServicio, String accion) {
-
-            buttonSelected.setOnClickListener(view -> {
-              sd.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sDialog) {
-                  switch (accion){
-                    case "transferir":
-                      if(transferirRegistros(txtIdServicio.getText().toString())){
-                        Swal.success(ctx, "Transferido","Transferido con éxito",1000);
-                        sDialog.dismissWithAnimation();
-                      }
-                    case "eliminar":
-                      if(eliminarRegistros(txtIdServicio.getText().toString())){
-                        Swal.success(ctx, "Eliminado!","Eliminado con éxito",1000);
-                        sDialog.dismissWithAnimation();
-                      }
+          public void onItemClick(TextView txtIdServicio, String accion) {
+            if(accion=="transferir"){
+              Swal.confirm(ctx, "Confirmar","Estás seguro que deseas transferir el registro?")
+              .setConfirmClickListener(sweetAlertDialog -> {
+                if(transferirRegistros(txtIdServicio.getText().toString())){
+                  Swal.success(ctx, "Correcto","El registro se ha transferido correctamente",1000);
+                }
+                sweetAlertDialog.dismissWithAnimation();
+              }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
+            }else if(accion=="eliminar"){
+              Swal.confirm(ctx, "Confirmar","Estás seguro que deseas eliminar el registro?")
+                .setConfirmClickListener(sweetAlertDialog -> {
+                  if(eliminarRegistros(txtIdServicio.getText().toString())){
+                    Swal.success(ctx, "Correcto!","Se ha eliminado el registro con éxito", 1000);
                   }
-                }
-              }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener(){
-                @Override
-                public void onClick(SweetAlertDialog sDialog){
-                  sDialog.dismissWithAnimation();
-                }
-              }).show();
-            });
+                  sweetAlertDialog.dismissWithAnimation();
+                })
+                .setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
+            }
+
 //            if(cbxIdServicio.isChecked()){
 //              SweetAlertDialog sd = Swal.confirm(ctx, "Estás seguro?","El registro seleccionado se transferirá.");
 //              sd.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

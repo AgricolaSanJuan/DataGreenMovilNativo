@@ -72,7 +72,8 @@ public class Swal {
             .setTitleText(title)
             .setContentText(body)
             .setConfirmText("Si")
-            .setCancelText("No");
+            .setCancelText("No")
+            .show();
     return sweetAlertDialog;
   }
 }

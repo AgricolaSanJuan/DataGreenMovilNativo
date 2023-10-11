@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -16,6 +19,7 @@ import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
+import com.example.datagreenmovil.ui.TareosMain.TareosMainFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -41,6 +45,7 @@ import java.util.List;
 
 public class TareosActivity extends AppCompatActivity {
 
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityTareosBinding binding;
     DrawerLayout drawer;
@@ -59,11 +64,13 @@ public class TareosActivity extends AppCompatActivity {
     Cursor c_Registros;
     RecyclerView c005_rcv_Reciclador;
     cls_05000100_Item_RecyclerView miAdaptador;
+    ArrayList<String> idsSeleccionados;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        idsSeleccionados = new ArrayList<>();
         sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
         editor = sharedPreferences.edit();
         ctx = this;
@@ -71,11 +78,13 @@ public class TareosActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         drawer = binding.drawerLayoutTareos;
 
+
         NavigationView navigationView = binding.navViewTareos;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_tareos_main)
+                R.id.nav_tareos_main,
+                R.id.nav_tareos_settings)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -84,40 +93,11 @@ public class TareosActivity extends AppCompatActivity {
             abrirDocumento(null);
         });
 
-        FloatingActionButton opciones = (FloatingActionButton) binding.getRoot().findViewById(R.id.c005_fab_MainTareos_Opciones_v);
-        opciones.setOnClickListener(view -> {
-            drawer.openDrawer(GravityCompat.START);
-        });
+
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_tareos);
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.nav_item_sync) {
-                if (transferirTareos()){
-                    al_RegistrosSeleccionados.clear();
-                    try {
-                        listarRegistros();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                    Funciones.notificar(ctx,"Proceso finalizado correctamente.");
-                    //Toast.makeText(this,"Tareos transferidos correctamente.",Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                Funciones.notificar(ctx,sharedPreferences.getString("MENSAJE","!MENSAJE"));
-                    return false;
-                }
-
-                // Cierra el cajón de navegación después de realizar la acción.
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
     }
 
     @Override
@@ -199,6 +179,9 @@ public class TareosActivity extends AppCompatActivity {
             return false;
         }
     }
+    public DrawerLayout getDrawerLayout() {
+        return drawer;
+    }
     public void listarRegistros() throws Exception {
 //        try{
 //            List<String> p = new ArrayList<String>();
@@ -223,15 +206,26 @@ public class TareosActivity extends AppCompatActivity {
             p.add(s_ListarDesde);
             p.add(s_ListarHasta);
             c_Registros = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_Tareos X ESTADO Y RANGO FECHA"), p, "READ");
-            if (c_Registros.moveToFirst()){
+//            if (c_Registros.moveToFirst()){
                 miAdaptador = new cls_05000100_Item_RecyclerView(this, c_Registros, objConfLocal, al_RegistrosSeleccionados);
-//                miAdaptador.tareosSeleccionados
                 c005_rcv_Reciclador.setAdapter(miAdaptador);
                 c005_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
-            }else{
-                c005_rcv_Reciclador.setAdapter(null);
-                c005_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
-            }
+            miAdaptador.setOnItemClickListener(new cls_05000100_Item_RecyclerView.OnItemClickListener() {
+                @Override
+                public void onItemClick(CheckBox cbxSeleccionado, TextView txtId) {
+                    Log.i("asdsadasd","asdcbxcvxcv");
+                    if (cbxSeleccionado.isChecked()) {
+                        idsSeleccionados.add(txtId.getText().toString());
+                    } else {
+                        idsSeleccionados.remove(txtId.getText().toString());
+                    }
+                    Log.i("IDS", idsSeleccionados.toString());
+                }
+            });
+//            }else{
+//                c005_rcv_Reciclador.setAdapter(null);
+//                c005_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
+//            }
 //            reciclador.setAdapter(miAdaptador);
         } catch (Exception ex)
         {
@@ -304,5 +298,9 @@ public class TareosActivity extends AppCompatActivity {
         }
         r = r + "'";
         return r;
+    }
+
+    public void abrirDrawer() {
+        drawer.openDrawer(GravityCompat.START);
     }
 }

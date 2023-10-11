@@ -246,6 +246,7 @@
                     android:layout_height="match_parent"
                     android:foregroundGravity="center"
                     android:gravity="center"
+                    android:clickable="true"
                     android:textAlignment="center" />
 
             </LinearLayout>

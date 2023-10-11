@@ -12,10 +12,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,11 +59,14 @@ public class TareosMainFragment extends Fragment {
     RecyclerView c005_rcv_Reciclador;
     ArrayList<String> al_RegistrosSeleccionados=new ArrayList<>();
     SharedPreferences sharedPreferences;
+    ArrayList<String> idsSeleccionados;
+    DrawerLayout drawer;
     int anio, mes, dia;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ctx = context;
+        getView().findViewById(R.id.drawer_layout_tareos);
         sharedPreferences = ctx.getSharedPreferences("objConfLocal",Context.MODE_PRIVATE);
     }
 
@@ -90,14 +96,19 @@ public class TareosMainFragment extends Fragment {
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+
         TareosMainViewModel tareosMainViewModel =
                 new ViewModelProvider(this).get(TareosMainViewModel.class);
 
         binding = FragmentTareosMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
         objSql = new ConexionBD(ctx);
         objSqlite = new ConexionSqlite(ctx,objConfLocal);
+        idsSeleccionados = new ArrayList<>();
 
 //        setearSelectorFechaDesde();
 //        setearSelectorFechaHasta();
@@ -194,6 +205,10 @@ public class TareosMainFragment extends Fragment {
                 }
             }
         });
+        binding.c005FabMainTareosOpcionesV.setOnClickListener(view -> {
+            TareosActivity tareosActivity = (TareosActivity) getActivity();
+            tareosActivity.abrirDrawer();
+        });
 
         return root;
     }
@@ -228,6 +243,17 @@ public class TareosMainFragment extends Fragment {
                 cls_05000100_Item_RecyclerView miAdaptador = new cls_05000100_Item_RecyclerView(ctx, c_Registros, objConfLocal, al_RegistrosSeleccionados);
                 binding.c005RcvRecicladorV.setAdapter(miAdaptador);
                 binding.c005RcvRecicladorV.setLayoutManager(new LinearLayoutManager(ctx));
+                miAdaptador.setOnItemClickListener(new cls_05000100_Item_RecyclerView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(CheckBox cbxSeleccionado, TextView txtId) {
+                        if (cbxSeleccionado.isChecked()) {
+                            idsSeleccionados.add(txtId.getText().toString());
+                        } else {
+                            idsSeleccionados.remove(txtId.getText().toString());
+                        }
+                        Log.i("IDS", idsSeleccionados.toString());
+                    }
+                });
             }else{
                 binding.c005RcvRecicladorV.setAdapter(null);
                 binding.c005RcvRecicladorV.setLayoutManager(new LinearLayoutManager(ctx));

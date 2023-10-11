@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,14 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
     Cursor tareos;
     ConfiguracionLocal objConfLocal;
     ArrayList<String> tareosSeleccionados = new ArrayList<>();
+    public interface OnItemClickListener {
+        void onItemClick(CheckBox cbxSeleccionado, TextView txtId);
+    }
+    private cls_05000100_Item_RecyclerView.OnItemClickListener listener;
+    // Método para establecer el listener
+    public void setOnItemClickListener(cls_05000100_Item_RecyclerView.OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public cls_05000100_Item_RecyclerView(Context ct, Cursor t, ConfiguracionLocal cl, ArrayList<String> lista){//, int[] img, String[] nm){
         //PENDIENTE: EN LUGAR DE PASAR UNA LISTA DE MODULOS. PASAR UN ARRAY DE TAREOS O LISTA O ALGO (CURSOR POR EJEMPLO)
@@ -113,29 +124,38 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
             holder.cbx_Seleccionado.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /*
-                    tareos.moveToPosition(holder.getAdapterPosition());
-                    String moduloSeleccionado = ; //ModulosPermitidos[position];
-                    switch (moduloSeleccionado){
-                        case "Tareos":
-                            Intent intent = new Intent(Context, cls_05010000_Edicion.class);
-                            //CON PUTEXTRAS SE PUEDEN AGREGAR PARAMETROS AQUI PARA PASARLOS A LA ACTIVIDAD QUE SE VA A ABRRIR
-
-                            //intent.putExtra("ConfiguracionLocal",objConfLocal);
-
-                            Context.startActivity(intent);
-                        default:
-                            //return getResources().getStringArray(R.array.DEFAULT);
-                    }*/
-                    //Toast.makeText(view.getContext(), "Check", Toast.LENGTH_SHORT).show();
-                    String idTareoCheckeado=holder.txv_IdTareo.getText().toString();
-                    if(holder.cbx_Seleccionado.isChecked() && !tareosSeleccionados.contains(idTareoCheckeado)){
-                        tareosSeleccionados.add(idTareoCheckeado);
-                    }else if (!holder.cbx_Seleccionado.isChecked() && tareosSeleccionados.contains(idTareoCheckeado)){
-                        tareosSeleccionados.remove(idTareoCheckeado);
+                    if (listener != null) {
+                        listener.onItemClick(holder.cbx_Seleccionado, holder.txv_IdTareo);
                     }
                 }
             });
+
+//            holder.cbx_Seleccionado.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    /*
+//                    tareos.moveToPosition(holder.getAdapterPosition());
+//                    String moduloSeleccionado = ; //ModulosPermitidos[position];
+//                    switch (moduloSeleccionado){
+//                        case "Tareos":
+//                            Intent intent = new Intent(Context, cls_05010000_Edicion.class);
+//                            //CON PUTEXTRAS SE PUEDEN AGREGAR PARAMETROS AQUI PARA PASARLOS A LA ACTIVIDAD QUE SE VA A ABRRIR
+//
+//                            //intent.putExtra("ConfiguracionLocal",objConfLocal);
+//
+//                            Context.startActivity(intent);
+//                        default:
+//                            //return getResources().getStringArray(R.array.DEFAULT);
+//                    }*/
+//                    //Toast.makeText(view.getContext(), "Check", Toast.LENGTH_SHORT).show();
+//                    String idTareoCheckeado=holder.txv_IdTareo.getText().toString();
+//                    if(holder.cbx_Seleccionado.isChecked() && !tareosSeleccionados.contains(idTareoCheckeado)){
+//                        tareosSeleccionados.add(idTareoCheckeado);
+//                    }else if (!holder.cbx_Seleccionado.isChecked() && tareosSeleccionados.contains(idTareoCheckeado)){
+//                        tareosSeleccionados.remove(idTareoCheckeado);
+//                    }
+//                }
+//            });
         }catch (Exception ex){
             throw ex;
         }

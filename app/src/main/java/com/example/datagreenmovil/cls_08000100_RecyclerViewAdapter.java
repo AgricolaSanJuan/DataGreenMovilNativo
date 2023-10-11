@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_08000100_RecyclerViewAdapter.MyViewHolder> {
 
   public interface OnItemClickListener {
-    void onItemClick(Button btnSelected, TextView idServicio, String accion);
+    void onItemClick(TextView idServicio, String accion);
   }
   private OnItemClickListener listener;
   // Método para establecer el listener
@@ -100,6 +100,9 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       holder.c023_txv_NroBrevete.setText(servicioTransporte.getString(servicioTransporte.getColumnIndex("IdConductor")));
       holder.c023_txv_Conductor.setText(servicioTransporte.getString(servicioTransporte.getColumnIndex("Conductor")));
       holder.c023_txv_Observacion.setText(servicioTransporte.getString(servicioTransporte.getColumnIndex("Observacion")));
+      if(holder.c023_txv_IdEstado.getText().toString().equals("TR")){
+        holder.c023_lly_Buttons.setVisibility(View.GONE);
+      }
 
 //            holder.mainLayout.setBackgroundColor(ContextCompat.getColor(Context, holder.txv_IdEstado.getText().equals("PE") ? R.color.alerta : R.color.verdeClaro));
       holder.c023_cly_Principal.setBackground(ResourcesCompat.getDrawable(contextoLocal.getResources(), holder.c023_txv_IdEstado.getText().equals("PE") ? R.drawable.bg_item_recyclerview_alerta : R.drawable.bg_item_recyclerview_normal, null));
@@ -143,15 +146,18 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 //          Toast.makeText(contextoLocal, , Toast.LENGTH_SHORT).show();
         }
       });
-      holder.btnTransferirRegistro.setOnClickListener(view -> {
-        if (listener != null) {
-          listener.onItemClick(holder.btnTransferirRegistro, holder.c023_txv_Id, "transferir");
+      holder.btnTransferirRegistro.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+//          if (listener != null) {
+            listener.onItemClick(holder.c023_txv_Id, "transferir");
+//          }
         }
       });
       holder.btnEliminar.setOnClickListener(view -> {
-        if (listener != null) {
-          listener.onItemClick(holder.btnEliminar, holder.c023_txv_Id, "eliminar");
-        }
+//        if (listener != null) {
+          listener.onItemClick(holder.c023_txv_Id, "eliminar");
+//        }
       });
 //      holder.c023_cbx_Seleccion.setOnClickListener(new View.OnClickListener() {
 //        @Override
@@ -213,7 +219,7 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         c023_txv_Observacion;
     CheckBox c023_cbx_Seleccion;
     Button btnAddPasajero2, btnTransferirRegistro, btnEliminar;
-    ConstraintLayout c023_cly_Principal;
+    ConstraintLayout c023_cly_Principal, c023_lly_Buttons;
 
     public MyViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -236,6 +242,7 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       btnAddPasajero2 = itemView.findViewById(R.id.btnAddPasajeros);
       btnTransferirRegistro = itemView.findViewById(R.id.c023_btn_transferir_v);
       btnEliminar = itemView.findViewById(R.id.c023_btn_eliminar_v);
+      c023_lly_Buttons = itemView.findViewById(R.id.c023_lly_buttons);
     }
   }
 
