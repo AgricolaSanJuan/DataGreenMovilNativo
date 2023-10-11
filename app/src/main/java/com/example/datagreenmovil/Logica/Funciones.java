@@ -537,6 +537,7 @@ public class Funciones {
 
   public static Dialog obtenerDialogParaCambiarClave(Context context, ConfiguracionLocal objConfLocal, ConexionSqlite objSqlite, Activity actividad) {
     //Context context, String titulo, boolean btnCerrar, String mensaje, boolean btnCancelar, boolean btnAceptar){
+    SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
     try {
 
       Dialog popUp = new Dialog(context);
@@ -565,7 +566,7 @@ public class Funciones {
       etxUsuarioCondicional = popUp.findViewById(R.id.etxUsuarioCondicional);
 
 
-      c018_txv_IdUsuario.setText(objConfLocal.get("ID_USUARIO_ACTUAL"));
+      c018_txv_IdUsuario.setText(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
       c018_imv_Cerrar.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -580,7 +581,7 @@ public class Funciones {
           c018_fab_Ok.setImageResource(R.drawable.ic_check);
           c018_fab_Ok.startAnimation(scaleAnimation);
 
-          String IdUsuarioActual = objConfLocal.get("ID_USUARIO_ACTUAL"), nuevaContrasenia, confirmacionNuevaContrasenia;
+          String IdUsuarioActual = sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"), nuevaContrasenia, confirmacionNuevaContrasenia;
           nuevaContrasenia = c018_etx_ContraseniaNueva.getText().toString();
           confirmacionNuevaContrasenia = c018_etx_ConfirmacionContraseniaNueva.getText().toString();
           if (validarNuevaContrasenia(nuevaContrasenia, confirmacionNuevaContrasenia)) {
@@ -616,6 +617,7 @@ public class Funciones {
   //  SOBRECARGA PARA ABRIR POPUP CAMBIAR CLAVE
   public static Dialog obtenerDialogParaCambiarClave(Context context, ConfiguracionLocal objConfLocal, ConexionSqlite objSqlite, Activity actividad, Boolean isForgetPassword) {
     //Context context, String titulo, boolean btnCerrar, String mensaje, boolean btnCancelar, boolean btnAceptar){
+    SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal",Context.MODE_PRIVATE);
     try {
       Dialog popUp = new Dialog(context);
       popUp.setContentView(R.layout.popup_cambiar_clave_018);
@@ -658,7 +660,7 @@ public class Funciones {
         c018_txv_IdUsuario.setVisibility(View.VISIBLE);
         tillyUsuario.setVisibility(View.GONE);
       }
-      c018_txv_IdUsuario.setText(objConfLocal.get("ID_USUARIO_ACTUAL"));
+      c018_txv_IdUsuario.setText(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
       c018_imv_Cerrar.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {

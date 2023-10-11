@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_08000100_RecyclerViewAdapter.MyViewHolder> {
 
   public interface OnItemClickListener {
-    void onItemClick(CheckBox cbxIdServicio, TextView idServicio);
+    void onItemClick(Button btnSelected, TextView idServicio, String accion);
   }
   private OnItemClickListener listener;
   // Método para establecer el listener
@@ -143,39 +143,49 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 //          Toast.makeText(contextoLocal, , Toast.LENGTH_SHORT).show();
         }
       });
-      holder.c023_cbx_Seleccion.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          if (listener != null) {
-            listener.onItemClick(holder.c023_cbx_Seleccion, holder.c023_txv_Id);
-          }
+      holder.btnTransferirRegistro.setOnClickListener(view -> {
+        if (listener != null) {
+          listener.onItemClick(holder.btnTransferirRegistro, holder.c023_txv_Id, "transferir");
         }
+      });
+      holder.btnEliminar.setOnClickListener(view -> {
+        if (listener != null) {
+          listener.onItemClick(holder.btnEliminar, holder.c023_txv_Id, "eliminar");
+        }
+      });
+//      holder.c023_cbx_Seleccion.setOnClickListener(new View.OnClickListener() {
 //        @Override
-//        public void onClick(View view) {
-//                    /*
-//                    tareos.moveToPosition(holder.getAdapterPosition());
-//                    String moduloSeleccionado = ; //ModulosPermitidos[position];
-//                    switch (moduloSeleccionado){
-//                        case "Tareos":
-//                            Intent intent = new Intent(Context, cls_05010000_Edicion.class);
-//                            //CON PUTEXTRAS SE PUEDEN AGREGAR PARAMETROS AQUI PARA PASARLOS A LA ACTIVIDAD QUE SE VA A ABRRIR
-//
-//                            //intent.putExtra("ConfiguracionLocal",objConfLocal);
-//
-//                            Context.startActivity(intent);
-//                        default:
-//                            //return getResources().getStringArray(R.array.DEFAULT);
-//                    }*/
-////          Toast.makeText(view.getContext(), objRex.Get("Id"), Toast.LENGTH_SHORT).show();
-//          String idSeleccionado = holder.c023_txv_Id.getText().toString();
-//          Log.i("ID",idSeleccionado);
-//          if (holder.c023_cbx_Seleccion.isChecked() && !idsSelecciones.contains(idSeleccionado)) {
-//            idsSelecciones.add(idSeleccionado);
-//          } else if (!holder.c023_cbx_Seleccion.isChecked() && idsSelecciones.contains(idSeleccionado)) {
-//            idsSelecciones.remove(idSeleccionado);
+//        public void onClick(View v) {
+//          if (listener != null) {
+//            listener.onItemClick(holder.c023_cbx_Seleccion, holder.c023_txv_Id);
 //          }
 //        }
-      });
+////        @Override
+////        public void onClick(View view) {
+////                    /*
+////                    tareos.moveToPosition(holder.getAdapterPosition());
+////                    String moduloSeleccionado = ; //ModulosPermitidos[position];
+////                    switch (moduloSeleccionado){
+////                        case "Tareos":
+////                            Intent intent = new Intent(Context, cls_05010000_Edicion.class);
+////                            //CON PUTEXTRAS SE PUEDEN AGREGAR PARAMETROS AQUI PARA PASARLOS A LA ACTIVIDAD QUE SE VA A ABRRIR
+////
+////                            //intent.putExtra("ConfiguracionLocal",objConfLocal);
+////
+////                            Context.startActivity(intent);
+////                        default:
+////                            //return getResources().getStringArray(R.array.DEFAULT);
+////                    }*/
+//////          Toast.makeText(view.getContext(), objRex.Get("Id"), Toast.LENGTH_SHORT).show();
+////          String idSeleccionado = holder.c023_txv_Id.getText().toString();
+////          Log.i("ID",idSeleccionado);
+////          if (holder.c023_cbx_Seleccion.isChecked() && !idsSelecciones.contains(idSeleccionado)) {
+////            idsSelecciones.add(idSeleccionado);
+////          } else if (!holder.c023_cbx_Seleccion.isChecked() && idsSelecciones.contains(idSeleccionado)) {
+////            idsSelecciones.remove(idSeleccionado);
+////          }
+////        }
+//      });
     } catch (Exception ex) {
       throw ex;
     }
@@ -202,7 +212,7 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         c023_txv_Conductor,
         c023_txv_Observacion;
     CheckBox c023_cbx_Seleccion;
-    Button btnAddPasajero2;
+    Button btnAddPasajero2, btnTransferirRegistro, btnEliminar;
     ConstraintLayout c023_cly_Principal;
 
     public MyViewHolder(@NonNull View itemView) {
@@ -224,6 +234,8 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       c023_cbx_Seleccion = itemView.findViewById(R.id.c023_cbx_Seleccionado_v);
       c023_cly_Principal = itemView.findViewById(R.id.c023_cly_Principal_v);
       btnAddPasajero2 = itemView.findViewById(R.id.btnAddPasajeros);
+      btnTransferirRegistro = itemView.findViewById(R.id.c023_btn_transferir_v);
+      btnEliminar = itemView.findViewById(R.id.c023_btn_eliminar_v);
     }
   }
 

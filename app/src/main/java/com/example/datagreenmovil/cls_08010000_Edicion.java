@@ -2,6 +2,7 @@ package com.example.datagreenmovil;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,6 +63,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
   LinearLayout c024_lly_Proveedor, c024_lly_Vehiculo, c024_lly_Ruta, c024_lly_Conductor;
   FloatingActionButton c024_fab_Volver, c024_fab_Guardar, c024_fab_AgregarPersonas;
   ArrayList<PopUpBuscarEnLista_Item> arl_Proveedores, arl_Vehiculos, arl_Rutas, arl_Conductores;
+  SharedPreferences sharedPreferences;
 
   ListView lvPasajeros;
   boolean registroModificado = false;
@@ -72,6 +74,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
     setContentView(R.layout.v_08010000_edicion_024);
     this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
+    sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
     try {
       if (getIntent().getExtras() != null) {
         objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
@@ -274,7 +277,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
   private void obtenerDataParaControles() throws Exception {
     try {
       List<String> p = new ArrayList<>();
-      p.add(objConfLocal.get("ID_EMPRESA"));
+      p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
       //PENDIENTE: CREAR ESTAS CONSULTAS EN QUERYS SQLITE
       arl_Proveedores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Proveedores"), p, "READ"));
       arl_Rutas = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Rutas"), p, "READ"));
@@ -365,7 +368,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         finish();
       } else if (idControlClickeado == R.id.c024_fab_Guardar_v) {
         guardarRegistro();
-        registroModificado = false;
+//        registroModificado = false;
       } else if (idControlClickeado == R.id.c024_fab_AgregarPersonas_v) {
         //c024_fab_AgregarPersonas = findViewById(R.id.c024_fab_AgregarPersonas_v);
         //throw new IllegalStateException("Click sin programacion: " + view.getId());
@@ -410,7 +413,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         obtenerRexActual();
         mostrarValoresRexActual();
 
-        Swal.success(this, "Correcto","El registro se ha guardado correctamente", 1500);
+//        Swal.success(this, "Correcto","El registro se ha guardado correctamente", 1500);
         finish();
 //                Funciones.notificar(this, "Registro guardado correctamente.");
         return true;
@@ -486,7 +489,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
 
   private void obtenerRexActual() throws Exception {
     List<String> p = new ArrayList<>();
-    p.add(objConfLocal.get("ID_EMPRESA"));
+    p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
     p.add(s_IdRex);
     objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte X ID"), p, "READ"));
     //PENDIENTE 1 DE 2: CREAR 2 OBJETOS UNO PARA IMPRESION VISUAL Y OTRO PARA GRABAR A SQLITE O MODIFICAR PROCEDIMIENTO DE GUARDADO EN SQLITE
@@ -495,11 +498,11 @@ public class cls_08010000_Edicion extends AppCompatActivity {
       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
       LocalDateTime now = LocalDateTime.now();
       fechaHoraActual = dtf.format(now);
-      objRex.Set("IdEmpresa", objConfLocal.get("ID_EMPRESA"));
+      objRex.Set("IdEmpresa", sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
       objRex.Set("IdEstado", "PE");
-      objRex.Set("IdUsuarioCrea", objConfLocal.get("ID_USUARIO_ACTUAL"));
+      objRex.Set("IdUsuarioCrea", sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
       objRex.Set("FechaHoraCreacion", fechaHoraActual);
-      objRex.Set("IdUsuarioActualiza", objConfLocal.get("ID_USUARIO_ACTUAL"));
+      objRex.Set("IdUsuarioActualiza", sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
     }
   }
 

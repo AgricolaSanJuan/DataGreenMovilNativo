@@ -65,4 +65,14 @@ public class Swal {
       }
     }, delay.longValue());
   }
+
+  public static SweetAlertDialog confirm(Context ctx, String title, String body) {
+    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ctx, SweetAlertDialog.NORMAL_TYPE);
+    sweetAlertDialog
+            .setTitleText(title)
+            .setContentText(body)
+            .setConfirmText("Si")
+            .setCancelText("No");
+    return sweetAlertDialog;
+  }
 }

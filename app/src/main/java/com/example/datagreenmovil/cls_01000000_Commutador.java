@@ -179,44 +179,51 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //                Funciones.notificar(this,"No existe base de datos local.");
 //                abrirConfiguraciones();
                 //objSqlite.crearBaseSqlite();
+                Log.i("NEL","existeBDLocal");
                 return false;
             }
             if (!objSqlite.existenTablas()) {
 //                Funciones.notificar(this,"No existe tablas en base de datos local.");
 //                abrirConfiguraciones();
+                Log.i("NEL","existenTablas");
                 return false;
                 //objQuerys = new Querys(objSql.obtenerQuerys());
                 //objSqlite.crearTablas(objQuerys);
             }
-            if (!objSqlite.existeDataLocal()) {
-//                Funciones.notificar(this,"No existe data local.");
-//                abrirConfiguraciones();
-                //descargarData();
-                //objSqlite.guardarConfiguracionLocal(objConfLocal);
-                return false;
-            }
+//            if (!objSqlite.existeDataLocal()) {
+////                Funciones.notificar(this,"No existe data local.");
+////                abrirConfiguraciones();
+//                //descargarData();
+//                //objSqlite.guardarConfiguracionLocal(objConfLocal);
+//                return false;
+//            }
 
             //objConfLocal.actualizarConfiguraciones(objSql.obtenerConfiguracionesDispositivoMovil());
-            if (!objSqlite.existeConfiguracionLocal()) {
-                Funciones.notificar(this, "No existe configuracion local.");
-//                abrirConfiguraciones();
-                //realizarConfiguracionLocal();
-                return false;
-            }
+//            if (!objSqlite.existeConfiguracionLocal()) {
+//                Funciones.notificar(this, "No existe configuracion local.");
+////                abrirConfiguraciones();
+//                //realizarConfiguracionLocal();
+//                Log.i("NEL","existeConfiguracionLocal");
+//                return false;
+//            }
 
             if (objSql.hayConexion()) {
 //                objConfLocal.set("ESTADO_RED", "ONLINE");
                 sharedPreferences.edit().putString("ESTADO_RED","ONLINE").apply();
+                Log.i("NEL","hayConexion");
                 procesoCargaOnline1();
                 procesoCargaOnline2();
             } else {
 //                objConfLocal.set("ESTADO_RED", "OFFLINE");
+                Log.i("NEL","ESTADO RED OFFLINE");
                 sharedPreferences.edit().putString("ESTADO_RED","OFFLINE").apply();
                 procesoCargaOffline1();
             }
+            Log.i("NEL","KIUBO MANO");
             return true;
         } catch (Exception ex) {
             Funciones.mostrarError(this, ex);
+            Log.i("NEL","ERROR");
             return false;
         }
 

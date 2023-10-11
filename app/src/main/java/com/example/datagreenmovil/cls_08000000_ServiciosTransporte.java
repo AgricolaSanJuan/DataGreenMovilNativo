@@ -21,6 +21,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
@@ -55,6 +56,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -273,13 +276,13 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     try {
       int idControlClickeado = item.getItemId();
       if (idControlClickeado == R.id.opc_05000000_transferir) {
-        if (transferirRegistros()) {
-//          al_RegistrosSeleccionados.clear();
-//          listarRegistros();
-//          Funciones.notificar(this, "Proceso finalizado correctamente.");
-//          return true;
-        }
-        Funciones.notificar(this, objConfLocal.get("MENSAJE"));
+//        if (transferirRegistros()) {
+////          al_RegistrosSeleccionados.clear();
+////          listarRegistros();
+////          Funciones.notificar(this, "Proceso finalizado correctamente.");
+////          return true;
+//        }
+//        Funciones.notificar(this, objConfLocal.get("MENSAJE"));
         return false;
       } else if (idControlClickeado == R.id.opc_05000000_extornar) {
         if (extornarRegistros()) {
@@ -287,10 +290,10 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         }
         return true;
       } else if (idControlClickeado == R.id.opc_05000000_eliminar) {
-        if (eliminarRegistros()) {
-          listarRegistros();
-          Funciones.notificar(this, "Registros eliminados correctamente.");
-        }
+//        if (eliminarRegistros()) {
+//          listarRegistros();
+//          Funciones.notificar(this, "Registros eliminados correctamente.");
+//        }
         return true;
       } else if (idControlClickeado == R.id.opc_05000000_reporte) {
         abrirActividadReportes();
@@ -382,10 +385,11 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   //...
 
   public void listarRegistros() throws Exception {
+    SweetAlertDialog sd = Swal.confirm(ctx, "Estás seguro?","Esta accion no se podrá cambiar.");
     try {
       //BINGO! METODO PARA LISTAR EN RECYCLERVIEW DESDE CURSOR
       List<String> p = new ArrayList<String>();
-      p.add(objConfLocal.get("ID_EMPRESA"));
+      p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
       p.add(s_ListarIdEstado);
       p.add(s_ListarDesde);
       p.add(s_ListarHasta);
@@ -396,14 +400,56 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         c022_rcv_Reciclador.setAdapter(miAdaptador);
         c022_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
         miAdaptador.setOnItemClickListener(new cls_08000100_RecyclerViewAdapter.OnItemClickListener() {
+
           @Override
-          public void onItemClick(CheckBox cbxIdServicio, TextView txtIdServicio) {
-            if(cbxIdServicio.isChecked()){
-              idsSeleccionados.add(txtIdServicio.getText().toString());
-            }else {
-              idsSeleccionados.remove(txtIdServicio.getText().toString());
-            }
-            Log.i("IDS", idsSeleccionados.toString());
+          public void onItemClick(Button buttonSelected, TextView txtIdServicio, String accion) {
+
+            buttonSelected.setOnClickListener(view -> {
+              sd.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sDialog) {
+                  switch (accion){
+                    case "transferir":
+                      if(transferirRegistros(txtIdServicio.getText().toString())){
+                        Swal.success(ctx, "Transferido","Transferido con éxito",1000);
+                        sDialog.dismissWithAnimation();
+                      }
+                    case "eliminar":
+                      if(eliminarRegistros(txtIdServicio.getText().toString())){
+                        Swal.success(ctx, "Eliminado!","Eliminado con éxito",1000);
+                        sDialog.dismissWithAnimation();
+                      }
+                  }
+                }
+              }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener(){
+                @Override
+                public void onClick(SweetAlertDialog sDialog){
+                  sDialog.dismissWithAnimation();
+                }
+              }).show();
+            });
+//            if(cbxIdServicio.isChecked()){
+//              SweetAlertDialog sd = Swal.confirm(ctx, "Estás seguro?","El registro seleccionado se transferirá.");
+//              sd.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sDialog) {
+//                          if(transferirRegistros()){
+//                            Swal.success(ctx, "Transferido","Transferido con éxito",1000);
+//                          }
+//                          sDialog.dismissWithAnimation();
+//                        }
+//                      }).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener(){
+//                @Override
+//                public void onClick(SweetAlertDialog sDialog){
+//                  sDialog.dismissWithAnimation();
+//                }
+//              });
+
+//              Log.i("INFO",String.valueOf(sd));
+
+//            }else {
+//              idsSeleccionados.remove(txtIdServicio.getText().toString());
+//            }
             // Manejar el evento de clic aquí
             // Puedes acceder al elemento en la posición "position" si es necesario
           }
@@ -434,25 +480,25 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     }
   }
 
-  private boolean eliminarRegistros() {
+  private boolean eliminarRegistros(String idEliminar) {
     try {
       List<String> pSqlite = new ArrayList<String>();
-      for (String id : al_RegistrosSeleccionados) {
-        pSqlite.add(objConfLocal.get("ID_EMPRESA"));
-        pSqlite.add(id);
+        Log.i("IDELIMINADO",idEliminar);
+        pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+        pSqlite.add(idEliminar);
         //objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER REGISTRO trx_ServiciosTransporte"),pSqlite,"READ"));
         objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte"), pSqlite, "READ"));
         if (objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) {
           pSqlite.clear();
-          pSqlite.add(objConfLocal.get("ID_EMPRESA"));
-          pSqlite.add(id);
+          pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+          pSqlite.add(idEliminar);
           objSqlite.doItBaby(objSqlite.obtQuery("ELIMINAR trx_ServiciosTransporte_Detalle PENDIENTES X ID"), pSqlite, "WRITE");
           objSqlite.doItBaby(objSqlite.obtQuery("ELIMINAR trx_ServiciosTransporte PENDIENTES X ID"), pSqlite, "WRITE");
         } else {
-          Funciones.notificar(this, "El registro [" + id + "] se encuentra transferido, imposible eliminar.");
+//          Swal.info(ctx, "Exito!","El registro se ha eliminado con éxito",1000);
+          Funciones.notificar(this, "El registro [" + idEliminar + "] se encuentra transferido, imposible eliminar.");
           return false;
         }
-      }
 
       objSqlite.ActualizarDataPendiente(objConfLocal);
       Funciones.mostrarEstatusGeneral(this.getBaseContext(),
@@ -464,6 +510,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
           txv_PushVersionDataBase,
           txv_PushIdentificador
       );
+      listarRegistros();
       return true;
     } catch (Exception ex) {
 //             Funciones.mostrarError(this,ex);
@@ -472,18 +519,18 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   }
 
 
-  private boolean transferirRegistros() {
+  private boolean transferirRegistros(String idTransferir) {
     try{
       SQLiteDatabase database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
-      Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='"+ idsSeleccionados.get(0) +"'", null);
+      Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='"+ idTransferir +"'", null);
       resultsUnidad.moveToFirst();
       String unidad = "";
         for(int i = 0; i<resultsUnidad.getColumnCount();i++){
           unidad += "'"+resultsUnidad.getString(i)+(i == resultsUnidad.getColumnCount() -1 ? "'" : "', ");
       }
 
-      Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idsSeleccionados.get(0) +"'",null);
+      Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idTransferir +"'",null);
       JSONArray pasajeros = new JSONArray();
       String servicioTransporte = "";
       while(results.moveToNext()){
@@ -497,12 +544,9 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         elemento.put(results.getColumnName(4), results.getString(4));
         pasajeros.put(elemento);
       }
-//        pasajeros.put(dni);
-      Log.i("venimos finos",unidad);
-      Log.i("venimos finos",pasajeros.toString());
-
       RequestQueue requestQueue = Volley.newRequestQueue(this);
-      String url = "http://192.168.30.222:8000/api/get-users";
+//      URL DE LA API EN LARAVEL
+      String url = "http://192.168.30.99:8000/api/get-users";
 
       JSONObject params = new JSONObject();
       try {
@@ -522,13 +566,27 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
               new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-//                    Log.i("RESPONSE",response.toString());
                   try {
-                    Log.i("DETALLE",response.getJSONArray("response").getJSONObject(0).getString("Detalle"));
-//                    if(!response.getJSONArray("response").getJSONObject(0).getString("Detalle").isEmpty()){
-//                      String nuevoId = response.getJSONArray("response").getJSONObject(0).getString("Detalle");
-//                      database.execSQL("update trx_serviciostransporte set Id = '"+nuevoId+"' where id='"+idServicioTransporte+"'");
-//                    }
+                    int code = response.getInt("code");
+                    List<String> pSqlite = new ArrayList<String>();
+
+                    if(code == 200){
+                      pSqlite.clear();
+                      pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
+                      pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+                      pSqlite.add(idServicioTransporte);
+                      objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
+                      listarRegistros();
+//                      Swal.success(ctx, "Correcto!","El registro se ha guardado correctamente!",3000);
+                    } else if (code == 500) {
+//                      Log.i("FINOS",response.toString());
+                      String nuevoId = response.getString("newId");
+                      database.execSQL("PRAGMA FOREIGN_KEYS=1;");
+                      String query = "UPDATE trx_serviciostransporte SET ID='"+ nuevoId +"' where ID = '"+idServicioTransporte+"'";
+                      database.execSQL(query);
+                      Swal.warning(ctx, "Importante!","No se ha transferido el registro pero se ha actualizado el identificador, por favor, vuelva a transferirlo",6000);
+                      listarRegistros();
+                    }
                   } catch (JSONException e) {
                     throw new RuntimeException(e);
                   } catch (Exception e) {
@@ -541,83 +599,18 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                   if (error.networkResponse != null && error.networkResponse.data != null) {
                     String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                    Log.e("ERROR", errorMessage);
+                    Swal.error(ctx,"Ha ocurrido un error al insertar el registro",errorMessage,6000);
                   } else {
-                    Log.e("ERROR", "Error desconocido");
+                    Swal.error(ctx,"Oops!","Ha ocurrido un error al insertar el registro",6000);
                   }
                 }
               });
-
 // Agregar la solicitud a la cola de solicitudes
       requestQueue.add(stringRequest);
     }catch (Exception e){
+      Swal.error(ctx, "Error al transferir",e.toString(),6000);
     }
     return true;
-
-
-//    try {
-//      List<String> pSqlite = new ArrayList<String>();
-//      String pSql = "";
-//      ResultSet rS;
-//      for (String id : al_RegistrosSeleccionados) {
-//        pSqlite.add(objConfLocal.get("ID_EMPRESA"));
-//        pSqlite.add(id);
-//        objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte"), pSqlite, "READ"));
-//        if (objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) {
-//          if (objSql.existeId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id)) {
-//            String nuevoId = objSql.obtenerNuevoId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), objConfLocal.get("ID_DISPOSITIVO"));
-//            SQLiteDatabase sqlite = objSqlite.getReadableDatabase();
-//            sqlite.execSQL("PRAGMA FOREIGN_KEYS=1;");
-//            objSqlite.ActualizarId("trx_ServiciosTransporte", objConfLocal.get("ID_EMPRESA"), id, nuevoId); //PROBAR
-//            sqlite.execSQL("PRAGMA FOREIGN_KEYS=0;");
-//            id = nuevoId;
-//            objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", id); //PROBAR
-//          }
-//          pSql = obtenerParametrosDeCabecera(id, "TRANSFERIR trx_ServiciosTransporte");
-//          rS = objSql.doItBaby(objSqlite.obtQuery("TRANSFERIR trx_ServiciosTransporte") + pSql, null);
-//          rS.next();
-//          if (rS.getString("Resultado").equals("1")) {
-//            if (transferirDetalle(id)) {
-//              pSqlite.clear();
-//              //pSqlite.add(rS.getString("Detalle"));
-//              pSqlite.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
-//              pSqlite.add(objConfLocal.get("ID_EMPRESA"));
-//              pSqlite.add(id);
-//              objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
-//              //return true;
-//            } else {
-//              List<String> p = new ArrayList<>();
-//              p.add(id);
-//              objSql.doItBaby(objSqlite.obtQuery("ROLLBACK trx_ServiciosTransporte"), p); //PROBAR
-//              return false;
-//            }
-////                    if (!id.equals(rS.getString("IdTrx")) && rS.getString("IdTrx").length()>0){
-////                        objSqlite.ActualizarId("trx_ServiciosTransporte",objConfLocal.get("ID_EMPRESA"), id,rS.getString("IdTrx")); //PROBAR
-////                    }
-//
-//          } else {
-//            //Toast.makeText(this,rS.getString("Detalle"),Toast.LENGTH_SHORT).show();
-//            objConfLocal.set("MENSAJE", rS.getString("Detalle"));
-//            return false;
-//          }
-//        } else {
-//          Funciones.notificar(this, "El registro. [" + id + "] no se puede transferir porque ya fue transferido anteriormente.");
-//        }
-//      }
-//      objConfLocal = objSqlite.ActualizarDataPendiente(objConfLocal, true);
-//      Funciones.mostrarEstatusGeneral(this.getBaseContext(),
-//          objConfLocal,
-//          txv_PushTituloVentana,
-//          txv_PushRed,
-//          txv_NombreApp,
-//          txv_PushVersionApp,
-//          txv_PushVersionDataBase,
-//          txv_PushIdentificador);
-//      return true;
-//    } catch (Exception ex) {
-//      Funciones.mostrarError(this, ex);
-//      return false;
-//    }
   }
 
   private boolean transferirDetalle(String id) {
