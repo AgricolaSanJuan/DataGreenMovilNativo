@@ -2,10 +2,6 @@ plugins {
     id 'com.android.application'
 }
 
-ext {
-    baseContext = this
-}
-
 android {
     compileSdk 32
 
@@ -61,12 +57,16 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation ('io.socket:socket.io-client:2.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+
     testImplementation 'junit:junit:4.12'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
-
 
 //    JSON PERMISSIONS
     implementation 'org.json:json:20230618'

@@ -4,15 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".ui.TareosSettings.TareosSettingsFragment">
 
-    <TextView
-        android:id="@+id/textView43"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAbrirDrawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="el fino p mi king"
+
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/chipGroupTareos"
+        app:srcCompat="@drawable/i_list" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txvTareos2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="SINCRONIZAR TAREOS"
+        android:textAlignment="textEnd"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/chipGroupGeneral"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroupGeneral" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupTareos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical"
+        app:chipSpacingHorizontal="20dp"
+        app:chipSpacingVertical="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txvTareos2"
+        app:layout_constraintTop_toBottomOf="@+id/txvTareos2"
+        app:singleSelection="false">
+
+        <Switch
+            android:id="@+id/switchLabores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="Labores"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchModulos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modulos"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchConsumidores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consumidores"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchCultivos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cultivos"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchDias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dias"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchVariedades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Variedades"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchTurnos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Turnos"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchActividades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Actividades"
+            android:textSize="18dp" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <Button
+        android:id="@+id/btnSincronizarTareos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/info"
+        android:text="SINCRONIZAR"
+        app:layout_constraintEnd_toEndOf="@+id/chipGroupTareos"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroupTareos" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

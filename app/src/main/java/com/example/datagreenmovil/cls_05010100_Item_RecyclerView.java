@@ -119,7 +119,6 @@ public class cls_05010100_Item_RecyclerView extends ArrayAdapter<TareoDetalle> {
                             objSqliteL.doItBaby(objSqliteL.obtQuery("ELIMINAR trx_Tareos_Detalle"),p,"WRITE");
                             p.remove(2);
                             objSqliteL.doItBaby(objSqliteL.obtQuery("ACTUALIZAR ITEM trx_Tareos_Detalle"),p,"WRITE");
-
                             //tareo.getDetalle().remove(tareo.getDetalle());
                             tareo.eliminarItemDetalle(itemSeleccionado);
                             //Toast.makeText(mContext, "tareo elimiado: " + itemSeleccionado, Toast.LENGTH_SHORT).show();

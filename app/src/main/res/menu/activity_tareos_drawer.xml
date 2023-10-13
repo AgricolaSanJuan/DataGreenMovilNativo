@@ -7,14 +7,15 @@
         <item
             android:id="@+id/nav_tareos_main"
             android:icon="@drawable/i_grass"
-            android:title="@string/menu_home" />
+            android:title="TAREOS" />
         <item
             android:id="@+id/nav_tareos_settings"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:icon="@drawable/i_sync"
+            android:title="SINCRONIZAR" />
         <item
             android:id="@+id/nav_item_sync"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Sincronizate manito" />
+            android:enabled="false"
+            android:icon="@drawable/ic_upload"
+            android:title="TRANSFERIR TAREOS" />
     </group>
 </menu>

@@ -72,16 +72,6 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/c007_fab_Sincronizar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="onClick"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,7 +79,6 @@
                 android:foregroundGravity="fill"
                 android:onClick="onClick"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/c007_fab_Sincronizar"
                 app:srcCompat="@drawable/i_crop" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

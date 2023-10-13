@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -863,7 +864,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             if (tareoActual.getIdEstado().equals("PE")) {
                 Dialog popUp = new Dialog(this);
                 popUp.setContentView(R.layout.popup_actualizar_detalle_tareo_021);
+            // Aplica los atributos a la ventana del diálogo
                 popUp.getWindow().setBackgroundDrawableResource(R.drawable.bg_popup);
+
 
                 //MANEJO DE CONTROLES INTERNOR DEL POPUP
                 EditText c021_etx_Horas, c021_etx_Rdtos, c021_etx_Observacion;

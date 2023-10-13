@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -88,13 +89,6 @@ public class TareosActivity extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
 
-        FloatingActionButton nuevoTareo = (FloatingActionButton) binding.getRoot().findViewById(R.id.c005_fab_MainTareos_NuevoTareo_v);
-        nuevoTareo.setOnClickListener(view -> {
-            abrirDocumento(null);
-        });
-
-
-
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_tareos);
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -107,16 +101,12 @@ public class TareosActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void abrirDocumento(String id) {
-        ConfiguracionLocal objConfLocal = null;
-        Intent nuevaActividad = new Intent(this, cls_05010000_Edicion.class);
-        nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
-        nuevaActividad.putExtra("IdDocumentoActual",id);
-        startActivity(nuevaActividad);
-    }
+
 
     private boolean transferirTareos(){
         try{
+
+
             List<String> tareos = new ArrayList<String>();
             tareos = miAdaptador.retornarTareos();
             List<String> pSqlite = new ArrayList<String>();
@@ -124,6 +114,7 @@ public class TareosActivity extends AppCompatActivity {
             ResultSet rS;
 
             for(String id: al_RegistrosSeleccionados){
+
                 Tareo aux = new Tareo(id,objSqlite,objConfLocal, ctx);
                 if (aux.getIdEstado().equals("PE")){
                     if (objSql.existeId("trx_Tareos",sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"), id)){
@@ -300,7 +291,7 @@ public class TareosActivity extends AppCompatActivity {
         return r;
     }
 
-    public void abrirDrawer() {
-        drawer.openDrawer(GravityCompat.START);
+    public DrawerLayout obtenerDrawer() {
+        return drawer;
     }
 }

@@ -21,22 +21,26 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/principal"
             android:text="Actualizar Detalle De Tareo"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="32dp"
             tools:layout_conversion_absoluteWidth="352dp" />
 
+
         <ImageView
             android:id="@+id/c021_imv_Cerrar_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.004"
             app:srcCompat="@drawable/i_close"
             tools:layout_conversion_absoluteHeight="40dp"
             tools:layout_conversion_absoluteWidth="40dp" />
-
 
         <TextView
             android:id="@+id/textView20"
@@ -45,7 +49,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="IdTareo: "
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_Titulo_v"
             app:layout_constraintTop_toBottomOf="@+id/c021_txv_Titulo_v"
@@ -58,7 +62,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/auxiliar_02"
             android:text="00100000001"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/textView20"
             app:layout_constraintTop_toTopOf="@+id/textView20"
@@ -71,7 +75,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/auxiliar_02"
             android:text="Item: "
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/c021_txv_Item_v"
             app:layout_constraintTop_toTopOf="@+id/c021_txv_IdTareo_v"
@@ -85,7 +89,7 @@
             android:layout_marginEnd="40dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="1"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView22"
@@ -100,7 +104,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="00000000"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView20"
             app:layout_constraintTop_toBottomOf="@+id/textView20"
@@ -114,7 +118,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="Nombre Trabajador"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_Dni_v"
             app:layout_constraintTop_toBottomOf="@+id/c021_txv_Dni_v"
@@ -128,7 +132,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="Id Actividad - Actividad"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_NombreTrabajador_v"
             app:layout_constraintTop_toBottomOf="@+id/c021_txv_NombreTrabajador_v"
@@ -142,7 +146,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="Id Labor - Labor"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_Actividad_v"
             app:layout_constraintTop_toBottomOf="@+id/c021_txv_Actividad_v"
@@ -156,7 +160,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="Id Consumidor - Consumidor"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_Labor_v"
             app:layout_constraintTop_toBottomOf="@+id/c021_txv_Labor_v"
@@ -172,7 +176,7 @@
             android:layout_weight="3"
             android:fontFamily="@font/auxiliar_02"
             android:text="Horas: "
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_Consumidor_v"
@@ -190,7 +194,7 @@
             android:fontFamily="@font/monoespaciada_principal"
             android:inputType="numberDecimal"
             android:paddingStart="10dp"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/c021_txv_Mensaje_v"
             app:layout_constraintEnd_toEndOf="@+id/textView22"
             app:layout_constraintStart_toEndOf="@+id/c021_txv_Mensaje_v"
@@ -206,7 +210,7 @@
             android:layout_weight="3"
             android:fontFamily="@font/auxiliar_02"
             android:text="Rdtos: "
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/c021_txv_Mensaje_v"
@@ -223,7 +227,7 @@
             android:fontFamily="@font/monoespaciada_principal"
             android:inputType="numberDecimal"
             android:paddingStart="10dp"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView26"
             app:layout_constraintEnd_toEndOf="@+id/textView22"
             app:layout_constraintHorizontal_weight="1"
@@ -239,7 +243,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/auxiliar_02"
             android:text="Observacion:"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView26"
             app:layout_constraintTop_toBottomOf="@+id/textView26"
@@ -282,24 +286,6 @@
             app:srcCompat="@drawable/i_done"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="56dp" />
-
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="10dp"
-            tools:layout_editor_absoluteX="402dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_conversion_absoluteHeight="10dp"
-            tools:layout_conversion_absoluteWidth="411dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="407dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
