@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -105,6 +106,8 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
   protected void onResume() {
     super.onResume();
     try {
+      referenciarControles();
+      setearControles();
       listarRegistros();
     } catch (Exception ex) {
       //throw new RuntimeException(e);
@@ -120,7 +123,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
     //...
-    referenciarControles();
+//    referenciarControles();
     c022_txv_DesdeFecha.setText(Funciones.malograrFecha(s_ListarDesde));
     c022_txv_HastaFecha.setText(Funciones.malograrFecha(s_ListarHasta));
     c022_txv_DesdeFecha.addTextChangedListener(new TextWatcher() {
@@ -161,7 +164,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
 
       @Override
       public void afterTextChanged(Editable editable) {
-        referenciarControles();
+//        referenciarControles();
         s_ListarHasta = Funciones.arreglarFecha(c022_txv_HastaFecha.getText().toString());
         try {
           listarRegistros();
@@ -335,11 +338,11 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
 //            }else if (idControlClickeado == R.id.c022_rad_Pendiente_v) {
 //                throw new IllegalStateException("Click sin programacion: " + view.getId());
       else if (idControlClickeado == R.id.c022_txt_DesdeFecha_v) {
-        referenciarControles();
+//        referenciarControles();
         PopUpCalendario d = new PopUpCalendario(this, c022_txv_DesdeFecha);
         d.show();
       } else if (idControlClickeado == R.id.c022_txt_HastaFecha_v) {
-        referenciarControles();
+//        referenciarControles();
         PopUpCalendario d = new PopUpCalendario(this, c022_txv_HastaFecha);
         d.show();
       } else if (idControlClickeado == R.id.c022_fab_Volver_v) {
@@ -363,14 +366,15 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     try {
       //BINGO! METODO PARA LISTAR EN RECYCLERVIEW DESDE CURSOR
       List<String> p = new ArrayList<String>();
-      p.add(objConfLocal.get("ID_EMPRESA"));
+      p.add("01");
       p.add(s_ListarIdEstado);
       p.add(s_ListarDesde);
       p.add(s_ListarHasta);
-      referenciarControles();
+      Log.i("PARAMS",p.toString());
+//      referenciarControles();
       c_Registros = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte X ESTADO Y RANGO FECHA"), p, "READ");
       if (c_Registros.moveToFirst()) {
-
+//        referenciarControles();
         cls_08000100_RecyclerViewAdapter miAdaptador = new cls_08000100_RecyclerViewAdapter(this, c_Registros, objConfLocal, al_RegistrosSeleccionados);
         c022_rcv_Reciclador.setAdapter(miAdaptador);
         c022_rcv_Reciclador.setLayoutManager(new LinearLayoutManager(this));
