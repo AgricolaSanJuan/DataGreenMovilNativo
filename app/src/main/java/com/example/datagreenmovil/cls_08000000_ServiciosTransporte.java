@@ -381,6 +381,8 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
     }
   }
   //@Jota:
+
+
   //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
   //...
 
@@ -405,9 +407,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
             if(accion=="transferir"){
               Swal.confirm(ctx, "Confirmar","Estás seguro que deseas transferir el registro?")
               .setConfirmClickListener(sweetAlertDialog -> {
-                if(transferirRegistros(txtIdServicio.getText().toString())){
-                  Swal.success(ctx, "Correcto","El registro se ha transferido correctamente",1000);
-                }
+                transferirRegistros(txtIdServicio.getText().toString());
                 sweetAlertDialog.dismissWithAnimation();
               }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
             }else if(accion=="eliminar"){
@@ -522,10 +522,9 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         for(int i = 0; i<resultsUnidad.getColumnCount();i++){
           unidad += "'"+resultsUnidad.getString(i)+(i == resultsUnidad.getColumnCount() -1 ? "'" : "', ");
       }
-
       Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idTransferir +"'",null);
       JSONArray pasajeros = new JSONArray();
-      String servicioTransporte = "";
+      String servicioTransporte = idTransferir;
       while(results.moveToNext()){
         servicioTransporte = results.getString(1);
         JSONObject elemento = new JSONObject();
@@ -570,7 +569,8 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
                       pSqlite.add(idServicioTransporte);
                       objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
                       listarRegistros();
-//                      Swal.success(ctx, "Correcto!","El registro se ha guardado correctamente!",3000);
+                      Swal.success(ctx, "Correcto!","El registro se ha guardado correctamente!",3000);
+                      objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", idServicioTransporte);
                     } else if (code == 500) {
 //                      Log.i("FINOS",response.toString());
                       String nuevoId = response.getString("newId");
@@ -592,16 +592,17 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                   if (error.networkResponse != null && error.networkResponse.data != null) {
                     String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                    Swal.error(ctx,"Ha ocurrido un error al insertar el registro",errorMessage,6000);
+                    Swal.error(ctx,"Ha ocurrido un error al insertar el registro",errorMessage,15000);
                   } else {
-                    Swal.error(ctx,"Oops!","Ha ocurrido un error al insertar el registro",6000);
+                    Log.i("ERROR API 2", error.toString());
+                    Swal.error(ctx,"Oops!","Ha ocurrido un error al insertar el registro",15000);
                   }
                 }
               });
 // Agregar la solicitud a la cola de solicitudes
       requestQueue.add(stringRequest);
     }catch (Exception e){
-      Swal.error(ctx, "Error al transferir",e.toString(),6000);
+      Swal.error(ctx, "Error al transferir",e.toString(),15000);
     }
     return true;
   }

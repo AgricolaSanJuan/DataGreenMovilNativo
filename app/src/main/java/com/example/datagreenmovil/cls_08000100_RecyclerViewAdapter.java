@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,6 +103,9 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       holder.c023_txv_Observacion.setText(servicioTransporte.getString(servicioTransporte.getColumnIndex("Observacion")));
       if(holder.c023_txv_IdEstado.getText().toString().equals("TR")){
         holder.c023_lly_Buttons.setVisibility(View.GONE);
+      }
+      if(holder.c023_txv_Pasajeros.getText().toString().equals("0")){
+        holder.btnTransferirRegistro.setVisibility(View.GONE);
       }
 
 //            holder.mainLayout.setBackgroundColor(ContextCompat.getColor(Context, holder.txv_IdEstado.getText().equals("PE") ? R.color.alerta : R.color.verdeClaro));
@@ -219,7 +223,8 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         c023_txv_Observacion;
     CheckBox c023_cbx_Seleccion;
     Button btnAddPasajero2, btnTransferirRegistro, btnEliminar;
-    ConstraintLayout c023_cly_Principal, c023_lly_Buttons;
+    ConstraintLayout c023_cly_Principal;
+    LinearLayout c023_lly_Buttons;
 
     public MyViewHolder(@NonNull View itemView) {
       super(itemView);

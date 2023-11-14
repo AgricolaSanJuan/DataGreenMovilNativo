@@ -33,14 +33,19 @@ import com.example.datagreenmovil.Logica.Swal;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.datagreenmovil.R;
+import com.example.datagreenmovil.SettingsActivity;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
+import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.databinding.FragmentSettingsLocalBinding;
+import com.google.android.material.internal.NavigationMenuItemView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,6 +69,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     ProgressBar pbSync;
     Button btnProbarConexion, btnGenerarBD, btnGuardar;
     Integer touchCounter = 0;
+    Integer flingCounter = 0;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private GestureDetector gestureDetector;
@@ -320,6 +326,22 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
             return true;
         }
 
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            flingCounter += 1;
+
+            if(flingCounter == 2){
+                SettingsActivity settingsActivity = (SettingsActivity) getActivity();
+                if(settingsActivity.obtenerDrawer() != null){
+                    DrawerLayout dl = settingsActivity.obtenerDrawer();
+//                    NavigationMenuItemView syncBtn = dl.findViewById(R.id.nav_item_sync);
+//                    syncBtn.setVisibility(View.INVISIBLE);
+                    dl.openDrawer(GravityCompat.START);
+                }
+                flingCounter = 0;
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
     }
 
     private String obtenerIMEI() {

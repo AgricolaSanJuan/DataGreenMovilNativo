@@ -41,6 +41,10 @@ public class PopUpCalendario extends Dialog {
         });
         obtenerFechaSeleccionada();
 
+        c028_fab_Ok.setOnClickListener(view ->  {
+                dismiss();
+        });
+
         this.getWindow().setBackgroundDrawableResource(R.drawable.bg_popup);
     }
 

@@ -471,6 +471,8 @@ public class Funciones {
   public static Dialog obtenerDialogParaCerrarSesion(Context context, ConfiguracionLocal objConfLocal, ConexionSqlite objSqlite, Activity actividad) {
     //Context context, String titulo, boolean btnCerrar, String mensaje, boolean btnCancelar, boolean btnAceptar){
     try {
+      SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+      SharedPreferences.Editor editor = sharedPreferences.edit();
       Dialog popUp = new Dialog(context);
       popUp.setContentView(R.layout.v_popup_generico_017);
       popUp.getWindow().setBackgroundDrawableResource(R.drawable.bg_popup_prueba);
@@ -499,8 +501,15 @@ public class Funciones {
         public void onClick(View view) {
           //popUp.dismiss();
           try {
-            cerrarSesion(objConfLocal, objSqlite, actividad);
+//            cerrarSesion(objConfLocal, objSqlite, actividad);
+            editor.remove("USER_LOGIN").apply();
+            editor.remove("PASSWORD_LOGIN").apply();
+            editor.putBoolean("RECORDAR_CREDENCIALES", false).apply();
             popUp.dismiss();
+            Intent intent = new Intent(actividad, cls_01000000_Commutador.class);
+            actividad.startActivity(intent);
+//            actividad.finish();
+            actividad.finishAffinity();
           } catch (Exception e) {
             throw new RuntimeException(e);
           }

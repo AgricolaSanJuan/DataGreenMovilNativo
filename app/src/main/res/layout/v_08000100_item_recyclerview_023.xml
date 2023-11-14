@@ -313,7 +313,7 @@
                 android:text="."
                 android:textColor="@color/grisOscuro" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/c023_lly_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -328,7 +328,7 @@
                     android:backgroundTint="@color/info"
                     android:text="TRANSFERIR"
                     android:textColor="@color/blanco"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textSize="13dp" />
 
                 <Button
                     android:id="@+id/c023_btn_eliminar_v"
@@ -340,9 +340,7 @@
                     android:backgroundTint="@color/danger"
                     android:text="ELIMINAR"
                     android:textColor="@color/blanco"
-                    app:layout_constraintEnd_toStartOf="@+id/btnAddPasajeros"
-                    app:layout_constraintStart_toEndOf="@+id/c023_btn_transferir_v"
-                    app:layout_constraintTop_toTopOf="@+id/c023_btn_transferir_v" />
+                    android:textSize="13dp" />
 
                 <Button
                     android:id="@+id/btnAddPasajeros"
@@ -352,19 +350,16 @@
                     android:backgroundTint="@color/verde"
                     android:text="AGREGAR"
                     android:textColor="@color/blanco"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:textSize="13dp" />
 
                 <CheckBox
                     android:id="@+id/c023_cbx_Seleccionado_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:visibility="gone" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

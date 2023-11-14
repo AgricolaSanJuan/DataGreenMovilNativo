@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,7 +24,7 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
 //    int images[];
     //String info[][];
     Context Context;
-//    String[] ModulosPermitidos;
+    //    String[] ModulosPermitidos;
     List<String> modulos;
     ConfiguracionLocal objConfLocal;
 
@@ -139,39 +138,24 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
         String modulo = modulos.get(holder.getAdapterPosition());
         //holder.c014_ivw_Icono.setImageDrawable(R.drawable.i_done);
         int IdDrawable = 0;
-        int IdBackground = 0;
-        int IdIcon = 0;
         switch (modulo){
             case "Tareos" :
                 IdDrawable = R.drawable.i_grass;
-                IdBackground = R.drawable.tareos;
-                IdIcon = R.drawable.ic_tareos;
                 break;
             case "Eficiencias" :
                 IdDrawable = R.drawable.i_barcode_scanner;
-                IdBackground = R.drawable.eficiencias;
-                IdIcon = R.drawable.ic_eficiencias;
                 break;
             case "Evaluaciones" :
                 IdDrawable = R.drawable.i_forest;
-                IdBackground = R.drawable.evaluaciones;
-                IdIcon = R.drawable.ic_evaluaciones;
                 break;
             case "Estandares" :
                 IdDrawable = R.drawable.i_equalizer;
-                IdBackground = R.drawable.estandares;
-                IdIcon = R.drawable.ic_estandares;
                 break;
             case "Servicios De Transporte" :
                 IdDrawable = R.drawable.i_airport_shuttle;
-                IdBackground = R.drawable.serviciostransporte;
-                IdIcon = R.drawable.ic_serviciostransporte;
                 break;
         }
-
         holder.c014_ivw_Icono.setImageDrawable(ResourcesCompat.getDrawable(Context.getResources(), IdDrawable ,null));
-        holder.c014_mly_Principal.setBackgroundResource(IdBackground);
-        holder.img_module.setImageDrawable(Context.getDrawable(IdIcon));
         holder.c014_mly_Principal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,7 +180,8 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
                         break;
                     case "Servicios De Transporte":
                         //Intent intent2 = new Intent(Context, cls_06000000_Eficiencias.class);
-                        intent = new Intent(Context, cls_08000000_ServiciosTransporte.class);
+//                        intent = new Intent(Context, cls_08000000_ServiciosTransporte.class);
+                        intent = new Intent(Context, TransportesActivity.class);
                         break;
                     default:
                         //return getResources().getStringArray(R.array.DEFAULT);
@@ -219,16 +204,13 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
         TextView c014_txv_NombreModulo;
         ConstraintLayout c014_mly_Principal;
         ImageView c014_ivw_Icono;
-        ImageView img_module;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             c014_txv_NombreModulo = itemView.findViewById(R.id.c014_txv_NombreModulo_v);
             c014_mly_Principal = itemView.findViewById(R.id.c014_mly_Principal_v);
             c014_ivw_Icono = itemView.findViewById(R.id.c014_ivw_Icono_v);
-            img_module = itemView.findViewById(R.id.img_module);
         }
     }
 
 }
-

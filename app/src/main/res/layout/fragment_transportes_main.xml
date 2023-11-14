@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_principal"
-    tools:context=".cls_08000000_ServiciosTransporte"
-    tools:ignore="MissingDefaultResource"> <!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
+    tools:context=".ui.TransportesMain.TransportesMainFragment" ><!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
 
     <LinearLayout
         android:id="@+id/c022_lly_StatusSuperior_v"
@@ -31,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
-            android:onClick="onClick"
             android:text="\\Servicios de Transporte" />
 
         <Space
@@ -44,7 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
-            android:onClick="onClick"
             android:text="OFFLINE" />
 
         <TextView
@@ -174,7 +171,6 @@
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
-                    android:onClick="onClick"
                     android:text="01/01/1990"
                     android:textAlignment="center"
                     android:textColor="@color/blanco"
@@ -205,7 +201,6 @@
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
-                    android:onClick="onClick"
                     android:text="01/01/2023"
                     android:textAlignment="center"
                     android:textColor="@color/blanco"
@@ -224,8 +219,7 @@
                 android:id="@+id/c022_rcv_Reciclador_v"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:focusableInTouchMode="true"
-                android:onClick="onClick">
+                android:focusableInTouchMode="true">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -237,19 +231,13 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/c022_fab_Volver_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    app:backgroundTint="@color/verde"
-                    app:srcCompat="@drawable/i_keyboard_backspace" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                    android:id="@+id/c022_fab_Volver_v"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:clickable="true"-->
+<!--                    app:backgroundTint="@color/verde"-->
+<!--                    app:srcCompat="@drawable/i_keyboard_backspace" />-->
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c022_fab_Opciones_v"
@@ -257,7 +245,6 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:foregroundTint="@color/alerta"
-                    android:onClick="mostrarMenuOpciones"
                     app:backgroundTint="@color/verde"
                     app:srcCompat="@drawable/i_list" />
 
@@ -271,7 +258,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:onClick="onClick"
                     app:backgroundTint="@color/verde"
                     app:srcCompat="@drawable/i_add" />
             </LinearLayout>
@@ -307,7 +293,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
-            android:onClick="onClick"
             android:text=" v 0.0" />
 
         <TextView
@@ -322,7 +307,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
-            android:onClick="onClick"
             android:text=" v 0.0" />
 
         <Space
@@ -335,7 +319,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
-            android:onClick="onClick"
             android:text="000-USUARIO" />
 
         <TextView

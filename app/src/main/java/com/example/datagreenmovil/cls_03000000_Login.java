@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -42,6 +43,7 @@ public class cls_03000000_Login extends AppCompatActivity {
     ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
     TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
+    CheckBox cbxRecordarCredenciales;
     Dialog dlg_PopUp;
     //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
@@ -52,6 +54,9 @@ public class cls_03000000_Login extends AppCompatActivity {
     EditText etx_Usuario;// = (EditText) findViewById(R.id.etx_Usuario_v);
     EditText etx_Password;// = (EditText) findViewById(R.id.etx_Password_v);
     Spinner c003_spi_Empresa;
+
+    String userLogin;
+    String passwordLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +76,19 @@ public class cls_03000000_Login extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+//        OBTENER VALORES DE LOGIN GUARDADOS EN CACHÉ
+        userLogin = sharedPreferences.getString("USER_LOGIN", "");
+        passwordLogin = sharedPreferences.getString("PASSWORD_LOGIN","");
+
         referenciarControles();
         setearControles();
+
+
+        if(sharedPreferences.getBoolean("RECORDAR_CREDENCIALES", false) && !userLogin.equals("") && !passwordLogin.equals("")){
+            directLogin();
+        }
+
+
         Funciones.mostrarEstatusGeneral(this.getBaseContext(),
                 objConfLocal,
                 txv_PushTituloVentana,
@@ -111,6 +127,8 @@ public class cls_03000000_Login extends AppCompatActivity {
         etx_Usuario = (EditText) findViewById(R.id.c003_etx_Usuario_v);
         etx_Password = (EditText) findViewById(R.id.c003_etx_Password_v);
         c003_spi_Empresa = (Spinner) findViewById(R.id.c003_spi_Empresa_v);
+
+        cbxRecordarCredenciales = findViewById(R.id.cbxRecordarCredenciales);
     }
     public void mostrarMenuUsuario(View v) {
         PopupMenu popup = new PopupMenu(this, v);
@@ -165,6 +183,15 @@ public class cls_03000000_Login extends AppCompatActivity {
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...
             else if (idControlClickeado == R.id.c003_btn_Login_v) {
+                if(cbxRecordarCredenciales.isChecked()){
+                    editor.putBoolean("RECORDAR_CREDENCIALES", true).apply();
+                    editor.putString("USER_LOGIN", etx_Usuario.getText().toString()).apply();
+                    editor.putString("PASSWORD_LOGIN",Funciones.generarMD5(etx_Usuario.getText().toString() + etx_Password.getText().toString())).apply();
+                }else{
+                    editor.putBoolean("RECORDAR_CREDENCIALES", false).apply();
+                    editor.remove("USER_LOGIN").apply();
+                    editor.remove("PASSWORD_LOGIN").apply();
+                }
                 intentaLogin();
             } else throw new IllegalStateException("Click sin programacion: " + view.getId());
         } catch (Exception ex) {
@@ -184,6 +211,47 @@ public class cls_03000000_Login extends AppCompatActivity {
         }
     }
 
+    public void directLogin(){
+        try{
+            String usuario = userLogin, password = passwordLogin;
+            List<String> p = new ArrayList<String>();
+            p.add(usuario);
+            p.add(usuario);
+
+            p.add(usuario);
+            p.add(password);
+            p.add(usuario);
+            p.add(password);
+
+            p.add(usuario);
+            p.add(password);
+            p.add(usuario);
+            p.add(password);
+
+            p.add(usuario);
+            p.add(password);
+            p.add(usuario);
+            p.add(password);
+
+            p.add(usuario);
+            p.add(usuario);
+            Cursor validacion = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER DATOS LOGIN"),p,"READ");
+            if (!validacion.moveToFirst()){
+                Funciones.notificar(this, "Error de inicio de sesion.");
+            }else{
+                if(/*validacion.moveToFirst() &&*/ validacion.getString(0).equals("0")){
+                    editor.putString("ID_USUARIO_ACTUAL",usuario).apply();
+                    dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this);
+                    dlg_PopUp.show();
+                }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
+                    iniciarSesion(validacion.getString(2),validacion.getString(3), true);
+                    abrirMenuModulos();
+                }
+            }
+        }catch (Exception ex){
+            Funciones.mostrarError(this,ex);
+        }
+    }
     public void intentaLogin(){
         try{
             String usuario = etx_Usuario.getText().toString(), password = Funciones.generarMD5(etx_Usuario.getText().toString() + etx_Password.getText().toString());
@@ -213,26 +281,26 @@ public class cls_03000000_Login extends AppCompatActivity {
                 Funciones.notificar(this, "Error de inicio de sesion.");
             }else{
                 if(/*validacion.moveToFirst() &&*/ validacion.getString(0).equals("0")){
-//                    objConfLocal.set("ID_USUARIO_ACTUAL",usuario);
                     editor.putString("ID_USUARIO_ACTUAL",usuario).apply();
                     dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this);
                     dlg_PopUp.show();
                 }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
-                    iniciarSesion(validacion.getString(2),validacion.getString(3));
+                    iniciarSesion(validacion.getString(2),validacion.getString(3), false);
                     abrirMenuModulos();
                 }
-//                Funciones.notificar(this, "Error de inicio de sesion.");
             }
         }catch (Exception ex){
             Funciones.mostrarError(this,ex);
         }
     }
 
-    private void iniciarSesion(String columna1, String columna2) throws Exception {
+    private void iniciarSesion(String columna1, String columna2, Boolean direct) throws Exception {
 //        objConfLocal.set("ID_USUARIO_ACTUAL",etx_Usuario.getText().toString());
-        editor.putString("ID_USUARIO_ACTUAL", etx_Usuario.getText().toString()).apply();
-//        objConfLocal.set("NOMBRE_USUARIO_ACTUAL",columna2);
+        if(!direct){
+            editor.putString("ID_USUARIO_ACTUAL",etx_Usuario.getText().toString()).apply();
+        }
         editor.putString("NOMBRE_USUARIO_ACTUAL",columna2).apply();
+//        objConfLocal.set("NOMBRE_USUARIO_ACTUAL",columna2);
         int horasExpiracion = Integer.parseInt(objConfLocal.get("DURACION_TOKEN_HORAS"));
         LocalDateTime ldt_TokenExpira = LocalDateTime.now().plusHours(horasExpiracion);
         String str_tokenExpira = ldt_TokenExpira.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

@@ -1,5 +1,6 @@
 package com.example.datagreenmovil.ui.TareosMain;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.PopupMenu;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -67,6 +69,7 @@ public class TareosMainFragment extends Fragment {
     private ConfiguracionLocal objConfLocal;
     private ConexionSqlite objSqlite;
     private ConexionBD objSql;
+    Dialog dlg_PopUp;
     String s_DesdeFecha = LocalDate.now().plusDays(-7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     String s_HastaFecha = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;
     String s_ListarDesde = LocalDate.now().plusDays(-7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -251,7 +254,66 @@ public class TareosMainFragment extends Fragment {
             abrirDocumento(null);
         });
 
+        binding.c005TxvPushTituloVentanaV.setOnClickListener(view -> {
+            Funciones.popUpTablasPendientesDeEnviar(ctx);
+        });
+        binding.c005TxvHastaFechaV.setOnClickListener(view -> {
+            PopUpCalendario d = new PopUpCalendario(ctx, binding.c005TxvHastaFechaV);
+            d.show();
+        });
+        binding.c005TxvDesdeFechaV.setOnClickListener(view -> {
+            PopUpCalendario d = new PopUpCalendario(ctx, binding.c005TxvDesdeFechaV);
+            d.show();
+        });
+        binding.c005TxvPushVersionAppV.setOnClickListener(view -> {
+            Funciones.popUpStatusVersiones(ctx);
+        });
+        binding.c005TxvPushVersionDataBaseV.setOnClickListener(view -> {
+            Funciones.popUpStatusVersiones(ctx);
+        });
+        binding.c005TxvPushIdentificadorV.setOnClickListener(view -> {
+            mostrarMenuUsuario(binding.c005TxvPushIdentificadorV);
+        });
+
+        binding.c005TxvPushRedV.setOnClickListener(view -> {
+            try {
+                objSql.probarConexion(objConfLocal);
+                Funciones.mostrarEstatusGeneral(ctx,
+                        objConfLocal,
+                        binding.c005TxvPushTituloVentanaV,
+                        binding.c005TxvPushRedV,
+                        binding.c005TxvNombreAppV,
+                        binding.c005TxvPushVersionAppV,
+                        binding.c005TxvPushVersionDataBaseV,
+                        binding.c005TxvPushIdentificadorV);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         return root;
+    }
+    public void mostrarMenuUsuario(View v) {
+        PopupMenu popup = new PopupMenu(ctx, v);
+        popup.setOnMenuItemClickListener(this::onMenuItemClick);
+        popup.inflate(R.menu.mnu_00000001_menu_usuario);
+        popup.show();
+    }
+    public boolean onMenuItemClick(MenuItem item) {
+        try {
+            int idControlClickeado = item.getItemId();
+            if (idControlClickeado == R.id.opc_00000001_cambiar_clave_usuario_v) {
+                dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(ctx, objConfLocal, objSqlite, getActivity());
+                dlg_PopUp.show();
+            } else if (idControlClickeado == R.id.opc_00000001_cerrar_sesion_v) {
+                dlg_PopUp = Funciones.obtenerDialogParaCerrarSesion(ctx, objConfLocal, objSqlite, getActivity());
+                dlg_PopUp.show();
+            } else return false;
+        } catch (Exception ex) {
+            Funciones.mostrarError(ctx, ex);
+            return false;
+        }
+        return true;
     }
     private boolean transferirTareos(){
         try{

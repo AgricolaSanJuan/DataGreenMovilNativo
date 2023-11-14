@@ -8,7 +8,7 @@
 
         <!-- MI CONFIGURACION PERSONAL-->
         <item name="colorPrimary">@color/verde</item>
-        <item name="colorPrimaryDark">@color/verdeOscuro</item>
+        <item name="colorPrimaryDark">@color/verde</item>
         <item name="colorAccent">@color/gris</item>
 
         <!-- Status bar color. -->

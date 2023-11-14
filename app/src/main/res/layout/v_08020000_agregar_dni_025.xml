@@ -127,25 +127,55 @@
             android:background="@drawable/bg_r_blanco"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/c025_et_IngresoDni_v"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:cursorVisible="false"
+                    android:focusable="true"
+                    android:windowSoftInputMode="stateAlwaysHidden"
+                    android:focusableInTouchMode="true"
+                    android:hint="00000000"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/textView46"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/c025_et_IngresoDni_v"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/c025_et_IngresoDni_v"
+                    app:layout_constraintTop_toTopOf="@+id/c025_et_IngresoDni_v" />
 
                 <TextView
                     android:id="@+id/c025_txv_IngresoDni_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:fontFamily="@font/auxiliar_02"
                     android:text="00000000"
                     android:textAlignment="center"
                     android:textSize="34sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -373,7 +403,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:onClick="onClick"
-                app:backgroundTint="@color/azulOscuro"
+                app:backgroundTint="@color/verde"
                 app:srcCompat="@drawable/i_keyboard_backspace" />
 
             <Space

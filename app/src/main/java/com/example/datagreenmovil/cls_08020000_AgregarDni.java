@@ -2,16 +2,21 @@ package com.example.datagreenmovil;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraDevice;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -29,8 +34,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class cls_08020000_AgregarDni extends AppCompatActivity {
@@ -41,17 +44,21 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
     //    AlertDialog.Builder builderDialogoCerrarSesion;
     Dialog dlg_PopUp;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
+//    VARIABLES DE COMPORTAMIENTO DEL MÓDULO
+    Boolean permitirTrabajadoresDesconocidos;
     LinearLayout c025_lly_IngresoDni;
-    TextView c025_txv_Contador, c025_txv_DniMarcado, c025_txv_NombreMarcado, c025_txv_ApellidoMarcado, c025_txv_IngresoDni;
+    TextView c025_txv_Contador, c025_txv_DniMarcado, c025_txv_NombreMarcado, c025_txv_ApellidoMarcado;
+    EditText c025_et_IngresoDni;
     Button c025_btn_1, c025_btn_2, c025_btn_3, c025_btn_4, c025_btn_5, c025_btn_6, c025_btn_7, c025_btn_8, c025_btn_9, c025_btn_0, c025_btn_X, c025_btn_Ok;
     TextureView tvLector;
     Rex objRex;
     String s_DniMarcado = "", s_IdRex;
     int i_Items, i_Capacidad;
-
-    private CameraDevice cameraDevice;
-    private CameraCaptureSession cameraCaptureSession;
+    Boolean registrarDni = false;
+    private String dniRestringido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +66,17 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         setContentView(R.layout.v_08020000_agregar_dni_025);
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         try {
             if (getIntent().getExtras() != null) {
                 objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
                 s_IdRex = (String) getIntent().getSerializableExtra("IdRegistro");
             }
+            sharedPreferences = this.getSharedPreferences("objConfLocal", this.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+
+            permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", false);
+//            Swal.info(this, s_IdRex, "fino", 2000);
 
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, objConfLocal);
@@ -92,6 +105,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         } catch (Exception ex) {
             Funciones.mostrarError(this, ex);
         }
+// Agrega esto en el método onCreate de tu Activity
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        c025_et_IngresoDni.requestFocus();
+        s_DniMarcado = "";
     }
 
     //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -119,7 +137,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         c025_txv_DniMarcado = findViewById(R.id.c025_txv_DniMarcado_v);
         c025_txv_NombreMarcado = findViewById(R.id.c025_txv_NombreMarcado_v);
         c025_txv_ApellidoMarcado = findViewById(R.id.c025_txv_ApellidoMarcado_v);
-        c025_txv_IngresoDni = findViewById(R.id.c025_txv_IngresoDni_v);
+//        c025_txv_IngresoDni = findViewById(R.id.c025_txv_IngresoDni_v);
+        c025_et_IngresoDni = findViewById(R.id.c025_et_IngresoDni_v);
         c025_btn_1 = findViewById(R.id.c025_btn_1_v);
         c025_btn_2 = findViewById(R.id.c025_btn_2_v);
         c025_btn_3 = findViewById(R.id.c025_btn_3_v);
@@ -132,6 +151,32 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         c025_btn_0 = findViewById(R.id.c025_btn_0_v);
         c025_btn_X = findViewById(R.id.c025_btn_X_v);
         c025_btn_Ok = findViewById(R.id.c025_btn_Ok_v);
+
+        c025_et_IngresoDni.setOnKeyListener((view, i, keyEvent) ->
+                {
+                    if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            s_DniMarcado = c025_et_IngresoDni.getText().toString();
+                            try {
+                                if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
+                                    Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
+                                    actualizarNItems(s_IdRex);
+                                    obtenerRexActual();
+                                    mostrarValoresRexActual();
+                                }
+                                c025_et_IngresoDni.setText("");
+                                c025_et_IngresoDni.requestFocus();
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(c025_et_IngresoDni.getWindowToken(), 0); // Donde "editText" es tu EditText
+                                return true;
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }finally {
+                                s_DniMarcado = "";
+                            }
+                    }
+                    return false;
+                }
+        );
     }
 
     public void mostrarMenuUsuario(View v) {
@@ -184,56 +229,57 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             //...
             else if (idControlClickeado == R.id.c025_btn_1_v) {
                 s_DniMarcado = s_DniMarcado + "1";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_2_v) {
                 s_DniMarcado = s_DniMarcado + "2";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_3_v) {
                 s_DniMarcado = s_DniMarcado + "3";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_4_v) {
                 s_DniMarcado = s_DniMarcado + "4";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_5_v) {
                 s_DniMarcado = s_DniMarcado + "5";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_6_v) {
                 s_DniMarcado = s_DniMarcado + "6";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_7_v) {
                 s_DniMarcado = s_DniMarcado + "7";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_8_v) {
                 s_DniMarcado = s_DniMarcado + "8";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_9_v) {
                 s_DniMarcado = s_DniMarcado + "9";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_0_v) {
                 s_DniMarcado = s_DniMarcado + "0";
-                c025_txv_IngresoDni.setText(s_DniMarcado);
+                c025_et_IngresoDni.setText(s_DniMarcado);
             } else if (idControlClickeado == R.id.c025_btn_X_v) {
                 if (s_DniMarcado.length() > 0) {
                     s_DniMarcado = s_DniMarcado.substring(0, s_DniMarcado.length() - 1);
-                    c025_txv_IngresoDni.setText(s_DniMarcado);
+                    c025_et_IngresoDni.setText(s_DniMarcado);
                 }
             } else if (idControlClickeado == R.id.c025_btn_Ok_v) {
-                if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
-                    Funciones.mostrarEstatusGeneral(this.getBaseContext(),
-                            objConfLocal,
-                            txv_PushTituloVentana,
-                            txv_PushRed,
-                            txv_NombreApp,
-                            txv_PushVersionApp,
-                            txv_PushVersionDataBase,
-                            txv_PushIdentificador
-                    );
-                    actualizarNItems(s_IdRex);
-                    c025_txv_IngresoDni.setText("");
+                s_DniMarcado = c025_et_IngresoDni.getText().toString();
+                try {
+                    if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
+                        Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
+                        actualizarNItems(s_IdRex);
+                        obtenerRexActual();
+                        mostrarValoresRexActual();
+                    }
+                    c025_et_IngresoDni.setText("");
+                    c025_et_IngresoDni.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(c025_et_IngresoDni.getWindowToken(), 0); // Donde "editText" es tu EditText
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }finally {
                     s_DniMarcado = "";
-                    obtenerRexActual();
-                    mostrarValoresRexActual();
-                } else Funciones.notificar(this, objConfLocal.get("MENSAJE"));
+                }
             } else if (idControlClickeado == R.id.c025_fab_Volver_v) {
                 finish();
             } else throw new IllegalStateException("Click sin programacion: " + view.getId());
@@ -260,6 +306,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
         try {
             final MediaPlayer Notificacion = MediaPlayer.create(this, R.raw.notificacion);
+            final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
 //            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //            Date fechaHora = new Date();
             objRex.Set("Item", i_Items + 1);
@@ -267,19 +314,46 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             //objRex.Set("Hora",dateFormat.format(fechaHora));
             objRex.Set("FechaHora", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
 
-                try {
-                    if (objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex)) {
-                        i_Items++;
-                    }
+            Cursor verificarExistencia;
+            verificarExistencia = objSqlite.doItBaby("select count(*) exist from mst_personas where IDEMPRESA = '01' AND NroDocumento = '"+s_dniMarcado+"'", null, "READ");
+            verificarExistencia.moveToNext();
 
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+            Cursor verificarRegistroExiste;
+
+            verificarRegistroExiste = objSqlite.doItBaby("select count(*) repetido from trx_serviciostransporte_detalle where idserviciotransporte = '"+s_IdRex+"' and Nrodocumento = '"+s_dniMarcado+"'", null, "READ");
+            verificarRegistroExiste.moveToNext();
+
+            if(verificarRegistroExiste.getInt(0) <= 0) {
+                if (permitirTrabajadoresDesconocidos == true) {
+                    Notificacion.start();
+                    dniRestringido = "permitido";
+                    try {
+                        if (objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex)) {
+                            i_Items++;
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    if (verificarExistencia.getInt(0) > 0) {
+                        Notificacion.start();
+                        dniRestringido = "permitido";
+                        try {
+                            if (objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex)) {
+                                i_Items++;
+                            }
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        Error.start();
+                        dniRestringido = "no_permitido";
+                    }
                 }
-                Notificacion.start();
-//                List<String> p = new ArrayList<>();
-//                p.add(s_dniMarcado);
-//                Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER DATOS mst_Personas"),p,"READ");
-//                c.moveToFirst();
+            }else{
+                Error.start();
+                dniRestringido = "repetido";
+            }
             return true;
         } catch (Exception ex) {
             Funciones.mostrarError(this, ex);
@@ -289,7 +363,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
     public int obtenerItems(String idRegistro) throws Exception {
         List<String> p = new ArrayList<>();
-        p.add(objConfLocal.get("ID_EMPRESA"));
+        p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         p.add(idRegistro);
         Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("CONTAR trx_ServiciosTransporte_Detalle"), p, "READ");
         c.moveToFirst();
@@ -298,7 +372,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
     public int obtenerCapacidad(String idRegistro) throws Exception {
         List<String> p = new ArrayList<>();
-        p.add(objConfLocal.get("ID_EMPRESA"));
+        p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         p.add(idRegistro);
         Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER CAPACIDAD trx_ServiciosTransporte"), p, "READ");
         c.moveToFirst();
@@ -307,9 +381,9 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
     public void actualizarNItems(String idRegistro) throws Exception {
         List<String> p = new ArrayList<>();
-        p.add(objConfLocal.get("ID_EMPRESA"));
+        p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         p.add(idRegistro);
-        p.add(objConfLocal.get("ID_EMPRESA"));
+        p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         p.add(idRegistro);
         Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("ACTUALIZAR N ITEMS trx_ServiciosTransporte"), p, "UPDATE");
     }
@@ -339,18 +413,29 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 //        c025_txv_DniMarcado.setText(c.getString(c.getColumnIndex("NroDocumento")));
 //        c025_txv_NombreMarcado.setText(c.getString(c.getColumnIndex("Nombres")));
 //        c025_txv_ApellidoMarcado.setText(c.getString(c.getColumnIndex("Apellidos")));
-//        c025_txv_IngresoDni.setText("");
-        c025_txv_DniMarcado.setText(objRex.Get("NroDocumento"));
-        c025_txv_NombreMarcado.setText(objRex.Get("Nombres"));
-        c025_txv_ApellidoMarcado.setText(objRex.Get("Apellidos"));
-        c025_txv_IngresoDni.setText("");
+//        c025_et_IngresoDni.setText("");
+
+        if(dniRestringido.equals("permitido")) {
+            c025_txv_DniMarcado.setText(objRex.Get("NroDocumento"));
+            c025_txv_NombreMarcado.setText(objRex.Get("Nombres"));
+            c025_txv_ApellidoMarcado.setText(objRex.Get("Apellidos"));
+        }else if(dniRestringido.equals("repetido")) {
+            c025_txv_DniMarcado.setText("");
+            c025_txv_NombreMarcado.setText("REGISTRO REPETIDO");
+            c025_txv_ApellidoMarcado.setText("");
+        }else if(dniRestringido.equals("no_permitido")){
+            c025_txv_DniMarcado.setText("");
+            c025_txv_NombreMarcado.setText("RESTRINGIDO");
+            c025_txv_ApellidoMarcado.setText("");
+        }
+//        c025_et_IngresoDni.setText("");
     }
 
     private void obtenerRexActual() throws Exception {
         List<String> p = new ArrayList<>();
-        p.add(objConfLocal.get("ID_EMPRESA"));
+        p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         p.add(s_IdRex);
-        p.add(objConfLocal.get("ID_EMPRESA"));
+        p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         p.add(s_IdRex);
         //objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte_Detalle X ID"),p,"READ"));
         objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER DATA XA MOSTRAR trx_ServiciosTransporte_Detalle"), p, "READ"));
@@ -359,7 +444,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 //            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //            LocalDateTime now = LocalDateTime.now();
 //            fechaHoraActual = dtf.format(now);
-        objRex.Set("IdEmpresa", objConfLocal.get("ID_EMPRESA"));
+        objRex.Set("IdEmpresa", sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         objRex.Set("IdServicioTransporte", s_IdRex);
 //        }
         i_Items = obtenerItems(s_IdRex);
