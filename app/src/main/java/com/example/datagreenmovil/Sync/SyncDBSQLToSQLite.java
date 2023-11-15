@@ -120,7 +120,7 @@ public class SyncDBSQLToSQLite {
                     regis += "'" + resultSet.getString(columnName) + (i == columnCount ? "'" : "', ");
                 }
 
-                database.execSQL("INSERT OR IGNORE INTO " + c.getString(1) + " VALUES (" + regis + ")");
+                database.execSQL("INSERT OR REPLACE INTO " + c.getString(1) + " VALUES (" + regis + ")");
 //                Log.i("REGISTER: " + c.getString(1), regis);
                 //            registers.add(regis);
             }

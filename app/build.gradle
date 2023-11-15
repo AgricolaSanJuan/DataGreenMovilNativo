@@ -69,7 +69,6 @@ dependencies {
 
 //    JSON PERMISSIONS
     implementation 'org.json:json:20230618'
-
     implementation 'com.google.code.gson:gson:2.8.8'
 
     implementation 'com.android.volley:volley:1.2.0'

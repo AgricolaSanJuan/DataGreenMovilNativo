@@ -145,6 +145,7 @@ public class cls_04000000_Modulos extends AppCompatActivity {
             } else if (idControlClickeado == R.id.c004_txv_PushIdentificador_v) {
                 mostrarMenuUsuario(this.txv_PushIdentificador);
             }
+
             //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...

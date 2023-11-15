@@ -1204,7 +1204,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     SqliteDB = getWritableDatabase();
     try{
       for (int i = 0; i < listaRegistros.size(); i ++){
-      SqliteDB.execSQL("INSERT OR IGNORE INTO "+tableName+" VALUES ("+listaRegistros.get(i)+");");
+      SqliteDB.execSQL("INSERT OR REPLACE INTO "+tableName+" VALUES ("+listaRegistros.get(i)+");");
       }
     }catch (SQLiteException e){
     }

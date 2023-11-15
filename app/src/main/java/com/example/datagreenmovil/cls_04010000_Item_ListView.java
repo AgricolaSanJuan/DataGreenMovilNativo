@@ -154,6 +154,12 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
             case "Servicios De Transporte" :
                 IdDrawable = R.drawable.i_airport_shuttle;
                 break;
+            case "Taller" :
+                IdDrawable = R.drawable.ic_agriculture;
+                break;
+            default:
+                IdDrawable = R.drawable.ic_none;
+                break;
         }
         holder.c014_ivw_Icono.setImageDrawable(ResourcesCompat.getDrawable(Context.getResources(), IdDrawable ,null));
         holder.c014_mly_Principal.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +187,9 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
                     case "Servicios De Transporte":
                         //Intent intent2 = new Intent(Context, cls_06000000_Eficiencias.class);
 //                        intent = new Intent(Context, cls_08000000_ServiciosTransporte.class);
+                        intent = new Intent(Context, TransportesActivity.class);
+                        break;
+                    case "Taller":
                         intent = new Intent(Context, TransportesActivity.class);
                         break;
                     default:
