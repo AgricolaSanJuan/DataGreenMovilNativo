@@ -61,6 +61,7 @@ dependencies {
     implementation ('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+
     testImplementation 'junit:junit:4.12'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.5.2'

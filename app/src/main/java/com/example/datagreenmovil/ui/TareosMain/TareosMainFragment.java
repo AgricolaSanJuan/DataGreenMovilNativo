@@ -173,7 +173,7 @@ public class TareosMainFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
 //                String s_Valor = "";
-//                s_Valor = c022_txv_DesdeFecha.getText().toString();
+//                s_Valor = talmai_txv_DesdeFecha.getText().toString();
                 s_ListarDesde = Funciones.arreglarFecha(binding.c005TxvDesdeFechaV.getText().toString());
 //                s_ListarDesde = Funciones.arreglarFecha(s_Valor);
                 try {

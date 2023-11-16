@@ -86,6 +86,7 @@ ACCESO A BASE DE DATOS SQL: https://www.youtube.com/watch?v=OOm03ezazAI (NO OLVI
     <string name="menu_slideshow">ACERCA DE</string>
     <string name="title_activity_tareos">TareosActivity</string>
     <string name="title_activity_transportes">TransportesActivity</string>
+    <string name="title_activity_taller">TallerActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!--
     <string-array name="ModulosDisponibles">

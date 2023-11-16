@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_taller_main">
+
+    <fragment
+        android:id="@+id/nav_taller_main"
+        android:name="com.example.datagreenmovil.ui.TallerMain.TallerMainFragment"
+        android:label="MAQUINARIA"
+        tools:layout="@layout/fragment_taller_main" >
+        <action
+            android:id="@+id/action_nav_taller_main_to_nav_taller_maquinaria_detalle3"
+            app:destination="@id/nav_taller_maquinaria_detalle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_taller_settings"
+        android:name="com.example.datagreenmovil.ui.TallerSettings.TallerSettingsFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_taller_settings" />
+
+<!--    detalles-->
+    <fragment
+        android:id="@+id/nav_taller_maquinaria_detalle"
+        android:name="com.example.datagreenmovil.ui.TallerMain.Maquinaria.TallerMaquinariaDetalleFragment"
+        android:label="MAQUINARIA"
+        tools:layout="@layout/fragment_taller_maquinaria_detalle" />
+</navigation>
