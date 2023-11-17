@@ -1,4 +1,4 @@
-package com.example.datagreenmovil.ui.TallerMain.Maquinaria.CRUD.Class;
+package com.example.datagreenmovil.ui.TallerMain.Maquinaria.CRUD;
 
 import androidx.lifecycle.ViewModel;
 

@@ -2,6 +2,7 @@ package com.example.datagreenmovil.ui.TallerMain;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +24,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +48,7 @@ import com.example.datagreenmovil.TransportesActivity;
 import com.example.datagreenmovil.cls_08000100_RecyclerViewAdapter;
 import com.example.datagreenmovil.cls_08010000_Edicion;
 import com.example.datagreenmovil.databinding.FragmentTallerMainBinding;
+import com.example.datagreenmovil.ui.TallerMain.Maquinaria.CRUD.CrearRegistroOperadoresFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.internal.NavigationMenuItemView;
 
@@ -79,6 +83,7 @@ public class TallerMainFragment extends Fragment {
     String s_ListarHasta = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;
     String s_ListarIdEstado = "PE";
     String s_IdRex = "";
+    NavController navController;
 
     private FragmentTallerMainBinding binding;
 
@@ -158,7 +163,10 @@ public class TallerMainFragment extends Fragment {
             mostrarMenuUsuario(binding.talmaiTxvPushIdentificadorV);
         });
         binding.talmaiFabNuevoRegistroV.setOnClickListener(view -> {
-            Funciones.abrirActividad(ctx, cls_08010000_Edicion.class, objConfLocal, s_IdRex);
+//            Funciones.abrirActividad(ctx, CrearRegistroOperadoresFragment.class, objConfLocal, s_IdRex);
+            // Navega utilizando la acción definida en tu gráfico de navegación
+            navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_nav_taller_main_to_nav_taller_maquinaria_crear);
         });
         binding.talmaiFabOpcionesV.setOnClickListener(view -> {
             TallerActivity tallerActivity = (TallerActivity) getActivity();

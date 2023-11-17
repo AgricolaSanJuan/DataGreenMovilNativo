@@ -15,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
+import com.example.datagreenmovil.ui.TallerMain.TallerMainFragment;
 
 import java.util.List;
 
@@ -190,7 +191,7 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
                         intent = new Intent(Context, TransportesActivity.class);
                         break;
                     case "Taller":
-                        intent = new Intent(Context, TransportesActivity.class);
+                        intent = new Intent(Context, TallerActivity.class);
                         break;
                     default:
                         //return getResources().getStringArray(R.array.DEFAULT);

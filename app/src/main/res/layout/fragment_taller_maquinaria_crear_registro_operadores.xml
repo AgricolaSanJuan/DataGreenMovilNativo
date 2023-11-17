@@ -5,33 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_principal"
-    tools:context=".CrearRegistroOperadoresFragment"> <!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
+    tools:context=".ui.TallerMain.Maquinaria.CRUD.CrearRegistroOperadoresFragment"> <!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
+
 
     <LinearLayout
-        android:id="@+id/c022_lly_StatusSuperior_v"
+        android:id="@+id/tmcro_lly_StatusSuperior_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/c022_lly_Cuerpo_v"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/c022_textView1"
+            android:id="@+id/tmcro_textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:text="[" />
 
         <TextView
-            android:id="@+id/c022_txv_PushTituloVentana_v"
+            android:id="@+id/tmcro_txv_PushTituloVentana_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:onClick="onClick"
-            android:text="\\Servicios de Transporte" />
+            android:text="\\ServicioTransporte\\Edicion" />
 
         <Space
             android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/c022_txv_PushRed_v"
+            android:id="@+id/tmcro_txv_PushRed_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
@@ -47,7 +48,7 @@
             android:text="OFFLINE" />
 
         <TextView
-            android:id="@+id/c022_textView2"
+            android:id="@+id/tmcro_textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
@@ -55,254 +56,987 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/c022_lly_Cuerpo_v"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/c022_lly_StatusInferior_v"
+        android:layout_marginBottom="50dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="@+id/tmcro_lly_Controles_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c022_lly_StatusSuperior_v">
+        app:layout_constraintTop_toBottomOf="@+id/tmcro_lly_StatusSuperior_v">
 
         <LinearLayout
-            android:id="@+id/c022_lly_Busqueda_v"
+            android:id="@+id/tmcro_lly_Cabecera_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:background="@drawable/bg_r_blanco"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/tmcro_lly_StatusSuperior_v"
+            tools:layout_editor_absoluteX="5dp">
 
             <LinearLayout
-                android:id="@+id/c022_lly_Estado_v"
+                android:id="@+id/tmcro_lly_IdFecha_v"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center|left">
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:padding="7dp">
 
                 <TextView
-                    android:id="@+id/c022_txt_Estado_v"
+                    android:id="@+id/tmcro_txv_Id_Etq_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
                     android:fontFamily="@font/auxiliar_02"
-                    android:text="Estado:"
+                    android:text="Id: "
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txv_Id_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <RadioGroup
-                    android:id="@+id/c022_rgr_Estado_v"
+                <Space
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <RadioButton
-                        android:id="@+id/c022_rad_Todos_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/blanco"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="Todos"
-                        android:textColor="@color/blanco"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <RadioButton
-                        android:id="@+id/c022_rad_Pendiente_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/blanco"
-                        android:checked="true"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="Pendiente"
-                        android:textColor="@color/blanco"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c022_lly_DesdeHasta_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center|left"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/c022_txt_Desde_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="Desde:"
+                    android:text="Fecha: "
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/c022_txt_DesdeFecha_v"
+                    android:id="@+id/tmcro_txt_Fecha_v"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:onClick="onClick"
+                    android:padding="7dp"
                     android:text="01/01/1990"
                     android:textAlignment="center"
                     android:textColor="@color/blanco"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/c022_txt_Hasta_v"
+                    android:id="@+id/tmcro_txv_Sucursal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Sucursal"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tmcro_txv_Id_Sucursal"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tmcro_txv_Id_Sucursal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="002"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Proveedor_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Proveedor_v"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
                     android:fontFamily="@font/auxiliar_02"
-                    android:text="Hasta:"
+                    android:gravity="center"
+                    android:text="Maquinaria:"
+                    android:textColor="@color/blanco"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/c022_txt_HastaFecha_v"
+                    android:id="@+id/tmcro_txt_Proveedor_Ruc_v"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_RazonSocial_v"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Proveedor_RazonSocial_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Vehiculo_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Operario:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Vehiculo_Placa_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
-                    android:onClick="onClick"
-                    android:text="01/01/2023"
-                    android:textAlignment="center"
+                    android:padding="2dp"
+                    android:text="."
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/blanco"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/c022_fly_Resultado_v"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/c022_rcv_Reciclador_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusableInTouchMode="true"
-                android:onClick="onClick">
-
-            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
-                android:id="@+id/c022_lly_BotonesControl_v"
+                android:id="@+id/tmcro_lly_Pasajeros_v"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|right|end"
+                android:orientation="horizontal"
+                android:padding="7dp">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/c022_fab_Volver_v"
+                <TextView
+                    android:id="@+id/textView42"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    app:backgroundTint="@color/verde"
-                    app:srcCompat="@drawable/i_keyboard_backspace" />
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="CAPACIDAD: "
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <Space
+                <TextView
+                    android:id="@+id/tmcro_txt_Vehiculo_NroPasajeros_v"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/c022_fab_Opciones_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:foregroundTint="@color/alerta"
-                    android:onClick="mostrarMenuOpciones"
-                    app:backgroundTint="@color/verde"
-                    app:srcCompat="@drawable/i_list" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/c022_fab_NuevoRegistro_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    app:backgroundTint="@color/verde"
-                    app:srcCompat="@drawable/i_add" />
             </LinearLayout>
 
-        </FrameLayout>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Ruta_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Ruta_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Turno:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Ruta_Id_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_DescripcionRuta_v"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Ruta_Descripcion_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Horas_De_Labor_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Horas de Labor:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Horas_De_Labor_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorasDeLabor_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorasDeLabor_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--        TIPO DE PARRON-->
+            <LinearLayout
+                android:id="@+id/tmcro_lly_TipoDeParron_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Tipo de Parrón"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_TipoDeParron_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_NombreConductor_v"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Conductor_Nombre_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--        HOROMETRO INICIAL-->
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Consumidores_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Consumidores Parron:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Consumidores_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Consumidores_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Consumidores_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--        CONSUMIDORES-->
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorometroInicial_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Horometro Inicial:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorometroInicial_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorometroInicial_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorometroInicial_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!--        HOROMETRO FINAL-->
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorometroFinal_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Horometro Final:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorometroFinal_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorometroFinal_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorometroFinal_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--        HORAS TRABAJADAS DE EQUIPO-->
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorasTrabajadas_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Horas Trabajadas:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorasTrabajadas_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_HorasTrabajadas_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_HorasTrabajadas_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--            IMPLEMENTOS-->
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Implementos_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Implementos:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Implementos_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Implementos_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Implementos_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--            ACTIVIDAD-->
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Actividad_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Actividad:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Actividad_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Actividad_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Actividad_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--            LABOR-->
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Labor_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Labor:"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Labor_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Labor_v1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Labor_v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="."
+                    android:textAlignment="viewEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!--            OBSERVACIONES -->
+
+            <LinearLayout
+                android:id="@+id/tmcro_lly_Observacion_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center|left"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="7dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:text="Observacion: "
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tmcro_txt_Observacion_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/auxiliar_02"
+                    android:gravity="center"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/blanco"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tmcro_lly_Controles_v"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/tmcro_lly_StatusInferior_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/tmcro_fab_Volver_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onClick"
+            app:backgroundTint="@color/primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_keyboard_backspace"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/tmcro_fab_Guardar_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:clickable="true"
+            android:foregroundTint="@color/alerta"
+            android:onClick="onClick"
+            app:backgroundTint="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tmcro_fab_Volver_v"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_save"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="48dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/tmcro_fab_AgregarPersonas_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:visibility="gone"
+            app:backgroundTint="@color/verde"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tmcro_fab_Volver_v"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_person_add"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/c022_lly_StatusInferior_v"
+        android:id="@+id/tmcro_lly_StatusInferior_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c022_lly_Cuerpo_v">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/c022_textView3"
+            android:id="@+id/tmcro_textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:text="[" />
 
         <TextView
-            android:id="@+id/c022_txv_NombreApp_v"
+            android:id="@+id/tmcro_txv_NombreApp_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:text="Nombre App" />
 
         <TextView
-            android:id="@+id/c022_txv_PushVersionApp_v"
+            android:id="@+id/tmcro_txv_PushVersionApp_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
@@ -310,14 +1044,14 @@
             android:text=" v 0.0" />
 
         <TextView
-            android:id="@+id/c022_textView4"
+            android:id="@+id/tmcro_textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:text=" | DB" />
 
         <TextView
-            android:id="@+id/c022_txv_PushVersionDataBase_v"
+            android:id="@+id/tmcro_txv_PushVersionDataBase_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
@@ -330,7 +1064,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/c022_txv_PushIdentificador_v"
+            android:id="@+id/tmcro_txv_PushIdentificador_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
@@ -338,11 +1072,15 @@
             android:text="000-USUARIO" />
 
         <TextView
-            android:id="@+id/c022_textView5"
+            android:id="@+id/tmcro_textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:text="]" />
 
     </LinearLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

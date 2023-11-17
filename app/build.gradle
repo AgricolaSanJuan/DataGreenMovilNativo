@@ -9,8 +9,8 @@ android {
         applicationId "com.example.datagreenmovil"
         minSdk 23
         targetSdk 32
-        versionCode 3
-        versionName "1.4"
+        versionCode 4
+        versionName "1.5.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

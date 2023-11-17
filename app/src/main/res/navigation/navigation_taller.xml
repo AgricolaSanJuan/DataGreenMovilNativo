@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_nav_taller_main_to_nav_taller_maquinaria_detalle3"
             app:destination="@id/nav_taller_maquinaria_detalle" />
+        <action
+            android:id="@+id/action_nav_taller_main_to_nav_taller_maquinaria_crear"
+            app:destination="@id/nav_taller_maquinaria_crear"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -27,4 +32,9 @@
         android:name="com.example.datagreenmovil.ui.TallerMain.Maquinaria.TallerMaquinariaDetalleFragment"
         android:label="MAQUINARIA"
         tools:layout="@layout/fragment_taller_maquinaria_detalle" />
+    <fragment
+        android:id="@+id/nav_taller_maquinaria_crear"
+        android:name="com.example.datagreenmovil.ui.TallerMain.Maquinaria.CRUD.CrearRegistroOperadoresFragment"
+        android:label="MAQUINARIA"
+        tools:layout="@layout/fragment_taller_maquinaria_crear_registro_operadores" />
 </navigation>
