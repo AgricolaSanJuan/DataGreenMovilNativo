@@ -18,25 +18,27 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".DataGreenApp"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@mipmap/ic_data_green_adaptive_fore"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_data_green"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DataGreenMovil"
+        android:theme="@style/Theme.DataGreenMovilLight"
         android:usesCleartextTraffic="true"
-        tools:replace="android:appComponentFactory">
+        >
+<!--    tools:replace="android:appComponentFactory"-->
         <activity
             android:name=".TallerActivity"
             android:exported="false"
             android:label="@string/title_activity_taller"
-            android:theme="@style/Theme.DataGreenMovil.NoActionBar" />
+            />
         <activity
             android:name=".TransportesActivity"
             android:exported="false"
             android:label="@string/title_activity_transportes"
-            android:theme="@style/Theme.DataGreenMovil.NoActionBar" />
+            />
         <activity
             android:name=".ASJMessenger"
             android:exported="true">
@@ -50,8 +52,7 @@
         </activity>
         <activity
             android:name=".TareosActivity"
-            android:exported="true"
-            android:theme="@style/Theme.DataGreenMovil.NoActionBar">
+            android:exported="true">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -64,7 +65,7 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.DataGreenMovil.NoActionBar" />
+            />
 
         <service
             android:name=".DataGreenUpdateService"

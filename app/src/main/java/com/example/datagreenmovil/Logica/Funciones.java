@@ -747,19 +747,19 @@ public class Funciones {
     //PUSH TITULO VENTANA
     if ( confLocal.getString("EXISTE_DATA_PENDIENTE","FALSE").equals("TRUE")) {
       txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.black, null));
-      txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     } else {
-      txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verdeClaro, null));
-      txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
+      txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
+      txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     }
     //PUSH ESTADO RED
     txv_PushRed.setText(confLocal.getString("ESTADO_RED","OFFLINE"));
     if (confLocal.getString("ESTADO_RED","OFFLINE").equals("ONLINE")) {
-      txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verdeClaro, null));
-      txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
+      txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
+      txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     } else {
       txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.alerta, null));
-      txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     }
     //NOMBRE APP
     txv_NombreApp.setText(confLocal.getString("NOMBRE_APP","!NOMBRE_APP"));
@@ -767,21 +767,21 @@ public class Funciones {
     String versionApp = " v: " + confLocal.getString("VERSION_APP","!VERSION_APP");
     txv_PushVersionApp.setText(versionApp);
     if (versionApp.equals(confLocal.getString("VERSION_APP_DISPONIBLE","!VERSION_APP_DISPONIBLE"))) {
-      txv_PushVersionApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_PushVersionApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
       txv_PushVersionApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
       txv_PushVersionApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
-      txv_PushVersionApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_PushVersionApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     }
     //VERSION DATABASE
     String versionDB = " v: " +  confLocal.getString("VERSION_DB_SQLITE","");
     txv_PushVersionDataBase.setText(versionDB);
     if (versionDB.equals(confLocal.getString("VERSION_DB_DISPONIBLE","!VERSION_DB_DISPONIBLE"))) {
-      txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
       txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
       txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
-      txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     }
     //IDENTIFICADOR
     String identificador = confLocal.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO") + " " + confLocal.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL");
@@ -798,19 +798,19 @@ public class Funciones {
     //PUSH TITULO VENTANA
     if (("EXISTE_DATA_PENDIENTE").equals("TRUE")) {
       txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.black, null));
-      txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     } else {
-      txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verdeClaro, null));
+      txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
       txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     }
     //PUSH ESTADO RED
     txv_PushRed.setText(cl.get("ESTADO_RED"));
     if (cl.get("ESTADO_RED").equals("ONLINE")) {
-      txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verdeClaro, null));
+      txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
       txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
       txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.alerta, null));
-      txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
     }
     //NOMBRE APP
 //        txv_NombreApp.setText(cl.get("NOMBRE_APP"));
@@ -818,21 +818,21 @@ public class Funciones {
 //        String versionApp = " v: " + cl.get("VERSION_APP");
 //        txv_PushVersionApp.setText(versionApp);
 //        if (cl.get("VERSION_APP").equals(cl.get("VERSION_APP_DISPONIBLE"))){
-//            txv_NombreApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//            txv_NombreApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //            txv_NombreApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
 //        }else {
 //            txv_NombreApp.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
-//            txv_NombreApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//            txv_NombreApp.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //        }
 //        //VERSION DATABASE
 //        String versionDB = " v: " + cl.get("VERSION_APP");
 //        txv_PushVersionDataBase.setText(versionDB);
 //        if (cl.get("VERSION_APP").equals(cl.get("VERSION_APP_DISPONIBLE"))){
-//            txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//            txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //            txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
 //        }else {
 //            txv_PushVersionDataBase.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
-//            txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//            txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //        }
     //IDENTIFICADOR
     String identificador = cl.get("ID_DISPOSITIVO") + " " + cl.get("NOMBRE_USUARIO_ACTUAL");
@@ -1052,13 +1052,13 @@ public class Funciones {
 //        View view = toast.getView();
 //
 //        //To change the Background of Toast
-////        view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verdeClaro, null));
+////        view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
 //        view.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.bg_notificacion,null));
 //        TextView text = (TextView) view.findViewById(android.R.id.message);
 //
 //        //Shadow of the Of the Text Color
 ////        text.setShadowLayer(0, 0, 0, Color.TRANSPARENT);
-//        text.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//        text.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //        text.setTextSize(18);
 //        Typeface typeface = ResourcesCompat.getFont(context, R.font.auxiliar);
 //        text.setTypeface(typeface);
@@ -1073,7 +1073,7 @@ public class Funciones {
 //            layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.bg_notificacion,null));
 //            TextView textView = layout.findViewById(tvRes);
 //            textView.setGravity(Gravity.LEFT);
-//            textView.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//            textView.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //            textView.setTextSize(18);
 //            Typeface typeface = ResourcesCompat.getFont(context, R.font.auxiliar);
 //            textView.setTypeface(typeface);
@@ -1104,7 +1104,7 @@ public class Funciones {
 //        }
 //        view.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.bg_notificacion,null));
 //        //TextView text = (TextView) view.findViewById(android.R.id.message);
-//        text.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+//        text.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //        text.setTextSize(18);
 //        text.setTypeface(fuenteToast);
 ////        if (toast.getView() == null) {
@@ -1114,7 +1114,7 @@ public class Funciones {
 ////            layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.bg_notificacion,null));
 ////            TextView textView = layout.findViewById(tvRes);
 ////            textView.setGravity(Gravity.LEFT);
-////            textView.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+////            textView.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 ////            textView.setTextSize(18);
 ////            textView.setTypeface(fuenteToast);
 ////            textView.setText(mensaje);
@@ -1140,7 +1140,7 @@ public class Funciones {
       //params.setMargins(5,-5,5,-10);
       params.setMargins(20, 0, 20, 0);
       textView.setLayoutParams(params);
-      textView.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      textView.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
       textView.setTextSize(16);
       Typeface typeface = ResourcesCompat.getFont(context, R.font.monoespaciada_principal);
       textView.setTypeface(typeface);
@@ -1151,7 +1151,7 @@ public class Funciones {
       View view = t.getView();
       view.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.bg_notificacion, null));
       TextView text = (TextView) view.findViewById(android.R.id.message);
-      text.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blanco, null));
+      text.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
       text.setTextSize(18);
       Typeface typeface = ResourcesCompat.getFont(context, R.font.monoespaciada_principal);
       text.setTypeface(typeface);

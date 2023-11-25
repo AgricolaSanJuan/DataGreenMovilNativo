@@ -1,29 +1,44 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.DataGreenMovil" parent="Theme.AppCompat.Light">
-        <item name="android:textColorSecondary">@color/azulOscuro</item>
+
+
+    <style name="Theme.DataGreenMovilLight" parent="Theme.AppCompat.Light">
+        <item name="android:colorBackgroundFloating">@color/main_orange_light_color</item>
+        <item name="backgroundPrimary">@color/backgroundPrimaryLight</item>
+        <item name="textColorMuted">@color/textColorMutedLight</item>
+        <item name="backgroundFilter">@color/backgroundFilterLight</item>
+        <item name="textValoresActuales">@color/blancoOficial</item>
+
+        <!-- Personaliza el estilo por defecto del FloatingActionButton -->
+        <item name="materialButtonStyle">@style/fab_style_light</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MaterialComponents.SmallComponent</item>
+        <!-- Otros atributos según tus necesidades -->
+    </style>
+
+
+    <style name="Theme.DataGreenMovilDark" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="backgroundPrimary">@color/backgroundPrimaryDark</item>
+        <item name="textColorMuted">@color/textColorMutedDark</item>
+        <item name="fabColor">@color/verdeOscuro</item>
+        <item name="backgroundFilter"> @color/backgroundFilterDark </item>
+        <item name="textValoresActuales"> @color/main_orange_light_color </item>
+
         <item name="android:textColor">@color/gris</item>
-
-        <!--        <item name="radioButtonStyle">@style/radioButton</item>-->
-
+<!--        <item name="android:background">@color/verdeClaro</item>-->
         <!-- MI CONFIGURACION PERSONAL-->
-        <item name="colorPrimary">@color/verde</item>
+        <item name="colorPrimary">@color/negroOficial</item>
         <item name="colorPrimaryDark">@color/verde</item>
         <item name="colorAccent">@color/gris</item>
-
         <!-- Status bar color. -->
-        <!--<item name="android:statusBarColor" tools:targetApi="l">@color/verdeClaro</item>-->
         <item name="android:statusBarColor">@color/verdeClaro</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- ocultar action bar-->
         <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
-        <!--<item name="buttonStyle">@style/Boton</item>-->
-        <item name="floatingActionButtonStyle">@style/fab_Boton</item>
-
-        <!--        <item name="buttonStyle">@style/Boton</item>-->
+<!--        <item name="floatingActionButtonStyle">@style/fab_BotonDark</item>-->
     </style>
+
+
     <!-- Base application theme. -->
     <style name="Base.Theme.DataGreenMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -46,4 +61,5 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

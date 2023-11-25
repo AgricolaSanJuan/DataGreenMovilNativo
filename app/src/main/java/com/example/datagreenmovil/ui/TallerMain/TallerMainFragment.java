@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -37,6 +39,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.Rex;
@@ -72,6 +75,7 @@ public class TallerMainFragment extends Fragment {
     Dialog dlg_PopUp;
     Context ctx;
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     ArrayList<String> idsSeleccionados;
     //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
@@ -84,6 +88,7 @@ public class TallerMainFragment extends Fragment {
     String s_ListarIdEstado = "PE";
     String s_IdRex = "";
     NavController navController;
+    boolean newThemeValue;
 
     private FragmentTallerMainBinding binding;
 
@@ -91,6 +96,16 @@ public class TallerMainFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         TallerMainViewModel tallerMainViewModel =
                 new ViewModelProvider(this).get(TallerMainViewModel.class);
+
+//        newThemeValue = sharedPreferences.getBoolean("THEME_LIGTH", false);
+//
+//        if(newThemeValue){
+//            getActivity().setTheme(R.style.Theme_DataGreenMovilDark);
+//        }else{
+//            getActivity().setTheme(R.style.Theme_DataGreenMovilLight);
+//        }
+
+//        ((DataGreenApp) getActivity().getApplication()).InicializarTema(getActivity());
 
         binding = FragmentTallerMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -175,10 +190,17 @@ public class TallerMainFragment extends Fragment {
                 dl.openDrawer(GravityCompat.START);
                 NavigationMenuItemView itemSync = dl.findViewById(R.id.nav_item_sync);
             }
+//            editor.putBoolean("THEME_LIGTH", !newThemeValue).apply();
+//            ((DataGreenApp) getActivity().getApplication()).setDarkTheme(getActivity());
+//            getActivity().recreate();
+
+
+
         });
         
         return root;
     }
+
 
     private void setearControles() {
         //        builderDialogoCerrarSesion= Funciones.setearAlertDialogParaCerrarSesion_(objConfLocal,objSqlite,this);
@@ -470,6 +492,7 @@ public class TallerMainFragment extends Fragment {
         super.onAttach(context);
         ctx = context;
         sharedPreferences = ctx.getSharedPreferences("objConfLocal", ctx.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
     @Override
     public void onDestroyView() {

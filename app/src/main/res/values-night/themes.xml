@@ -16,7 +16,7 @@
         <item name="windowNoTitle">true</item>
 
         <!--<item name="buttonStyle">@style/Boton</item>-->
-        <item name="floatingActionButtonStyle">@style/fab_Boton</item>
+<!--        <item name="floatingActionButtonStyle">@style/fab_Boton</item>-->
     </style>
     <!-- Base application theme. -->
     <style name="Base.Theme.DataGreenMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">

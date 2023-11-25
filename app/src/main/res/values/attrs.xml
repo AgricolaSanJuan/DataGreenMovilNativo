@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="backgroundPrimary" format="reference|color"/>
+    <attr name="textColorMuted" format="reference|color"/>
+    <attr name="fabColor" format="reference|color"/>
+    <attr name="backgroundFilter" format="reference|color"/>
+    <attr name="textValoresActuales" format="reference|color"/>
+    <attr name="fabStyle" format="reference|color"/>
+</resources>

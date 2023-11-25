@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_principal"
-    tools:context=".ui.TallerMain.TallerMainFragment" ><!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
+    tools:context=".ui.TallerMain.TallerMainFragment"><!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
 
     <LinearLayout
         android:id="@+id/talmai_lly_StatusSuperior_v"
@@ -89,6 +88,8 @@
                     android:layout_marginBottom="7dp"
                     android:fontFamily="@font/auxiliar_02"
                     android:text="Estado:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@android:color/secondary_text_light"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 

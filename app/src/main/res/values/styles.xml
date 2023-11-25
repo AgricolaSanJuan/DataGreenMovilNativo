@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="fab_Boton" parent="Theme.DataGreenMovil">
-        <item name="android:layout_height">48dp</item>
-        <item name="android:layout_width">48dp</item>
-        <item name="fabCustomSize">48dp</item>
-        <item name="maxImageSize">40dp</item>
-        <item name="android:backgroundTint">@color/verde</item>
-        <item name="elevation">0dp</item>
-        <!--        <item name="borderWidth">1dp</item>-->
-        <!--<item name="borderWidth">2dp</item>-->
+<!--    <style name="estiloPersonalizadoLight" parent="Theme.DataGreenMovil">-->
+<!--        <item name="backgroundPrimary">@color/blancoOficial</item>-->
+<!--        <item name="android:layout_height">48dp</item>-->
+<!--        <item name="android:layout_width">48dp</item>-->
+<!--        <item name="fabCustomSize">48dp</item>-->
+<!--        <item name="maxImageSize">40dp</item>-->
+<!--        <item name="tint">@color/grisOscuro</item>-->
+<!--        <item name="background">@color/main_green_color</item>-->
+<!--        <item name="android:backgroundTint">@color/verdePrimario</item>-->
+<!--        <item name="elevation">0dp</item>-->
+<!--        &lt;!&ndash;        <item name="borderWidth">1dp</item>&ndash;&gt;-->
+<!--        &lt;!&ndash;<item name="borderWidth">2dp</item>&ndash;&gt;-->
+<!--    </style>-->
+<!--    <style name="estiloPersonalizadoDark" parent="Theme.DataGreenMovil">-->
+<!--        <item name="backgroundPrimary">@color/negroOficial</item>-->
+<!--        <item name="android:layout_height">80dp</item>-->
+<!--        <item name="android:layout_width">80dp</item>-->
+<!--        <item name="fabCustomSize">48dp</item>-->
+<!--        <item name="maxImageSize">40dp</item>-->
+<!--        <item name="tint">@color/main_orange_color</item>-->
+<!--        <item name="android:backgroundTint">@color/verde</item>-->
+<!--        <item name="elevation">0dp</item>-->
+<!--        &lt;!&ndash;        <item name="borderWidth">1dp</item>&ndash;&gt;-->
+<!--        &lt;!&ndash;<item name="borderWidth">2dp</item>&ndash;&gt;-->
+<!--    </style>-->
+
+    <style name="fab_style_light" parent="Widget.Design.FloatingActionButton">
+        <item name="android:background"> @color/main_orange_light_color </item>
+        <item name="android:backgroundTint"> @color/main_orange_color </item>
+        <item name="materialButtonStyle"></item>
     </style>
+
+
+
 
     <!--<style name="radioButton" parent="Theme.AppCompat.Light">-->
     <!--&lt;!&ndash;    <item name="android:buttonTint">@color/alerta</item>&ndash;&gt;-->

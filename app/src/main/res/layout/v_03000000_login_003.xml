@@ -66,11 +66,11 @@
         app:layout_constraintTop_toBottomOf="@+id/c003_lly_StatusSuperior_v">
 
         <ImageView
-            android:layout_width="40mm"
+            android:layout_width="match_parent"
             android:layout_height="40mm"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/siembra"
-            tools:srcCompat="@drawable/siembra" />
+            app:srcCompat="@drawable/img_minigreen"
+            tools:srcCompat="@drawable/img_minigreen" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,7 +90,9 @@
                     android:contentDescription="Configuracion"
                     android:elevation="0dp"
                     android:onClick="abrirMenuConfiguracion"
-                    app:srcCompat="@drawable/i_settings" />
+                    app:maxImageSize="45dp"
+                    app:srcCompat="@drawable/i_settings"/>
+
 
                 <Spinner
                     android:id="@+id/c003_spi_Empresa_v"
@@ -100,52 +102,81 @@
                     android:background="@drawable/bg_r_blanco"
                     android:foregroundGravity="center"
                     android:gravity="center"
+
                     android:textAlignment="center" />
             </LinearLayout>
 
-            <Space
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/c003_etx_Usuario_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Usuario"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="24sp"
+                    android:background="@color/float_transparent"
+                    android:fontFamily="@font/monoespaciada_principal"
+
+                    android:textAlignment="center"
+                    android:foregroundGravity="center_vertical"
+                    android:gravity="center"
+                    android:textColorHint="@color/grisOscuro" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <EditText
-                android:id="@+id/c003_etx_Usuario_v"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/c003_etx_Password_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña"
+                    android:textSize="24sp"
+                    android:background="@color/float_transparent"
+                    android:fontFamily="@font/monoespaciada_principal"
+                    android:inputType="textPassword"
+                    android:textAlignment="center"
+                    android:foregroundGravity="center_vertical"
+                    android:gravity="center"
+                    android:textColorHint="@color/grisOscuro" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/c003_btn_Login_v"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_r_blanco"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/verdeSuave"
+                android:clickable="true"
+                android:focusable="true"
                 android:fontFamily="@font/monoespaciada_principal"
-                android:gravity="center"
-                android:hint="@string/txt_usuario"
-                android:importantForAutofill="no"
-                android:inputType="numberDecimal"
-                android:minHeight="48dp"
-                android:textAllCaps="true"
+                android:foregroundGravity="center_vertical"
+                android:onClick="onClick"
+                android:text="@string/btn_login"
+
+                android:textColor="@color/grisOscuro"
                 android:textSize="24sp"
-                tools:ignore="TextContrastCheck" />
+                android:layout_marginTop="20dp"/>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <EditText
-                android:id="@+id/c003_etx_Password_v"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_r_blanco"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
                 android:fontFamily="@font/monoespaciada_principal"
-                android:gravity="center"
-                android:hint="@string/txt_password"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:textSize="24sp"
-                tools:ignore="TextContrastCheck" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:onClick="cambiarContrasenia"
+                android:visibility="invisible"
+                android:text="Olvidé mi contraseña" />
 
             <CheckBox
                 android:id="@+id/cbxRecordarCredenciales"
@@ -154,34 +185,8 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:text="Recordar credenciales"
-                android:textAlignment="center" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <Button
-                android:id="@+id/c003_btn_Login_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/verde"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:foregroundGravity="center_vertical"
-                android:onClick="onClick"
-                android:text="@string/btn_login"
-                android:textColor="@color/blanco"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="cambiarContrasenia"
-                android:text="Olvidé mi contraseña" />
+                android:textAlignment="center"
+                android:visibility="visible"/>
 
         </LinearLayout>
 
