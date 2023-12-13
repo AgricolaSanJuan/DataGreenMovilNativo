@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
-            android:background="@drawable/bg_r_grismasclaro"
+
             android:ems="10"
             android:fontFamily="@font/auxiliar_02"
             android:gravity="start|top"
@@ -58,7 +58,7 @@
             android:minLines="5"
             android:padding="7dp"
             android:scrollbars="vertical"
-            android:textColorHint="@color/grisAux"
+            android:textColorHint="@color/grisPrimario"
             android:textSize="20sp"
             android:textStyle="bold" />
 

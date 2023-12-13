@@ -86,7 +86,7 @@ public class AdapatadorSpinner extends ArrayAdapter<ClaveValor> {
             label.setText(t);
             Typeface tf = ResourcesCompat.getFont(context, R.font.monoespaciada_principal); //Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
             label.setTypeface(tf);
-            label.setTextSize(22);
+            label.setTextSize(18);
             label.setPadding(20,20,20,20);
             //label.setTextColor(Color.parseColor("#FF000000"));
             return label;

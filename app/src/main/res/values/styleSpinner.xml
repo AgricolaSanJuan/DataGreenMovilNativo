@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="spinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="fontFamily"> @font/monoespaciada_principal </item>
+    </style>
+</resources>

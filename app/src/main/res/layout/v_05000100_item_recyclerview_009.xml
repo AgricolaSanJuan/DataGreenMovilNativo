@@ -166,7 +166,7 @@
                             android:id="@+id/c009_txv_TotalDetalles_v"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/verdeClaro"
+
                             android:fontFamily="@font/vmr"
                             android:text="3"
                             android:textColor="@color/black"
@@ -187,7 +187,7 @@
                             android:id="@+id/c009_txv_TotalHoras_v"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/verdeClaro"
+
                             android:fontFamily="@font/vmr"
                             android:text="20.00"
                             android:textColor="@color/black"
@@ -208,7 +208,7 @@
                             android:id="@+id/c009_txv_TotalRdtos_v"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/verdeClaro"
+
                             android:fontFamily="@font/vmr"
                             android:text="80.00"
                             android:textColor="@color/black"
@@ -230,7 +230,7 @@
                             android:id="@+id/c009_txv_TotalJornales_v"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/verdeClaro"
+
                             android:fontFamily="@font/vmr"
                             android:text="2.50"
                             android:textColor="@color/black"

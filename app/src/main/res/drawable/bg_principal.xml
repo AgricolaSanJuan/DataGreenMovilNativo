@@ -6,7 +6,7 @@
 <!--                android:endColor="@color/verdeClaro"-->
 
 <!--                android:centerColor="@color/verdeClaro"-->
-<!--                android:startColor="@color/blanco"-->
+<!--                android:startColor="@color/blancoOficial"-->
 <!--                />-->
             <solid android:color="?attr/backgroundPrimary"/>
         </shape>

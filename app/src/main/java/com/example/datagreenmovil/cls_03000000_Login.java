@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -60,10 +62,14 @@ public class cls_03000000_Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+//        INICIALIZAMOS EL TEMA EN CLARO / OSCURO
+        DataGreenApp dataGreenApp =  (DataGreenApp) getApplication();
+//        dataGreenApp.InicializarTema();
+//        COMENTADO EN LA VERSIÓN 1.6 POR QUE AUN NO SE DEFINEN LOS COLORES PARA EL MODO DARK
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_03000000_login_003);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         if(getIntent().getExtras()!=null){
             objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");

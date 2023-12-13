@@ -49,19 +49,17 @@
 
                         <TextView
                             android:id="@+id/textView4"
+                            style="@style/textoSecundarioDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="ID: "
-                            android:textAlignment="textEnd" />
+                            android:text="ID: "/>
 
                         <TextView
                             android:id="@+id/c023_txv_Id_v"
+                            style="@style/textoDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="."
-                            android:textColor="@color/grisOscuro" />
+                            android:text="."/>
 
                         <Space
                             android:layout_width="wrap_content"
@@ -70,19 +68,18 @@
 
                         <TextView
                             android:id="@+id/textView11"
+                            style="@style/textoSecundarioDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
                             android:text="FECHA: "
                             android:textAlignment="textEnd" />
 
                         <TextView
                             android:id="@+id/c023_txv_Fecha_v"
+                            style="@style/textoDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="."
-                            android:textColor="@color/grisOscuro" />
+                            android:text="."/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -92,18 +89,17 @@
 
                         <TextView
                             android:id="@+id/textView12"
+                            style="@style/textoSecundarioDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="USUARIO: " />
+                            android:text="USUARIO: "/>
 
                         <TextView
                             android:id="@+id/c023_txv_IdUsuario_v"
+                            style="@style/textoDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="."
-                            android:textColor="@color/grisOscuro" />
+                            android:text="."/>
 
                         <Space
                             android:layout_width="wrap_content"
@@ -112,18 +108,17 @@
 
                         <TextView
                             android:id="@+id/textView10"
+                            style="@style/textoSecundarioDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
                             android:text="ESTADO: " />
 
                         <TextView
                             android:id="@+id/c023_txv_IdEstado_v"
+                            style="@style/textoDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="."
-                            android:textColor="@color/grisOscuro" />
+                            android:text="."/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -135,19 +130,18 @@
 
                         <TextView
                             android:id="@+id/textView23"
+                            style="@style/textoSecundarioDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="PROVEEDOR: " />
+                            android:text="PROVEEDOR: "/>
 
                         <TextView
                             android:id="@+id/c023_txv_Ruc_v"
+                            style="@style/textoDetallesCardView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/auxiliar_02"
-                            android:text="."
-                            android:textColor="@color/grisOscuro" />
+                            android:text="." />
 
                     </LinearLayout>
 
@@ -164,70 +158,76 @@
                     android:id="@+id/textView24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02" />
+                    android:fontFamily="@font/auxiliar_02"
+                    android:textColor="@color/negroOficial"/>
 
                 <TextView
                     android:id="@+id/c023_txv_RazonSocial_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    android:text="." />
 
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout9"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView34"
+                    style="@style/textoSecundarioDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="PLACA: " />
+                    android:text="PLACA: "
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/c023_txv_Placa_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView34" />
 
                 <TextView
                     android:id="@+id/textView25"
+                    style="@style/textoSecundarioDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="PASAJEROS: " />
+                    android:text="PASAJEROS: "
+                    app:layout_constraintBaseline_toBaselineOf="@+id/c023_txv_Placa_v"
+                    app:layout_constraintEnd_toStartOf="@+id/c023_txv_Pasajeros_v" />
 
                 <TextView
                     android:id="@+id/c023_txv_Pasajeros_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
+                    app:layout_constraintEnd_toStartOf="@+id/textView36" />
 
                 <TextView
                     android:id="@+id/textView36"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="/"
-                    android:textColor="@color/grisOscuro" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/c023_txv_Pasajeros_v"
+                    app:layout_constraintEnd_toStartOf="@+id/c023_txv_Capacidad_v" />
 
                 <TextView
                     android:id="@+id/c023_txv_Capacidad_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="."
-                    android:textColor="@color/grisOscuro" />
-            </LinearLayout>
+                    app:layout_constraintBaseline_toBaselineOf="@+id/textView36"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -236,35 +236,32 @@
 
                 <TextView
                     android:id="@+id/textView35"
+                    style="@style/textoSecundarioDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="RUTA: " />
 
                 <TextView
                     android:id="@+id/c023_txv_IdRuta_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    android:text="." />
 
                 <TextView
                     android:id="@+id/textView21"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text=" - "
-                    android:textColor="@color/grisOscuro" />
+                    android:text=" - "/>
 
                 <TextView
                     android:id="@+id/c023_txv_Ruta_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    android:text="."/>
             </LinearLayout>
 
             <LinearLayout
@@ -274,35 +271,32 @@
 
                 <TextView
                     android:id="@+id/textView32"
+                    style="@style/textoSecundarioDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="CONDUCTOR: " />
 
                 <TextView
                     android:id="@+id/c023_txv_NroBrevete_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    android:text="."/>
 
                 <TextView
                     android:id="@+id/textView31"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text=" - "
-                    android:textColor="@color/grisOscuro" />
+                    android:text=" - " />
 
                 <TextView
                     android:id="@+id/c023_txv_Conductor_v"
+                    style="@style/textoDetallesCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textColor="@color/grisOscuro" />
+                    android:text="."/>
             </LinearLayout>
 
             <TextView
@@ -321,36 +315,25 @@
                 android:clipToPadding="true">
 
                 <Button
+                    style="@style/buttonPrimary"
                     android:id="@+id/c023_btn_transferir_v"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/info"
-                    android:text="TRANSFERIR"
-                    android:textColor="@color/blanco"
-                    android:textSize="13dp" />
+                    android:text="Transferir"/>
 
                 <Button
+                    style="@style/buttonDanger"
                     android:id="@+id/c023_btn_eliminar_v"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/danger"
-                    android:text="ELIMINAR"
-                    android:textColor="@color/blanco"
-                    android:textSize="13dp" />
+                    android:text="ELIMINAR" />
 
                 <Button
+                    style="@style/buttonSuccess"
                     android:id="@+id/btnAddPasajeros"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/verde"
-                    android:text="AGREGAR"
-                    android:textColor="@color/blanco"
-                    android:textSize="13dp" />
+                    android:text="AGREGAR" />
 
                 <CheckBox
                     android:id="@+id/c023_cbx_Seleccionado_v"

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_principal"
+    android:clickable="true"
     tools:context=".cls_05010000_Edicion">
 
     <LinearLayout
@@ -63,6 +64,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/c007_lly_StatusInferior_v"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c007_lly_StatusSuperior_v">
 
@@ -71,6 +73,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+<!--            RENDIMIENTOS VIEW-->
+            <TextView
+                android:id="@+id/c007_txv_TotalRendimientos"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Rdtos.: "
+                android:textColor="@color/grisOscuro"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
+
+            <TextView
+                android:id="@+id/c007_txv_TotalRendimientosView"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/grisOscuro"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
+                app:layout_constraintStart_toEndOf="@+id/c007_txv_TotalRendimientos"
+                app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
+<!--            TRABAJADORES VIEW-->
+            <TextView
+                android:id="@+id/c007_txv_TotalTrabajadores"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trabajadores.: "
+                android:textColor="@color/grisOscuro"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/c007_txv_TotalTrabajadoresView"
+                app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
+
+            <TextView
+                android:id="@+id/c007_txv_TotalTrabajadoresView"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textColor="@color/grisOscuro"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
+                app:layout_constraintEnd_toStartOf="@+id/c007_fab_AbrirCerrarCabecera_v"
+                app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
                 android:layout_width="wrap_content"
@@ -78,7 +131,9 @@
                 android:clickable="true"
                 android:foregroundGravity="fill"
                 android:onClick="onClick"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/i_crop" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
+
             android:orientation="vertical"
             android:padding="2dp">
 
@@ -101,20 +156,20 @@
 
                 <TextView
                     android:id="@+id/c007_txv_EtiquetaId_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="Id: "
-                    android:textSize="20sp"
+                    android:textColor="@color/grisOscuro"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c007_txv_IdTareo_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="."
-                    android:textSize="20sp"
+                    android:textColor="@color/grisOscuro"
                     android:textStyle="bold" />
 
                 <Space
@@ -124,12 +179,12 @@
 
                 <TextView
                     android:id="@+id/c007_txv_Fecha_Etq_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:text="Fecha: "
-                    android:textSize="20sp"
+                    android:textColor="@color/grisOscuro"
                     android:textStyle="bold" />
 
                 <TextView
@@ -143,14 +198,15 @@
                     android:padding="7dp"
                     android:text="01/01/1990"
                     android:textAlignment="center"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
+                    android:textColor="@color/blancoOficial"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/c007_lly_Turno_v"
+                style="textViewEdicionItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -165,25 +221,24 @@
 
                 <TextView
                     android:id="@+id/c007_txv_Turno_Etq_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:text="Turno: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
+                    android:textColor="@color/blancoOficial"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c007_txv_Turno_Key_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -204,7 +259,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -224,37 +279,35 @@
                 android:padding="7dp">
 
                 <TextView
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="Observacion: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c007_txv_Observacion_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/c007_lly_Detalle1_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical"
             android:padding="2dp">
 
@@ -275,26 +328,22 @@
 
                 <TextView
                     android:id="@+id/c007_txv_Actividad_Etq_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="Actividad: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c007_txv_Actividad_Key_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:padding="2dp"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -315,7 +364,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -336,25 +385,20 @@
 
                 <TextView
                     android:id="@+id/c007_txv_Labor_Etq_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="Labor: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c007_txv_Labor_Key_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -376,7 +420,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -384,8 +428,7 @@
             <LinearLayout
                 android:id="@+id/c007_lly_Consumidor_v"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_redondeado_gris_transparente"
                 android:clickable="true"
                 android:focusable="true"
@@ -396,25 +439,21 @@
                 android:padding="7dp">
 
                 <TextView
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
                     android:text="Consumidor: "
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/c007_txv_Consumidor_Key_v"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -423,7 +462,6 @@
                 android:id="@+id/c007_lly_Consumidor_Val_v"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
                 android:gravity="center|left"
                 android:orientation="horizontal"
                 android:padding="7dp">
@@ -436,34 +474,32 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
 
-
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/c007_lly_Detalle2_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
-            android:orientation="vertical"
-            android:padding="2dp">
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/c007_lly_DniNombre_v"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2px"
-                android:background="@drawable/bg_r_blanco"
+
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toTopOf="@+id/c007_cly_HorasRdtos_v"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/c007_cly_Resumen_v"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/c007_cly_Resumen_v">
 
                 <AutoCompleteTextView
                     android:id="@+id/c007_atv_NroDocumento_v"
@@ -476,10 +512,16 @@
                     android:hint="Dni"
                     android:inputType="phone"
                     android:padding="7dp"
-                    android:textColor="@color/blanco"
-                    android:textColorHint="@color/blanco"
-                    android:textSize="20sp"
+                    android:textColor="@color/blancoOficial"
+                    android:textColorHint="@color/blancoOficial"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
                 <AutoCompleteTextView
                     android:id="@+id/c007_atv_NombreTrabajador_v"
@@ -491,113 +533,129 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:hint="Nombre Trabajador"
                     android:padding="7dp"
-                    android:textColor="@color/blanco"
-                    android:textColorHint="@color/blanco"
+                    android:textColor="@color/blancoOficial"
+                    android:textColorHint="@color/blancoOficial"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </LinearLayout>
-            <LinearLayout
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/c007_cly_HorasRdtos_v"
+                style="@style/textViewEdicionItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2px"
+                android:layout_marginTop="2dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:textColor="@color/blancoOficial"
+                android:textColorHint="@color/blancoOficial"
                 app:layout_constraintBottom_toTopOf="@+id/c007_rvw_Detalle_v"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/c007_lly_DniNombre_v"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/c007_lly_DniNombre_v">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:orientation="horizontal"
-                    android:padding="7dp">
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
+                        style="@style/textViewEdicionItems"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/auxiliar_02"
                         android:text="Horas:"
-                        android:textColor="@color/blanco"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/blancoOficial"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/etxHoras_v"
+                        app:layout_constraintEnd_toStartOf="@+id/etxHoras_v"
+                        app:layout_constraintTop_toTopOf="@+id/etxHoras_v" />
 
                     <EditText
                         android:id="@+id/etxHoras_v"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_r_blanco"
-                        android:fontFamily="@font/auxiliar_02"
                         android:gravity="center|center_vertical"
                         android:hint="0.00"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/grisAux"
-                        android:textColorHint="@color/grisAux"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textColor="@color/blancoOficial"
+                        android:textColorHint="@color/blancoOficial"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_redondeado_gris_transparente"
                     android:orientation="horizontal"
-                    android:padding="7dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/auxiliar_02"
-                        android:text="Rdtos:"
-                        android:textColor="@color/blanco"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <EditText
                         android:id="@+id/etxRtos_v"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_r_blanco"
-                        android:fontFamily="@font/auxiliar_02"
                         android:gravity="center_horizontal|center_vertical"
                         android:hint="0.00"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/grisAux"
-                        android:textColorHint="@color/grisAux"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:paddingTop="10dp"
+                        android:textColor="@color/blancoOficial"
+                        android:textColorHint="@color/blancoOficial"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView37"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rdtos:"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/etxRtos_v"
+                        app:layout_constraintEnd_toStartOf="@+id/etxRtos_v"
+                        app:layout_constraintTop_toTopOf="@+id/etxRtos_v" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c007_fab_Agregar_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:onClick="onClick"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:srcCompat="@drawable/i_person_add" />
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
-        <!--        inicio-->
-
-        <!--        fin-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/c007_rvw_Detalle_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:layout_weight="1"
             app:layout_constraintBottom_toTopOf="@+id/c007_lly_Controles_v"
             app:layout_constraintEnd_toEndOf="parent"
@@ -633,7 +691,6 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:onClick="onClick"
-                app:borderWidth="1dp"
                 app:srcCompat="@drawable/i_save" />
         </LinearLayout>
 

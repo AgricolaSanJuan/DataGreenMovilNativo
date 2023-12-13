@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    GENERAL-->
+    <style name="buttonStyle" parent="@style/Widget.AppCompat.Button">
+<!--        <item name="android:background"> @drawable/button_rounded </item>-->
+        <item name="backgroundTint"> @color/verdePrimario </item>
+        <item name="android:foregroundGravity"> center_vertical </item>
+        <item name="fontFamily"> @font/monoespaciada_principal </item>
+        <item name="android:textColor">  @color/blancoOficial </item>
+    </style>
+
+<!--    BOTONES REDONDEADOS PARA ITEMS-->
+    <style name="buttonPrimary">
+        <item name="backgroundTint"> @color/azulPrimario </item>
+        <item name="fontFamily"> @font/auxiliar_02</item>
+        <item name="android:textColor">@color/blancoOficial</item>
+        <item name="android:layout_weight"> 1 </item>
+        <item name="android:textSize"> 13dp </item>
+        <item name="android:layout_marginStart"> 2dp </item>
+        <item name="android:layout_marginEnd"> 2dp </item>
+    </style>
+
+    <style name="buttonDanger">
+        <item name="backgroundTint"> @color/AuxiliarFuerte </item>
+        <item name="fontFamily"> @font/auxiliar_02</item>
+        <item name="android:textColor">@color/blancoOficial</item>
+        <item name="android:layout_weight"> 1 </item>
+        <item name="android:textSize"> 13dp </item>
+        <item name="android:layout_marginStart"> 2dp </item>
+        <item name="android:layout_marginEnd"> 2dp </item>
+    </style>
+
+    <style name="buttonSuccess">
+        <item name="backgroundTint"> @color/verdePrimario </item>
+        <item name="fontFamily"> @font/auxiliar_02</item>
+        <item name="android:textColor">@color/blancoOficial</item>
+        <item name="android:layout_weight"> 1 </item>
+        <item name="android:textSize"> 13dp </item>
+        <item name="android:layout_marginStart"> 2dp </item>
+        <item name="android:layout_marginEnd"> 2dp </item>
+    </style>
+
+<!--    IMAGE BUTTON-->
+    <style name="imageButtonSwitchTheme" parent="Widget.AppCompat.ImageButton">
+        <item name="android:src"> @drawable/ic_night_mode </item>
+        <item name="android:background"> @color/float_transparent </item>
+        <item name="android:tint"> @color/negroOficial </item>
+    </style>
+
+    <style name="imageViewStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:height"> 50dp </item>
+    </style>
+</resources>

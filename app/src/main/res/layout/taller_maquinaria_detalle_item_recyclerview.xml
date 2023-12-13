@@ -327,7 +327,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/info"
                     android:text="TRANSFERIR"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="13dp" />
 
                 <Button
@@ -339,7 +339,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/danger"
                     android:text="ELIMINAR"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="13dp" />
 
                 <Button
@@ -349,7 +349,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/verde"
                     android:text="AGREGAR"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="13dp" />
 
                 <CheckBox

@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
+
             android:orientation="vertical"
             android:padding="2dp">
 
@@ -98,7 +98,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:text="Fecha: "
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:text="01/01/1990"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -149,7 +149,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Linea: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -161,7 +161,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="."
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -209,7 +209,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Cultivo: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -221,7 +221,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="."
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -269,7 +269,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Variedad: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -281,7 +281,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="."
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -329,7 +329,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Empaque: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -341,7 +341,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="."
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -389,7 +389,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Cantidad: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -401,7 +401,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="."
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>

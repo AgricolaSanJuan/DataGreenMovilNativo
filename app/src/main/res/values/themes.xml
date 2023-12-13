@@ -1,65 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
 
+    <style name="Theme.DataGreenMovilLight" parent="Theme.AppCompat.Light.NoActionBar">
 
-    <style name="Theme.DataGreenMovilLight" parent="Theme.AppCompat.Light">
-        <item name="android:colorBackgroundFloating">@color/main_orange_light_color</item>
-        <item name="backgroundPrimary">@color/backgroundPrimaryLight</item>
-        <item name="textColorMuted">@color/textColorMutedLight</item>
-        <item name="backgroundFilter">@color/backgroundFilterLight</item>
-        <item name="textValoresActuales">@color/blancoOficial</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows"> false </item>
+        <item name="android:itemTextAppearance">@style/MenuItemTextAppearance</item>
 
-        <!-- Personaliza el estilo por defecto del FloatingActionButton -->
-        <item name="materialButtonStyle">@style/fab_style_light</item>
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MaterialComponents.SmallComponent</item>
-        <!-- Otros atributos según tus necesidades -->
+        <!--        <item name="android:background"> @color/blancoOficial </item>-->
+        <item name="textInputStyle"> @style/textInputLayoutStyle </item>
+        <item name="editTextStyle"> @style/editTextStyle </item>
+        <item name="floatingActionButtonStyle"> @style/floatingActionButtonStyle </item>
+        <item name="spinnerStyle"> @style/spinnerStyle </item>
+<!--        <item name="cardViewStyle"> @style/CardView </item>-->
+        <item name="android:textViewStyle"> @style/textViewStyle </item>
+<!--        <item name="android:background"> @color/azulOscuro </item>-->
+<!--        <item name="buttonStyle"> @style/buttonStyle </item>-->
     </style>
 
 
-    <style name="Theme.DataGreenMovilDark" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="backgroundPrimary">@color/backgroundPrimaryDark</item>
-        <item name="textColorMuted">@color/textColorMutedDark</item>
-        <item name="fabColor">@color/verdeOscuro</item>
-        <item name="backgroundFilter"> @color/backgroundFilterDark </item>
-        <item name="textValoresActuales"> @color/main_orange_light_color </item>
 
-        <item name="android:textColor">@color/gris</item>
-<!--        <item name="android:background">@color/verdeClaro</item>-->
-        <!-- MI CONFIGURACION PERSONAL-->
-        <item name="colorPrimary">@color/negroOficial</item>
-        <item name="colorPrimaryDark">@color/verde</item>
-        <item name="colorAccent">@color/gris</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/verdeClaro</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <!-- ocultar action bar-->
-        <item name="android:windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-<!--        <item name="floatingActionButtonStyle">@style/fab_BotonDark</item>-->
-    </style>
-
-
-    <!-- Base application theme. -->
-    <style name="Base.Theme.DataGreenMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-    </style>
-
-    <style name="Theme.DataGreenMovil.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.DataGreenMovil.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.DataGreenMovil.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

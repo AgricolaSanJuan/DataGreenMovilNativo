@@ -19,6 +19,12 @@ import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //ESTE ES EL ADAPTADOR QUE SE USA REALMENTE, EL OTRO DEBERIA ELIMINARSE
 public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_05010200_RecyclerViewAdapter.MyViewHolder> {
@@ -37,12 +43,31 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         objSqlite = pSqlite;
     }
 
+    public Double obtenerTotalRendimientos() {
+        Double suma = 0.00;
+
+        for (TareoDetalle detalle : tareo.getDetalle()) {
+            suma += detalle.getRdtos(); // Asume que hay un método getRdtos() en TareoDetalle
+        }
+        return suma;
+    }
+
+    public JSONObject obtenerUltimosDatos(){
+        JSONObject ultimoRegistro = new JSONObject();
+        TareoDetalle tareoDetalle = new TareoDetalle();
+        return ultimoRegistro;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(mContext);
         View view=inflater.inflate(R.layout.v_05010100_item_recyclerview_010,parent,false);
         return new MyViewHolder(view);
+    }
+
+    public String cantidadRendimientos(){
+        return "hola";
     }
 
     @Override
@@ -93,55 +118,20 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
                 try{
                     int idOpcionClickeada = item.getItemId();
                     if(idOpcionClickeada == R.id.opc_05010101_EliminarDetalle_v){
-                        if (mContext instanceof cls_05010000_Edicion) {
-                            ((cls_05010000_Edicion)mContext).eliminarDetalle(itemSeleccionado);
-                        }
-//                        tareo.eliminarItemDetalle(itemSeleccionado);
-//                        Funciones.notificar(mContext, "Detalle elimiado: " + itemSeleccionado);
-//                        cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(mContext,objConfLocal,objSqlite,tareo);
+                        Swal.confirm(mContext, "Estás seguro?", "Una vez eliminado este detalle no se podrá recuperar").
+                                setConfirmClickListener(sweetAlertDialog -> {
+                                    if (mContext instanceof cls_05010000_Edicion) {
+                                        ((cls_05010000_Edicion)mContext).eliminarDetalle(itemSeleccionado);
+                                    }
+                                    sweetAlertDialog.dismissWithAnimation();
+                                }).setCancelClickListener(sweetAlertDialog -> {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                });
                     } else if (idOpcionClickeada == R.id.opc_05010101_ActualizarDetalle_v) {
                         if (mContext instanceof cls_05010000_Edicion) {
                             ((cls_05010000_Edicion)mContext).popUpActualizarDetalleTareos(td);
                         }
-                        //Funciones.popUpActualizarDetalleTareos(mContext,objSqlite,td);
-
-                        //Toast.makeText(this, ,Toast.LENGTH_LONG).show();
-                        //Funciones.notificar(mContext,"fin de todo");
-
                     }
-//                    switch (item.getItemId()) {
-//                        case R.id.opc_05010101_EliminarDetalle_v:/*
-//                            List<String> p = new ArrayList<>();
-//                            p.add(tareo.getIdEmpresa());
-//                            p.add(tareo.getId());
-//                            p.add(String.valueOf(itemSeleccionado));
-//                            objSqlite.doItBaby(objSqlite.obtQuery("ELIMINAR trx_Tareos_Detalle"),p,"WRITE");
-//                            //tareo.getDetalle().remove(tareo.getDetalle());
-//                            tareo.eliminarDetalle(itemSeleccionado);
-//                            p.remove(2);
-//                            objSqlite.doItBaby(objSqlite.obtQuery("ACTUALIZAR ITEM trx_Tareos_Detalle"),p,"WRITE");
-//                            Toast.makeText(mContext, "tareo elimiado: " + itemSeleccionado, Toast.LENGTH_SHORT).show();*/
-//
-//                            tareo.eliminarItemDetalle(itemSeleccionado);
-//                            Funciones.notificar(mContext, "Detalle elimiado: " + itemSeleccionado);
-//                            cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(mContext,objConfLocal,objSqlite,tareo);
-//
-////                            c007_rvw_Detalle.setAdapter(adaptadorLista);
-////                            c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
-//
-//                            //tareo.eliminarDetalle_Sqlite(objSqlite);
-////                            List<String> p = new ArrayList<>();
-////                            p.add(tareo.getIdEmpresa());
-////                            p.add(tareo.getId());
-////                            objSqlite.doItBaby(objSqlite.obtQuery("ELIMINAR trx_Tareos_Detalle EN BLOQUE"),p,"WRITE");
-//////                            for (TareoDetalle det : tareo.getDetalle()) {
-//////                                if(!det.guardar(objSqlite)) return false;
-//////                            }
-////                            tareo.guardarDetalle(objSqlite);
-//                            break;
-//                        default:
-//                            return false;
-//                    }
                 }catch(Exception ex){
                     Funciones.mostrarError(mContext,ex);
                     return false;
@@ -155,6 +145,19 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
     public int getItemCount()
     {
         return tareo.getDetalle().size();
+    }
+
+    public String getLastActividad(){
+        int cantidad = tareo.getTotalDetalles();
+        return tareo.getDetalle().get(cantidad-1).getIdActividad();
+    }
+    public String getLastLabor(){
+        int cantidad = tareo.getTotalDetalles();
+        return tareo.getDetalle().get(cantidad-1).getIdLabor();
+    }
+    public String getLastConsumidor(){
+        int cantidad = tareo.getTotalDetalles();
+        return tareo.getDetalle().get(cantidad-1).getIdConsumidor();
     }
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {

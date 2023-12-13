@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    TEXT INPUT LAYOUT-->
+    <style name="textInputLayoutStyle" parent="@style/Widget.Design.TextInputLayout">
+        <item name="android:background"> @color/float_transparent </item>
+    </style>
+
+    <!--    EDIT TEXT-->
+    <style name="editTextStyle" parent="@style/Widget.AppCompat.EditText">
+        <!--        <item name="android:background"> @color/float_transparent </item>-->
+    </style>
+</resources>

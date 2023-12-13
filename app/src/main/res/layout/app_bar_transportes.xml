@@ -7,11 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".TransportesActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:theme="@style/Theme.DataGreenMovil.AppBarOverlay"/>
-
-  <include layout="@layout/content_transportes"/>
+    <include layout="@layout/content_transportes"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

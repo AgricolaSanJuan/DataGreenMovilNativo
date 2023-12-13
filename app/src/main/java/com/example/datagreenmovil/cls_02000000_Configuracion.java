@@ -171,7 +171,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
                 pbSync.post(() -> pbSync.setProgress(100));
             } catch (Exception e) {
                 runOnUiThread(() -> Funciones.notificar(getBaseContext(), e.getMessage()));
-                pbSync.post(() -> pbSync.setBackgroundColor(R.color.redError));
+                pbSync.post(() -> pbSync.setBackgroundColor(R.color.AuxiliarFuerte));
                 pbSync.post(() -> pbSync.setProgress(100));
             } finally {
                 pbSync.post(() -> pbSync.setProgress(0));

@@ -11,7 +11,7 @@ ACCESO A BASE DE DATOS SQL: https://www.youtube.com/watch?v=OOm03ezazAI (NO OLVI
 -->
 
 <resources>
-    <string name="app_name">DataGreen Movil</string>
+    <string name="app_name">MiniGreen</string>
     <string name="btn_login">Ingresar</string>
     <string name="txt_usuario">Usuario:</string>
     <string name="txt_password">Contraseña:</string>

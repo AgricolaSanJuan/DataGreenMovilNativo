@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.datagreenmovil">
+    package="com.example.datagreenmovil"
+    >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission
@@ -21,12 +22,12 @@
         android:name=".DataGreenApp"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-        android:icon="@mipmap/ic_data_green_adaptive_fore"
+        android:icon="@drawable/ic_minigreen"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_data_green"
+        android:roundIcon="@drawable/ic_minigreen"
         android:supportsRtl="true"
         android:theme="@style/Theme.DataGreenMovilLight"
-        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         >
 <!--    tools:replace="android:appComponentFactory"-->
         <activity

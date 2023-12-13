@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -55,9 +56,8 @@ public class Tareo {
     }
 
 
-    public Tareo(String idTareo, ConexionSqlite objSqlite, ConfiguracionLocal objConfLocal, Context context) throws Exception {
+    public Tareo(String idTareo, ConexionSqlite objSqlite, Context context) throws Exception {
         sharedPreferences = context.getSharedPreferences("objConfLocal",ctx.MODE_PRIVATE);
-        Log.i("AQUIII","FINO");
         try {
             if (idTareo == null || idTareo.length() == 0){
                 //idTareo = new Tareo(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER ULTIMO trx_Tareos"),null,"READ",""),objConfLocal.get("ID_USUARIO_ACTUAL"));
@@ -245,6 +245,11 @@ public class Tareo {
             td.setItem(i+1);
             i++;
         }
+    }
+
+    public void obtenerUltimoDetalle(){
+        TareoDetalle td = new TareoDetalle();
+        Swal.success(ctx, "TITULO", td.getActividad(), 5000);
     }
 
     public boolean guardar(ConexionSqlite objSqlite, ConfiguracionLocal objConfLocal) throws Exception {

@@ -156,8 +156,11 @@ public class TareosSettingsFragment extends Fragment {
             TareosActivity tareosActivity = (TareosActivity) getActivity();
             if(tareosActivity.obtenerDrawer() != null){
                 DrawerLayout dl = tareosActivity.obtenerDrawer();
-                NavigationMenuItemView syncBtn = dl.findViewById(R.id.nav_item_sync);
-                syncBtn.setVisibility(View.INVISIBLE);
+//                OCULTAR BOTONES DE ACCIONES PARA TAREOS
+                dl.findViewById(R.id.nav_item_sync).setVisibility(View.INVISIBLE);
+                dl.findViewById(R.id.nav_item_delete).setVisibility(View.INVISIBLE);
+                dl.findViewById(R.id.nav_item_extornar).setVisibility(View.INVISIBLE);
+//                ABRIR DRAWER
                 dl.openDrawer(GravityCompat.START);
             }
         });

@@ -27,6 +27,7 @@ import com.example.datagreenmovil.Logica.Swal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -805,7 +806,6 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     }
 
   }
-
   public void GuardarTareoDetalle(TareoDetalle d) throws Exception {
     try {
       String q = obtQuery("INSERTAR trx_Tareos_Detalle");
@@ -816,6 +816,100 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     } catch (Exception ex) {
       throw new Exception(ex);
     }
+  }
+
+  public JSONObject obtenerTareos(String whereIn) throws Exception {
+    JSONObject mainJSON = new JSONObject();
+    JSONArray tareosMainArray = new JSONArray();
+
+    Cursor cMain;
+    String qMain;
+
+    Cursor cDetalle;
+    String qDetalle;
+
+    qMain = "SELECT * FROM trx_tareos where Id IN "+whereIn+";";
+    cMain = doItBaby(qMain, null, "READ");
+    while (cMain.moveToNext()){
+      JSONObject tareoObject = new JSONObject();
+      JSONArray detallesTareoMainArray = new JSONArray();
+      qDetalle = "SELECT * FROM trx_tareos_detalle where IdTareo = '"+cMain.getString(1)+"';";
+      cDetalle = doItBaby(qDetalle, null, "READ");
+      for(int i = 0 ; i < cMain.getColumnCount(); i++){
+        tareoObject.put(cMain.getColumnName(i), cMain.getString(i));
+//        INSERTAR DETALLES
+        while (cDetalle.moveToNext()){
+          JSONObject detalleTareoObject = new JSONObject();
+          for(int j = 0 ; j < cDetalle.getColumnCount(); j++){
+            detalleTareoObject.put(cDetalle.getColumnName(j), cDetalle.getString(j));
+          }
+          detallesTareoMainArray.put(detalleTareoObject);
+        }
+      }
+      Log.i("RECORRIENDO",detallesTareoMainArray.toString());
+      tareoObject.put("detalles", detallesTareoMainArray);
+
+      tareosMainArray.put(tareoObject);
+    }
+    mainJSON.put("tareos", tareosMainArray);
+    Log.i("RESULTADO TAREOS", mainJSON.toString());
+    return mainJSON;
+  }
+
+  public boolean actualizarIdTareo(String newId,String oldId){
+    try {
+      doItBaby("PRAGMA FOREIGN_KEYS=1;", null, "WRITE");
+
+      String query = "UPDATE trx_tareos SET ID='"+ newId +"' where ID = '"+oldId+"'";
+
+      doItBaby(query, null, "WRITE");
+
+      doItBaby("PRAGMA FOREIGN_KEYS=0;", null, "WRITE");
+      return true;
+    }catch (Exception e){
+      return false;
+    }
+  }
+  public JSONObject eliminarTareos(ArrayList<String> idSeleccionados) throws JSONException {
+    JSONObject jsonObject = new JSONObject();
+    Cursor c;
+    String q;
+    try{
+      String whereIn = "(";
+      for(int i = 0; i < idSeleccionados.size(); i++){
+        if(i == idSeleccionados.size() - 1){
+          whereIn += "'"+idSeleccionados.get(i)+"')";
+          Log.i("CANTIDAD - 1", String.valueOf(i));
+        }else{
+          whereIn += "'"+idSeleccionados.get(i)+"',";
+        }
+      }
+      q = "SELECT COUNT(*) FROM trx_tareos where Id IN "+whereIn+" AND IdEstado = 'TR'";
+      c = doItBaby(q, null, "READ");
+      c.moveToFirst();
+      if(c.getInt(0) > 0){
+        jsonObject.put("message", "Hay ");
+        jsonObject.put("message_code", "transferido_seleccionado");
+        jsonObject.put("state", true);
+        return jsonObject;
+      }
+
+      q = "DELETE FROM trx_tareos_detalle WHERE IdTareo IN "+whereIn;
+      c = doItBaby(q, null, "READ");
+      c.moveToFirst();
+
+      q = "DELETE FROM trx_tareos WHERE Id IN "+whereIn;
+      c = doItBaby(q, null, "READ");
+      c.moveToFirst();
+      jsonObject.put("message", "error");
+      jsonObject.put("message_code", "eliminado");
+      jsonObject.put("state", true);
+    }catch (Exception e){
+      jsonObject.put("message", "error");
+      jsonObject.put("message_code", "error");
+      jsonObject.put("state", false);
+    }
+    return jsonObject;
   }
 
   public boolean GuardarRegistro(String nombreTabla, List<String> valores) throws Exception {

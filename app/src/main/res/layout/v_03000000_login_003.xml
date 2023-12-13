@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_principal"
+
     tools:context=".cls_03000000_Login">
 
     <LinearLayout
@@ -91,7 +91,7 @@
                     android:elevation="0dp"
                     android:onClick="abrirMenuConfiguracion"
                     app:maxImageSize="45dp"
-                    app:srcCompat="@drawable/i_settings"/>
+                    app:srcCompat="@drawable/i_settings" />
 
 
                 <Spinner
@@ -99,7 +99,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_r_blanco"
+
                     android:foregroundGravity="center"
                     android:gravity="center"
 
@@ -115,17 +115,15 @@
                     android:id="@+id/c003_etx_Usuario_v"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Usuario"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:textSize="24sp"
-                    android:background="@color/float_transparent"
                     android:fontFamily="@font/monoespaciada_principal"
-
-                    android:textAlignment="center"
                     android:foregroundGravity="center_vertical"
                     android:gravity="center"
-                    android:textColorHint="@color/grisOscuro" />
+                    android:hint="Usuario"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/grisOscuro"
+                    android:textSize="24sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -139,15 +137,14 @@
                     android:id="@+id/c003_etx_Password_v"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contraseña"
-                    android:textSize="24sp"
-                    android:background="@color/float_transparent"
                     android:fontFamily="@font/monoespaciada_principal"
-                    android:inputType="textPassword"
-                    android:textAlignment="center"
                     android:foregroundGravity="center_vertical"
                     android:gravity="center"
-                    android:textColorHint="@color/grisOscuro" />
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/grisOscuro"
+                    android:textSize="24sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -155,17 +152,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/verdeSuave"
+                android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:foregroundGravity="center_vertical"
                 android:onClick="onClick"
                 android:text="@string/btn_login"
-
-                android:textColor="@color/grisOscuro"
-                android:textSize="24sp"
-                android:layout_marginTop="20dp"/>
+                style="@style/buttonSuccess"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -175,8 +168,8 @@
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/monoespaciada_principal"
                 android:onClick="cambiarContrasenia"
-                android:visibility="invisible"
-                android:text="Olvidé mi contraseña" />
+                android:text="Olvidé mi contraseña"
+                android:visibility="invisible" />
 
             <CheckBox
                 android:id="@+id/cbxRecordarCredenciales"
@@ -186,7 +179,7 @@
                 android:gravity="center"
                 android:text="Recordar credenciales"
                 android:textAlignment="center"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
         </LinearLayout>
 

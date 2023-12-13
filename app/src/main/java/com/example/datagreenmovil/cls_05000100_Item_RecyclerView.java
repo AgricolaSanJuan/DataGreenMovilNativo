@@ -92,7 +92,9 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
             //holder.txv_TotalRdtos.setText(tareos.getString(7));
 
             //holder.mainLayout.setBackgroundColor(ContextCompat.getColor(Context, holder.txv_IdEstado.getText().equals("PE") ? R.color.alerta : R.color.verdeClaro));
-            holder.mainLayout.setBackground(ResourcesCompat.getDrawable(Context.getResources(), holder.txv_IdEstado.getText().equals("PE") ? R.drawable.bg_alerta_suave : R.drawable.bg_r_blanco,null));
+            holder.mainLayout.setBackground(ResourcesCompat.getDrawable(Context.getResources(), holder.txv_IdEstado.getText().equals("PE")
+                                ? R.drawable.bg_alerta_suave
+                                : R.drawable.bg_transferido,null));
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,6 +158,10 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
 //                    }
 //                }
 //            });
+
+            if(holder.txv_IdEstado.getText().toString().equals("TR")){
+                holder.cbx_Seleccionado.setVisibility(View.GONE);
+            }
         }catch (Exception ex){
             throw ex;
         }

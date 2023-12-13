@@ -109,7 +109,9 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
       }
 
 //            holder.mainLayout.setBackgroundColor(ContextCompat.getColor(Context, holder.txv_IdEstado.getText().equals("PE") ? R.color.alerta : R.color.verdeClaro));
-      holder.c023_cly_Principal.setBackground(ResourcesCompat.getDrawable(contextoLocal.getResources(), holder.c023_txv_IdEstado.getText().equals("PE") ? R.drawable.bg_item_recyclerview_alerta : R.drawable.bg_item_recyclerview_normal, null));
+      holder.c023_cly_Principal.setBackground(ResourcesCompat.getDrawable(contextoLocal.getResources(), holder.c023_txv_IdEstado.getText().equals("PE")
+              ? R.drawable.bg_alerta_suave
+              : R.drawable.bg_transferido, null));
 
 
       holder.c023_cly_Principal.setOnClickListener(new View.OnClickListener() {

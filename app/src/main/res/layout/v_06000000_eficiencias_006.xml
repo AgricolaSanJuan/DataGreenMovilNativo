@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
+
             android:orientation="vertical"
             android:padding="2dp">
 
@@ -105,7 +105,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Fecha: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="01/01/1990"
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -141,7 +141,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Estado: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -153,7 +153,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:text="."
                         android:textAlignment="viewEnd"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -180,7 +180,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:text="Pallet: "
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -192,7 +192,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:text="."
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -223,7 +223,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
+
             android:gravity="center"
             android:orientation="vertical"
             android:padding="2dp">
@@ -253,7 +253,7 @@
                         android:fontFamily="@font/auxiliar_02"
                         android:gravity="center"
                         android:text="Codigo: "
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -268,7 +268,7 @@
                         android:inputType="text"
                         android:selectAllOnFocus="true"
                         android:textAllCaps="true"
-                        android:textColor="@color/blanco" />
+                        android:textColor="@color/blancoOficial" />
                 </LinearLayout>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton

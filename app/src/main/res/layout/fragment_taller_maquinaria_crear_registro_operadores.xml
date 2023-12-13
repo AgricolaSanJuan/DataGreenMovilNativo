@@ -126,7 +126,7 @@
                     android:padding="7dp"
                     android:text="01/01/1990"
                     android:textAlignment="center"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_r_blanco"
+
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
@@ -224,7 +224,7 @@
                             android:fontFamily="@font/auxiliar_02"
                             android:gravity="center"
                             android:text="Maquinaria:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -236,7 +236,7 @@
                             android:fontFamily="@font/auxiliar_02"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -289,7 +289,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Horometro Inicial:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -302,7 +302,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -353,7 +353,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Horometro Final:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -366,7 +366,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -417,7 +417,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Implementos:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -430,7 +430,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -468,7 +468,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_r_blanco"
+
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
@@ -517,7 +517,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Operario:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -531,7 +531,7 @@
                             android:padding="2dp"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -593,7 +593,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Turno:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -606,7 +606,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -657,7 +657,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Horas de Labor:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -670,7 +670,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -721,7 +721,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Horas Trabajadas:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -734,7 +734,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -772,7 +772,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_r_blanco"
+
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
@@ -815,7 +815,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Actividad:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -828,7 +828,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -879,7 +879,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Labor:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -892,7 +892,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -930,7 +930,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_r_blanco"
+
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
@@ -980,7 +980,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Tipo de Parrón"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -993,7 +993,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -1044,7 +1044,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/auxiliar_02"
                             android:text="Consumidores Parron:"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -1057,7 +1057,7 @@
                             android:gravity="center"
                             android:text="."
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/blanco"
+                            android:textColor="@color/blancoOficial"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -1097,7 +1097,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/bg_r_blanco"
+
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
@@ -1122,7 +1122,7 @@
                     android:fontFamily="@font/auxiliar_02"
                     android:gravity="center"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 

@@ -217,7 +217,6 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       }
     });
   }
-
   private void referenciarControles() {
     txv_PushTituloVentana = findViewById(R.id.c022_txv_PushTituloVentana_v);
     txv_PushRed = findViewById(R.id.c022_txv_PushRed_v);
@@ -456,14 +455,12 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       Funciones.mostrarError(this, ex);
     }
   }
-
   private void abrirActividadReportes() {
 //        Intent nuevaActividad = new Intent(this, cls_05020000_Reportes.class);
 //        nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
 //        startActivity(nuevaActividad);
     Funciones.notificar(this, "NO SE HA CREADO UNA ACTIVIDAD DE REPORTES.");
   }
-
   private boolean extornarRegistros() {
     try {
       throw new Exception();
@@ -472,7 +469,6 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       return false;
     }
   }
-
   private boolean eliminarRegistros(String idEliminar) {
     try {
       List<String> pSqlite = new ArrayList<String>();
@@ -510,8 +506,6 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       return false;
     }
   }
-
-
   private boolean transferirRegistros(String idTransferir) {
     try{
       SQLiteDatabase database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
@@ -538,7 +532,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       }
       RequestQueue requestQueue = Volley.newRequestQueue(this);
 //      URL DE LA API EN LARAVEL
-      String url = "http://192.168.30.99:8000/api/get-users";
+      String url = "http://192.168.30.99:8000/api/insertar_servicios_transporte";
 
       JSONObject params = new JSONObject();
       try {

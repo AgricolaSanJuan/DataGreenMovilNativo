@@ -439,6 +439,8 @@ private FragmentTransportesMainBinding binding;
                                     listarRegistros();
                                 }
                             } catch (JSONException e) {
+                                //AGREGAR COMPROBACIÓN DE EXISTENCIA DE REGISTRO EN LA BASE DE DATOS DE SQL SERVER CON LA CANTIDAD DE ITEMS, YA
+//                                QUE AVECES SE EJECUTA UNA EXCEPCIÓN Y NO HAY NADA QUE LO DIGA.
                                 throw new RuntimeException(e);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);

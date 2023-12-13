@@ -4,30 +4,43 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class DataGreenApp extends Application {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     boolean darkTheme;
-    public void setDarkTheme(Activity activity) {
+
+    public void InicializarTema() {
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putBoolean("THEME_LIGTH", !darkTheme).apply();
-        if(darkTheme){
-            activity.setTheme(R.style.Theme_DataGreenMovilDark);
-        }else{
-            activity.setTheme(R.style.Theme_DataGreenMovilLight);
-        }
+//        darkTheme = sharedPreferences.getBoolean("THEME_LIGTH", true);
+//        if(darkTheme){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putBoolean("THEME_LIGTH", true).apply();// Para modo claro
+//        }else{
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // Para modo oscuro
+//            editor.putBoolean("THEME_LIGTH", true).apply();// Para modo claro
+//        }
+//        return darkTheme;
         //activity.recreate();
     }
-    public void InicializarTema(Activity activity) {
-        sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
+
+    public void setMainTheme(Activity activity,View view) {
+        sharedPreferences = this.getSharedPreferences("objConfLocal", this.MODE_PRIVATE);
         darkTheme = sharedPreferences.getBoolean("THEME_LIGTH", true);
+        editor = sharedPreferences.edit();
+        Toast.makeText(this, String.valueOf(darkTheme), Toast.LENGTH_SHORT).show();
         if(darkTheme){
-            activity.setTheme(R.style.Theme_DataGreenMovilLight);
+            editor.putBoolean("THEME_LIGTH", true).apply();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Para modo claro
         }else{
-            activity.setTheme(R.style.Theme_DataGreenMovilDark);
+            editor.putBoolean("THEME_LIGTH", false).apply();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // Para modo oscuro
         }
-        //activity.recreate();
     }
 }

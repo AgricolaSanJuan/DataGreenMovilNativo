@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="floatingActionButtonStyle" parent="Widget.Design.FloatingActionButton">
+        <item name="android:backgroundTint"> @color/verdePrimario </item>
+        <item name="android:tint"> @color/blancoOficial </item>
+        <item name="maxImageSize"> 40dp </item>
+        <item name="borderWidth"> 0dp </item>
+        <item name="android:elevation"> 0dp </item>
+    </style>
+</resources>

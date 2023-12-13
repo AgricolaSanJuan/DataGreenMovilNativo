@@ -1,3 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+<!--    &lt;!&ndash;    TEXT INPUT LAYOUT&ndash;&gt;-->
+<!--    <style name="textInputLayoutStyle" parent="@style/Widget.Design.TextInputLayout">-->
+<!--        <item name="android:background"> @color/float_transparent </item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash;    EDIT TEXT&ndash;&gt;-->
+<!--    <style name="editTextStyle" parent="@style/Widget.AppCompat.EditText">-->
+<!--        &lt;!&ndash;        <item name="android:background"> @color/float_transparent </item>&ndash;&gt;-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash;    SPINNER&ndash;&gt;-->
+<!--    <style name="spinnerStyle" parent="Widget.AppCompat.Spinner">-->
+<!--        <item name="fontFamily"> @font/monoespaciada_principal </item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash;    LINEAR LAYOUT DENTRO DE CARDVIEW&ndash;&gt;-->
+<!--    <style name="CardView.LinearLayoutStyle" parent="cardViewStyle">-->
+<!--        <item name="android:background"> @drawable/bg_redondeado_gris_transparente </item>-->
+<!--        <item name="android:textColor"> @color/main_orange_color </item>-->
+<!--    </style>-->
+
+<!--    <style name="cardViewStyle.textView" parent="CardView.LinearLayoutStyle">-->
+<!--        <item name="android:textColor"> @color/main_orange_color </item>-->
+<!--    </style>-->
+
+<!--    <style name="textViewEdicionItems">-->
+<!--        <item name="android:background"> @color/float_transparent </item>-->
+<!--        <item name="android:textColor"> @color/blancoOficial </item>-->
+<!--        <item name="android:textSize"> 20dp </item>-->
+<!--        <item name="fontFamily"> @font/auxiliar_02 </item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash;    ESTILO DE LOS EDIT TEXT&ndash;&gt;-->
+
+
+
+<!--    <style name="tituloNavegacion" parent="textViewStyle">-->
+<!--        <item name="android:paddingTop"> @dimen/nav_header_vertical_spacing </item>-->
+<!--        <item name="android:fontFamily"> @font/auxiliar_02 </item>-->
+<!--        <item name="android:textAppearance"> @style/TextAppearance.AppCompat.Body1 </item>-->
+<!--        <item name="android:textColor"> @color/blancoOficial </item>-->
+<!--        <item name="android:textSize"> 30dp </item>-->
+<!--        <item name="android:textStyle"> bold </item>-->
+<!--    </style>-->
 
 </resources>

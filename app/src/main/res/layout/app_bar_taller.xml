@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".TallerActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.DataGreenMovil.AppBarOverlay"/>
-
     <include layout="@layout/content_taller" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -411,13 +411,13 @@ public class ConexionBD implements Serializable {
     public void probarConexion(ConfiguracionLocal objCL) throws Exception {
         try {
             if (this.hayConexion()) {
-                objCL.set("RED_CONFIGURADA","TRUE");
-                objCL.set("ESTADO_RED","ONLINE");
+//                objCL.set("RED_CONFIGURADA","TRUE");
+//                objCL.set("ESTADO_RED","ONLINE");
                 editor.putString("RED_CONFIGURADA","TRUE").apply();
                 editor.putString("ESTADO_RED","ONLINE").apply();
             }else{
-                objCL.set("RED_CONFIGURADA","FALSE");
-                objCL.set("ESTADO_RED","OFFLINE");
+//                objCL.set("RED_CONFIGURADA","FALSE");
+//                objCL.set("ESTADO_RED","OFFLINE");
                 editor.putString("RED_CONFIGURADA","FALSE").apply();
                 editor.putString("ESTADO_RED","OFFLINE").apply();
             }

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
             android:onClick="onClick"
-            android:text="\\SetvicioTransporte\\Edicion" />
+            android:text="\\ServicioTransporte\\Edicion" />
 
         <Space
             android:layout_width="wrap_content"
@@ -60,11 +60,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:background="@drawable/bg_r_blanco"
+
+        android:layout_marginTop="4dp"
         android:orientation="vertical"
         android:padding="2dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="28dp">
+        app:layout_constraintTop_toBottomOf="@+id/c024_lly_StatusSuperior_v"
+        tools:layout_editor_absoluteX="5dp">
 
         <LinearLayout
             android:id="@+id/c024_lly_IdFecha_v"
@@ -117,7 +118,7 @@
                 android:padding="7dp"
                 android:text="01/01/1990"
                 android:textAlignment="center"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -144,7 +145,7 @@
                 android:fontFamily="@font/auxiliar_02"
                 android:gravity="center"
                 android:text="Proveedor: "
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -156,7 +157,7 @@
                 android:fontFamily="@font/auxiliar_02"
                 android:text="."
                 android:textAlignment="viewEnd"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -202,7 +203,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="Vehiculo: "
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -216,7 +217,7 @@
                 android:padding="2dp"
                 android:text="."
                 android:textAlignment="viewEnd"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -272,7 +273,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="Ruta: "
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -285,7 +286,7 @@
                 android:gravity="center"
                 android:text="."
                 android:textAlignment="viewEnd"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -332,7 +333,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="Conductor: "
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -345,7 +346,7 @@
                 android:gravity="center"
                 android:text="."
                 android:textAlignment="viewEnd"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -392,7 +393,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="Observacion: "
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -404,7 +405,7 @@
                 android:fontFamily="@font/auxiliar_02"
                 android:gravity="center"
                 android:textAlignment="viewEnd"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

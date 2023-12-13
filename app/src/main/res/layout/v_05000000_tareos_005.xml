@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/bg_r_blanco"
+
             android:orientation="vertical">
 
             <LinearLayout
@@ -113,10 +113,10 @@
                         android:id="@+id/c005_rad_Todos_v"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/blanco"
+                        android:buttonTint="@color/blancoOficial"
                         android:fontFamily="@font/auxiliar_02"
                         android:text="Todos"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -129,11 +129,11 @@
                         android:id="@+id/c005_rad_Pendientes_v"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/blanco"
+                        android:buttonTint="@color/blancoOficial"
                         android:checked="true"
                         android:fontFamily="@font/auxiliar_02"
                         android:text="Pendiente"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -177,7 +177,7 @@
                     android:onClick="onClick"
                     android:text="01/01/1990"
                     android:textAlignment="center"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -208,7 +208,7 @@
                     android:onClick="onClick"
                     android:text="01/01/2023"
                     android:textAlignment="center"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/blancoOficial"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 

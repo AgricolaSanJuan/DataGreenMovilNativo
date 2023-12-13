@@ -5,11 +5,11 @@
             android:shape="rectangle">
             <corners android:radius="20dp" />
             <!--            <gradient android:angle="90"-->
-            <!--                android:endColor="@color/blanco"-->
+            <!--                android:endColor="@color/blancoOficial"-->
 
             <!--                android:startColor="@color/grisClaro"-->
             <!--                />-->
-            <solid android:color="@color/grisMasClaro" />
+            <solid android:color="@color/grisSuave" />
             <!--            <stroke android:width="5px" android:color="@color/grisClaro" />-->
         </shape>
     </item>

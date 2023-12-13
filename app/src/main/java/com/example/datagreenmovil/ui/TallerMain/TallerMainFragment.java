@@ -105,7 +105,7 @@ public class TallerMainFragment extends Fragment {
 //            getActivity().setTheme(R.style.Theme_DataGreenMovilLight);
 //        }
 
-//        ((DataGreenApp) getActivity().getApplication()).InicializarTema(getActivity());
+        ((DataGreenApp) getActivity().getApplication()).InicializarTema();
 
         binding = FragmentTallerMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

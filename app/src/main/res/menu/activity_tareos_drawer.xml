@@ -3,19 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="all">
         <item
             android:id="@+id/nav_tareos_main"
             android:icon="@drawable/i_grass"
-            android:title="TAREOS" />
+            android:title="Tareos" />
         <item
             android:id="@+id/nav_tareos_settings"
-            android:icon="@drawable/i_sync"
-            android:title="SINCRONIZAR" />
+            android:icon="@drawable/i_settings"
+            android:title="Configuracion" />
         <item
             android:id="@+id/nav_item_sync"
             android:enabled="false"
             android:icon="@drawable/ic_upload"
-            android:title="TRANSFERIR TAREOS" />
+            android:title="Transferir Tareos" />
+        <item
+            android:id="@+id/nav_item_delete"
+            android:enabled="false"
+            android:icon="@drawable/ic_delete"
+            android:title="Eliminar Tareos" />
+        <item
+            android:id="@+id/nav_item_extornar"
+            android:enabled="false"
+            android:icon="@drawable/ic_undo"
+            android:title="Extornar Tareos" />
     </group>
 </menu>

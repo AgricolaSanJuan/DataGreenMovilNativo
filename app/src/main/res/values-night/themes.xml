@@ -1,26 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.DataGreenMovil" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <!-- MI CONFIGURACION PERSONAL-->
-        <item name="colorPrimary">@color/verde</item>
-        <item name="colorPrimaryDark">@color/verde</item>
-        <item name="colorAccent">@color/gris</item>
 
-        <!-- Status bar color. -->
-        <!--<item name="android:statusBarColor" tools:targetApi="l">@color/verdeClaro</item>-->
-        <item name="android:statusBarColor">@color/verdeClaro</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <!-- ocultar action bar-->
-        <item name="android:windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+<!--    <style name="Theme.DataGreenMovilLight" parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>-->
+<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+<!--        <item name="android:fitsSystemWindows"> false </item>-->
 
-        <!--<item name="buttonStyle">@style/Boton</item>-->
-<!--        <item name="floatingActionButtonStyle">@style/fab_Boton</item>-->
-    </style>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.DataGreenMovil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<!--        <item name="android:background"> @color/grisPrimario </item>-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--        <item name="textInputStyle"> @style/textInputLayoutStyle </item>-->
+<!--        <item name="editTextStyle"> @style/editTextStyle </item>-->
+<!--        <item name="floatingActionButtonStyle"> @style/floatingActionButtonStyle </item>-->
+<!--        <item name="spinnerStyle"> @style/spinnerStyle </item>-->
+<!--        <item name="cardViewStyle"> @style/CardView </item>-->
+<!--        <item name="android:textViewStyle"> @style/textViewStyle </item>-->
+<!--        &lt;!&ndash;        <item name="android:background"> @color/azulOscuro </item>&ndash;&gt;-->
+<!--        <item name="buttonStyle"> @style/buttonStyle </item>-->
+<!--    </style>-->
+
+<!--    <style name="Theme.DataGreenMovilDark" parent="ThemeOverlay.AppCompat.Dark">-->
+
+<!--    </style>-->
+
 </resources>

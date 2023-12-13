@@ -202,7 +202,7 @@
                 android:backgroundTint="@color/primary"
                 android:padding="10dp"
                 android:text="Guardar"
-                android:textColor="@color/blanco"
+                android:textColor="@color/blancoOficial"
                 android:onClick="onClick"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

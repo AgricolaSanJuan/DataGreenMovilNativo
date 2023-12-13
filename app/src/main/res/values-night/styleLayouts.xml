@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    CARD VIEW-->
+<!--    <style name="cabeceraCardView" parent="CardView.LinearLayoutStyle">-->
+<!--        <item name="android:background"> @drawable/bg_sr_verde </item>-->
+<!--        <item name="android:orientation"> horizontal </item>-->
+<!--        <item name="android:paddingTop"> 2dp </item>-->
+<!--        <item name="android:paddingBottom"> 2dp </item>-->
+<!--    </style>-->
+
+<!--    <style name="CardView.LinearLayoutStyle" parent="cardViewStyle">-->
+<!--        <item name="android:background"> @drawable/bg_redondeado_gris_transparente </item>-->
+<!--        <item name="android:textColor"> @color/main_orange_color </item>-->
+<!--    </style>-->
+</resources>
