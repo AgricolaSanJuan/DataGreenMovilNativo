@@ -22,7 +22,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class SyncDBSQLToSQLite {
     public void sincronizar(Context ctx, ConfiguracionLocal objConfLocal, String tableName, String tableOriginName) throws SQLException {
@@ -82,7 +85,50 @@ public class SyncDBSQLToSQLite {
 //        return tableName;
     }
 
+    public static void sincronizarDatosUsuario(Context ctx) throws SQLException {
+        try {
+            // Crear un ExecutorService con un tiempo de espera de 10 segundos
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Future<Connection> future = executor.submit(() -> {
+                SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+                String redHost = sharedPreferences.getString("RED_HOST", "!RED_HOST");
+                String redInstancia = sharedPreferences.getString("RED_INSTANCIA", "!RED_INSTANCIA");
+                String redNombreDB = sharedPreferences.getString("RED_NOMBRE_DB", "RED_NOMBRE_DB");
+                String redUsuario = sharedPreferences.getString("RED_USUARIO", "RED_USUARIO");
+                String redPassword = sharedPreferences.getString("RED_PASSWORD", "RED_PASSWORD");
+                String StringConnection = "jdbc:jtds:sqlserver://" + redHost + ";instance=" + redInstancia + ";databaseName=" + redNombreDB + ";user=" + redUsuario + ";password=" + redPassword + ";";
+
+                return DriverManager.getConnection(StringConnection);
+            });
+
+            // Esperar hasta 10 segundos para la conexión
+            Connection connection = future.get(2, TimeUnit.SECONDS);
+
+            // Verificar si la conexión es exitosa
+            if (connection != null) {
+                Statement statement = connection.createStatement();
+
+                SQLiteDatabase database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
+                Cursor c;
+                c = database.rawQuery("SELECT * from mst_usuarios where suma != '';", null);
+                while (c.moveToNext()) {
+                    statement.execute("UPDATE DataGreenMovil..mst_usuarios SET Suma = '" + c.getString(8) + "' WHERE Id = '" + c.getString(1) + "'");
+                }
+            } else {
+                // Manejar caso de conexión fallida
+            }
+
+        } catch (Exception e) {
+            // Manejar excepciones
+        }
+    }
     public void sincronizarData(Context ctx, String tableName) throws SQLException {
+
+        try {
+            sincronizarDatosUsuario(ctx);
+        }catch (Exception e){
+
+        }
 
         try{
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", ctx.MODE_PRIVATE);
@@ -103,7 +149,8 @@ public class SyncDBSQLToSQLite {
 
             c.moveToNext();
             String query = c.getString(0);
-//            Log.i("result", query);
+            Log.i("result", query);
+            database.execSQL("DELETE FROM  "+ c.getString(1)+";");
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -119,10 +166,8 @@ public class SyncDBSQLToSQLite {
                     String columnName = metaData.getColumnName(i);
                     regis += "'" + resultSet.getString(columnName) + (i == columnCount ? "'" : "', ");
                 }
-
+                Log.i("QUERY REEMPLAZO", "INSERT OR REPLACE INTO " + c.getString(1) + " VALUES (" + regis + ")");
                 database.execSQL("INSERT OR REPLACE INTO " + c.getString(1) + " VALUES (" + regis + ")");
-//                Log.i("REGISTER: " + c.getString(1), regis);
-                //            registers.add(regis);
             }
             database.close();
         }catch (Exception e){

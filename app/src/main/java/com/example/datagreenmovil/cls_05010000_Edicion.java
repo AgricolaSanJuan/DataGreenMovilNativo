@@ -741,6 +741,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 finish();
                 sweetAlertDialog.dismissWithAnimation();
             });
+        }else{
+            finish();
         }
 
     }

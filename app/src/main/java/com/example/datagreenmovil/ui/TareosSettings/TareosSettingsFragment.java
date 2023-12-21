@@ -55,16 +55,6 @@ public class TareosSettingsFragment extends Fragment {
                 }
             }
         });
-        binding.switchModulos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!!b){
-                    tablasSeleccionadas.add("mst_modulos");
-                }else {
-                    tablasSeleccionadas.remove("mst_modulos");
-                }
-            }
-        });
         binding.switchConsumidores.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -122,6 +112,17 @@ public class TareosSettingsFragment extends Fragment {
                     tablasSeleccionadas.add("mst_actividades");
                 }else {
                     tablasSeleccionadas.remove("mst_actividades");
+                }
+            }
+        });
+
+        binding.switchPersonas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!!b){
+                    tablasSeleccionadas.add("mst_personas");
+                }else {
+                    tablasSeleccionadas.remove("mst_personas");
                 }
             }
         });

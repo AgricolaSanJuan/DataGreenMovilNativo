@@ -345,12 +345,12 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
         etx_Password.setText(objConfLocal.get("RED_PASSWORD"));
         etxPuerto.setText(objConfLocal.get("RED_PUERTO_CONEXION"));
         etxImei.setText(Funciones.obtenerIdUnico(this));
-        etxMac.setText(Funciones.obtenerMac());
-        if (etxMac.getText().length() == 0 && etxImei.getText().length() > 0) {
-            etxMac.setText(etxImei.getText());
-        } else if (etxMac.getText().length() > 0 && etxImei.getText().length() == 0) {
-            etxImei.setText(etxMac.getText());
-        }
+//        etxMac.setText(Funciones.obtenerMac());
+//        if (etxMac.getText().length() == 0 && etxImei.getText().length() > 0) {
+//            etxMac.setText(etxImei.getText());
+//        } else if (etxMac.getText().length() > 0 && etxImei.getText().length() == 0) {
+//            etxImei.setText(etxMac.getText());
+//        }
         if (etxImei.getText().length() == 0) {
             etxImei.setEnabled(true);
         }

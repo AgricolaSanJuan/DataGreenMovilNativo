@@ -48,6 +48,7 @@ import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
+import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.cls_05000100_Item_RecyclerView;
 import com.example.datagreenmovil.cls_05010000_Edicion;
@@ -377,6 +378,14 @@ public class TareosMainFragment extends Fragment {
     }
 
     private boolean transferirTareos() {
+
+        try {
+            SyncDBSQLToSQLite.sincronizarDatosUsuario(ctx);
+            Log.i("PASSWORD SEND!","SE HAN ENVIADO LAS CONTRASEÑAS AL SERVIDOR REMOTO.");
+        }catch (Exception e){
+
+        }
+
         try{
             String whereIn = "(";
             JSONObject tareos = new JSONObject();
@@ -396,6 +405,19 @@ public class TareosMainFragment extends Fragment {
             Log.i("SELECCIONADOS", whereIn);
 
             tareos = objSqlite.obtenerTareos(whereIn);
+
+            String mac = String.valueOf(sharedPreferences.getString("MAC","!MAC"));
+            if(mac.length() > 12){
+                mac = mac.substring(0, 12);
+            }
+
+            tareos.put("descripcion", "Transferencia de tareos");
+            tareos.put("nro_telefonico", sharedPreferences.getString("NRO_TELEFONICO","!NRO_TELEFONICO"));
+            tareos.put("propietario", sharedPreferences.getString("PROPIETARIO","!PROPIETARIO"));
+            tareos.put("mac", mac);
+            tareos.put("user_login", sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL"));
+            tareos.put("app", "MiniGreen");
+            tareos.put("parametros", String.valueOf(objSqlite.obtenerTareos(whereIn)));
 
             Log.i("LISTA TAREOS",tareos.toString());
 
@@ -443,7 +465,7 @@ public class TareosMainFragment extends Fragment {
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null && error.networkResponse.data != null) {
                                 String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                                Log.e("ERROR API 1", error.toString());
+                                Log.e("ERROR API 1", errorMessage);
                                 Swal.error(ctx,"Ha ocurrido un error al insertar el registro",errorMessage,15000);
                             } else {
                                 Log.e("ERROR API 2", error.toString());

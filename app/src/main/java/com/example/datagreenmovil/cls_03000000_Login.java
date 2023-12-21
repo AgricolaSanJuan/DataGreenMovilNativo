@@ -31,7 +31,9 @@ import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
+import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -258,7 +260,9 @@ public class cls_03000000_Login extends AppCompatActivity {
             Funciones.mostrarError(this,ex);
         }
     }
-    public void intentaLogin(){
+    public void intentaLogin() throws SQLException {
+
+
         try{
             String usuario = etx_Usuario.getText().toString(), password = Funciones.generarMD5(etx_Usuario.getText().toString() + etx_Password.getText().toString());
             List<String> p = new ArrayList<String>();
@@ -291,6 +295,7 @@ public class cls_03000000_Login extends AppCompatActivity {
                     dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this);
                     dlg_PopUp.show();
                 }else if(/*validacion.moveToFirst() && */validacion.getString(1).equals("1")){
+                    SyncDBSQLToSQLite.sincronizarDatosUsuario(this);
                     iniciarSesion(validacion.getString(2),validacion.getString(3), false);
                     abrirMenuModulos();
                 }
