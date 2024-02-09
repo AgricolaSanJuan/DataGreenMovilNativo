@@ -143,11 +143,12 @@
                 android:textSize="18dp" />
 
             <Switch
-                android:id="@+id/switchPersonas"
+                android:id="@+id/switchModulos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Personas"
+                android:text="Modulos"
                 android:textSize="18dp" />
+
         </com.google.android.material.chip.ChipGroup>
 
         <TextView
@@ -178,18 +179,25 @@
             app:singleSelection="false">
 
             <Switch
+                android:id="@+id/switchPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personas"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchMarcas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Marcas"
+                android:textSize="18dp" />
+
+            <Switch
                 android:id="@+id/switchLabores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="false"
                 android:text="Labores"
-                android:textSize="18dp" />
-
-            <Switch
-                android:id="@+id/switchModulos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Modulos"
                 android:textSize="18dp" />
 
             <Switch

@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -38,7 +39,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class DataGreenUpdateService extends Service {
-
+    Context ctx;
     public class DownloadUpdate extends AsyncTask<String, Void, Void> {
         File outputFile;
         @Override
@@ -176,8 +177,10 @@ public class DataGreenUpdateService extends Service {
                     e.printStackTrace();
                 }
 
-                if(!appVersion.equals(result)){
-                    String fileUrl = "http://192.168.30.158:8000/api/download-file";
+                if(!appVersion.equals(result) && ctx != null){
+                    SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+                    String ServerIP = sharedPreferences.getString("RED_HOST", "");
+                    String fileUrl = "http://"+ServerIP+":8000/api/download-file";
                     String fileName = "DataGreen"+result+".apk";
                     new DownloadUpdate().execute(fileUrl,fileName);
                     Toast.makeText(DataGreenUpdateService.this, "Se ha descargado una version disponible!", Toast.LENGTH_SHORT).show();
@@ -221,13 +224,16 @@ public class DataGreenUpdateService extends Service {
         }
     }
 
-    private class NetworkChangeReceiver extends BroadcastReceiver {
+    public class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            ctx = context;
             // Verificar el estado de la conexión cuando cambia la red
             if (isConnectedToInternet()) {
                 try {
-                    new ApiRequestTask().execute("http://192.168.30.158:8000/api/get-available-update");
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+                    String ServerIP = sharedPreferences.getString("RED_HOST", "");
+                    new ApiRequestTask().execute("http://"+ServerIP+":8000/api/get-available-update");
                     // Mover la obtención de la versión de la aplicación aquí
                     PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                     String versionName = packageInfo.versionName;

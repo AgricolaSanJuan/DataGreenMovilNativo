@@ -177,7 +177,6 @@ private FragmentTransportesMainBinding binding;
             if(transportesActivity.obtenerDrawer() != null){
                 DrawerLayout dl = transportesActivity.obtenerDrawer();
                 dl.openDrawer(GravityCompat.START);
-                NavigationMenuItemView itemSync = dl.findViewById(R.id.nav_item_sync);
             }
         });
 
@@ -396,7 +395,9 @@ private FragmentTransportesMainBinding binding;
             }
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);
 //      URL DE LA API EN LARAVEL
-            String url = "http://192.168.30.99:8000/api/get-users";
+            SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+            String ServerIP = sharedPreferences.getString("RED_HOST", "");
+            String url = "http://"+ServerIP+":8000/api/get-users";
 
             JSONObject params = new JSONObject();
             try {

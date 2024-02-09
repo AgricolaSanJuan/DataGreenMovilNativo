@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -124,6 +126,12 @@ public class SyncDBSQLToSQLite {
     }
     public void sincronizarData(Context ctx, String tableName) throws SQLException {
 
+        LocalDateTime now = LocalDateTime.now();
+
+        // Formatear la fecha como una cadena
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDateTime = now.format(formatter);
+
         try {
             sincronizarDatosUsuario(ctx);
         }catch (Exception e){
@@ -134,6 +142,7 @@ public class SyncDBSQLToSQLite {
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", ctx.MODE_PRIVATE);
             SQLiteDatabase database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
             String sqliteQuery = "select QuerySqlite, tablaObjetivo from mst_queryssqlite where NombreQuery LIKE '%descargar%' AND tablaObjetivo LIKE '"+tableName+"'";
+            String query = "";
 
             String redHost = sharedPreferences.getString("RED_HOST", "!RED_HOST");
             String redInstancia = sharedPreferences.getString("RED_INSTANCIA", "!RED_INSTANCIA");
@@ -145,12 +154,18 @@ public class SyncDBSQLToSQLite {
 //            Log.i("Conection", StringConnection);
             Connection connection = DriverManager.getConnection(StringConnection);
 //            Log.i("SQLITEQuery", sqliteQuery);
-            Cursor c = database.rawQuery(sqliteQuery, null);
 
-            c.moveToNext();
-            String query = c.getString(0);
-            Log.i("result", query);
-            database.execSQL("DELETE FROM  "+ c.getString(1)+";");
+            if(tableName.equals("mst_marcasTareo")){
+                database.execSQL("CREATE TABLE IF NOT EXISTS mst_marcasTareo( id INTEGER PRIMARY KEY AUTOINCREMENT, fecha DATE, dni CHAR(8))");
+                query = "EXEC DatagreenMovil..sp_obtener_marcaciones_para_tareo_diario '"+formattedDateTime+"'";
+                Log.i("QUERY MARCAS", query);
+                database.execSQL("DELETE FROM "+tableName+";");
+            }else{
+                Cursor c = database.rawQuery(sqliteQuery, null);
+                c.moveToNext();
+                query = c.getString(0);
+                database.execSQL("DELETE FROM  "+ tableName +";");
+            }
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -158,16 +173,20 @@ public class SyncDBSQLToSQLite {
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columnCount = metaData.getColumnCount();
 
-            //        resultSet.next();
-            //        Log.i("EJECUTAO:", resultSet.getString(0));
             while (resultSet.next()) {
                 String regis = "";
                 for (int i = 1; i <= columnCount; i++) {
                     String columnName = metaData.getColumnName(i);
-                    regis += "'" + resultSet.getString(columnName) + (i == columnCount ? "'" : "', ");
+                    if(resultSet.getString(columnName) == null && !tableName.equals("mst_marcasTareo")) {
+                        regis += "' ', ";
+                    }else if(resultSet.getString(columnName) == null){
+                        regis += "null , ";
+                    }else {
+                        regis += "'" + resultSet.getString(columnName) + (i == columnCount ? "'" : "', ");
+                    }
                 }
-                Log.i("QUERY REEMPLAZO", "INSERT OR REPLACE INTO " + c.getString(1) + " VALUES (" + regis + ")");
-                database.execSQL("INSERT OR REPLACE INTO " + c.getString(1) + " VALUES (" + regis + ")");
+                Log.i("QUERY REEMPLAZO", "INSERT OR REPLACE INTO " + tableName + " VALUES (" + regis + ")");
+                database.execSQL("INSERT OR REPLACE INTO " + tableName + " VALUES (" + regis + ")");
             }
             database.close();
         }catch (Exception e){

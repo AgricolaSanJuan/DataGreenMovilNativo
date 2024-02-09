@@ -1,5 +1,7 @@
 package com.example.datagreenmovil.ui.TareosSettings;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +33,8 @@ import java.util.concurrent.Executors;
 public class TareosSettingsFragment extends Fragment {
     Boolean stateTareos = false;
     List<String> tablasSeleccionadas = new ArrayList<>();
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private FragmentTareosSettingsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,9 +42,12 @@ public class TareosSettingsFragment extends Fragment {
         TareosSettingsViewModel tareosSettingsViewModel =
                 new ViewModelProvider(this).get(TareosSettingsViewModel.class);
 
+        sharedPreferences = this.getContext().getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         binding = FragmentTareosSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        binding.switchPermitirSinTareo.setChecked(sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", false));
         binding.txvTareos2.setOnClickListener(view -> {
             stateTareos = !stateTareos;
             checkAllTareos(stateTareos);
@@ -115,7 +122,6 @@ public class TareosSettingsFragment extends Fragment {
                 }
             }
         });
-
         binding.switchPersonas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -143,6 +149,7 @@ public class TareosSettingsFragment extends Fragment {
                     });
                 }catch (Exception e){
                     getActivity().runOnUiThread(()->{
+                        Log.e("ERROR", e.toString());
                         Swal.error(this.getContext(), "Oops!","Hubo un error al sincronizar las tablas: "+e.toString(), 8000);
                     });
                 }finally {
@@ -153,16 +160,34 @@ public class TareosSettingsFragment extends Fragment {
             });
         });
 
+        binding.switchPermitirSinTareo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    editor.putBoolean("PERMITIR_SIN_TAREO", b).apply();
+            }
+        });
+
         binding.fabAbrirDrawer.setOnClickListener(view -> {
             TareosActivity tareosActivity = (TareosActivity) getActivity();
             if(tareosActivity.obtenerDrawer() != null){
                 DrawerLayout dl = tareosActivity.obtenerDrawer();
 //                OCULTAR BOTONES DE ACCIONES PARA TAREOS
-                dl.findViewById(R.id.nav_item_sync).setVisibility(View.INVISIBLE);
-                dl.findViewById(R.id.nav_item_delete).setVisibility(View.INVISIBLE);
-                dl.findViewById(R.id.nav_item_extornar).setVisibility(View.INVISIBLE);
+                dl.findViewById(R.id.nav_item_transferir).setVisibility(View.GONE);
+                dl.findViewById(R.id.nav_item_borrar).setVisibility(View.GONE);
+                dl.findViewById(R.id.nav_item_extorno).setVisibility(View.GONE);
 //                ABRIR DRAWER
                 dl.openDrawer(GravityCompat.START);
+            }
+        });
+
+        binding.switchMarcas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!!b){
+                    tablasSeleccionadas.add("mst_marcasTareo");
+                }else {
+                    tablasSeleccionadas.remove("mst_marcasTareo");
+                }
             }
         });
         return root;

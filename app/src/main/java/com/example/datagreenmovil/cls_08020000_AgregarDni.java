@@ -29,6 +29,7 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -156,6 +157,9 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 {
                     if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                             s_DniMarcado = c025_et_IngresoDni.getText().toString();
+                        if(String.valueOf(c025_et_IngresoDni.getText().toString().charAt(0)).equals("S")){
+                            s_DniMarcado = c025_et_IngresoDni.getText().toString().substring(2).toString();
+                        }
                             try {
                                 if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
                                     Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
@@ -264,6 +268,10 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 }
             } else if (idControlClickeado == R.id.c025_btn_Ok_v) {
                 s_DniMarcado = c025_et_IngresoDni.getText().toString();
+                if(s_DniMarcado.substring(1,1).equals("S")){
+                    s_DniMarcado = s_DniMarcado.substring(3).toString();
+                    Log.i("DNI", s_DniMarcado);
+                }
                 try {
                     if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
                         Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
@@ -303,6 +311,9 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
     private boolean guardarDni(String s_dniMarcado) {
         AtomicReference<Boolean> status = new AtomicReference<>(false);
+        if(s_dniMarcado.substring(1,1).equals("S")){
+            s_dniMarcado = s_dniMarcado.substring(3).toString();
+        }
 
         try {
             final MediaPlayer Notificacion = MediaPlayer.create(this, R.raw.notificacion);

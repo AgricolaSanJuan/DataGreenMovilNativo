@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 
 import android.os.Bundle;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,12 +59,15 @@ import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.example.datagreenmovil.Logica.InterfazDialog;
 
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import me.dm7.barcodescanner.zbar.Result;
 
-public class cls_05010000_Edicion extends AppCompatActivity implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener  {
+
+public class cls_05010000_Edicion extends AppCompatActivity implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener, ZBarScannerView.ResultHandler  {
     //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
 
     private ScaleGestureDetector scaleGestureDetector;
-
+    private ZBarScannerView zBarScannerView;
     static ConexionSqlite objSqlite;
     ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
@@ -76,8 +81,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     HashMap<String, Tabla> hmTablas =new HashMap<>();
     //CONTROLES;
     private RecyclerView c007_rvw_Detalle;// = findViewById(R.id.c007_rvw_Detalle_v);
-    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera;
-
+    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera, fabToggleFlash, fabMostrarEscaner, fabDuplicar;
+    ConstraintLayout layoutEscaner;
     private AutoCompleteTextView c007_atv_NroDocumento;
     private AutoCompleteTextView c007_atv_NombreTrabajador;
     private TextView c007_txv_Id, c007_txv_Fecha, c007_txv_Turno_Key, c007_txv_Turno_Val, c007_txv_Actividad_Key, c007_txv_Actividad_Val, c007_txv_Labor_Key, c007_txv_Labor_Val,
@@ -97,6 +102,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     public LinearLayout c007_lly_Turno, c007_lly_Actividad, c007_lly_Labor, c007_lly_Consumidor, c007_lly_Cabecera,
             c007_lly_Actividad_Val, c007_lly_Labor_Val, c007_lly_Consumidor_Val, c007_lly_Observacion, c007_lly_Detalle2;
     boolean layoutAbierto = true;
+    boolean flashState = false;
+    boolean mostrarEscaner = false;
 
     int cantidadInicial, cantidadFinal;
 
@@ -105,6 +112,14 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_05010000_edicion_007);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        zBarScannerView = findViewById(R.id.zBarScannerView);
+
+        zBarScannerView.setAspectTolerance(1.0f);
+        zBarScannerView.setFlash(flashState);
+//        zBarScannerView.setFocusable(0.5f);
+
+
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         scaleGestureDetector = new ScaleGestureDetector(this, this);
@@ -190,8 +205,60 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     public void onResume() {
         super.onResume();
         listarDetalles();
+//        zBarScannerView.setResultHandler(this);
+//        zBarScannerView.startCamera();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        zBarScannerView.stopCamera();
     }
 
+    @Override
+    public void handleResult(Result result) {
+
+//        zBarScannerView.stopCamera();
+        CountDownTimer countDownTimer = new CountDownTimer(1500, 1500) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+//                zBarScannerView.startCamera();
+                zBarScannerView.resumeCameraPreview(cls_05010000_Edicion.this);
+            }
+        };
+
+        // Iniciar el temporizador
+        countDownTimer.start();
+
+        if(
+            c007_etx_Horas.length() > 0 &&
+            c007_txv_Consumidor_Key.length() > 0 &&
+            c007_txv_Actividad_Key.length() > 0 &&
+            c007_txv_Labor_Key.length() > 0
+        ){
+            String barcodeValue = result.getContents();
+            c007_atv_NroDocumento.setText(barcodeValue.replaceAll("[^0-9]", ""));
+
+            try {
+                obtenerDataTrabajador(hmTablas.get("PERSONAS"));
+                agregarDetalle("lector");
+            } catch (Exception e) {
+                Log.e("ERROR!", e.getMessage());
+                Swal.error(this, "Error!",e.toString(), 8000);
+                throw new RuntimeException(e);
+            }finally {
+                c007_atv_NroDocumento.setText("");
+                c007_atv_NombreTrabajador.setText("");
+            }
+
+        }else{
+            Swal.warning(this, "Alerta!","No se ha agregado el tareo por que faltan campos", 1500);
+        }
+    }
     //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     private void setearControles() {
 
@@ -317,7 +384,12 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
         //...
         c007_fab_Guardar = findViewById(R.id.c007_fab_Guardar_v);
+        fabDuplicar = findViewById(R.id.c007_fab_Duplicar_v);
         c007_fab_AbrirCerrarCabecera = findViewById(R.id.c007_fab_AbrirCerrarCabecera_v);
+
+        layoutEscaner = findViewById(R.id.layoutEscaner);
+        fabToggleFlash = findViewById(R.id.fabToggleFlash);
+        fabMostrarEscaner = findViewById(R.id.fabMostrarEscaner);
 
         c007_atv_NroDocumento = findViewById(R.id.c007_atv_NroDocumento_v);
         c007_atv_NombreTrabajador = findViewById(R.id.c007_atv_NombreTrabajador_v);
@@ -349,6 +421,28 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         c007_etx_Rdtos = findViewById(R.id.etxRtos_v);
 
         c007_rvw_Detalle = findViewById(R.id.c007_rvw_Detalle_v);
+
+        fabToggleFlash.setOnClickListener(view -> {
+            flashState = !flashState;
+            zBarScannerView.setFlash(flashState);
+        });
+
+        zBarScannerView.setOnClickListener(view -> {
+            zBarScannerView.setAutoFocus(true);
+        });
+
+        fabMostrarEscaner.setOnClickListener(view -> {
+            mostrarEscaner = !mostrarEscaner;
+            if(mostrarEscaner){
+                layoutEscaner.setVisibility(View.VISIBLE);
+                zBarScannerView.setResultHandler(this);
+                zBarScannerView.startCamera();
+                zBarScannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
+            }else {
+                zBarScannerView.stopCamera();
+            layoutEscaner.setVisibility(View.GONE);
+            }
+        });
 
     }
     public void mostrarMenuUsuario(View v) {
@@ -425,31 +519,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             }
 
             else if (idControlClickeado == R.id.c007_fab_Agregar_v) {
-                detalleActual.setIdEmpresa(tareoActual.getIdEmpresa());
-                detalleActual.setIdTareo(tareoActual.getId());
-                detalleActual.setItem(tareoActual.getDetalle().size()+1);
-                detalleActual.setHoras(Double.parseDouble(c007_etx_Horas.getText().length()>0? c007_etx_Horas.getText().toString():"0") );
-                detalleActual.setRdtos(Double.parseDouble(c007_etx_Rdtos.getText().length()>0? c007_etx_Rdtos.getText().toString():"0") );
-                detalleActual.setDni(c007_atv_NroDocumento.getText().toString());
-                List<String> p = new ArrayList<>();
-                p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
-                p.add(detalleActual.getDni());
-                detalleActual.setIdPlanilla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER PLANILLA"),p,"READ",""));
-                detalleActual.setNombres(c007_atv_NombreTrabajador.getText().toString());
-                if(validarDetalleTareo(detalleActual)){
-                    tareoActual.agregarDetalle(detalleActual);
-                    cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this ,objConfLocal,objSqlite,tareoActual);
-                    c007_rvw_Detalle.setAdapter(adaptadorLista);
-                    c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
-                    c007_atv_NombreTrabajador.setText("");
-                    c007_atv_NroDocumento.setText("");
-                    mostrarValoresDocumentoActual();
-                }else{
-                    Funciones.notificar(this,"Datos incompletos. Revisar.");
-                }
-                //PENDIENTE AQUI: VALIDAR TAREOS REPETIDOS POR CULTIVO, VARIEDAD, ACTIVIDAD, LABOR, CONSUMIDOR
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+                agregarDetalle("manual");
             } else if (idControlClickeado == R.id.c007_fab_Guardar_v) {
                 guardarTareo();
             } else if (idControlClickeado == R.id.c007_fab_AbrirCerrarCabecera_v) {
@@ -462,6 +532,65 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         } catch (Exception ex) {
             Funciones.mostrarError(this,ex);
         }
+    }
+
+    public void duplicarRegistros(View view){
+        Swal.info(this, "CLICK", "DUPLICITY", 5000);
+    }
+    private void agregarDetalle(String tipoEntrada) throws Exception {
+        boolean validarMarca = sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", false);
+        boolean marcaExistente = false;
+//        VALIDACION DE EXISTENCIA
+        for (TareoDetalle td : tareoActual.getDetalle()) {
+            if (
+                td.getDni().equals(this.detalleActual.getDni()) &&
+                td.getIdActividad().equals(this.detalleActual.getIdActividad()) &&
+                td.getIdConsumidor().equals(this.detalleActual.getIdConsumidor()) &&
+                td.getIdLabor().equals(this.detalleActual.getIdLabor())
+            ) {
+                marcaExistente = true;
+                break;
+            }
+        }
+
+        if (!marcaExistente){
+            if (objSqlite.verificarExistenciaMarca(this.detalleActual.getDni(), validarMarca)) {
+                detalleActual.setIdEmpresa(tareoActual.getIdEmpresa());
+                detalleActual.setIdTareo(tareoActual.getId());
+                detalleActual.setItem(tareoActual.getDetalle().size() + 1);
+                detalleActual.setHoras(Double.parseDouble(c007_etx_Horas.getText().length() > 0 ? c007_etx_Horas.getText().toString() : "0"));
+                detalleActual.setRdtos(Double.parseDouble(c007_etx_Rdtos.getText().length() > 0 ? c007_etx_Rdtos.getText().toString() : "0"));
+                detalleActual.setDni(c007_atv_NroDocumento.getText().toString());
+                List<String> p = new ArrayList<>();
+                p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
+                p.add(detalleActual.getDni());
+                detalleActual.setIdPlanilla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER PLANILLA"), p, "READ", ""));
+                detalleActual.setNombres(c007_atv_NombreTrabajador.getText().toString());
+
+                if (validarDetalleTareo(detalleActual)) {
+                    tareoActual.agregarDetalle(detalleActual, this);
+                    cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this, objConfLocal, objSqlite, tareoActual);
+                    c007_rvw_Detalle.setAdapter(adaptadorLista);
+                    c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
+                    mostrarValoresDocumentoActual();
+                } else {
+                    if (tipoEntrada.equals("lector")) {
+                        Swal.warning(this, "Aviso!", "Trabajador no encontrado, por favor, ingresa el nombre.", 3000);
+                        c007_atv_NroDocumento.requestFocus();
+                        c007_atv_NroDocumento.setEnabled(true);
+                    } else {
+                        Funciones.notificar(this, "Datos incompletos. Revisar.");
+                    }
+                }
+            } else {
+                Swal.warning(this, "ERROR", "PERSONAL NO TIENE MARCA", 8000);
+            }
+        }else{
+            Swal.warning(this, "Cuidado", "Ya existe el trabajador", 1500);
+        }
+
+        c007_atv_NombreTrabajador.setText("");
+        c007_atv_NroDocumento.setText("");
     }
 
     public void guardarTareo(){
@@ -497,8 +626,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         c007_lly_Consumidor_Val.setVisibility(layoutAbierto ? View.VISIBLE : View.GONE);
         c007_lly_Observacion.setVisibility(layoutAbierto ? View.VISIBLE : View.GONE);
         c007_lly_Detalle2.setVisibility(layoutAbierto ? View.GONE : View.VISIBLE);
-
     }
+
     //@Jota:
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
     //...
@@ -521,20 +650,31 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         c007_atv_NroDocumento.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id){
-                try{
-                    String dni= c007_atv_NroDocumento.getText().toString();
-                    String nombres=ClaveValor.obtenerValorDesdeClave(dni ,ClaveValor.getArrayClaveValor(cv,  0, 2));
-                    c007_atv_NombreTrabajador.setText(nombres);
-                    detalleActual.setDni(dni);
-                    detalleActual.setNombres(nombres);
-                }catch (Exception ex){
-                    StackTraceElement z = new Exception().getStackTrace()[0];
-                    String detalleError = z.getFileName() + "\n" + z.getMethodName() + "\n" + z.getLineNumber() + ": \n" + ex.getMessage();
-                    ex.printStackTrace();
-                    Toast.makeText(cls_05010000_Edicion.super.getBaseContext(),detalleError, Toast.LENGTH_LONG).show();
+                try {
+                    obtenerDataTrabajador(cv);
+                } catch (Exception e) {
+                    Log.e("ERROR OBTENER", e.toString());
                 }
             }
         });
+    }
+
+    private void obtenerDataTrabajador(Tabla cv) throws Exception {
+        try{
+            String dni= c007_atv_NroDocumento.getText().toString();
+            String nombres=ClaveValor.obtenerValorDesdeClave(dni ,ClaveValor.getArrayClaveValor(cv,  0, 2));
+            if(!nombres.isEmpty()){
+                c007_atv_NombreTrabajador.setText(nombres);
+                detalleActual.setDni(dni);
+                detalleActual.setNombres(nombres);
+            }
+        }catch (Exception ex){
+            Log.e("ERROR", ex.toString());
+            Swal.error(cls_05010000_Edicion.this, "Error", ex.toString(), 8000);
+//            StackTraceElement z = new Exception().getStackTrace()[0];
+////            String detalleError = z.getFileName() + "\n" + z.getMethodName() + "\n" + z.getLineNumber() + ": \n" + ex.getMessage();
+//            ex.printStackTrace();
+        }
     }
 
     private void setearAutoCompleteTextViewNombreTrabajador(Tabla cv) {
@@ -543,7 +683,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id){
                 try{
                     String nombres= c007_atv_NombreTrabajador.getText().toString(); //ClaveValor.obtenerClaveDesdeValor(dni ,cv);
-                    String dni=ClaveValor.obtenerClaveDesdeValor(nombres ,ClaveValor.getArrayClaveValor(cv,  0, 2));
+                    String dni = ClaveValor.obtenerClaveDesdeValor(nombres ,ClaveValor.getArrayClaveValor(cv,  0, 2));
                     c007_atv_NroDocumento.setText(dni);
                     detalleActual.setDni(dni);
                     detalleActual.setNombres(nombres);
@@ -602,13 +742,18 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             String sumaFormateada = decimalFormat.format(sumaTotal);
 
             if(adaptadorLista.getItemCount() > 0){
-                String lastActividad, lastLabor, lastConsumidor;
+                String lastActividad, lastLabor, lastConsumidor, lastHoras, lastRendimientos;
                 lastActividad = adaptadorLista.getLastActividad();
                 lastLabor = adaptadorLista.getLastLabor();
                 lastConsumidor = adaptadorLista.getLastConsumidor();
+                lastHoras = adaptadorLista.getLastHoras();
+                lastRendimientos = adaptadorLista.getLastRendimientos();
+
                 c007_txv_Actividad_Key.setText(lastActividad);
                 c007_txv_Labor_Key.setText(lastLabor);
                 c007_txv_Consumidor_Key.setText(lastConsumidor);
+                c007_etx_Horas.setText(lastHoras);
+                c007_etx_Rdtos.setText(lastRendimientos);
             }
 
             TotalRendimientos.setText(String.valueOf(sumaFormateada));
@@ -642,6 +787,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
     //////////////////////////////////////////// PRUEBA 2
     public void popUpActualizarDetalleTareos(TareoDetalle detalle){
+
+        zBarScannerView.stopCamera();
         try{
             if (tareoActual.getIdEstado().equals("PE")) {
                 Dialog popUp = new Dialog(this);
@@ -724,6 +871,10 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             }
         }catch(Exception ex){
             Funciones.mostrarError(super.getBaseContext(),ex);
+        }finally {
+            zBarScannerView.setResultHandler(this);
+            zBarScannerView.startCamera();
+            zBarScannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
         }
     }
 

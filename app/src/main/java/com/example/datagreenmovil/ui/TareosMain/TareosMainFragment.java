@@ -52,6 +52,7 @@ import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.cls_05000100_Item_RecyclerView;
 import com.example.datagreenmovil.cls_05010000_Edicion;
+import com.example.datagreenmovil.cls_05020000_Reportes;
 import com.example.datagreenmovil.databinding.FragmentTareosMainBinding;
 import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;
@@ -88,7 +89,8 @@ public class TareosMainFragment extends Fragment {
     ArrayList<String> idsSeleccionados;
     cls_05000100_Item_RecyclerView miAdaptador;
 
-    NavigationMenuItemView itemSync, itemDelete, itemExtornar;
+    MenuItem itemSync, itemDelete, itemExtornar, itemReport;
+    NavigationView nv;
     int anio, mes, dia;
     @Override
     public void onAttach(@NonNull Context context) {
@@ -107,6 +109,10 @@ public class TareosMainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         idsSeleccionados = new ArrayList<>();
+        if(nv != null){
+            Menu menu = nv.getMenu();
+            habilitarItems(menu,false);
+        }
         try {
             objSqlite.ActualizarDataPendiente(objConfLocal);
             Funciones.mostrarEstatusGeneral(ctx,
@@ -230,84 +236,90 @@ public class TareosMainFragment extends Fragment {
         });
         TareosActivity tareosActivity = (TareosActivity) getActivity();
         binding.c005FabMainTareosOpcionesV.setOnClickListener(view -> {
-            NavigationView nv = tareosActivity.obtenerNavigationView();
+            nv = tareosActivity.obtenerNavigationView();
             DrawerLayout drawer = tareosActivity.obtenerDrawer();
             Menu menu = nv.getMenu();
             drawer.openDrawer(GravityCompat.START);
 
-            itemSync = drawer.findViewById(R.id.nav_item_sync);
-            itemDelete = drawer.findViewById(R.id.nav_item_delete);
-            itemExtornar = drawer.findViewById(R.id.nav_item_extornar);
-                if(idsSeleccionados.size() != 0){
-                    menu.findItem(R.id.nav_item_sync).setEnabled(true);
-                    menu.findItem(R.id.nav_item_delete).setEnabled(true);
-                    menu.findItem(R.id.nav_item_extornar).setEnabled(true);
-//                    ACCION PARA SINCRONIZAR / ENVIAR TAREOS
-                    itemSync.setOnClickListener(view1 -> {
-                        Swal.confirm(ctx,
-                                "Estás seguro?",
-                                "Seguro que desea transferir los tareos seleccionados?")
-                                .setConfirmClickListener(sweetAlertDialog -> {
-                                    if(transferirTareos()){
-                                        idsSeleccionados = new ArrayList<>();
-                                        drawer.closeDrawer(GravityCompat.START);
-                                        sweetAlertDialog.dismissWithAnimation();
-                                    }
-                                }).setCancelClickListener(sweetAlertDialog -> {
-                                    sweetAlertDialog.dismissWithAnimation();
-                                });
-                    });
-//                    ACCION PARA ELIMINAR TAREOS
-                    itemDelete.setOnClickListener(view1 -> {
-                        Swal.confirm(ctx,
-                                "Estás seguro?",
-                                "Seguro que desea eliminar los tareos seleccionados?")
-                                .setConfirmClickListener(sweetAlertDialog -> {
-                                    try {
-                                        JSONObject jsonObject = eliminarTareos();
-                                        String message = jsonObject.getString("message_code");
-                                        if(message.equals("transferido_seleccionado")){
-                                            Swal.warning(ctx, "Uy!","No se puede eliminar, usted ha seleccionado al menos un tareo transferido.", 6000);
-                                        } else if (message.equals("eliminado")) {
-                                            Swal.success(ctx, "Correcto!","Se han eliminado los tareos seleccionados",2000);
-                                        } else if (message.equals("error")) {
-                                            Swal.confirm(ctx, "Confirmar","No se han eliminado los tareos seleccionados, ha ocurrido un error, ¿Desea enviar un mensaje a soporte técnico?")
-                                                    .setConfirmClickListener(sweetAlertDialog1 -> {
-                                                        enviarMensajeSoporteTecnico();
-                                                        sweetAlertDialog1.dismissWithAnimation();
-                                                    }).setCancelClickListener(sweetAlertDialog1 -> {
-                                                        sweetAlertDialog1.dismissWithAnimation();
-                                                    });
-                                        }
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }finally {
-                                        try {
-                                            menu.findItem(R.id.nav_item_sync).setEnabled(false);
-                                            menu.findItem(R.id.nav_item_delete).setEnabled(false);
-                                            menu.findItem(R.id.nav_item_extornar).setEnabled(false);
-                                            drawer.closeDrawer(GravityCompat.START);
-                                            listarRegistros();
-                                        } catch (Exception e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                    }
-                                    sweetAlertDialog.dismissWithAnimation();
-                                }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
+            itemSync = nv.getMenu().findItem(R.id.nav_item_transferir);
+            itemDelete = nv.getMenu().findItem(R.id.nav_item_borrar);
+            itemExtornar = nv.getMenu().findItem(R.id.nav_item_extorno);
+            itemReport = nv.getMenu().findItem(R.id.nav_item_report);
+            //                    ACCION PARA REPORTE
+            itemReport.setOnMenuItemClickListener(view1 -> {
+//                    Swal.info(this.getContext(),"asd","REPORTE", 1500);
+                abrirActividadReportes();
+                return false;
+            });
 
-                    });
-                    itemExtornar.setOnClickListener(view1 -> {
-                            drawer.closeDrawer(GravityCompat.START);
-                            Swal.warning(ctx, "Huy!","Aún no se ha implementado esta función 😥",4000);
-                    });
-                }else{
-                    itemSync.setOnClickListener(view1 -> {
-                            Swal.warning(ctx, "Alerta!","No has seleccionado ningún tareo para transferir",1000);
-                    });
-                    menu.findItem(R.id.nav_item_sync).setEnabled(false);
-                    menu.findItem(R.id.nav_item_delete).setEnabled(false);
-                    menu.findItem(R.id.nav_item_extornar).setEnabled(false);
-                }
+            if(idsSeleccionados.size() != 0){
+                habilitarItems(menu,true);
+//                    ACCION PARA SINCRONIZAR / ENVIAR TAREOS
+
+                itemSync.setOnMenuItemClickListener(view1 -> {
+                    Swal.confirm(ctx,
+                            "Estás seguro?",
+                            "Seguro que desea transferir los tareos seleccionados?")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                if(transferirTareos()){
+                                    idsSeleccionados = new ArrayList<>();
+                                    drawer.closeDrawer(GravityCompat.START);
+                                    sweetAlertDialog.dismissWithAnimation();
+                                }
+                            }).setCancelClickListener(sweetAlertDialog -> {
+                                sweetAlertDialog.dismissWithAnimation();
+                            });
+                    return false;
+                });
+//                    ACCION PARA ELIMINAR TAREOS
+                itemDelete.setOnMenuItemClickListener(view1 -> {
+                    Swal.confirm(ctx,
+                            "Estás seguro?",
+                            "Seguro que desea eliminar los tareos seleccionados?")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                try {
+                                    JSONObject jsonObject = eliminarTareos();
+                                    String message = jsonObject.getString("message_code");
+                                    if(message.equals("transferido_seleccionado")){
+                                        Swal.warning(ctx, "Uy!","No se puede eliminar, usted ha seleccionado al menos un tareo transferido.", 6000);
+                                    } else if (message.equals("eliminado")) {
+                                        Swal.success(ctx, "Correcto!","Se han eliminado los tareos seleccionados",2000);
+                                    } else if (message.equals("error")) {
+                                        Swal.confirm(ctx, "Confirmar","No se han eliminado los tareos seleccionados, ha ocurrido un error, ¿Desea enviar un mensaje a soporte técnico?")
+                                                .setConfirmClickListener(sweetAlertDialog1 -> {
+                                                    enviarMensajeSoporteTecnico();
+                                                    sweetAlertDialog1.dismissWithAnimation();
+                                                }).setCancelClickListener(sweetAlertDialog1 -> {
+                                                    sweetAlertDialog1.dismissWithAnimation();
+                                                });
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }finally {
+                                    try {
+                                        habilitarItems(menu,false);
+                                        drawer.closeDrawer(GravityCompat.START);
+                                        listarRegistros();
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                                sweetAlertDialog.dismissWithAnimation();
+                            }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
+                    return false;
+                });
+
+//                    ACCION PARA EXTORNAR
+                itemExtornar.setOnMenuItemClickListener(view1 -> {
+                        drawer.closeDrawer(GravityCompat.START);
+                        Swal.warning(ctx, "Huy!","Aún no se ha implementado esta función 😥",4000);
+                    return false;
+                });
+
+
+            }else{
+                habilitarItems(menu,false);
+            }
 //            }
         });
         binding.c005FabMainTareosNuevoTareoV.setOnClickListener(view -> {
@@ -354,6 +366,14 @@ public class TareosMainFragment extends Fragment {
 
         return root;
     }
+
+    public void habilitarItems(Menu menu,Boolean b){
+        menu.findItem(R.id.nav_item_transferir).setEnabled(b);
+        menu.findItem(R.id.nav_item_borrar).setEnabled(b);
+        menu.findItem(R.id.nav_item_extorno).setEnabled(b);
+//        menu.findItem(R.id.nav_item_report).setEnabled(b);
+    }
+
     public void mostrarMenuUsuario(View v) {
         PopupMenu popup = new PopupMenu(ctx, v);
         popup.setOnMenuItemClickListener(this::onMenuItemClick);
@@ -392,7 +412,9 @@ public class TareosMainFragment extends Fragment {
 //            DATOS DE CONSUMO DE API
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);
 //            URL DE LA API EN LARAVEL
-            String url = "http://192.168.30.99:8000/api/tareos/insertar_tareos";
+            SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+            String ServerIP = sharedPreferences.getString("RED_HOST", "");
+            String url = "http://"+ServerIP+":8000/api/tareos/insertar_tareos";
 
             for(int i = 0; i < idsSeleccionados.size(); i++){
                 if(i == idsSeleccionados.size() - 1){
@@ -430,6 +452,8 @@ public class TareosMainFragment extends Fragment {
                                 List<String> pSqlite = new ArrayList<String>();
 
                                 JSONArray responses = response.getJSONArray("response");
+
+                                responses = reverseJSONArray(responses);
                                 for(int i = 0; i < responses.length(); i++){
                                     JSONObject responseAnalytic = responses.getJSONObject(i);
                                     Log.i("OldId", responseAnalytic.getString("OldId"));
@@ -471,6 +495,11 @@ public class TareosMainFragment extends Fragment {
                                 Log.e("ERROR API 2", error.toString());
                                 Swal.error(ctx,"Oops!","Ha ocurrido un error al insertar el registro",15000);
                             }
+                            try {
+                                listarRegistros();
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     });
             requestQueue.add(stringRequest);
@@ -479,6 +508,16 @@ public class TareosMainFragment extends Fragment {
             Swal.error(ctx, "Error al transferir",e.toString(),15000);
         return false;
         }
+    }
+    private static JSONArray reverseJSONArray(JSONArray jsonArray) throws JSONException {
+        JSONArray reversedArray = new JSONArray();
+
+        // Recorre el JSONArray en orden inverso y agrega los elementos al nuevo JSONArray
+        for (int i = jsonArray.length() - 1; i >= 0; i--) {
+            reversedArray.put(jsonArray.get(i));
+        }
+
+        return reversedArray;
     }
     private boolean transferirTareosDetalle(String id) {
         try{
@@ -506,7 +545,11 @@ public class TareosMainFragment extends Fragment {
             return false;
         }
     }
-
+    private void abrirActividadReportes() {
+        Intent nuevaActividad = new Intent(this.getContext(), cls_05020000_Reportes.class);
+        nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
+        startActivity(nuevaActividad);
+    }
     private JSONObject eliminarTareos() throws JSONException {
         JSONObject jsonObject = objSqlite.eliminarTareos(idsSeleccionados);
 //        if(){

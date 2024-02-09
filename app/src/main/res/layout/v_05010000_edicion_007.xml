@@ -14,11 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/c007_lly_Cuerpo_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/c007_textView1"
@@ -57,644 +55,699 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/c007_lly_Cuerpo_v"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/c007_lly_StatusInferior_v"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/c007_lly_Controles_v"
         app:layout_constraintTop_toBottomOf="@+id/c007_lly_StatusSuperior_v">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-<!--            RENDIMIENTOS VIEW-->
-            <TextView
-                android:id="@+id/c007_txv_TotalRendimientos"
-                style="@style/textViewEdicionItems"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Rdtos.: "
-                android:textColor="@color/grisOscuro"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
-
-            <TextView
-                android:id="@+id/c007_txv_TotalRendimientosView"
-                style="@style/textViewEdicionItems"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0.00"
-                android:textColor="@color/grisOscuro"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
-                app:layout_constraintStart_toEndOf="@+id/c007_txv_TotalRendimientos"
-                app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
-<!--            TRABAJADORES VIEW-->
-            <TextView
-                android:id="@+id/c007_txv_TotalTrabajadores"
-                style="@style/textViewEdicionItems"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trabajadores.: "
-                android:textColor="@color/grisOscuro"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/c007_txv_TotalTrabajadoresView"
-                app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
-
-            <TextView
-                android:id="@+id/c007_txv_TotalTrabajadoresView"
-                style="@style/textViewEdicionItems"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="0"
-                android:textColor="@color/grisOscuro"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
-                app:layout_constraintEnd_toStartOf="@+id/c007_fab_AbrirCerrarCabecera_v"
-                app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foregroundGravity="fill"
-                android:onClick="onClick"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/i_crop" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <LinearLayout
-            android:id="@+id/c007_lly_Cabecera_v"
+            android:id="@+id/c007_lly_Cuerpo_v"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-
-            android:orientation="vertical"
-            android:padding="2dp">
-
-            <LinearLayout
-                android:id="@+id/c007_lly_IdFecha_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_EtiquetaId_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Id: "
-                    android:textColor="@color/grisOscuro"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_IdTareo_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="."
-                    android:textColor="@color/grisOscuro"
-                    android:textStyle="bold" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Fecha_Etq_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Fecha: "
-                    android:textColor="@color/grisOscuro"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Fecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:onClick="onClick"
-                    android:padding="7dp"
-                    android:text="01/01/1990"
-                    android:textAlignment="center"
-                    android:textColor="@color/blancoOficial"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Turno_v"
-                style="textViewEdicionItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Turno_Etq_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:gravity="center"
-                    android:text="Turno: "
-                    android:textColor="@color/blancoOficial"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Turno_Key_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Turno_Val_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Turno_Val_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Observacion_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Observacion: "
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Observacion_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/c007_lly_Detalle1_v"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="29dp"
-            android:layout_marginEnd="5dp"
-            android:orientation="vertical"
-            android:padding="2dp">
-
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Actividad_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Actividad_Etq_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Actividad: "
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Actividad_Key_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Actividad_Val_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|right|end"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Actividad_Val_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Labor_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Labor_Etq_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Labor: "
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Labor_Key_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Labor_Val_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:gravity="center|left"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Labor_Val_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Consumidor_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_redondeado_gris_transparente"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center|left"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Consumidor: "
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c007_txv_Consumidor_Key_v"
-                    style="@style/textViewEdicionItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c007_lly_Consumidor_Val_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:orientation="horizontal"
-                android:padding="7dp">
-
-                <TextView
-                    android:id="@+id/c007_txv_Consumidor_Val_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:text="."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/c007_lly_Detalle2_v"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/c007_lly_DniNombre_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:gravity="center_vertical"
-                app:layout_constraintBottom_toTopOf="@+id/c007_cly_HorasRdtos_v"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/c007_cly_Resumen_v">
-
-                <AutoCompleteTextView
-                    android:id="@+id/c007_atv_NroDocumento_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_weight="2"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:hint="Dni"
-                    android:inputType="phone"
-                    android:padding="7dp"
-                    android:textColor="@color/blancoOficial"
-                    android:textColorHint="@color/blancoOficial"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <AutoCompleteTextView
-                    android:id="@+id/c007_atv_NombreTrabajador_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_weight="3"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
-                    android:fontFamily="@font/auxiliar_02"
-                    android:hint="Nombre Trabajador"
-                    android:padding="7dp"
-                    android:textColor="@color/blancoOficial"
-                    android:textColorHint="@color/blancoOficial"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/c007_cly_HorasRdtos_v"
-                style="@style/textViewEdicionItems"
+                android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:textColor="@color/blancoOficial"
-                android:textColorHint="@color/blancoOficial"
-                app:layout_constraintBottom_toTopOf="@+id/c007_rvw_Detalle_v"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/c007_lly_DniNombre_v">
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
-                    android:orientation="horizontal"
-                    android:paddingStart="7dp"
-                    android:paddingEnd="7dp"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <TextView
-                        style="@style/textViewEdicionItems"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Horas:"
-                        android:textColor="@color/blancoOficial"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/etxHoras_v"
-                        app:layout_constraintEnd_toStartOf="@+id/etxHoras_v"
-                        app:layout_constraintTop_toTopOf="@+id/etxHoras_v" />
-
-                    <EditText
-                        android:id="@+id/etxHoras_v"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center|center_vertical"
-                        android:hint="0.00"
-                        android:inputType="numberDecimal"
-                        android:textColor="@color/blancoOficial"
-                        android:textColorHint="@color/blancoOficial"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="2dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_redondeado_gris_transparente"
-                    android:orientation="horizontal"
-                    android:paddingStart="7dp"
-                    android:paddingEnd="7dp"
-                    app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <EditText
-                        android:id="@+id/etxRtos_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:hint="0.00"
-                        android:inputType="numberDecimal"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/blancoOficial"
-                        android:textColorHint="@color/blancoOficial"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textView37"
-                        style="@style/textViewEdicionItems"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rdtos:"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/etxRtos_v"
-                        app:layout_constraintEnd_toStartOf="@+id/etxRtos_v"
-                        app:layout_constraintTop_toTopOf="@+id/etxRtos_v" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <Space
+                <!--            RENDIMIENTOS VIEW-->
+                <TextView
+                    android:id="@+id/c007_txv_TotalRendimientos"
+                    style="@style/textViewEdicionItems"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_marginStart="10dp"
+                    android:text="Rdtos.: "
+                    android:textColor="@color/grisOscuro"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
+
+                <TextView
+                    android:id="@+id/c007_txv_TotalRendimientosView"
+                    style="@style/textViewEdicionItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
+                    android:textColor="@color/grisOscuro"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
+                    app:layout_constraintStart_toEndOf="@+id/c007_txv_TotalRendimientos"
+                    app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
+                <!--            TRABAJADORES VIEW-->
+                <TextView
+                    android:id="@+id/c007_txv_TotalTrabajadores"
+                    style="@style/textViewEdicionItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trabajadores.: "
+                    android:textColor="@color/grisOscuro"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/c007_txv_TotalTrabajadoresView"
+                    app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
+
+                <TextView
+                    android:id="@+id/c007_txv_TotalTrabajadoresView"
+                    style="@style/textViewEdicionItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="0"
+                    android:textColor="@color/grisOscuro"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
+                    app:layout_constraintEnd_toStartOf="@+id/c007_fab_AbrirCerrarCabecera_v"
+                    app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/c007_fab_Agregar_v"
+                    android:id="@+id/c007_fab_AbrirCerrarCabecera_v"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
+                    android:foregroundGravity="fill"
                     android:onClick="onClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@drawable/i_person_add" />
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/i_crop" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/c007_rvw_Detalle_v"
-            android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/c007_lly_Cabecera_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:orientation="vertical"
+                android:padding="2dp">
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_IdFecha_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:gravity="center|left"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_EtiquetaId_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Id: "
+                        android:textColor="@color/grisOscuro"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_IdTareo_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="."
+                        android:textColor="@color/grisOscuro"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Fecha_Etq_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Fecha: "
+                        android:textColor="@color/grisOscuro"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Fecha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_redondeado_gris_transparente"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:gravity="center"
+                        android:onClick="onClick"
+                        android:padding="7dp"
+                        android:text="01/01/1990"
+                        android:textAlignment="center"
+                        android:textColor="@color/blancoOficial"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Turno_v"
+                    style="textViewEdicionItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center|left"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Turno_Etq_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:gravity="center"
+                        android:text="Turno: "
+                        android:textColor="@color/blancoOficial"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Turno_Key_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Turno_Val_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:gravity="center|left"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Turno_Val_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Observacion_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center|left"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Observacion: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Observacion_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/c007_lly_Detalle1_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="29dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical"
+                android:padding="2dp">
+
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Actividad_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center|left"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Actividad_Etq_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Actividad: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Actividad_Key_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Actividad_Val_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:gravity="center|right|end"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Actividad_Val_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Labor_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center|left"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Labor_Etq_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Labor: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Labor_Key_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Labor_Val_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:gravity="center|left"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Labor_Val_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Consumidor_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_redondeado_gris_transparente"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center|left"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Consumidor: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/c007_txv_Consumidor_Key_v"
+                        style="@style/textViewEdicionItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_Consumidor_Val_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/c007_txv_Consumidor_Val_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:text="."
+                        android:textAlignment="viewEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/c007_lly_Detalle2_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutEscaner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <me.dm7.barcodescanner.zbar.ZBarScannerView
+                        android:id="@+id/zBarScannerView"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabToggleFlash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_flash"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toBottomOf="@+id/zBarScannerView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:maxImageSize="25dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/c007_lly_DniNombre_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center_vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/c007_cly_HorasRdtos_v"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/c007_cly_Resumen_v">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/c007_atv_NroDocumento_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/bg_redondeado_gris_transparente"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:hint="Dni"
+                        android:inputType="phone"
+                        android:maxLength="8"
+                        android:padding="7dp"
+                        android:textColor="@color/blancoOficial"
+                        android:textColorHint="@color/blancoOficial"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabMostrarEscaner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:src="@drawable/ic_menu_camera"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:maxImageSize="25dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/c007_atv_NombreTrabajador_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/bg_redondeado_gris_transparente"
+                        android:fontFamily="@font/auxiliar_02"
+                        android:hint="Nombre Trabajador"
+                        android:padding="7dp"
+                        android:textColor="@color/blancoOficial"
+                        android:textColorHint="@color/blancoOficial"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/c007_cly_HorasRdtos_v"
+                    style="@style/textViewEdicionItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:textColor="@color/blancoOficial"
+                    android:textColorHint="@color/blancoOficial"
+                    app:layout_constraintBottom_toTopOf="@+id/c007_rvw_Detalle_v"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/c007_lly_DniNombre_v">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_redondeado_gris_transparente"
+                        android:orientation="horizontal"
+                        android:paddingStart="7dp"
+                        android:paddingEnd="7dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            style="@style/textViewEdicionItems"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Horas:"
+                            android:textColor="@color/blancoOficial"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/etxHoras_v"
+                            app:layout_constraintEnd_toStartOf="@+id/etxHoras_v"
+                            app:layout_constraintTop_toTopOf="@+id/etxHoras_v" />
+
+                        <EditText
+                            android:id="@+id/etxHoras_v"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|center_vertical"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/blancoOficial"
+                            android:textColorHint="@color/blancoOficial"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_redondeado_gris_transparente"
+                        android:orientation="horizontal"
+                        android:paddingStart="7dp"
+                        android:paddingEnd="7dp"
+                        app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+                        app:layout_constraintTop_toTopOf="@+id/constraintLayout2">
+
+                        <EditText
+                            android:id="@+id/etxRtos_v"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:paddingTop="10dp"
+                            android:textColor="@color/blancoOficial"
+                            android:textColorHint="@color/blancoOficial"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView37"
+                            style="@style/textViewEdicionItems"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rdtos:"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/etxRtos_v"
+                            app:layout_constraintEnd_toStartOf="@+id/etxRtos_v"
+                            app:layout_constraintTop_toTopOf="@+id/etxRtos_v" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/c007_fab_Agregar_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/i_person_add" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/c007_rvw_Detalle_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:layout_constraintBottom_toTopOf="@+id/c007_lly_Controles_v"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/c007_cly_HorasRdtos_v" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/c007_lly_Controles_v"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/c007_lly_StatusInferior_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c007_fab_volver_v"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:layout_weight="1"
-            app:layout_constraintBottom_toTopOf="@+id/c007_lly_Controles_v"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="onClick"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/c007_cly_HorasRdtos_v" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_keyboard_backspace" />
 
-        <LinearLayout
-            android:id="@+id/c007_lly_Controles_v"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c007_fab_Guardar_v"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:clickable="true"
+            android:onClick="onClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_save" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c007_fab_Duplicar_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="duplicarRegistros"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/c007_rvw_Detalle_v">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/i_save" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/c007_fab_volver_v"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="onClick"
-                app:srcCompat="@drawable/i_keyboard_backspace" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/c007_fab_Guardar_v"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="onClick"
-                app:srcCompat="@drawable/i_save" />
-        </LinearLayout>
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/c007_lly_StatusInferior_v"

@@ -216,7 +216,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-
             android:fontFamily="@font/monoespaciada_principal"
             android:inputType="numberDecimal"
             android:paddingStart="10dp"

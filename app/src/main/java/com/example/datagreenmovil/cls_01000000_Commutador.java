@@ -678,7 +678,8 @@ public class cls_01000000_Commutador extends AppCompatActivity {
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.READ_PHONE_STATE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.MANAGE_EXTERNAL_STORAGE
+                android.Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA
 
         };
         if (!tienePermisos(this, PERMISSIONS)) {

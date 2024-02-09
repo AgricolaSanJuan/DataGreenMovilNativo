@@ -154,7 +154,9 @@ public class Funciones {
 */
   public static void cargarSpinner(Context ctx, Spinner spi, Tabla t, int iC, int iV) throws Exception { //iC, iV indexClave, indexValor
     try {
-      if (t.Filas == null) {
+      if (t.Filas.size() == 0){
+        spi.setAdapter(null);
+      }else if (t.Filas == null) {
         spi.setAdapter(null);
       } else {
         ClaveValor[] cvAux = ClaveValor.getArrayClaveValor(t, iC, iV);

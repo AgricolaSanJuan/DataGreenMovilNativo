@@ -1,10 +1,12 @@
 package com.example.datagreenmovil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -70,6 +73,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         return "hola";
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onBindViewHolder(@NonNull cls_05010200_RecyclerViewAdapter.MyViewHolder holder, int position) {
         //tareos.moveToPosition(position);
@@ -102,9 +106,17 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         holder.c010_txv_Rdtos.setText(String.valueOf(td.getRdtos()));
         holder.c010_txv_Observacion.setText(td.getObservacion());
         holder.c010_lly_CultivoVariedad.setVisibility(View.GONE);
+
+        holder.c010_lly_Principal.setOnLongClickListener(view -> {
+            holder.selected = !holder.selected;
+            holder.imageCheck.setVisibility(holder.selected ? View.VISIBLE : View.INVISIBLE);
+            return true;
+        });
+
         holder.c010_lly_Principal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 itemSeleccionado = Integer.parseInt(holder.c010_txv_Item.getText().toString());
                 mostrarMenuDetalle(holder.c010_lly_Principal);
             }
@@ -159,8 +171,24 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         int cantidad = tareo.getTotalDetalles();
         return tareo.getDetalle().get(cantidad-1).getIdConsumidor();
     }
+    public int getTotalDetalles(){
+        int cantidad = tareo.getTotalDetalles();
+        return cantidad;
+    }
+
+    public String getLastHoras() {
+        int cantidad = tareo.getTotalDetalles();
+        return String.valueOf(tareo.getDetalle().get(cantidad-1).getHoras());
+    }
+
+    public String getLastRendimientos() {
+        int cantidad = tareo.getTotalDetalles();
+        return String.valueOf(tareo.getDetalle().get(cantidad-1).getRdtos());
+    }
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {
+        boolean selected = false;
+        ImageView imageCheck;
         TextView c010_txv_Item, c010_txv_Dni, c010_txv_Nombres, c010_txv_IdCultivo, c010_txv_Cultivo,
                 c010_txv_IdVariedad, c010_txv_Variedad, c010_txv_IdConsumidor, c010_txv_Consumidor,
                 c010_txv_IdActividad, c010_txv_Actividad, c010_txv_IdLabor, c010_txv_Labor, c010_txv_Horas, c010_txv_Rdtos, c010_txv_Observacion ;
@@ -187,6 +215,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
             c010_txv_Rdtos = (TextView) itemView.findViewById(R.id.c010_txv_Rdtos_v);
             c010_lly_CultivoVariedad = (LinearLayout) itemView.findViewById(R.id.c010_lly_CultivoVariedad_v);
             c010_txv_Observacion = (TextView)  itemView.findViewById(R.id.c010_txv_Observacion_v);
+            imageCheck = itemView.findViewById(R.id.imageCheck);
         }
     }
 }

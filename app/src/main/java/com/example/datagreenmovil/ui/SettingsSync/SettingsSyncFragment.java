@@ -197,6 +197,18 @@ public class SettingsSyncFragment extends Fragment {
                 }
             }
         });
+
+        binding.switchMarcas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!!b){
+                    tablasSeleccionadas.add("mst_marcasTareo");
+                }else {
+                    tablasSeleccionadas.remove("mst_marcasTareo");
+                }
+            }
+        });
+
         binding.switchLabores.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

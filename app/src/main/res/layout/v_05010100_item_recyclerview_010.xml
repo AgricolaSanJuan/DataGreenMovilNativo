@@ -9,6 +9,17 @@
     android:layout_margin="5dp"
     android:layout_marginBottom="10dp">
 
+    <ImageView
+        android:id="@+id/imageCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:tint="@color/verde"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_check" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -67,6 +78,7 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyBody"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/fondo_delineado_3"
@@ -284,9 +296,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/monoespaciada_principal"
                     android:text="Rdtos:"
-                    app:layout_constraintTop_toTopOf="@+id/textView39"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@id/c010_txv_Rdtos_v"
-                    android:textSize="16sp" />
+                    app:layout_constraintTop_toTopOf="@+id/textView39" />
 
                 <TextView
                     android:id="@+id/c010_txv_Rdtos_v"
@@ -297,8 +309,8 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="@+id/textView40"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView40" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

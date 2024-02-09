@@ -1,6 +1,11 @@
 package com.example.datagreenmovil.Conexiones;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.datagreenmovil.DataGreenApp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,14 +15,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MyHttpTask extends AsyncTask<String, Void, String> {
+    private Context ctx;
 
+    public MyHttpTask(Context ctx){
+        this.ctx = ctx;
+    }
     @Override
     protected String doInBackground(String... params) {
+
         HttpURLConnection connection = null;
         BufferedReader reader = null;
         try {
+            SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+            String ServerIP = sharedPreferences.getString("RED_HOST", "");
             // URL de la API a la que deseas enviar la solicitud POST
-            URL url = new URL("http://192.168.30.158:8000/api/get-available-update");
+            URL url = new URL("http://"+ServerIP+":8000/api/get-available-update");
 
             // Abre una conexión HTTP
             connection = (HttpURLConnection) url.openConnection();

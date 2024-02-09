@@ -34,13 +34,11 @@
         android:id="@+id/txvTareos2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="SINCRONIZAR DATOS"
         android:textAlignment="textEnd"
         android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/chipGroupGeneral"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroupGeneral" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupTareos"
@@ -61,6 +59,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Personas"
+            android:textSize="18dp" />
+        <Switch
+            android:id="@+id/switchMarcas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Marcas"
             android:textSize="18dp" />
         <Switch
             android:id="@+id/switchLabores"
@@ -124,5 +128,25 @@
         android:textColor="@color/blancoOficial"
         app:layout_constraintEnd_toEndOf="@+id/chipGroupTareos"
         app:layout_constraintTop_toBottomOf="@+id/chipGroupTareos" />
+
+    <TextView
+        android:id="@+id/txvOpciones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="OPCIONES"
+        android:textAlignment="textEnd"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSincronizarTareos" />
+
+    <Switch
+        android:id="@+id/switchPermitirSinTareo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Permitir sin tareo"
+        android:textSize="18dp"
+        app:layout_constraintTop_toBottomOf="@+id/txvOpciones"
+        tools:layout_editor_absoluteX="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

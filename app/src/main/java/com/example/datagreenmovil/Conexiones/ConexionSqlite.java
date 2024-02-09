@@ -1,6 +1,5 @@
 package com.example.datagreenmovil.Conexiones;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -23,7 +22,6 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
-import com.example.datagreenmovil.Logica.Swal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,19 +30,14 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
-import javax.xml.transform.Result;
 
 @SuppressWarnings("serial")
 public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
@@ -1398,4 +1391,35 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
 
 
   }
+
+    public boolean verificarExistenciaMarca(String dni, boolean validarMarca) {
+      if(validarMarca){
+        return true;
+      }
+        SQLiteDatabase SqliteDB;
+        SqliteDB = getReadableDatabase();
+        Cursor c;
+
+        c = SqliteDB.rawQuery("SELECT COUNT(*) FROM mst_marcasTareo WHERE Dni = '"+dni+"'", null);
+        c.moveToFirst();
+        if(c.getInt(0) > 0){
+          return true;
+        }else {
+          return false;
+      }
+    }
+
+    public boolean verificarExistenciaPersona(String dni){
+      SQLiteDatabase sqLiteDatabase;
+      sqLiteDatabase = getReadableDatabase();
+      Cursor c;
+
+      c = sqLiteDatabase.rawQuery("SELECT COUNT(*) FROM mst_personas WHERE Nrodocumento = '"+dni+"'", null);
+      c.moveToFirst();
+      if(c.getInt(0) > 0){
+        return true;
+      }else{
+        return false;
+      }
+    }
 }

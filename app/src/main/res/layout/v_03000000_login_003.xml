@@ -99,10 +99,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
                     android:foregroundGravity="center"
                     android:gravity="center"
-
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -121,6 +119,8 @@
                     android:foregroundGravity="center_vertical"
                     android:gravity="center"
                     android:hint="Usuario"
+                    android:maxLines="1"
+                    android:inputType="number"
                     android:textAlignment="center"
                     android:textColorHint="@color/grisOscuro"
                     android:textSize="24sp" />
@@ -141,6 +141,7 @@
                     android:foregroundGravity="center_vertical"
                     android:gravity="center"
                     android:hint="Contraseña"
+                    android:maxLines="1"
                     android:inputType="textPassword"
                     android:textAlignment="center"
                     android:textColorHint="@color/grisOscuro"
@@ -178,8 +179,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:text="Recordar credenciales"
-                android:textAlignment="center"
-                android:visibility="invisible" />
+                android:textAlignment="center" />
 
         </LinearLayout>
 

@@ -6,5 +6,6 @@
         <item name="maxImageSize"> 40dp </item>
         <item name="borderWidth"> 0dp </item>
         <item name="android:elevation"> 0dp </item>
+        <item name="elevation"> 0dp </item>
     </style>
 </resources>

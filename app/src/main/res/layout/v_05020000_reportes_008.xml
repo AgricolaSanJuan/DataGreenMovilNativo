@@ -12,11 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/c008_lly_Cuerpo_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/c008_textView1"
@@ -56,156 +54,206 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/c008_lly_Cuerpo_v"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/c008_lly_StatusInferior_v"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/linearLayout14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintTop_toBottomOf="@+id/c008_lly_StatusSuperior_v">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/fechaActual"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        android:id="@+id/c008_rad_TareosReportesActivity_Fecha_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/monoespaciada_principal"
-                        android:onClick="onClick"
-                        android:text="Fecha: 01/01/2022" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5px"
-                android:background="@drawable/fondo_delineado_3"
+                android:layout_weight="1"
+                android:background="@drawable/bg_redondeado_gris_transparente"
+                android:fontFamily="@font/auxiliar_02"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5px">
+                android:text="01/01/1990"
+                android:textAlignment="center"
+                android:textColor="@color/blancoOficial"
+                android:textSize="20dp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:gravity="center"
-                    android:text="Supervisor:"
-                    android:textStyle="bold" />
+<!--            <RadioGroup-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent">-->
 
-                <Spinner
-                    android:id="@+id/c008_spi_TareosReportesActivity_Supervisores_v"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+<!--                <RadioButton-->
+<!--                    android:id="@+id/c008_rad_TareosReportesActivity_Fecha_v"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:fontFamily="@font/monoespaciada_principal"-->
+<!--                    android:text="Fecha: 01/01/2022" />-->
+
+<!--            </RadioGroup>-->
 
         </LinearLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="5px"
+            android:background="@drawable/fondo_delineado_3"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:gravity="center"
+                android:text="Supervisor:"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/c008_spi_TareosReportesActivity_Supervisores_v"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                />
+        </LinearLayout>
 
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="ifContentScrolls">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/monoespaciada_principal"
-                            android:text="Totales:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/c008_rcv_TareosReportes_RCV1_v"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:overScrollMode="ifContentScrolls" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/monoespaciada_principal"
-                            android:text="Resumen X Consumidor:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/c008_rcv_TareosReportes_RCV2_v"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:overScrollMode="ifContentScrolls" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/monoespaciada_principal"
-                            android:text="Detalles X Actividad Y Labor:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/c008_rcv_TareosReportes_RCV3_v"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:overScrollMode="ifContentScrolls" />
-                    </LinearLayout>
-                </ScrollView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:orientation="horizontal">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/c008_fab_TareosReportesActivity_Volver_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/verde"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    app:srcCompat="@android:drawable/ic_media_rew" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-        </FrameLayout>
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/c008_lly_StatusInferior_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyTotales"
+            android:layout_width="1px"
+            android:layout_height="1px"
+            app:layout_constraintBottom_toTopOf="@+id/bnvReportes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:text="Totales:"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="20dp"
+                tools:layout_conversion_absoluteWidth="411dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/c008_rcv_TareosReportes_RCV1_v"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:overScrollMode="ifContentScrolls"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView47"
+                tools:layout_conversion_absoluteHeight="729dp"
+                tools:layout_conversion_absoluteWidth="411dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyConsumidor"
+            android:layout_width="1px"
+            android:layout_height="1px"
+            app:layout_constraintBottom_toTopOf="@+id/bnvReportes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:text="Resumen X Consumidor:"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="20dp"
+                tools:layout_conversion_absoluteWidth="411dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/c008_rcv_TareosReportes_RCV2_v"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:overScrollMode="ifContentScrolls"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView48" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyActividad"
+            android:layout_width="1px"
+            android:layout_height="1px"
+            app:layout_constraintBottom_toTopOf="@+id/bnvReportes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:text="Detalles X Actividad Y Labor:"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="20dp"
+                tools:layout_conversion_absoluteWidth="411dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/c008_rcv_TareosReportes_RCV3_v"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:overScrollMode="ifContentScrolls"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView49"
+                tools:layout_conversion_absoluteHeight="189dp"
+                tools:layout_conversion_absoluteWidth="411dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnvReportes"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@color/verde"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/menu_reporte_tareo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/c008_lly_StatusInferior_v"
@@ -213,8 +261,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c008_lly_Cuerpo_v">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/c008_textView3"
