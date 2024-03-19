@@ -741,6 +741,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:onClick="duplicarRegistros"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

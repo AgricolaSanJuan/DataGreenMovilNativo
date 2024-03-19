@@ -10,7 +10,7 @@ android {
         minSdk 23
         targetSdk 32
         versionCode 5
-        versionName "1.6.2"
+        versionName "1.6.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -58,7 +58,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    implementation ('io.socket:socket.io-client:2.0.0') {
+//    tableview
+    implementation 'com.evrencoskun.library:tableview:0.8.9.4'
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+//    sockets
+    implementation ('io.socket:socket.io-client:2.1.0') {
         exclude group: 'org.json', module: 'json'
     }
     implementation 'me.dm7.barcodescanner:zbar:1.9.13'

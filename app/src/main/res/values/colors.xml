@@ -45,6 +45,11 @@
     <color name="blancoOficial">#FFFFFF</color>
     <color name="negroOficial">#141414</color>
     <!--    fin nuevos colores-->
+    }
+<!--    COLORES DE TABLA-->
+    <color name="cell_background_color">#ffffff</color>
+    <color name="header_line_color">#0a0a0a</color>
+    <color name="table_view_default_text_color">#0a0a0a</color>
 
 <!--    COLORES DE TEMA-->
     <color name="backgroundPrimaryLight">@color/blancoOficial</color>

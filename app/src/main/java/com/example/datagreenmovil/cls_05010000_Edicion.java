@@ -796,7 +796,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             // Aplica los atributos a la ventana del diálogo
                 popUp.getWindow().setBackgroundDrawableResource(R.drawable.bg_popup);
 
-
                 //MANEJO DE CONTROLES INTERNOR DEL POPUP
                 EditText c021_etx_Horas, c021_etx_Rdtos, c021_etx_Observacion;
                 TextView c021_txv_IdTareo, c021_txv_Item, c021_txv_Dni, c021_txv_NombreTrabajador, c021_txv_Actividad, c021_txv_Labor, c021_txv_Consumidor;

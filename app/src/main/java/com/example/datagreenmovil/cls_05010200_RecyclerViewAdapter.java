@@ -69,14 +69,9 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         return new MyViewHolder(view);
     }
 
-    public String cantidadRendimientos(){
-        return "hola";
-    }
-
     @SuppressLint("RestrictedApi")
     @Override
     public void onBindViewHolder(@NonNull cls_05010200_RecyclerViewAdapter.MyViewHolder holder, int position) {
-        //tareos.moveToPosition(position);
         String s ="";
         TareoDetalle td = tareo.getDetalle().get(position);
         holder.c010_txv_Item.setText(String.valueOf(td.getItem()));

@@ -414,6 +414,7 @@ public class TareosMainFragment extends Fragment {
 //            URL DE LA API EN LARAVEL
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
             String ServerIP = sharedPreferences.getString("RED_HOST", "");
+//            ServerIP = "192.168.30.23";
             String url = "http://"+ServerIP+":8000/api/tareos/insertar_tareos";
 
             for(int i = 0; i < idsSeleccionados.size(); i++){
@@ -424,6 +425,7 @@ public class TareosMainFragment extends Fragment {
                     whereIn += "'"+idsSeleccionados.get(i)+"',";
                 }
             }
+
             Log.i("SELECCIONADOS", whereIn);
 
             tareos = objSqlite.obtenerTareos(whereIn);
