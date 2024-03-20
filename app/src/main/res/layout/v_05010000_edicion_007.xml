@@ -495,14 +495,22 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <me.dm7.barcodescanner.zbar.ZBarScannerView
-                        android:id="@+id/zBarScannerView"
+                    <com.example.datagreenmovil.Logica.ZXingScannerView
+                        android:id="@+id/scannerView"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
+<!--                    <me.dm7.barcodescanner.zbar.ZBarScannerView-->
+<!--                        android:id="@+id/zBarScannerView"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fabToggleFlash"

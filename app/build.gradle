@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.datagreenmovil"
-        minSdk 23
+        minSdk 24
         targetSdk 32
         versionCode 5
         versionName "1.6.3"
@@ -67,7 +67,12 @@ dependencies {
     implementation ('io.socket:socket.io-client:2.1.0') {
         exclude group: 'org.json', module: 'json'
     }
-    implementation 'me.dm7.barcodescanner:zbar:1.9.13'
+    //  ZBAR CAMERA
+//    implementation 'me.dm7.barcodescanner:zbar:1.9.13'
+
+//    ZXING CAMERA
+    implementation 'com.google.zxing:core:3.4.1'
+    implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
 
     testImplementation 'junit:junit:4.12'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'

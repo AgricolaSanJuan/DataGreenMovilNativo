@@ -180,7 +180,7 @@
                 android:gravity="center"
                 android:text="Recordar credenciales"
                 android:textAlignment="center"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
         </LinearLayout>
 

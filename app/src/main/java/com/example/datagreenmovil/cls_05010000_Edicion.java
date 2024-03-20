@@ -56,18 +56,19 @@ import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
+import com.example.datagreenmovil.Logica.ZXingScannerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.Result;
+import com.journeyapps.barcodescanner.BarcodeResult;
 //import com.example.datagreenmovil.Logica.InterfazDialog;
 
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
-import me.dm7.barcodescanner.zbar.Result;
-
-
-public class cls_05010000_Edicion extends AppCompatActivity implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener, ZBarScannerView.ResultHandler  {
+public class cls_05010000_Edicion extends AppCompatActivity
+        implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener{
     //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
 
     private ScaleGestureDetector scaleGestureDetector;
-    private ZBarScannerView zBarScannerView;
+    private ZXingScannerView scannerView;
+
     static ConexionSqlite objSqlite;
     ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
@@ -113,11 +114,11 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.v_05010000_edicion_007);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        zBarScannerView = findViewById(R.id.zBarScannerView);
+        scannerView = findViewById(R.id.scannerView);
 
-        zBarScannerView.setAspectTolerance(1.0f);
-        zBarScannerView.setFlash(flashState);
-//        zBarScannerView.setFocusable(0.5f);
+//        scannerView.setAspectTolerance(1.2f);
+//        scannerView.setFlash(flashState);
+//        scannerView.setFocusable(1.2f);
 
 
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
@@ -167,8 +168,28 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         return true;
     }
 
+    void setHandlerScanner(Context context){
+        scannerView.resume();
+        scannerView.setResultHandler(result -> {
+            Context ctx = this;
+            CountDownTimer countDownTimer = new CountDownTimer(1500, 1500) {
+                @Override
+                public void onTick(long millisUntilFinished) {
 
+                }
 
+                @Override
+                public void onFinish() {
+//                scannerView.startCamera();
+                    setHandlerScanner(ctx);
+
+                }
+            };
+            resultado(result.getText());
+//            Swal.info(context, "asd","asdasdasd", 500);
+            countDownTimer.start();
+        });
+    }
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
         // Se llama cuando se detecta un gesto de escala (zoom)
@@ -205,34 +226,42 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     public void onResume() {
         super.onResume();
         listarDetalles();
-//        zBarScannerView.setResultHandler(this);
-//        zBarScannerView.startCamera();
+//        scannerView.setResultHandler(this);
+//        scannerView.startCamera();
     }
     @Override
     public void onPause() {
         super.onPause();
-        zBarScannerView.stopCamera();
+        scannerView.pause();
     }
 
-    @Override
-    public void handleResult(Result result) {
+//    @Override
+//    public void handleResult(Result rawResult) {
+//        // Aquí puedes manejar el resultado del escaneo
+//        Log.d("Scan Result", rawResult.getText());
+//        mScannerView.resumeCameraPreview(this); // Reanudar la vista previa de la cámara después del escaneo
+//    }
 
-//        zBarScannerView.stopCamera();
-        CountDownTimer countDownTimer = new CountDownTimer(1500, 1500) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+//    @Override
+    public void resultado(String barcodeValue) {
 
-            }
-
-            @Override
-            public void onFinish() {
-//                zBarScannerView.startCamera();
-                zBarScannerView.resumeCameraPreview(cls_05010000_Edicion.this);
-            }
-        };
+//        scannerView.stopCamera();
+//        CountDownTimer countDownTimer = new CountDownTimer(1500, 1500) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//
+//            }
+//
+//            @Override
+//            public void onFinish() {
+////                scannerView.startCamera();
+//                scannerView.resume();
+//
+//            }
+//        };
 
         // Iniciar el temporizador
-        countDownTimer.start();
+//        countDownTimer.start();
 
         if(
             c007_etx_Horas.length() > 0 &&
@@ -240,7 +269,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             c007_txv_Actividad_Key.length() > 0 &&
             c007_txv_Labor_Key.length() > 0
         ){
-            String barcodeValue = result.getContents();
+
             c007_atv_NroDocumento.setText(barcodeValue.replaceAll("[^0-9]", ""));
 
             try {
@@ -424,22 +453,34 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
         fabToggleFlash.setOnClickListener(view -> {
             flashState = !flashState;
-            zBarScannerView.setFlash(flashState);
+            if(flashState){
+                scannerView.setTorchOn();
+            }else{
+                scannerView.setTorchOff();
+            }
         });
 
-        zBarScannerView.setOnClickListener(view -> {
-            zBarScannerView.setAutoFocus(true);
+        scannerView.setOnClickListener(view -> {
+//            scannerView.setAutoFocus(false);
+            Swal.info(this, "tocao", "fuiste manito", 2000);
         });
 
         fabMostrarEscaner.setOnClickListener(view -> {
             mostrarEscaner = !mostrarEscaner;
             if(mostrarEscaner){
                 layoutEscaner.setVisibility(View.VISIBLE);
-                zBarScannerView.setResultHandler(this);
-                zBarScannerView.startCamera();
-                zBarScannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
+
+                setHandlerScanner(this);
+
+//                scannerView.setResultHandler(this);
+//                scannerView.set (1000);
+
+//                scannerView.setAutoFocus(false);
+//                scannerView.startCamera();
+//                scannerView.setAutoFocus(false);
+//                scannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
             }else {
-                zBarScannerView.stopCamera();
+                scannerView.pause();
             layoutEscaner.setVisibility(View.GONE);
             }
         });
@@ -788,7 +829,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     //////////////////////////////////////////// PRUEBA 2
     public void popUpActualizarDetalleTareos(TareoDetalle detalle){
 
-        zBarScannerView.stopCamera();
+        scannerView.pause();
         try{
             if (tareoActual.getIdEstado().equals("PE")) {
                 Dialog popUp = new Dialog(this);
@@ -871,9 +912,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         }catch(Exception ex){
             Funciones.mostrarError(super.getBaseContext(),ex);
         }finally {
-            zBarScannerView.setResultHandler(this);
-            zBarScannerView.startCamera();
-            zBarScannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
+            setHandlerScanner(this);
+//            scannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
         }
     }
 
