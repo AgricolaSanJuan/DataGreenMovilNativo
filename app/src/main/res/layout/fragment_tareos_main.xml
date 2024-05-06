@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llyPrincipalTareos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_principal"
@@ -111,23 +112,23 @@
                         android:id="@+id/c005_rad_Todos_v"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:buttonTint="@color/blancoOficial"
                         android:fontFamily="@font/auxiliar_02"
                         android:text="Todos"
                         android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
-                        android:layout_weight="1"
                         android:textStyle="bold" />
 
                     <RadioButton
                         android:id="@+id/c005_rad_Pendientes_v"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:buttonTint="@color/blancoOficial"
                         android:checked="true"
                         android:fontFamily="@font/auxiliar_02"
                         android:text="Pendiente"
-                        android:layout_weight="1"
                         android:textColor="@color/blancoOficial"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -319,4 +320,17 @@
             android:text="]" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbTransferenciaTareo"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c005_lly_StatusInferior_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/c005_lly_Cuerpo_v"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

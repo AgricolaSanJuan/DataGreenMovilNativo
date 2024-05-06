@@ -5,21 +5,28 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:fitsSystemWindows"> false </item>
+        <item name="android:fitsSystemWindows">false</item>
         <item name="android:itemTextAppearance">@style/MenuItemTextAppearance</item>
 
         <!--        <item name="android:background"> @color/blancoOficial </item>-->
-        <item name="textInputStyle"> @style/textInputLayoutStyle </item>
-        <item name="editTextStyle"> @style/editTextStyle </item>
-        <item name="floatingActionButtonStyle"> @style/floatingActionButtonStyle </item>
-        <item name="spinnerStyle"> @style/spinnerStyle </item>
-<!--        <item name="cardViewStyle"> @style/CardView </item>-->
-        <item name="android:textViewStyle"> @style/textViewStyle </item>
-<!--        <item name="android:background"> @color/azulOscuro </item>-->
-<!--        <item name="buttonStyle"> @style/buttonStyle </item>-->
+        <item name="textInputStyle">@style/textInputLayoutStyle</item>
+        <item name="editTextStyle">@style/editTextStyle</item>
+        <item name="floatingActionButtonStyle">@style/floatingActionButtonStyle</item>
+        <item name="spinnerStyle">@style/spinnerStyle</item>
+        <!--        <item name="cardViewStyle"> @style/CardView </item>-->
+        <item name="android:textViewStyle">@style/textViewStyle</item>
+        <!--        <item name="android:background"> @color/azulOscuro </item>-->
+        <!--        <item name="buttonStyle"> @style/buttonStyle </item>-->
     </style>
 
+    <style name="Theme.DataGreenMovilLight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="Theme.DataGreenMovilLight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DataGreenMovilLight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

@@ -9,8 +9,8 @@ android {
         applicationId "com.example.datagreenmovil"
         minSdk 24
         targetSdk 32
-        versionCode 5
-        versionName "1.6.3"
+        versionCode 8
+        versionName "1.7.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -73,6 +73,8 @@ dependencies {
 //    ZXING CAMERA
     implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
+//    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
 
     testImplementation 'junit:junit:4.12'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'

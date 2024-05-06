@@ -396,9 +396,12 @@ private FragmentTransportesMainBinding binding;
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);
 //      URL DE LA API EN LARAVEL
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-            String ServerIP = sharedPreferences.getString("RED_HOST", "");
-            String url = "http://"+ServerIP+":8000/api/get-users";
-
+            String ServerIP = sharedPreferences.getString("API_SERVER", "");
+            String url = "http://"+ServerIP+"/api/get-users";
+            String mac = String.valueOf(sharedPreferences.getString("MAC","!MAC"));
+            if(mac.length() > 12){
+                mac = mac.substring(0, 12);
+            }
             JSONObject params = new JSONObject();
             try {
                 params.put("unidad", unidad);
@@ -406,6 +409,9 @@ private FragmentTransportesMainBinding binding;
                 params.put("idServicioTransporte",servicioTransporte);
                 params.put("idDispositivo",sharedPreferences.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO"));
                 params.put("idEmpresa", sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+                params.put("userLogin", sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL"));
+                params.put("app", "MiniGreen");
+                params.put("mac", mac);
                 // Agrega otros campos según las expectativas del servidor
             } catch (JSONException e) {
                 e.printStackTrace();

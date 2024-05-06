@@ -533,8 +533,8 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
       RequestQueue requestQueue = Volley.newRequestQueue(this);
 //      URL DE LA API EN LARAVEL
       SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-      String ServerIP = sharedPreferences.getString("RED_HOST", "");
-      String url = "http://"+ServerIP+":8000/api/insertar_servicios_transporte";
+      String ServerIP = sharedPreferences.getString("API_SERVER", "");
+      String url = "http://"+ServerIP+"/api/insertar_servicios_transporte";
 
       JSONObject params = new JSONObject();
       try {

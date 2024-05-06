@@ -2,6 +2,7 @@ package com.example.datagreenmovil;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,13 @@ public class DataGreenApp extends Application {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     boolean darkTheme;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //        INICIAMOS EL SERVICIO QUE NOS INDICA SI LA APLICACION TIENE UNA ACTUALIZACIÓN
+        startService(new Intent(this, DataGreenUpdateService.class));
+    }
 
     public void InicializarTema() {
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);

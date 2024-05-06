@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -71,6 +72,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class TareosMainFragment extends Fragment {
 
     private FragmentTareosMainBinding binding;
@@ -88,10 +91,13 @@ public class TareosMainFragment extends Fragment {
     SharedPreferences.Editor editor;
     ArrayList<String> idsSeleccionados;
     cls_05000100_Item_RecyclerView miAdaptador;
+    SweetAlertDialog refSwalConfirm;
 
     MenuItem itemSync, itemDelete, itemExtornar, itemReport;
     NavigationView nv;
     int anio, mes, dia;
+    private DrawerLayout drawer;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -237,7 +243,7 @@ public class TareosMainFragment extends Fragment {
         TareosActivity tareosActivity = (TareosActivity) getActivity();
         binding.c005FabMainTareosOpcionesV.setOnClickListener(view -> {
             nv = tareosActivity.obtenerNavigationView();
-            DrawerLayout drawer = tareosActivity.obtenerDrawer();
+            drawer = tareosActivity.obtenerDrawer();
             Menu menu = nv.getMenu();
             drawer.openDrawer(GravityCompat.START);
 
@@ -261,11 +267,12 @@ public class TareosMainFragment extends Fragment {
                             "Estás seguro?",
                             "Seguro que desea transferir los tareos seleccionados?")
                             .setConfirmClickListener(sweetAlertDialog -> {
-                                if(transferirTareos()){
-                                    idsSeleccionados = new ArrayList<>();
-                                    drawer.closeDrawer(GravityCompat.START);
-                                    sweetAlertDialog.dismissWithAnimation();
-                                }
+                                refSwalConfirm = sweetAlertDialog;
+                                sweetAlertDialog.dismissWithAnimation();
+                                drawer.closeDrawer(GravityCompat.START);
+                                binding.pbTransferenciaTareo.setVisibility(View.VISIBLE);
+                                binding.c005FabMainTareosOpcionesV.setEnabled(false);
+                                transferirTareos();
                             }).setCancelClickListener(sweetAlertDialog -> {
                                 sweetAlertDialog.dismissWithAnimation();
                             });
@@ -397,14 +404,11 @@ public class TareosMainFragment extends Fragment {
         return true;
     }
 
-    private boolean transferirTareos() {
+    private void transferirTareos() {
+        binding.pbTransferenciaTareo.setVisibility(View.VISIBLE);
+        binding.c005FabMainTareosOpcionesV.setEnabled(false);
 
-        try {
-            SyncDBSQLToSQLite.sincronizarDatosUsuario(ctx);
-            Log.i("PASSWORD SEND!","SE HAN ENVIADO LAS CONTRASEÑAS AL SERVIDOR REMOTO.");
-        }catch (Exception e){
-
-        }
+        try { SyncDBSQLToSQLite.sincronizarDatosUsuario(ctx);} catch (Exception e){}
 
         try{
             String whereIn = "(";
@@ -413,11 +417,12 @@ public class TareosMainFragment extends Fragment {
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);
 //            URL DE LA API EN LARAVEL
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-            String ServerIP = sharedPreferences.getString("RED_HOST", "");
+            String ServerIP = sharedPreferences.getString("API_SERVER", "");
 //            ServerIP = "192.168.30.23";
-            String url = "http://"+ServerIP+":8000/api/tareos/insertar_tareos";
+            String url = "http://"+ServerIP+"/api/tareos/insertar_tareos";
 
             for(int i = 0; i < idsSeleccionados.size(); i++){
+
                 if(i == idsSeleccionados.size() - 1){
                     whereIn += "'"+idsSeleccionados.get(i)+"')";
                     Log.i("CANTIDAD - 1", String.valueOf(i));
@@ -425,8 +430,6 @@ public class TareosMainFragment extends Fragment {
                     whereIn += "'"+idsSeleccionados.get(i)+"',";
                 }
             }
-
-            Log.i("SELECCIONADOS", whereIn);
 
             tareos = objSqlite.obtenerTareos(whereIn);
 
@@ -443,7 +446,7 @@ public class TareosMainFragment extends Fragment {
             tareos.put("app", "MiniGreen");
             tareos.put("parametros", String.valueOf(objSqlite.obtenerTareos(whereIn)));
 
-            Log.i("LISTA TAREOS",tareos.toString());
+            Log.i("TAREOS", tareos.getString("parametros"));
 
 //            PROCESO DE CONSUMO DE API
             JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, tareos,
@@ -452,34 +455,33 @@ public class TareosMainFragment extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 List<String> pSqlite = new ArrayList<String>();
-
                                 JSONArray responses = response.getJSONArray("response");
-
+//                                LE DAMOS LA VUELTA AL ARRAY PARA EMPEZAR POR EL ID MÁXIMO
                                 responses = reverseJSONArray(responses);
                                 for(int i = 0; i < responses.length(); i++){
                                     JSONObject responseAnalytic = responses.getJSONObject(i);
-                                    Log.i("OldId", responseAnalytic.getString("OldId"));
-                                    Log.i("ReplaceId", responseAnalytic.getString("ReplaceId"));
-                                    if(responseAnalytic.getString("OldId") != (responseAnalytic.getString("ReplaceId"))){
-                                        objSqlite.actualizarIdTareo(responseAnalytic.getString("ReplaceId"), responseAnalytic.getString("OldId"));
-                                    }
+//                                    if(!responseAnalytic.getString("OldId").equals(responseAnalytic.getString("ReplaceId"))){
+//                                        objSqlite.actualizarIdTareo(responseAnalytic.getString("ReplaceId"), responseAnalytic.getString("OldId"));
+//                                    }
 
                                     pSqlite.add(responseAnalytic.getString("FechaHoraTransferencia"));
                                     pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
                                     pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
                                     pSqlite.add(responseAnalytic.getString("ReplaceId"));
-                                    objSqlite.doItBaby(objSqlite.obtQuery("MARCAR TAREO COMO TRANSFERIDO") , pSqlite, "WRITE","");
+//                                    objSqlite.doItBaby(objSqlite.obtQuery("MARCAR TAREO COMO TRANSFERIDO") , pSqlite, "WRITE","");
 
                                     pSqlite.clear();
                                     try {
                                         listarRegistros();
                                     } catch (Exception e) {
+                                        Swal.success(ctx, "Error al listar registros:", e.toString(),2000);
                                         throw new RuntimeException(e);
                                     }
+                                    binding.pbTransferenciaTareo.setVisibility(View.INVISIBLE);
+                                    binding.c005FabMainTareosOpcionesV.setEnabled(true);
+                                    Swal.success(ctx, "Correcto!","Se han transferido los tareos seleccionados",2000);
+                                    idsSeleccionados = new ArrayList<>();
                                 }
-                                Swal.success(ctx, "Correcto!","Se han transferido los tareos seleccionados",2000);
-
-//                                sweetAlertDialog.dismissWithAnimation();
                             } catch (Exception e) {
 //                                throw new RuntimeException(e);
                                 Log.e("ERROR 2", e.getMessage());
@@ -489,26 +491,33 @@ public class TareosMainFragment extends Fragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null && error.networkResponse.data != null) {
+                            if (error instanceof TimeoutError) {
+                                Swal.error(ctx,"Ha ocurrido un error al insertar el registro", "No hay conexión al servidor, comunique a soporte técnico.",15000);
+                            }else if (error.networkResponse != null && error.networkResponse.data != null) {
                                 String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                                Log.e("ERROR API 1", errorMessage);
+//                                Log.e("ERROR API 1", errorMessage);
                                 Swal.error(ctx,"Ha ocurrido un error al insertar el registro",errorMessage,15000);
                             } else {
-                                Log.e("ERROR API 2", error.toString());
-                                Swal.error(ctx,"Oops!","Ha ocurrido un error al insertar el registro",15000);
+//                                Log.e("ERROR API 2", error.toString());
+                                Swal.error(ctx,"Oops!",error.toString(),15000);
                             }
                             try {
                                 listarRegistros();
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
+                            binding.pbTransferenciaTareo.setVisibility(View.INVISIBLE);
+                            binding.c005FabMainTareosOpcionesV.setEnabled(true);
+                            idsSeleccionados = new ArrayList<>();
                         }
                     });
-            requestQueue.add(stringRequest);
-        return true;
+//        return true;
+        requestQueue.add(stringRequest);
         }catch (Exception e){
-            Swal.error(ctx, "Error al transferir",e.toString(),15000);
-        return false;
+            Swal.error(ctx, "Error al obtener los tareos para transferir",e.toString(),15000);
+            binding.pbTransferenciaTareo.setVisibility(View.INVISIBLE);
+            binding.c005FabMainTareosOpcionesV.setEnabled(false);
+//        return false;
         }
     }
     private static JSONArray reverseJSONArray(JSONArray jsonArray) throws JSONException {

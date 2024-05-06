@@ -10,8 +10,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -137,6 +139,29 @@ public class cls_03000000_Login extends AppCompatActivity {
         c003_spi_Empresa = (Spinner) findViewById(R.id.c003_spi_Empresa_v);
 
         cbxRecordarCredenciales = findViewById(R.id.cbxRecordarCredenciales);
+
+        etx_Password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_DONE){
+                    if(cbxRecordarCredenciales.isChecked()){
+                        editor.putBoolean("RECORDAR_CREDENCIALES", true).apply();
+                        editor.putString("USER_LOGIN", etx_Usuario.getText().toString()).apply();
+                        editor.putString("PASSWORD_LOGIN",Funciones.generarMD5(etx_Usuario.getText().toString() + etx_Password.getText().toString())).apply();
+                    }else{
+                        editor.putBoolean("RECORDAR_CREDENCIALES", false).apply();
+                        editor.remove("USER_LOGIN").apply();
+                        editor.remove("PASSWORD_LOGIN").apply();
+                    }
+                    try {
+                        intentaLogin();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                return false;
+            }
+        });
     }
     public void mostrarMenuUsuario(View v) {
         PopupMenu popup = new PopupMenu(this, v);

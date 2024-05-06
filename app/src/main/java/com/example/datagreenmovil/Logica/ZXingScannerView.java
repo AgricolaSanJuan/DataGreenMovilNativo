@@ -10,6 +10,8 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class ZXingScannerView extends DecoratedBarcodeView {
         formats.add(BarcodeFormat.QR_CODE);
         formats.add(BarcodeFormat.CODE_128);
 
+        setCameraDistance(0.5f);
+
         setDecoderFactory(new DefaultDecoderFactory(formats));
     }
 
@@ -37,16 +41,22 @@ public class ZXingScannerView extends DecoratedBarcodeView {
 
             @Override
             public void barcodeResult(BarcodeResult result) {
-                resultListener.onScanResult(result.getResult());
+                try {
+                    resultListener.onScanResult(result.getResult());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             @Override
-            public void possibleResultPoints(List resultPoints) {
+            public void possibleResultPoints(List  resultPoints) {
             }
         });
     }
 
     public interface OnScanResultListener {
-        void onScanResult(Result result);
+        void onScanResult(Result result) throws Exception;
     }
 }

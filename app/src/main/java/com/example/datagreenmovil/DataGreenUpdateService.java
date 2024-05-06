@@ -21,12 +21,16 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.FileProvider;
 
 import com.example.datagreenmovil.Logica.Swal;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -40,11 +44,12 @@ import java.net.URL;
 
 public class DataGreenUpdateService extends Service {
     Context ctx;
+    Snackbar snackbar;
     public class DownloadUpdate extends AsyncTask<String, Void, Void> {
         File outputFile;
         @Override
         protected Void doInBackground(String... params) {
-            String fileUrl = params[0]; // URL del archivo que deseas descargar
+            String fileUrl = params[0]; // URL completa del archivo que deseas descargar
             String fileName = params[1]; // Nombre del archivo en el dispositivo
 
             try {
@@ -64,7 +69,7 @@ public class DataGreenUpdateService extends Service {
                     // Flujo de salida para escribir el archivo
                     FileOutputStream outputStream = new FileOutputStream(outputFile);
 
-                    byte[] buffer = new byte[1024];
+                    byte[] buffer = new byte[4096];
                     int bytesRead;
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         outputStream.write(buffer, 0, bytesRead);
@@ -78,6 +83,7 @@ public class DataGreenUpdateService extends Service {
                     Log.e("HTTP", "Error en la solicitud. Código de respuesta: " + responseCode);
                 }
             } catch (IOException e) {
+                Log.e("ERROR AL DESCARGAR", e.toString());
                 e.printStackTrace();
             }
 
@@ -86,36 +92,41 @@ public class DataGreenUpdateService extends Service {
 
         @Override
         protected void onPostExecute(Void unused) {
+            // Muestra un Toast para indicar que la descarga ha finalizado
+            Toast.makeText(ctx, "Descarga completada", Toast.LENGTH_SHORT).show();
 
-//            Toast.makeText(DataGreenUpdateService.this,  Toast.LENGTH_SHORT).show();
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                NotificationChannel channel = new NotificationChannel("mi_canal_id", "Mi Canal", NotificationManager.IMPORTANCE_DEFAULT);
-//                NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//                notificationManager.createNotificationChannel(channel);
-//            }
-//
-//            // Define la intención (intent) para abrir el archivo después de la descarga
-//            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            Uri uri = Uri.fromFile(new File(outputFile.toURI())); // Reemplaza "ruta_del_archivo" con la ubicación de tu archivo descargado
-//            intent.setDataAndType(uri, "application/pdf"); // Cambia el tipo MIME según el tipo de archivo
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//            PendingIntent pendingIntent = PendingIntent.getActivity(DataGreenUpdateService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//            // Crea la notificación de descarga
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(DataGreenUpdateService.this, "mi_canal_id")
-//                    .setContentTitle("Descarga completada")
-//                    .setContentText("Haz clic para abrir el archivo descargado")
-//                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                    .setContentIntent(pendingIntent)
-//                    .setAutoCancel(true); // Cierra la notificación después de hacer clic en ella
-//
-//            // Muestra la notificación
-//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(DataGreenUpdateService.this);
-//            notificationManager.notify(1, builder.build()); // Puedes usar un ID diferente para cada notificación
-            super.onPostExecute(unused);
+            // Comprueba si el dispositivo está ejecutando Android Oreo (API 26) o superior
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Crea un canal de notificación para Android Oreo y versiones superiores
+                NotificationChannel channel = new NotificationChannel("mi_canal_id", "Mi Canal", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            }
+
+            // Define la intención (intent) para abrir el archivo después de la descarga
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = FileProvider.getUriForFile(ctx, "com.example.datagreenmovil.fileprovider", outputFile);
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+
+            // Asegúrate de que el PendingIntent tenga permisos de lectura para la URI del archivo
+            PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            ctx.grantUriPermission("com.android.packageinstaller", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            // Crea la notificación de descarga utilizando NotificationCompat.Builder
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, "mini_green_update")
+                    .setContentTitle("Descarga completada")
+                    .setContentText("Busque el archivo en la carpeta de descargas y ejecutelo.")
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true); // Cierra la notificación después de hacer clic en ella
+
+            // Finalmente, construye y muestra la notificación
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
+            notificationManager.notify(1, builder.build()); // Puedes usar un ID diferente para cada notificación
         }
+
+
     }
     private class ApiRequestTask extends AsyncTask<String, Void, String> {
 
@@ -179,16 +190,17 @@ public class DataGreenUpdateService extends Service {
 
                 if(!appVersion.equals(result) && ctx != null){
                     SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-                    String ServerIP = sharedPreferences.getString("RED_HOST", "");
-                    String fileUrl = "http://"+ServerIP+":8000/api/download-file";
-                    String fileName = "DataGreen"+result+".apk";
-                    new DownloadUpdate().execute(fileUrl,fileName);
-                    Toast.makeText(DataGreenUpdateService.this, "Se ha descargado una version disponible!", Toast.LENGTH_SHORT).show();
+                    String ServerIP = sharedPreferences.getString("API_SERVER", "");
+                    String fileUrl = "http://192.168.30.99:8090/DataGreenMovil/MiniGreen"+result+".apk";
+                    String fileName = "MiniGreen"+result+".apk";
+                    new DownloadUpdate().execute(fileUrl, fileName);
 
+                    Toast.makeText(DataGreenUpdateService.this, "Se está descargando una versión disponible, por favor espere!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(ctx, "No hay nueva versión disponible.", Toast.LENGTH_SHORT).show();
                 }
-
             } else {
-//                Toast.makeText(DataGreenUpdateService.this, "Error en la solicitud de descarga.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DataGreenUpdateService.this, "Error en la solicitud de descarga.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -232,8 +244,8 @@ public class DataGreenUpdateService extends Service {
             if (isConnectedToInternet()) {
                 try {
                     SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-                    String ServerIP = sharedPreferences.getString("RED_HOST", "");
-                    new ApiRequestTask().execute("http://"+ServerIP+":8000/api/get-available-update");
+                    String ServerIP = sharedPreferences.getString("API_SERVER", "");
+                    new ApiRequestTask().execute("http://"+ServerIP+"/api/minigreen/validar_version");
                     // Mover la obtención de la versión de la aplicación aquí
                     PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                     String versionName = packageInfo.versionName;

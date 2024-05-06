@@ -54,6 +54,7 @@ import com.example.datagreenmovil.Entidades.PopUpObservacion;
 import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
+import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.Logica.ZXingScannerView;
@@ -172,6 +173,20 @@ public class cls_05010000_Edicion extends AppCompatActivity
         scannerView.resume();
         scannerView.setResultHandler(result -> {
             Context ctx = this;
+
+//            ANALIZAMOS LA CADENA DE TEXTO PARA PODER DESENCRIPTARLA SI FUERA NECESARIO
+            String resultadoDesencriptado = "";
+            if(result.getText().length() == 10 && !(String.valueOf(result.getText().charAt(0)).equals("S"))) {
+                try {
+                    resultadoDesencriptado = CryptorSJ.desencriptarCadena(result.getText());
+                } catch (Exception e) {
+                    Swal.warning(ctx, "Cuidado", "La cadena no cumple con el formato de San Juan.", 2000);
+                }
+            }else{
+                resultadoDesencriptado = result.getText();
+            }
+
+
             CountDownTimer countDownTimer = new CountDownTimer(1500, 1500) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -185,8 +200,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
 
                 }
             };
-            resultado(result.getText());
-//            Swal.info(context, "asd","asdasdasd", 500);
+            resultado(resultadoDesencriptado);
             countDownTimer.start();
         });
     }
@@ -271,6 +285,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
         ){
 
             c007_atv_NroDocumento.setText(barcodeValue.replaceAll("[^0-9]", ""));
+//            Swal.info(this, "ID", barcodeValue.replaceAll("[^0-9]", ""), 5000);
 
             try {
                 obtenerDataTrabajador(hmTablas.get("PERSONAS"));
@@ -458,11 +473,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
             }else{
                 scannerView.setTorchOff();
             }
-        });
-
-        scannerView.setOnClickListener(view -> {
-//            scannerView.setAutoFocus(false);
-            Swal.info(this, "tocao", "fuiste manito", 2000);
         });
 
         fabMostrarEscaner.setOnClickListener(view -> {
@@ -756,7 +766,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
         if (d.getIdActividad().length()==0) return false;
         if (d.getIdLabor().length()==0) return false;
         if (d.getIdConsumidor().length()==0) return false;
-        return d.getHoras() > 0;
+        return d.getHoras() >= 0;
     }
 
     public void mostrarValoresDocumentoActual() {
