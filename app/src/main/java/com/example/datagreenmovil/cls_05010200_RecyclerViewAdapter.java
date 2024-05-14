@@ -26,8 +26,12 @@ import com.example.datagreenmovil.Logica.Swal;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 //ESTE ES EL ADAPTADOR QUE SE USA REALMENTE, EL OTRO DEBERIA ELIMINARSE
 public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_05010200_RecyclerViewAdapter.MyViewHolder> {
@@ -101,6 +105,32 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         holder.c010_txv_Rdtos.setText(String.valueOf(td.getRdtos()));
         holder.c010_txv_Observacion.setText(td.getObservacion());
         holder.c010_lly_CultivoVariedad.setVisibility(View.GONE);
+        holder.tvIngreso.setText(td.getIngreso());
+        holder.tvSalida.setText(td.getSalida());
+
+//        SETEAR LAS HORAS SI ENCUENTRA AMBAS
+        if(!td.getIngreso().equals("") && !td.getSalida().equals("")){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                // Convertir las cadenas a objetos Date
+                Date date1 = sdf.parse(td.getIngreso());
+                Date date2 = sdf.parse(td.getSalida());
+
+                // Calcular la diferencia en milisegundos
+                long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+
+                // Convertir la diferencia de milisegundos a horas
+                long diferenciaHoras = TimeUnit.MILLISECONDS.toHours(diferenciaMilisegundos);
+
+                // Mostrar la diferencia de horas
+                System.out.println("La diferencia de horas es: " + diferenciaHoras);
+                holder.c010_txv_Horas.setText(String.valueOf(diferenciaHoras));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        SETEAR LAS HORAS SI ENCUENTRA AMBAS
 
         holder.c010_lly_Principal.setOnLongClickListener(view -> {
             holder.selected = !holder.selected;
@@ -187,6 +217,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         TextView c010_txv_Item, c010_txv_Dni, c010_txv_Nombres, c010_txv_IdCultivo, c010_txv_Cultivo,
                 c010_txv_IdVariedad, c010_txv_Variedad, c010_txv_IdConsumidor, c010_txv_Consumidor,
                 c010_txv_IdActividad, c010_txv_Actividad, c010_txv_IdLabor, c010_txv_Labor, c010_txv_Horas, c010_txv_Rdtos, c010_txv_Observacion ;
+        TextView tvIngreso, tvSalida;
         ConstraintLayout c010_lly_Principal;
         LinearLayout c010_lly_CultivoVariedad;
 
@@ -211,6 +242,8 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
             c010_lly_CultivoVariedad = (LinearLayout) itemView.findViewById(R.id.c010_lly_CultivoVariedad_v);
             c010_txv_Observacion = (TextView)  itemView.findViewById(R.id.c010_txv_Observacion_v);
             imageCheck = itemView.findViewById(R.id.imageCheck);
+            tvIngreso = itemView.findViewById(R.id.tvIngreso);
+            tvSalida = itemView.findViewById(R.id.tvSalida);
         }
     }
 }

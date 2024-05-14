@@ -569,7 +569,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1px"
                     android:gravity="center_vertical">
 
                     <AutoCompleteTextView
@@ -604,6 +604,27 @@
                     app:layout_constraintTop_toBottomOf="@+id/c007_lly_DniNombre_v">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/c007_fab_Agregar_v"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/c007_fab_Agregar_v">
+
+                        <Switch
+                            android:id="@+id/swTipoTareo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Ingreso"
+                            android:textOff="Ingreso"
+                            android:textOn="Salida"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -613,6 +634,7 @@
                         android:orientation="horizontal"
                         android:paddingStart="7dp"
                         android:paddingEnd="7dp"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -653,6 +675,7 @@
                         android:orientation="horizontal"
                         android:paddingStart="7dp"
                         android:paddingEnd="7dp"
+                        android:visibility="gone"
                         app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
                         app:layout_constraintTop_toTopOf="@+id/constraintLayout2">
 

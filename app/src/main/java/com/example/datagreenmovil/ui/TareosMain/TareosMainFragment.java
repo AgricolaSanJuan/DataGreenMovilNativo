@@ -434,9 +434,10 @@ public class TareosMainFragment extends Fragment {
             tareos = objSqlite.obtenerTareos(whereIn);
 
             String mac = String.valueOf(sharedPreferences.getString("MAC","!MAC"));
-            if(mac.length() > 12){
-                mac = mac.substring(0, 12);
-            }
+////            ESTO TIENE QUE ENVIARSE COMPLETO SI NO SE CAEN LOS CORRELATIVOS
+//            if(mac.length() > 12){
+//                mac = mac.substring(0, 12);
+//            }
 
             tareos.put("descripcion", "Transferencia de tareos");
             tareos.put("nro_telefonico", sharedPreferences.getString("NRO_TELEFONICO","!NRO_TELEFONICO"));
@@ -460,9 +461,9 @@ public class TareosMainFragment extends Fragment {
                                 responses = reverseJSONArray(responses);
                                 for(int i = 0; i < responses.length(); i++){
                                     JSONObject responseAnalytic = responses.getJSONObject(i);
-//                                    if(!responseAnalytic.getString("OldId").equals(responseAnalytic.getString("ReplaceId"))){
-//                                        objSqlite.actualizarIdTareo(responseAnalytic.getString("ReplaceId"), responseAnalytic.getString("OldId"));
-//                                    }
+                                    if(!responseAnalytic.getString("OldId").equals(responseAnalytic.getString("ReplaceId"))){
+                                        objSqlite.actualizarIdTareo(responseAnalytic.getString("ReplaceId"), responseAnalytic.getString("OldId"));
+                                    }
 
                                     pSqlite.add(responseAnalytic.getString("FechaHoraTransferencia"));
                                     pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
@@ -718,7 +719,6 @@ public class TareosMainFragment extends Fragment {
             Log.i("PARAMS",p.toString());
             c_Registros = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_Tareos X ESTADO Y RANGO FECHA"), p, "READ");
             if (c_Registros.moveToFirst()){
-
                 miAdaptador = new cls_05000100_Item_RecyclerView(ctx, c_Registros, objConfLocal, al_RegistrosSeleccionados);
                 binding.c005RcvRecicladorV.setAdapter(miAdaptador);
                 binding.c005RcvRecicladorV.setLayoutManager(new LinearLayoutManager(ctx));
@@ -746,7 +746,7 @@ public class TareosMainFragment extends Fragment {
         ConfiguracionLocal objConfLocal = null;
         Intent nuevaActividad = new Intent(ctx, cls_05010000_Edicion.class);
         nuevaActividad.putExtra("ConfiguracionLocal",objConfLocal);
-        nuevaActividad.putExtra("IdDocuxentoActual",id);
+        nuevaActividad.putExtra("IdDocumentoActual",id);
         startActivity(nuevaActividad);
     }
 }

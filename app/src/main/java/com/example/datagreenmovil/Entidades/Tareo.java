@@ -67,6 +67,10 @@ public class Tareo {
                 p.add(sharedPreferences.getString("MAC","!MAC"));
                 p.add(sharedPreferences.getString("IMEI","IMEI"));
                 this.id = Funciones.siguienteCorrelativo(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER ULTIMO trx_Tareos"),p,"READ",""),'A');
+// //                NOS ASEGURAMOS QUE EL ID CONTENGA EL ID DE DISPOSITIVO
+//                if(this.id.length() == 9){
+//                    this.id = sharedPreferences.getString("ID_DISPOSITIVO", "!ID_DISPOSITIVO") + this.id;
+//                }
                 this.idUsuario=sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
                 this.fecha= LocalDate.now();
                 this.idTurno="";
@@ -96,7 +100,8 @@ public class Tareo {
                 this.observaciones =c.getString(13);
                 this.detalle=new ArrayList<>();
 
-                c = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_Tareos_Detalle X ID") ,p,"READ");
+                String query = objSqlite.obtQuery("OBTENER trx_Tareos_Detalle X ID");
+                c = objSqlite.doItBaby(query ,p,"READ");
                 //c.moveToFirst();
                 while (c.moveToNext()){
                     this.detalle.add(new TareoDetalle(c,c.getPosition()));
