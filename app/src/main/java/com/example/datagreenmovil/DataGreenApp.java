@@ -16,11 +16,28 @@ public class DataGreenApp extends Application {
     SharedPreferences.Editor editor;
     boolean darkTheme;
 
+    public static boolean isPassPassed() {
+        return passPassed;
+    }
+
+    public void setPassPassed(boolean passPassed) {
+        this.passPassed = passPassed;
+    }
+
+    public static boolean passPassed = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
         //        INICIAMOS EL SERVICIO QUE NOS INDICA SI LA APLICACION TIENE UNA ACTUALIZACIÓN
         startService(new Intent(this, DataGreenUpdateService.class));
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        // Detener el servicio cuando la aplicación se termina
+        stopService(new Intent(this, DataGreenUpdateService.class));
     }
 
     public void InicializarTema() {

@@ -29,6 +29,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,9 +48,11 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.Tareo;
+import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
+import com.example.datagreenmovil.Scanner.ui.ScannerViewModel;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.cls_05000100_Item_RecyclerView;
@@ -111,6 +115,7 @@ public class TareosMainFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -119,6 +124,7 @@ public class TareosMainFragment extends Fragment {
             Menu menu = nv.getMenu();
             habilitarItems(menu,false);
         }
+
         try {
             objSqlite.ActualizarDataPendiente(objConfLocal);
             Funciones.mostrarEstatusGeneral(ctx,
@@ -135,6 +141,9 @@ public class TareosMainFragment extends Fragment {
             Funciones.mostrarError(ctx,ex);
         }
     }
+
+    private ScannerViewModel scannerViewModel;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -143,7 +152,6 @@ public class TareosMainFragment extends Fragment {
 
         binding = FragmentTareosMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
 
         objSql = new ConexionBD(ctx);
         objSqlite = new ConexionSqlite(ctx,objConfLocal);
@@ -162,6 +170,7 @@ public class TareosMainFragment extends Fragment {
                 binding.c005TxvPushVersionDataBaseV,
                 binding.c005TxvPushIdentificadorV
         );
+
         try {
             listarRegistros();
         } catch (Exception e) {
@@ -177,6 +186,7 @@ public class TareosMainFragment extends Fragment {
             PopUpCalendario d = new PopUpCalendario(ctx, binding.c005TxvDesdeFechaV);
             d.show();
         });
+
         binding.c005TxvDesdeFechaV.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -329,6 +339,9 @@ public class TareosMainFragment extends Fragment {
             }
 //            }
         });
+
+
+
         binding.c005FabMainTareosNuevoTareoV.setOnClickListener(view -> {
             abrirDocumento(null);
         });
@@ -422,7 +435,6 @@ public class TareosMainFragment extends Fragment {
             String url = "http://"+ServerIP+"/api/tareos/insertar_tareos";
 
             for(int i = 0; i < idsSeleccionados.size(); i++){
-
                 if(i == idsSeleccionados.size() - 1){
                     whereIn += "'"+idsSeleccionados.get(i)+"')";
                     Log.i("CANTIDAD - 1", String.valueOf(i));
@@ -434,6 +446,7 @@ public class TareosMainFragment extends Fragment {
             tareos = objSqlite.obtenerTareos(whereIn);
 
             String mac = String.valueOf(sharedPreferences.getString("MAC","!MAC"));
+            String imei = String.valueOf(sharedPreferences.getString("IMEI","!IMEI"));
 ////            ESTO TIENE QUE ENVIARSE COMPLETO SI NO SE CAEN LOS CORRELATIVOS
 //            if(mac.length() > 12){
 //                mac = mac.substring(0, 12);
@@ -443,11 +456,12 @@ public class TareosMainFragment extends Fragment {
             tareos.put("nro_telefonico", sharedPreferences.getString("NRO_TELEFONICO","!NRO_TELEFONICO"));
             tareos.put("propietario", sharedPreferences.getString("PROPIETARIO","!PROPIETARIO"));
             tareos.put("mac", mac);
+            tareos.put("imei", imei);
             tareos.put("user_login", sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL"));
             tareos.put("app", "MiniGreen");
             tareos.put("parametros", String.valueOf(objSqlite.obtenerTareos(whereIn)));
 
-            Log.i("TAREOS", tareos.getString("parametros"));
+            Log.i("TAREOS", tareos.toString());
 
 //            PROCESO DE CONSUMO DE API
             JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, tareos,
@@ -460,28 +474,53 @@ public class TareosMainFragment extends Fragment {
 //                                LE DAMOS LA VUELTA AL ARRAY PARA EMPEZAR POR EL ID MÁXIMO
                                 responses = reverseJSONArray(responses);
                                 for(int i = 0; i < responses.length(); i++){
+
                                     JSONObject responseAnalytic = responses.getJSONObject(i);
-                                    if(!responseAnalytic.getString("OldId").equals(responseAnalytic.getString("ReplaceId"))){
-                                        objSqlite.actualizarIdTareo(responseAnalytic.getString("ReplaceId"), responseAnalytic.getString("OldId"));
+                                    System.out.println(responseAnalytic);
+
+                                    if(responseAnalytic.getString("message") != null && responseAnalytic.getString("message").equals("Se marcarán los tareos como transferidos por ya existir en la tabla")){
+                                        pSqlite.add(responseAnalytic.getString("FechaHoraTransferencia"));
+                                        pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
+                                        pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+                                        pSqlite.add(responseAnalytic.getString("ReplaceId"));
+                                        objSqlite.ActualizarCorrelativos(objConfLocal,"trx_Tareos",responseAnalytic.getString("ReplaceId")); //PROBAR
+                                        objSqlite.doItBaby(objSqlite.obtQuery("MARCAR TAREO COMO TRANSFERIDO") , pSqlite, "WRITE","");
+                                        pSqlite.clear();
+                                        try {
+                                            listarRegistros();
+                                        } catch (Exception e) {
+                                            Swal.success(ctx, "Error al listar registros:", e.toString(),2000);
+                                            throw new RuntimeException(e);
+                                        }
+                                        binding.pbTransferenciaTareo.setVisibility(View.INVISIBLE);
+                                        binding.c005FabMainTareosOpcionesV.setEnabled(true);
+                                        Swal.success(ctx, "Correcto!","Se han marcado los tareos como transferidos.",2000);
+                                        idsSeleccionados = new ArrayList<>();
+                                    }else{
+                                        if(!responseAnalytic.getString("OldId").equals(responseAnalytic.getString("ReplaceId"))){
+                                            objSqlite.actualizarIdTareo(responseAnalytic.getString("ReplaceId"), responseAnalytic.getString("OldId"));
+//                                            break;
+                                        }
+
+                                        pSqlite.add(responseAnalytic.getString("FechaHoraTransferencia"));
+                                        pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
+                                        pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+                                        pSqlite.add(responseAnalytic.getString("ReplaceId"));
+                                        objSqlite.doItBaby(objSqlite.obtQuery("MARCAR TAREO COMO TRANSFERIDO") , pSqlite, "WRITE","");
+                                        objSqlite.ActualizarCorrelativos(objConfLocal,"trx_Tareos",responseAnalytic.getString("ReplaceId")); //PROBAR
+                                        pSqlite.clear();
+                                        try {
+                                            listarRegistros();
+                                        } catch (Exception e) {
+                                            Swal.success(ctx, "Error al listar registros:", e.toString(),2000);
+                                            throw new RuntimeException(e);
+                                        }
+                                        binding.pbTransferenciaTareo.setVisibility(View.INVISIBLE);
+                                        binding.c005FabMainTareosOpcionesV.setEnabled(true);
+                                        Swal.success(ctx, "Correcto!","Se han transferido los tareos seleccionados",2000);
+                                        idsSeleccionados = new ArrayList<>();
                                     }
 
-                                    pSqlite.add(responseAnalytic.getString("FechaHoraTransferencia"));
-                                    pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
-                                    pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
-                                    pSqlite.add(responseAnalytic.getString("ReplaceId"));
-//                                    objSqlite.doItBaby(objSqlite.obtQuery("MARCAR TAREO COMO TRANSFERIDO") , pSqlite, "WRITE","");
-
-                                    pSqlite.clear();
-                                    try {
-                                        listarRegistros();
-                                    } catch (Exception e) {
-                                        Swal.success(ctx, "Error al listar registros:", e.toString(),2000);
-                                        throw new RuntimeException(e);
-                                    }
-                                    binding.pbTransferenciaTareo.setVisibility(View.INVISIBLE);
-                                    binding.c005FabMainTareosOpcionesV.setEnabled(true);
-                                    Swal.success(ctx, "Correcto!","Se han transferido los tareos seleccionados",2000);
-                                    idsSeleccionados = new ArrayList<>();
                                 }
                             } catch (Exception e) {
 //                                throw new RuntimeException(e);

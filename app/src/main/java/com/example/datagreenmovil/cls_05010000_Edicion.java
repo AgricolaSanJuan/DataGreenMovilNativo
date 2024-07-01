@@ -36,18 +36,25 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -64,6 +71,7 @@ import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.Logica.ZXingScannerView;
+import com.example.datagreenmovil.Scanner.ui.ScannerViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.Result;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -75,6 +83,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
 
     private ScaleGestureDetector scaleGestureDetector;
     private ZXingScannerView scannerView;
+    private ScannerViewModel scannerViewModel;
 
     static ConexionSqlite objSqlite;
     ConexionBD objSql;
@@ -117,6 +126,8 @@ public class cls_05010000_Edicion extends AppCompatActivity
     public Switch switchTipoMarcacion;
 
     int cantidadInicial, cantidadFinal;
+    public ConstraintLayout layoutHoras, layoutRendimientos;
+    private FloatingActionButton fabAgregar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +143,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
 
 
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
+
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         scaleGestureDetector = new ScaleGestureDetector(this, this);
         database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
@@ -144,14 +156,43 @@ public class cls_05010000_Edicion extends AppCompatActivity
             objSqlite = new ConexionSqlite(this,objConfLocal);
             referenciarControles();
 
+            boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
             switchTipoMarcacion = findViewById(R.id.swTipoTareo);
-            switchTipoMarcacion.setOnCheckedChangeListener((compoundButton, b) -> {
-                if(!b){
-                    switchTipoMarcacion.setText("INGRESO");
-                }else{
-                    switchTipoMarcacion.setText("SALIDA");
-                }
-            });
+            layoutHoras = findViewById(R.id.layoutHoras);
+            layoutRendimientos = findViewById(R.id.layoutRendimientos);
+            fabAgregar = findViewById(R.id.c007_fab_Agregar_v);
+
+            if(!!modoPacking){
+                switchTipoMarcacion.setVisibility(View.VISIBLE);
+                layoutHoras.setVisibility(View.GONE);
+                layoutRendimientos.setVisibility(View.GONE);
+                fabAgregar.setVisibility(View.INVISIBLE);
+                c007_atv_NombreTrabajador.setVisibility(View.INVISIBLE);
+                c007_atv_NombreTrabajador.setHeight(1);
+            }else{
+                // Definir LayoutParams con wrap_content para ancho y alto
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                switchTipoMarcacion.setVisibility(View.GONE);
+                layoutHoras.setVisibility(View.VISIBLE);
+                layoutRendimientos.setVisibility(View.VISIBLE);
+                c007_atv_NombreTrabajador.setLayoutParams(params);
+                c007_atv_NombreTrabajador.setVisibility(View.VISIBLE);
+                fabAgregar.setVisibility(View.VISIBLE);
+            }
+
+            if(switchTipoMarcacion != null){
+                switchTipoMarcacion.setOnCheckedChangeListener((compoundButton, b) -> {
+                    if(!b){
+                        switchTipoMarcacion.setText("INGRESO");
+                    }else{
+                        switchTipoMarcacion.setText("SALIDA");
+                    }
+                });
+            }
+
 //            }
             c007_txv_Fecha.setText(Funciones.malograrFecha(s_Fecha));
 //            setearControles();
@@ -297,7 +338,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
             String fechaHoraFormateada = sdf.format(calendar.getTime());
             Cursor cVerificarSinSalida;
             try {
-                if(!switchTipoMarcacion.isChecked()){
+                if(switchTipoMarcacion != null && !switchTipoMarcacion.isChecked()){
                     String[] selectionArgs = {tareoActual.getId(), c007_atv_NroDocumento.getText().toString()};
                     cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE td inner join trx_tareos t WHERE td.Idtareo = ? AND td.Dni = ? AND td.salida = '';", selectionArgs);
                     if(cVerificarSinSalida.getCount() > 0) {
@@ -308,28 +349,32 @@ public class cls_05010000_Edicion extends AppCompatActivity
                         agregarDetalle("lector");
                     }
                 } else {
+//                    ESTO SOLO SE EJECUTARÁ CUANDO SE MARQUE LA SALIDA, MAS NO CUANDO SE CARGUEN LOS DETALLES,
+//                    Y ES DONDE SE DEBE HACER EL CÁLCULO PARA LA CANTIDAD DE HORAS DE ACUERDO A LA HORA DE INGRESO Y A LA HORA DE SALIDA
+//
 //                    OBTENEMOS EL ULTIMO TAREO QUE NO TENGA UNA FECHA DE SALIDA
-//                    detalleActual.setIngreso("");
                     String[] selectionArgs = {tareoActual.getId(), c007_atv_NroDocumento.getText().toString()};
                     cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE WHERE Idtareo = ? AND Dni = ? AND salida = ''", selectionArgs);
                     if(cVerificarSinSalida.getCount() > 0){
                         cVerificarSinSalida.moveToFirst();
                         int itemIndex;
-//                        idTareoIndex = cVerificarSinSalida.getColumnIndex("Idtareo");
-//                        int idTareoIndex, dniIndex, itemIndex;
-//                        dniIndex = cVerificarSinSalida.getColumnIndex("Dni");
                         itemIndex = cVerificarSinSalida.getColumnIndex("Item");
-
-//                        String idtareoU, dniU, itemIndexU;
                         String itemIndexU;
-//                        idtareoU = cVerificarSinSalida.getString(idTareoIndex);
-//                        dniU = cVerificarSinSalida.getString(dniIndex);
                         itemIndexU = cVerificarSinSalida.getString(itemIndex);
 
-    //                    String[] selectionArgsUpdate = {fechaHoraFormateada, , , };
-//                        String query = "UPDATE trx_tareos_detalle SET salida = '"+fechaHoraFormateada+"' WHERE IdTareo = '"+idtareoU+"' AND Item = '"+itemIndexU+"' AND Dni = '"+dniU+"'";
-//                        database.execSQL(query);
-                        tareoActual.getDetalle().get(Integer.parseInt(itemIndexU) - 1).setSalida(fechaHoraFormateada);
+                        TareoDetalle tareoDetalle = tareoActual.getDetalle().get(Integer.parseInt(itemIndexU) - 1);
+                        Date date1 = sdf.parse(tareoDetalle.getIngreso());
+                        Date date2 = sdf.parse(fechaHoraFormateada);
+
+                        // Calcular la diferencia en milisegundos
+                        long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+                        // Convertir la diferencia de milisegundos a horas
+                        long diferenciaHoras = TimeUnit.MILLISECONDS.toHours(diferenciaMilisegundos);
+                        tareoDetalle.setSalida(fechaHoraFormateada);
+                        double horas = diferenciaMilisegundos / 3600000.00;
+                        BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
+                        Log.i("DIFERENCIAFINA", String.valueOf(horasRedondeadas.doubleValue()));
+                        tareoDetalle.setHoras(horasRedondeadas.doubleValue());
                         mostrarValoresDocumentoActual();
                     }else {
                         Swal.warning(this, "Cuidado", "No se encuentra un tareo de ingreso de este trabajador, pruebe a guardar el tareo y volver a intentar.", 2000);
@@ -457,7 +502,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
 
         setearAutoCompleteTextViewNroDocumento(hmTablas.get("PERSONAS"));
         setearAutoCompleteTextViewNombreTrabajador(hmTablas.get("PERSONAS"));
-//        setearSelectorFecha();
     }
 
     private void referenciarControles() {
@@ -520,6 +564,35 @@ public class cls_05010000_Edicion extends AppCompatActivity
             }else{
                 scannerView.setTorchOff();
             }
+        });
+
+//        NUEVO MÉTODO PARA LECTURAR FOTOCHECKS
+        scannerViewModel = new ViewModelProvider(this).get(ScannerViewModel.class);
+
+        scannerViewModel.getScannedCode().observe(this, code -> {
+            // Maneja el código escaneado aquí
+            if (code != null) {
+                // Hacer algo con el código escaneado
+                try {
+                    String dni = CryptorSJ.desencriptarCadena(code);
+//                    evaluarMarca(dni);
+                    Toast.makeText(this, "Código escaneado: " + dni, Toast.LENGTH_LONG).show();
+                    scannerViewModel.setScannedCode(null);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
+
+        fabMostrarEscaner.setOnLongClickListener(view -> {
+//            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_tareos);
+//            navController.navigate(R.id.nav_tareos_scanner);
+            Swal.scanDialog(this, (resultado, sweetAlertDialog)->{
+                Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
+            });
+
+            return false;
         });
 
         fabMostrarEscaner.setOnClickListener(view -> {
@@ -637,6 +710,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     }
     private void agregarDetalle(String tipoEntrada) throws Exception {
 
+                boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
 //            if (objSqlite.verificarExistenciaMarca(this.detalleActual.getDni(), validarMarca)) {
                 // Obtener la fecha y hora actual
                 Calendar calendar = Calendar.getInstance();
@@ -649,7 +723,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     //                CHECK ES SALIDA, UNCHECK ENTRADA
 //            SI ES ENTRADA, QUE REALICE EL NUEVO REGISTRO, SI NO, QUE ACTUALICE LA SALIDA
 
-                    boolean validarMarca = sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", false);
+                    boolean validarMarca = sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", true);
                     boolean marcaExistente = false;
 //        VALIDACION DE EXISTENCIA
                     for (TareoDetalle td : tareoActual.getDetalle()) {
@@ -669,7 +743,12 @@ public class cls_05010000_Edicion extends AppCompatActivity
                         detalleActual.setIdEmpresa(tareoActual.getIdEmpresa());
                         detalleActual.setIdTareo(tareoActual.getId());
                         detalleActual.setItem(tareoActual.getDetalle().size() + 1);
-                        detalleActual.setHoras(Double.valueOf("0"));
+//                        EVALUAMOS SI ESTÁ EN MODO PACKING O NO
+                        if(!!modoPacking){
+                            detalleActual.setHoras(Double.valueOf("0"));
+                        }else{
+                            detalleActual.setHoras(Double.parseDouble(c007_etx_Horas.getText().length() > 0 ? c007_etx_Horas.getText().toString() : "0"));
+                        }
                         detalleActual.setRdtos(Double.parseDouble(c007_etx_Rdtos.getText().length() > 0 ? c007_etx_Rdtos.getText().toString() : "0"));
                         detalleActual.setDni(c007_atv_NroDocumento.getText().toString());
 
@@ -836,6 +915,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     }
 
     public void mostrarValoresDocumentoActual() {
+        boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
 //        int i = ((AdapatadorSpinner) spiTurnos.getAdapter()).getIndex(tareoActual.getIdTurno());
 //        spiTurnos.setSelection(i);
         if (tareoActual.getId().length()>0){
@@ -869,8 +949,14 @@ public class cls_05010000_Edicion extends AppCompatActivity
                 c007_txv_Actividad_Key.setText(lastActividad);
                 c007_txv_Labor_Key.setText(lastLabor);
                 c007_txv_Consumidor_Key.setText(lastConsumidor);
-                c007_etx_Horas.setText("0.00");
-                c007_etx_Rdtos.setText("0.00");
+
+                if(!!modoPacking){
+                    c007_etx_Horas.setText("0.00");
+                    c007_etx_Rdtos.setText("0.00");
+                }else{
+                    c007_etx_Horas.setText(lastHoras);
+                    c007_etx_Rdtos.setText(lastRendimientos);
+                }
             }
 
             TotalRendimientos.setText(String.valueOf(sumaFormateada));

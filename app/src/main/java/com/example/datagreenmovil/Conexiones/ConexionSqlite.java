@@ -1422,4 +1422,29 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         return false;
       }
     }
+
+    public void alterarColumnasEnServicioTransporte() {
+      SQLiteDatabase db = this.getWritableDatabase();
+
+      String column_name = "coordenadas_marca";
+
+      // Verificar si la columna existe
+      Cursor cursor = db.rawQuery("PRAGMA table_info(trx_ServiciosTransporte_Detalle)", null);
+      boolean columnExists = false;
+
+      while (cursor.moveToNext()) {
+        String currentColumn = cursor.getString(cursor.getColumnIndex("name"));
+        if (column_name.equals(currentColumn)) {
+          columnExists = true;
+          break;
+        }
+      }
+      cursor.close();
+
+      // Si la columna no existe, agregarla
+      if (!columnExists) {
+        String alterTableSQL = "ALTER TABLE trx_ServiciosTransporte_Detalle ADD COLUMN coordenadas_marca VARCHAR(100)";
+        db.execSQL(alterTableSQL);
+      }
+    }
 }

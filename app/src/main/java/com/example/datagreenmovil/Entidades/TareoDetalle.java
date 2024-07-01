@@ -1,6 +1,7 @@
 package com.example.datagreenmovil.Entidades;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 

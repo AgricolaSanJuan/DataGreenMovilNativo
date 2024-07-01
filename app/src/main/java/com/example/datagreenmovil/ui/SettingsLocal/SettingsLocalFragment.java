@@ -115,10 +115,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         txv_PushRed = binding.c002TxvPushRedV;
         txv_NombreApp = binding.c002TxvNombreAppV;
 
-        if (getActivity().getIntent().getExtras() != null) {
-            objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
-        }
-
         Funciones.mostrarEstatusGeneral(root.getContext(),
                 objConfLocal,
                 txv_PushTituloVentana,
@@ -141,13 +137,15 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 throw new RuntimeException(e);
             }
         });
-
+        if (getActivity().getIntent().getExtras() != null) {
+            objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
+        }
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 objSqlite = new ConexionSqlite(context, objConfLocal);
                 editor.putString("EQUIPO_CONFIGURADO", "TRUE").apply();
-//                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
+                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
                     editor.putString("RED_HOST",binding.c002EtxHostV.getText().toString()).apply();
                     editor.putString("API_SERVER",binding.c002EtxApiServerV.getText().toString()).apply();

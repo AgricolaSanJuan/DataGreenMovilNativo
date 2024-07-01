@@ -379,7 +379,7 @@ private FragmentTransportesMainBinding binding;
             for(int i = 0; i<resultsUnidad.getColumnCount();i++){
                 unidad += "'"+resultsUnidad.getString(i)+(i == resultsUnidad.getColumnCount() -1 ? "'" : "', ");
             }
-            Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idTransferir +"'",null);
+            Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora, coordenadas_marca from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idTransferir +"'",null);
             JSONArray pasajeros = new JSONArray();
             String servicioTransporte = idTransferir;
             while(results.moveToNext()){
@@ -391,6 +391,7 @@ private FragmentTransportesMainBinding binding;
                 elemento.put(results.getColumnName(2), results.getString(2));
                 elemento.put(results.getColumnName(3), results.getString(3));
                 elemento.put(results.getColumnName(4), results.getString(4));
+                elemento.put(results.getColumnName(5), results.getString(5));
                 pasajeros.put(elemento);
             }
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);
@@ -399,9 +400,9 @@ private FragmentTransportesMainBinding binding;
             String ServerIP = sharedPreferences.getString("API_SERVER", "");
             String url = "http://"+ServerIP+"/api/get-users";
             String mac = String.valueOf(sharedPreferences.getString("MAC","!MAC"));
-            if(mac.length() > 12){
-                mac = mac.substring(0, 12);
-            }
+//            if(mac.length() > 12){
+//                mac = mac.substring(0, 12);
+//            }
             JSONObject params = new JSONObject();
             try {
                 params.put("unidad", unidad);
@@ -412,6 +413,7 @@ private FragmentTransportesMainBinding binding;
                 params.put("userLogin", sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL"));
                 params.put("app", "MiniGreen");
                 params.put("mac", mac);
+                params.put("usuario", sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
                 // Agrega otros campos según las expectativas del servidor
             } catch (JSONException e) {
                 e.printStackTrace();

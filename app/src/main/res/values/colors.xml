@@ -7,6 +7,9 @@
     <color name="danger">#ff213c</color>
     <color name="black">#FF000000</color>
 
+    <color name="button_pressed_color">#FF8F8F8F</color>
+    <color name="button_default_color">#FFD9D9D9</color>
+
 <!--    <color name="redError">#ED0000</color>-->
 
     <color name="verde">#00AF90</color>

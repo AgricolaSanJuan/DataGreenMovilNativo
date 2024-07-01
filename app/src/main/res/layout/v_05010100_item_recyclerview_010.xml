@@ -270,8 +270,8 @@
                     android:id="@id/textView39"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Horas:"
                     android:fontFamily="@font/monoespaciada_principal"
+                    android:text="Horas:"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView38" />
@@ -279,7 +279,7 @@
 
                 <TextView
                     android:id="@+id/c010_txv_Horas_v"
-                    android:layout_width="35dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/monoespaciada_principal"
                     android:text="0.00"
@@ -363,8 +363,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="YYYY-MM-DD HH:SS:mm"
                 android:fontFamily="@font/monoespaciada_principal"
+                android:text="YYYY-MM-DD HH:SS:mm"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView63"
                 app:layout_constraintStart_toEndOf="@+id/textView63"
@@ -385,12 +385,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="YYYY-MM-DD HH:SS:mm"
                 android:fontFamily="@font/monoespaciada_principal"
+                android:text="YYYY-MM-DD HH:SS:mm"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView64"
                 app:layout_constraintStart_toEndOf="@+id/textView64"
                 app:layout_constraintTop_toTopOf="@+id/textView64" />
+
+
+            <Spinner
+                android:id="@+id/spinnerAlmuerzo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvSalida"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelAlmuerzo" />
+            <TextView
+                android:id="@+id/labelAlmuerzo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Almuerzo"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerAlmuerzo"
+                app:layout_constraintTop_toTopOf="@+id/tvIngreso" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

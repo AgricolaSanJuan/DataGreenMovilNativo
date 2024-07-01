@@ -17,4 +17,10 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_tareos_settings" />
 
+    <fragment
+        android:id="@+id/nav_tareos_scanner"
+        android:name="com.example.datagreenmovil.Scanner.ui.ScannerFragment"
+        android:label="ESCANER"
+        tools:layout="@layout/fragment_scanner" />
+
 </navigation>
