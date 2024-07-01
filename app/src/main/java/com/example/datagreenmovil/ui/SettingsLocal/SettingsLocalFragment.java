@@ -64,7 +64,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     ConfiguracionLocal objConfLocal;
     ConexionBD objSql;
     Querys objQuerys;
-    EditText etxHost, etxInstancia, etxNombreBD, etxPuerto, etxUsuario, etx_Password, etxImei, etxMac, etxNroTelefono, etxPropietario;
+    EditText etxHost, etxApiServer, etxInstancia, etxNombreBD, etxPuerto, etxUsuario, etx_Password, etxImei, etxMac, etxNroTelefono, etxPropietario;
     TextView txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador, txv_PushTituloVentana, txv_PushRed, txv_NombreApp;
     ProgressBar pbSync;
     Button btnProbarConexion, btnGenerarBD, btnGuardar;
@@ -97,6 +97,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         pbSync = binding.progressBarHorizontal;
 
         etxHost = binding.c002EtxHostV;
+        etxApiServer = binding.c002EtxApiServerV;
         etxInstancia = binding.c002EtxInstanciaV;
         etxNombreBD = binding.c002EtxNombreBDV;
         etxPuerto = binding.c002EtxPuertoV;
@@ -113,10 +114,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         txv_PushTituloVentana = binding.c002TxvPushTituloVentanaV;
         txv_PushRed = binding.c002TxvPushRedV;
         txv_NombreApp = binding.c002TxvNombreAppV;
-
-        if (getActivity().getIntent().getExtras() != null) {
-            objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
-        }
 
         Funciones.mostrarEstatusGeneral(root.getContext(),
                 objConfLocal,
@@ -140,15 +137,18 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 throw new RuntimeException(e);
             }
         });
-
+        if (getActivity().getIntent().getExtras() != null) {
+            objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
+        }
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 objSqlite = new ConexionSqlite(context, objConfLocal);
                 editor.putString("EQUIPO_CONFIGURADO", "TRUE").apply();
-//                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
+                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
                     editor.putString("RED_HOST",binding.c002EtxHostV.getText().toString()).apply();
+                    editor.putString("API_SERVER",binding.c002EtxApiServerV.getText().toString()).apply();
                     editor.putString("RED_INSTANCIA",binding.c002EtxInstanciaV.getText().toString()).apply();
                     editor.putString("RED_NOMBRE_DB",binding.c002EtxNombreBDV.getText().toString()).apply();
                     editor.putString("RED_USUARIO",binding.c002EtxUsuarioV.getText().toString()).apply();
@@ -174,7 +174,11 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
         txv_PushVersionDataBase.setOnClickListener(view -> Funciones.popUpStatusVersiones(context));
 
+//        GUARDAR EL API SERVER EN SHARED PREFERENCES
+        binding.btnConnectApiServer.setOnClickListener(view -> editor.putString("API_SERVER", binding.c002EtxApiServerV.getText().toString()).apply());
+
         settingsScroll.setOnTouchListener(this::onTouch);
+
         return root;
     }
 
@@ -216,6 +220,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 //                String imei, String mac, String nroTelefono, String propietario
         try {
             clAux.set("RED_HOST", etxHost.getText().toString());
+            clAux.set("API_SERVER", etxApiServer.getText().toString());
             clAux.set("RED_INSTANCIA", etxInstancia.getText().toString());
             clAux.set("RED_NOMBRE_DB", etxNombreBD.getText().toString());
             clAux.set("RED_PUERTO_CONEXION", etxPuerto.getText().toString());
@@ -229,6 +234,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
             // MIGRAR PROGRESIVAMENTE A SHARED PREFERENCES
             editor.putString("RED_HOST", etxHost.getText().toString()).apply();
+            editor.putString("API_SERVER", etxApiServer.getText().toString()).apply();
             editor.putString("RED_INSTANCIA", etxInstancia.getText().toString()).apply();
             editor.putString("RED_NOMBRE_DB", etxNombreBD.getText().toString()).apply();
             editor.putString("RED_PUERTO_CONEXION", etxPuerto.getText().toString()).apply();
@@ -280,6 +286,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
     private void mostrarValoresDocumentoActual() {
         etxHost.setText(sharedPreferences.getString("RED_HOST","!RED_HOST"));
+        etxApiServer.setText(sharedPreferences.getString("API_SERVER","!API_SERVER"));
         etxInstancia.setText(sharedPreferences.getString("RED_INSTANCIA", "!RED_INSTANCIAA"));
         etxNombreBD.setText(sharedPreferences.getString("RED_NOMBRE_DB","!RED_NOMBRE_DB"));
         etxUsuario.setText(sharedPreferences.getString("RED_USUARIO","!RED_USUARIO"));
@@ -317,6 +324,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
             Log.i("Presionado", String.valueOf(touchCounter));
             if (touchCounter == 3) {
                 etxHost.setText("192.168.30.99");
+                etxApiServer.setText("192.168.30.94:8080");
                 etxInstancia.setText("MSSQLSERVER17");
                 etxNombreBD.setText("DataGreenMovil");
                 etxUsuario.setText("sa");

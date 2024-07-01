@@ -353,8 +353,8 @@ public class TallerMainFragment extends Fragment {
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);
 //      URL DE LA API EN LARAVEL
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-            String ServerIP = sharedPreferences.getString("RED_HOST", "");
-            String url = "http://"+ServerIP+":8000/api/get-users";
+            String ServerIP = sharedPreferences.getString("API_SERVER", "");
+            String url = "http://"+ServerIP+"/api/get-users";
 
             JSONObject params = new JSONObject();
             try {

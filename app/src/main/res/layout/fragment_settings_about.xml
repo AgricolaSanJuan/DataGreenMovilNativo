@@ -19,13 +19,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/textView60"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="Configuraciones de comportamiento"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="Transportes"
+                app:layout_constraintEnd_toEndOf="@+id/switchTrabajadoresDesconocidos"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <Switch
                 android:id="@+id/switchTrabajadoresDesconocidos"
@@ -39,7 +38,39 @@
                 android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toBottomOf="@+id/textView60" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Configuraciones de comportamiento"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tareos"
+                app:layout_constraintEnd_toEndOf="@+id/switchTrabajadoresDesconocidos"
+                app:layout_constraintTop_toBottomOf="@+id/switchTrabajadoresDesconocidos" />
+
+            <Switch
+                android:id="@+id/switchModoPacking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Modo Packing"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/textView61" />
 
             <TextView
                 android:id="@+id/textView50"
@@ -48,7 +79,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Ejecución de comandos"
                 app:layout_constraintStart_toStartOf="@+id/switchTrabajadoresDesconocidos"
-                app:layout_constraintTop_toBottomOf="@+id/switchTrabajadoresDesconocidos" />
+                app:layout_constraintTop_toBottomOf="@+id/switchModoPacking" />
 
             <ScrollView
                 android:id="@+id/scrollView3"
@@ -71,13 +102,14 @@
                 android:id="@+id/fabStartQuery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/azulPrimario"
-                app:fabSize="mini"
-                app:maxImageSize="20dp"
                 android:clickable="true"
                 android:src="@android:drawable/ic_media_play"
+                app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/scrollView3" />
+                app:layout_constraintTop_toTopOf="@+id/scrollView3"
+                app:maxImageSize="20dp" />
 
             <com.evrencoskun.tableview.TableView
                 android:id="@+id/content_container"

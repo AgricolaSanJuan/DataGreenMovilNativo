@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -17,24 +16,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
 import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.databinding.FragmentTareosSettingsBinding;
-import com.google.android.material.internal.NavigationMenuItemView;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TareosSettingsFragment extends Fragment {
     Boolean stateTareos = false;
     List<String> tablasSeleccionadas = new ArrayList<>();
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    Context context;
     private FragmentTareosSettingsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,7 +47,8 @@ public class TareosSettingsFragment extends Fragment {
         binding = FragmentTareosSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.switchPermitirSinTareo.setChecked(sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", false));
+        binding.switchPermitirSinTareo.setChecked(sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", true));
+        binding.switchModoPacking.setChecked(sharedPreferences.getBoolean("MODO_PACKING", false));
         binding.txvTareos2.setOnClickListener(view -> {
             stateTareos = !stateTareos;
             checkAllTareos(stateTareos);
@@ -160,10 +161,54 @@ public class TareosSettingsFragment extends Fragment {
             });
         });
 
+
         binding.switchPermitirSinTareo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    editor.putBoolean("PERMITIR_SIN_TAREO", b).apply();
+                    editor.putBoolean("PERMITIR_SIN_TAREO", true).apply();
+            }
+        });
+        AtomicBoolean manualPush = new AtomicBoolean(false);
+
+        binding.switchModoPacking.setOnClickListener(view -> {
+            boolean b = sharedPreferences.getBoolean("MODO_PACKING", false);
+            if(manualPush.get()){
+                Swal.settingsPassword(getContext(), (isValid, sweetAlertDialog) -> {
+                    binding.switchModoPacking.setChecked(!b);
+                    if (isValid) {
+                        sweetAlertDialog.dismissWithAnimation();
+                        DataGreenApp.passPassed = true;
+                        editor.putBoolean("MODO_PACKING", !b).apply();
+                        if(manualPush.get()){
+                            binding.switchModoPacking.setChecked(!b);
+                        }
+//                        binding.switchModoPacking.setChecked(!b);
+                    } else {
+                        sweetAlertDialog.dismissWithAnimation();
+                        Swal.warning(getContext(), "PROHIBIDO", "La contraseña no es correcta", 2000);
+//                        binding.switchModoPacking.setChecked(!b);
+                    }
+                    manualPush.set(false);
+                    boolean cambiao = sharedPreferences.getBoolean("MODO_PACKING", false);
+                    binding.switchModoPacking.setChecked(cambiao);
+                });
+            }else {
+                manualPush.set(false);
+                boolean cambiao = sharedPreferences.getBoolean("MODO_PACKING", false);
+                binding.switchModoPacking.setChecked(sharedPreferences.getBoolean("MODO_PACKING", false));
+            }
+
+//            binding.switchModoPacking.setSelected(true);
+//            binding.switchModoPacking.setChecked(true);
+            boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
+            binding.switchModoPacking.setChecked(modoPacking);
+        });
+
+        binding.switchModoPacking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                compoundButton.setChecked(!b);
+                manualPush.set(true);
             }
         });
 
@@ -203,5 +248,11 @@ public class TareosSettingsFragment extends Fragment {
             Switch switchGeneral = (Switch) binding.chipGroupTareos.getChildAt(i);
             switchGeneral.setChecked(state);
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 }

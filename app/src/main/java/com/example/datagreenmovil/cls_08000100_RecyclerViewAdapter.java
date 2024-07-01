@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import org.w3c.dom.Text;
 
@@ -254,9 +255,10 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
   }
 
   private void abrirDocumento(String id) {
-    Intent nuevaActividad = new Intent(contextoLocal, cls_08010000_Edicion.class);
-    nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
-    nuevaActividad.putExtra("s_IdRex", id);
-    contextoLocal.startActivity(nuevaActividad);
+    Swal.info(contextoLocal.getApplicationContext(), "HOLI", "BOLI", 2000);
+//    Intent nuevaActividad = new Intent(contextoLocal, cls_08010000_Edicion.class);
+//    nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
+//    nuevaActividad.putExtra("s_IdRex", id);
+//    contextoLocal.startActivity(nuevaActividad);
   }
 }

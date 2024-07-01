@@ -1,6 +1,7 @@
 package com.example.datagreenmovil.Entidades;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 
@@ -27,6 +28,8 @@ public class TareoDetalle {
     private Double rdtos;
     private Double horas;
     private String observacion;
+    private String ingreso;
+    private String salida;
 
     public TareoDetalle() {
 
@@ -49,6 +52,8 @@ public class TareoDetalle {
         this.rdtos = 0.0;
         this.horas = 0.0;
         this.observacion ="";
+        this.ingreso = "";
+        this.salida = "";
     }
 
     public TareoDetalle(TareoDetalle td) {
@@ -71,6 +76,8 @@ public class TareoDetalle {
         this.rdtos = td.rdtos;
         this.horas = td.horas;
         this.observacion = td.observacion;
+        this.ingreso = td.ingreso;
+        this.salida = td.salida;
     }
 
     public TareoDetalle(Cursor c, int i) {
@@ -96,6 +103,8 @@ public class TareoDetalle {
         this.rdtos = c.getDouble(16);
         this.horas = c.getDouble(17);
         this.observacion = c.getString(18);
+        this.ingreso = c.getString(19) == null ? "" : c.getString(19);
+        this.salida = c.getString(20) == null ? "" : c.getString(20);
     }
 
     /*
@@ -266,6 +275,22 @@ public class TareoDetalle {
 
     public void setObservacion(String observacion) { this.observacion = observacion; }
 
+    public String getIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(String ingreso) {
+        this.ingreso = ingreso;
+    }
+
+    public String getSalida() {
+        return salida;
+    }
+
+    public void setSalida(String salida) {
+        this.salida = salida;
+    }
+
     //PENDIENTE: IMPLEMENTAR UN METOD PARA CONVERTIR CUALQUIER ENTIDAD EN LIST, EJEMPLO LA ENTIDAD TAREDODETALLE->LIST PARA QUE? PARA PODER USARLA EN LA NUEVA IMPLEMENTACION
     //DE LA CLASE CONEXIONSQLITE LA CUAL GUARDA CUALQUIER ENTIDAD COMO "REGISTRO" GENERICO Y NO ENTIDAD POR ENTIDAD
     public boolean guardar(ConexionSqlite objSqlite, String IdUsuario) throws Exception {
@@ -287,6 +312,8 @@ public class TareoDetalle {
         l.add(Double.toString(this.horas));
         l.add(Double.toString(this.rdtos));
         l.add(this.observacion);
+        l.add(this.ingreso);
+        l.add(this.salida);
         objSqlite.GuardarRegistro("trx_Tareos_Detalle",l);
         //RECALCULAR SUBTOTALES GENERALES
         List<String> p = new ArrayList<>();

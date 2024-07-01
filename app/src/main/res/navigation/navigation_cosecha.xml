@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_cosecha"
+    app:startDestination="@+id/nav_cosecha_supervisor_main">
+
+    <fragment
+        android:id="@+id/nav_cosecha_submodulos"
+        android:name="com.example.datagreenmovil.ui.CosechaMain.CosechaMain"
+        android:label="Principal"
+        tools:layout="@layout/fragment_cosecha_main" />
+
+    <fragment
+        android:id="@+id/nav_cosecha_transferencia"
+        android:name="com.example.datagreenmovil.ui.cosechaQrTransferencia.CosechaQrTransferenciasFragment"
+        android:label="Transferir"
+        tools:layout="@layout/fragment_cosecha_qr_transferencias" />
+
+    <fragment
+        android:id="@+id/nav_cosecha_conductor"
+        android:name="com.example.datagreenmovil.ui.CosechaConductorMain.CosechaConductorMainFragment"
+        android:label="LectorQR"
+        tools:layout="@layout/fragment_cosecha_qr_conductor" />
+
+    <fragment
+        android:id="@+id/nav_cosecha_conductor_details"
+        android:name="com.example.datagreenmovil.ui.CosechaConductorDetails.CosechaConductorDetailsFragment"
+        android:label="LectorQR"
+        tools:layout="@layout/fragment_cosecha_conductor_details" />
+
+    <fragment
+        android:id="@+id/nav_cosecha_supervisor_main"
+        android:name="com.example.datagreenmovil.ui.CosechaSupervisorMain.CosechaSupervisorMainFragment"
+        tools:layout="@layout/fragment_cosecha_supervisor_main" >
+        <action
+            android:id="@+id/action_nav_cosecha_supervisor_main_to_nav_cosecha_supervisor_detalle"
+            app:destination="@id/nav_cosecha_supervisor_detalle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_cosecha_supervisor_detalle"
+        android:name="com.example.datagreenmovil.ui.CosechaSupervisorMain.CosechaSupervisorMainFragment"
+        tools:layout="@layout/fragment_cosecha_supervisor_detalle" />
+
+</navigation>

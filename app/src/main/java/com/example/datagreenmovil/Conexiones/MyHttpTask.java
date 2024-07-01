@@ -27,9 +27,9 @@ public class MyHttpTask extends AsyncTask<String, Void, String> {
         BufferedReader reader = null;
         try {
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-            String ServerIP = sharedPreferences.getString("RED_HOST", "");
+            String ServerIP = sharedPreferences.getString("API_SERVER", "");
             // URL de la API a la que deseas enviar la solicitud POST
-            URL url = new URL("http://"+ServerIP+":8000/api/get-available-update");
+            URL url = new URL("http://"+ServerIP+"/api/get-available-update");
 
             // Abre una conexión HTTP
             connection = (HttpURLConnection) url.openConnection();

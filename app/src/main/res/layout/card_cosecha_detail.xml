@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_weight="1"
+    android:elevation="5dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout13"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/azulPrimario"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/lblNroDetalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/secundaria"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/blancoOficial"
+                    android:text="Detalle #" />
+
+                <TextView
+                    android:id="@+id/tvNroDetalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/secundaria"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/blancoOficial"
+                    android:text="#" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblTipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="Tipo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
+
+            <TextView
+                android:id="@+id/tvTipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="XXXXXX"
+                app:layout_constraintBottom_toBottomOf="@+id/lblTipo"
+                app:layout_constraintStart_toStartOf="@+id/tvCantidad"
+                app:layout_constraintTop_toTopOf="@+id/lblTipo" />
+
+            <TextView
+                android:id="@+id/lblCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="Cantidad"
+                app:layout_constraintStart_toStartOf="@+id/lblTipo"
+                app:layout_constraintTop_toBottomOf="@+id/lblTipo" />
+
+            <TextView
+                android:id="@+id/tvCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="##"
+                app:layout_constraintBottom_toBottomOf="@+id/lblCantidad"
+                app:layout_constraintStart_toStartOf="@+id/tvPersonas"
+                app:layout_constraintTop_toTopOf="@+id/lblCantidad" />
+
+            <TextView
+                android:id="@+id/lblPersonas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="Personas"
+                app:layout_constraintStart_toStartOf="@+id/lblCantidad"
+                app:layout_constraintTop_toBottomOf="@+id/lblCantidad" />
+
+            <TextView
+                android:id="@+id/tvPersonas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="##"
+                app:layout_constraintBottom_toBottomOf="@+id/lblPersonas"
+                app:layout_constraintStart_toEndOf="@+id/lblPersonas"
+                app:layout_constraintTop_toTopOf="@+id/lblPersonas" />
+
+            <TextView
+                android:id="@+id/lblFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="Fecha"
+                app:layout_constraintStart_toStartOf="@+id/lblPersonas"
+                app:layout_constraintTop_toBottomOf="@+id/lblPersonas" />
+
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="YYYY-MM-DD"
+                app:layout_constraintBottom_toBottomOf="@+id/lblFecha"
+                app:layout_constraintStart_toStartOf="@+id/tvPersonas"
+                app:layout_constraintTop_toTopOf="@+id/lblFecha" />
+
+            <TextView
+                android:id="@+id/lblHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="Hora"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/lblFecha"
+                app:layout_constraintTop_toBottomOf="@+id/lblFecha" />
+
+            <TextView
+                android:id="@+id/tvHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/secundaria"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:text="HH:MM:SS"
+                app:layout_constraintBottom_toBottomOf="@+id/lblHora"
+                app:layout_constraintStart_toStartOf="@+id/tvFecha"
+                app:layout_constraintTop_toTopOf="@+id/lblHora" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/nav_cosecha_supervisor_main"
+            android:icon="@drawable/ic_person_apron"
+            android:title="SUPERVISOR MAIN" />
+        <item
+            android:id="@+id/nav_cosecha_submodulos"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="SUBMODULOS" />
+        <item
+            android:id="@+id/nav_cosecha_conductor"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="TRANSFERENCIA" />
+        <item
+            android:id="@+id/nav_cosecha_transferencia"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="LEER QR" />
+    </group>
+</menu>

@@ -142,7 +142,7 @@
                     android:gravity="center"
                     android:hint="Contraseña"
                     android:maxLines="1"
-                    android:inputType="textPassword"
+                    android:inputType="numberPassword"
                     android:textAlignment="center"
                     android:textColorHint="@color/grisOscuro"
                     android:textSize="24sp" />

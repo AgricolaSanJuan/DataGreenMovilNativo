@@ -1,11 +1,14 @@
 package com.example.datagreenmovil;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,14 +23,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Rex;
+import com.example.datagreenmovil.Helpers.LocationHelper;
+import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 
@@ -35,6 +43,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class cls_08020000_AgregarDni extends AppCompatActivity {
@@ -60,6 +70,10 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     int i_Items, i_Capacidad;
     Boolean registrarDni = false;
     private String dniRestringido;
+    private LocationHelper locationHelper;
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private String coordinates = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +90,12 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             sharedPreferences = this.getSharedPreferences("objConfLocal", this.MODE_PRIVATE);
             editor = sharedPreferences.edit();
 
-            permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", false);
+            permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", true);
 //            Swal.info(this, s_IdRex, "fino", 2000);
 
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, objConfLocal);
+            objSqlite.alterarColumnasEnServicioTransporte();
 //            objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
 
             referenciarControles();
@@ -98,6 +113,9 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...
             //PENDIENTE REEMPLZAR ESTE METODO EN LINEAS MAS ABAJO DESPUES DE MARCAR
+
+            locationHelper = new LocationHelper(this);
+            getLocation();
 
             obtenerRexActual();
             if (objRex.Get("IdServicioTransporte") != null && !objRex.Get("IdServicioTransporte").equals("")) {
@@ -120,6 +138,29 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
         //...
+    }
+
+    private void getLocation() {
+        final CountDownLatch latch = new CountDownLatch(1);
+
+        locationHelper.getLocation(new LocationHelper.LocationResult() {
+            @Override
+            public void gotLocation(Location location) {
+                coordinates = String.valueOf(+ location.getLatitude())+','+String.valueOf(location.getLongitude());
+//                Toast.makeText(cls_08020000_AgregarDni.this, coordinates, Toast.LENGTH_SHORT).show();
+//                if (location != null) {
+//                    latitude[0] = location.getLatitude();
+//                    longitude[0] = location.getLongitude();
+//                }
+                latch.countDown(); // Señalar que se ha recibido la ubicación
+            }
+        });
+
+        try {
+            latch.await(5, TimeUnit.SECONDS); // Esperar hasta 5 segundos para obtener la ubicación
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void referenciarControles() {
@@ -156,10 +197,53 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         c025_et_IngresoDni.setOnKeyListener((view, i, keyEvent) ->
                 {
                     if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                            s_DniMarcado = c025_et_IngresoDni.getText().toString();
-                        if(String.valueOf(c025_et_IngresoDni.getText().toString().charAt(0)).equals("S")){
-                            s_DniMarcado = c025_et_IngresoDni.getText().toString().substring(2).toString();
+                        if(c025_et_IngresoDni.getText().toString().length() == 10){
+                            try {
+                                c025_et_IngresoDni.setText(CryptorSJ.desencriptarCadena(c025_et_IngresoDni.getText().toString()));
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         }
+                        s_DniMarcado = c025_et_IngresoDni.getText().toString();
+//                        if(c025_et_IngresoDni.getText().toString().length() > 0){
+//                            if(String.valueOf(c025_et_IngresoDni.getText().toString().charAt(0)).equals("S")){
+//                                s_DniMarcado = c025_et_IngresoDni.getText().toString().substring(2).toString();
+//                            }
+//                        }
+                        s_DniMarcado = c025_et_IngresoDni.getText().toString().trim();
+                        if(s_DniMarcado.length() == 10 && !s_DniMarcado.startsWith("SJ")){
+                            try {
+                                s_DniMarcado = CryptorSJ.desencriptarCadena(s_DniMarcado);
+                                c025_et_IngresoDni.setText(s_DniMarcado);
+                                    if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
+                                        Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
+                                        actualizarNItems(s_IdRex);
+                                        obtenerRexActual();
+                                        mostrarValoresRexActual();
+                                    }
+                                    c025_et_IngresoDni.setText("");
+                                    c025_et_IngresoDni.requestFocus();
+                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(c025_et_IngresoDni.getWindowToken(), 0); // Donde "editText" es tu EditText
+                                    return true;
+                            } catch (Exception e) {
+                                final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
+                                c025_txv_NombreMarcado.setText("CÓDIGO");
+                                c025_txv_ApellidoMarcado.setText("INVÁLIDO");
+                                c025_et_IngresoDni.setText("");
+                                s_DniMarcado = "";
+                                Error.start();
+                                dniRestringido = "no_permitido";
+                            }
+                        }else if(s_DniMarcado.startsWith("SJ")){
+                            final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
+                            c025_txv_NombreMarcado.setText("NO PERMITE");
+                            c025_txv_ApellidoMarcado.setText("PREFIJOS");
+                            c025_et_IngresoDni.setText("");
+                            s_DniMarcado = "";
+                            Error.start();
+                            dniRestringido = "no_permitido";
+                        }else{
                             try {
                                 if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
                                     Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
@@ -177,6 +261,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                             }finally {
                                 s_DniMarcado = "";
                             }
+                        }
                     }
                     return false;
                 }
@@ -267,27 +352,56 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                     c025_et_IngresoDni.setText(s_DniMarcado);
                 }
             } else if (idControlClickeado == R.id.c025_btn_Ok_v) {
+
+                Toast.makeText(this, coordinates, Toast.LENGTH_SHORT).show();
+//                Log.i("Coordenadas", coordinates);
+
                 s_DniMarcado = c025_et_IngresoDni.getText().toString();
-                if(s_DniMarcado.substring(1,1).equals("S")){
-                    s_DniMarcado = s_DniMarcado.substring(3).toString();
-                    Log.i("DNI", s_DniMarcado);
-                }
-                try {
-                    if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
-                        Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
-                        actualizarNItems(s_IdRex);
-                        obtenerRexActual();
-                        mostrarValoresRexActual();
+                if(s_DniMarcado.length() == 10 && !s_DniMarcado.startsWith("SJ")){
+                    try {
+                        s_DniMarcado = CryptorSJ.desencriptarCadena(s_DniMarcado);
+                        c025_et_IngresoDni.setText(s_DniMarcado);
+                    } catch (Exception e) {
+                        final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
+                        c025_txv_NombreMarcado.setText("CÓDIGO");
+                        c025_txv_ApellidoMarcado.setText("INVÁLIDO");
+                        c025_et_IngresoDni.setText("");
+                        s_DniMarcado = "";
+                        Error.start();
+                        dniRestringido = "no_permitido";
                     }
+                }else if(s_DniMarcado.startsWith("SJ")){
+                    final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
+                    c025_txv_NombreMarcado.setText("NO PERMITE");
+                    c025_txv_ApellidoMarcado.setText("PREFIJOS");
                     c025_et_IngresoDni.setText("");
-                    c025_et_IngresoDni.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(c025_et_IngresoDni.getWindowToken(), 0); // Donde "editText" es tu EditText
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }finally {
                     s_DniMarcado = "";
+                    Error.start();
+                    dniRestringido = "no_permitido";
+                }else{
+                    try {
+//                        AQUI SE AGREGA EL DNI
+                        if (cumpleRestricciones() && guardarDni(s_DniMarcado)) {
+                            Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
+                            actualizarNItems(s_IdRex);
+                            obtenerRexActual();
+                            mostrarValoresRexActual();
+                        }
+                        c025_et_IngresoDni.setText("");
+                        c025_et_IngresoDni.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(c025_et_IngresoDni.getWindowToken(), 0); // Donde "editText" es tu EditText
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }finally {
+                        s_DniMarcado = "";
+                    }
                 }
+//                Swal.info(this, "HOLI", CryptorSJ.desencriptarCadena(s_DniMarcado), 5000);
+//                if(s_DniMarcado.substring(1,1).equals("S")){
+//                    s_DniMarcado = s_DniMarcado.substring(3).toString();
+//                    Log.i("DNI", s_DniMarcado);
+//                }
             } else if (idControlClickeado == R.id.c025_fab_Volver_v) {
                 finish();
             } else throw new IllegalStateException("Click sin programacion: " + view.getId());
@@ -306,16 +420,21 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     }
 
     public boolean cumpleLongitudCadena() {
-        return s_DniMarcado.length() == 8;
+        return s_DniMarcado.length() == 10 || s_DniMarcado.length() == 8;
     }
 
-    private boolean guardarDni(String s_dniMarcado) {
+    private boolean guardarDni(String s_dniMarcado) throws Exception {
         AtomicReference<Boolean> status = new AtomicReference<>(false);
         if(s_dniMarcado.substring(1,1).equals("S")){
             s_dniMarcado = s_dniMarcado.substring(3).toString();
         }
+//        else if(s_DniMarcado.length() == 10){
+//            s_DniMarcado = CryptorSJ.desencriptarCadena(s_DniMarcado);
+//        }
+//        Swal.info(this, "HOLI", s_DniMarcado, 5000);
 
         try {
+//            locationHelper
             final MediaPlayer Notificacion = MediaPlayer.create(this, R.raw.notificacion);
             final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
 //            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -324,6 +443,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             objRex.Set("NroDocumento", s_dniMarcado);
             //objRex.Set("Hora",dateFormat.format(fechaHora));
             objRex.Set("FechaHora", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
+            objRex.Set("coordenadas_marca", coordinates);
 
             Cursor verificarExistencia;
             verificarExistencia = objSqlite.doItBaby("select count(*) exist from mst_personas where IDEMPRESA = '01' AND NroDocumento = '"+s_dniMarcado+"'", null, "READ");
@@ -370,6 +490,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             Funciones.mostrarError(this, ex);
             return false;
         }
+//        return false;
     }
 
     public int obtenerItems(String idRegistro) throws Exception {

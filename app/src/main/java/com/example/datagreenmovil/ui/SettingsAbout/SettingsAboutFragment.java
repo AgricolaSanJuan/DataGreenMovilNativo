@@ -61,6 +61,15 @@ public class SettingsAboutFragment extends Fragment {
             }
         });
 
+        binding.switchTrabajadoresDesconocidos.setOnCheckedChangeListener((compoundButton, b) -> {
+            editor.putBoolean("MODO_PACKING", b).apply();
+            if(b){
+                Swal.success(ctx, "CAMBIO CORRECTO!", "Ahora se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+            }else{
+                Swal.warning(ctx, "CAMBIO CORRECTO!", "Ahora no se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+            }
+        });
+
         binding.fabStartQuery.setOnClickListener(view -> {
 //            if (!binding.textQuery.getText().toString().equals("")) {
 

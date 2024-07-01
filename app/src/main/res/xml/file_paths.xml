@@ -3,4 +3,6 @@
     <files-path
         name="databases"
         path="databases/" />
+    <external-path name="external_files" path="."/>
+
 </paths>

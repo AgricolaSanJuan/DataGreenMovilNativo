@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.datagreenmovil"
-    >
+    package="com.example.datagreenmovil">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
         android:name="android.permission.LOCAL_MAC_ADDRESS"
         tools:ignore="ProtectedPermissions" />
@@ -17,11 +17,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
-
-
 
     <application
         android:name=".DataGreenApp"
@@ -29,32 +27,40 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@drawable/ic_minigreen"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/ic_minigreen"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DataGreenMovilLight"
-        android:networkSecurityConfig="@xml/network_security_config"
-        >
-<!--    tools:replace="android:appComponentFactory"-->
+        android:theme="@style/Theme.DataGreenMovilLight">
+        <activity
+            android:name=".CosechaActivity"
+            android:exported="true"
+            android:label="@string/title_activity_cosecha"
+            android:theme="@style/Theme.DataGreenMovilLight.NoActionBar" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <!-- tools:replace="android:appComponentFactory" -->
         <activity
             android:name=".TallerActivity"
             android:exported="false"
-            android:label="@string/title_activity_taller"
-            />
+            android:label="@string/title_activity_taller" />
         <activity
             android:name=".TransportesActivity"
             android:exported="false"
-            android:label="@string/title_activity_transportes"
-            />
+            android:label="@string/title_activity_transportes" />
         <activity
             android:name=".ASJMessenger"
             android:exported="true">
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".TareosActivity"
@@ -70,8 +76,7 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings"
-            />
+            android:label="@string/title_activity_settings" />
 
         <service
             android:name=".DataGreenUpdateService"

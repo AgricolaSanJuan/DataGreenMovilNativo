@@ -135,6 +135,14 @@
                                 android:layout_height="40dp"
                                 android:fontFamily="@font/monoespaciada_principal"
                                 android:gravity="right|center_vertical"
+                                android:text="API Server:"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:fontFamily="@font/monoespaciada_principal"
+                                android:gravity="right|center_vertical"
                                 android:text="Instancia:"
                                 android:textSize="16sp" />
 
@@ -201,6 +209,7 @@
                                 android:gravity="right|center_vertical"
                                 android:text="Propietario:"
                                 android:textSize="16sp" />
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -216,6 +225,33 @@
                                 android:hint="*"
                                 android:inputType="textPersonName"
                                 android:textSize="16sp" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <EditText
+                                    android:id="@+id/c002_etxApiServer_v"
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:fontFamily="@font/monoespaciada_principal"
+                                    android:hint="*"
+                                    android:inputType="textPersonName"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/btnConnectApiServer"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageButton
+                                    android:id="@+id/btnConnectApiServer"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:backgroundTint="@color/verde"
+                                    android:src="@drawable/ic_save_min"
+                                    android:tint="@color/blancoOficial"
+                                    app:layout_constraintEnd_toEndOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <EditText
                                 android:id="@+id/c002_etxInstancia_v"
