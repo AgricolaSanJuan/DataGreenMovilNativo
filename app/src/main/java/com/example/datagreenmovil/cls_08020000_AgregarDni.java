@@ -1,17 +1,14 @@
 package com.example.datagreenmovil;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.TextureView;
@@ -25,9 +22,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
@@ -37,14 +32,11 @@ import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Helpers.LocationHelper;
 import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
-import com.example.datagreenmovil.Logica.Swal;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class cls_08020000_AgregarDni extends AppCompatActivity {
@@ -81,7 +73,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         setContentView(R.layout.v_08020000_agregar_dni_025);
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        locationHelper = new LocationHelper(this);
+        getLocation();
         try {
             if (getIntent().getExtras() != null) {
                 objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
@@ -91,12 +84,10 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             editor = sharedPreferences.edit();
 
             permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", true);
-//            Swal.info(this, s_IdRex, "fino", 2000);
 
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, objConfLocal);
             objSqlite.alterarColumnasEnServicioTransporte();
-//            objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
 
             referenciarControles();
             setearControles();
@@ -111,11 +102,6 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             );
             //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-            //...
-            //PENDIENTE REEMPLZAR ESTE METODO EN LINEAS MAS ABAJO DESPUES DE MARCAR
-
-            locationHelper = new LocationHelper(this);
-            getLocation();
 
             obtenerRexActual();
             if (objRex.Get("IdServicioTransporte") != null && !objRex.Get("IdServicioTransporte").equals("")) {
@@ -139,30 +125,18 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
         //...
     }
-
-    private void getLocation() {
-        final CountDownLatch latch = new CountDownLatch(1);
-
-        locationHelper.getLocation(new LocationHelper.LocationResult() {
-            @Override
-            public void gotLocation(Location location) {
-                coordinates = String.valueOf(+ location.getLatitude())+','+String.valueOf(location.getLongitude());
-//                Toast.makeText(cls_08020000_AgregarDni.this, coordinates, Toast.LENGTH_SHORT).show();
-//                if (location != null) {
-//                    latitude[0] = location.getLatitude();
-//                    longitude[0] = location.getLongitude();
-//                }
-                latch.countDown(); // Señalar que se ha recibido la ubicación
+//    NUEVO MÉTODO PARA OBTENER LA LOCALIZACIÓN
+private void getLocation() {
+    locationHelper.getLocation(new LocationHelper.LocationResult() {
+        @Override
+        public void gotLocation(Location location) {
+            if (location != null) {
+                coordinates = location.getLatitude() + "," + location.getLongitude();
+                Toast.makeText(cls_08020000_AgregarDni.this, coordinates, Toast.LENGTH_SHORT).show();
             }
-        });
-
-        try {
-            latch.await(5, TimeUnit.SECONDS); // Esperar hasta 5 segundos para obtener la ubicación
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-    }
-
+    });
+}
     private void referenciarControles() {
         txv_PushTituloVentana = findViewById(R.id.c025_txv_PushTituloVentana_v);
         txv_PushRed = findViewById(R.id.c025_txv_PushRed_v);
@@ -210,6 +184,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 //                                s_DniMarcado = c025_et_IngresoDni.getText().toString().substring(2).toString();
 //                            }
 //                        }
+                        getLocation();
                         s_DniMarcado = c025_et_IngresoDni.getText().toString().trim();
                         if(s_DniMarcado.length() == 10 && !s_DniMarcado.startsWith("SJ")){
                             try {
@@ -352,9 +327,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                     c025_et_IngresoDni.setText(s_DniMarcado);
                 }
             } else if (idControlClickeado == R.id.c025_btn_Ok_v) {
-
-                Toast.makeText(this, coordinates, Toast.LENGTH_SHORT).show();
-//                Log.i("Coordenadas", coordinates);
+//                OBTENEMOS LA LOCALIZACIÓN DESDE LA PRESIÓN PARA OBTENER LAS COORDENADAS Y ALMACENARLAS EN LA VARIABLE coordinates
+                getLocation();
 
                 s_DniMarcado = c025_et_IngresoDni.getText().toString();
                 if(s_DniMarcado.length() == 10 && !s_DniMarcado.startsWith("SJ")){
@@ -434,7 +408,6 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 //        Swal.info(this, "HOLI", s_DniMarcado, 5000);
 
         try {
-//            locationHelper
             final MediaPlayer Notificacion = MediaPlayer.create(this, R.raw.notificacion);
             final MediaPlayer Error = MediaPlayer.create(this, R.raw.error);
 //            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -443,7 +416,10 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             objRex.Set("NroDocumento", s_dniMarcado);
             //objRex.Set("Hora",dateFormat.format(fechaHora));
             objRex.Set("FechaHora", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
+//            if(coordinates!=null){
             objRex.Set("coordenadas_marca", coordinates);
+//            }
+//            objRex.Set("coordenadas_marca", coordinatesLocal);
 
             Cursor verificarExistencia;
             verificarExistencia = objSqlite.doItBaby("select count(*) exist from mst_personas where IDEMPRESA = '01' AND NroDocumento = '"+s_dniMarcado+"'", null, "READ");
@@ -523,29 +499,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     @SuppressLint("Range")
     public void mostrarValoresRexActual() throws Exception {
         String contador = String.valueOf(i_Items) + "/" + String.valueOf(i_Capacidad);
-//        String q ="SELECT D.Item, D.Dni, RTRIM(P.Nombres) Nombres, RTRIM(P.Paterno) Paterno, RTRIM(P.Materno) Materno \n" +
-//                "FROM trx_ServiciosTransporte_Detalle D\n" +
-//                "INNER JOIN (\n" +
-//                "\tSELECT IdEmpresa, IdServicioTransporte, Max(Item) Item \n" +
-//                "\tFROM trx_ServiciosTransporte_Detalle \n" +
-//                "\tWHERE IdEmpresa=@IdEmpresa AND IdServicioTransporte=@IdServicioTransporte \n" +
-//                "\tGROUP BY IdEmpresa, IdServicioTransporte\n" +
-//                "\t) M ON D.IdEmpresa=M.IdEmpresa AND D.IdServicioTransporte=M.IdServicioTransporte AND D.Item=M.Item\n" +
-//                "INNER JOIN mst_Personas P ON D.Dni=P.NroDocumento";
-//        q = q.replace("@IdEmpresa",objRex_Detalle.Get("IdEmpresa"));
-//        q = q.replace("@IdServicioTransporte",objRex_Detalle.Get("IdServicioTransporte"));
-//        List<String> p = new ArrayList<>();
-//        p.add(objRex.Get("IdEmpresa"));
-//        p.add(objRex.Get("IdServicioTransporte"));
-//        p.add(objRex.Get("IdEmpresa"));
-//        p.add(objRex.Get("IdServicioTransporte"));
-//        Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER DATA XA MOSTRAR trx_ServiciosTransporte_Detalle"),p,"READ");
-//        c.moveToFirst();
         c025_txv_Contador.setText(contador);
-//        c025_txv_DniMarcado.setText(c.getString(c.getColumnIndex("NroDocumento")));
-//        c025_txv_NombreMarcado.setText(c.getString(c.getColumnIndex("Nombres")));
-//        c025_txv_ApellidoMarcado.setText(c.getString(c.getColumnIndex("Apellidos")));
-//        c025_et_IngresoDni.setText("");
 
         if(dniRestringido.equals("permitido")) {
             c025_txv_DniMarcado.setText(objRex.Get("NroDocumento"));
@@ -560,7 +514,6 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             c025_txv_NombreMarcado.setText("RESTRINGIDO");
             c025_txv_ApellidoMarcado.setText("");
         }
-//        c025_et_IngresoDni.setText("");
     }
 
     private void obtenerRexActual() throws Exception {
@@ -571,11 +524,6 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         p.add(s_IdRex);
         //objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte_Detalle X ID"),p,"READ"));
         objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER DATA XA MOSTRAR trx_ServiciosTransporte_Detalle"), p, "READ"));
-//        if (objRex.Get("IdServicioTransporte").length()==0){
-//            String fechaHoraActual;// = dateFormat.format(date);
-//            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            LocalDateTime now = LocalDateTime.now();
-//            fechaHoraActual = dtf.format(now);
         objRex.Set("IdEmpresa", sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
         objRex.Set("IdServicioTransporte", s_IdRex);
 //        }

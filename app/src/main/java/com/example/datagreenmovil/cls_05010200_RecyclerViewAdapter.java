@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -72,6 +73,14 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         return ultimoRegistro;
     }
 
+    public interface OnItemSelected {
+        void onItemSelected(String texto, boolean agregar);
+    }
+    private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
+    public void setOnItemSelected(cls_05010200_RecyclerViewAdapter.OnItemSelected listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -87,7 +96,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         TareoDetalle td = tareo.getDetalle().get(position);
         holder.c010_txv_Item.setText(String.valueOf(td.getItem()));
         holder.c010_txv_Dni.setText(td.getDni());
-        holder.c010_txv_Nombres.setText(td.getNombres());
+        holder.c010_txv_Nombres.setText(td.getNombres() != null ? td.getNombres() : "TRABAJADOR DESCONOCIDO" );
         s = String.format("(%s)",td.getIdCultivo().trim());
         holder.c010_txv_IdCultivo.setText(s);
         s = String.format("%s",td.getCultivo().trim());
@@ -246,8 +255,11 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 //        SETEAR LAS HORAS SI ENCUENTRA AMBAS
 
         holder.c010_lly_Principal.setOnLongClickListener(view -> {
-            holder.selected = !holder.selected;
-            holder.imageCheck.setVisibility(holder.selected ? View.VISIBLE : View.INVISIBLE);
+            if (listener != null){
+                holder.selected = !holder.selected;
+                holder.imageCheck.setVisibility(holder.selected ? View.VISIBLE : View.INVISIBLE);
+                listener.onItemSelected(holder.c010_txv_Item.getText().toString(), holder.selected);
+            }
             return true;
         });
 

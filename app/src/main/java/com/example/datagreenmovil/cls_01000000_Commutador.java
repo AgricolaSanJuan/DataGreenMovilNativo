@@ -48,8 +48,8 @@ public class cls_01000000_Commutador extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("objConfLocal",MODE_PRIVATE);
         validarPermisosAndroid();
         //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
-//        sharedPreferences.edit().putString("API_SERVER","192.168.30.94:8080").apply();
-        sharedPreferences.edit().putString("API_SERVER","56.10.3.24:8000").apply();
+        sharedPreferences.edit().putString("API_SERVER","192.168.30.94:8080").apply();
+//        sharedPreferences.edit().putString("API_SERVER","56.10.3.24:8000").apply();
 
         try {
 //            int w = Resources.getSystem().getDisplayMetrics().widthPixels;

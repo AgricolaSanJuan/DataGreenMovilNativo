@@ -471,13 +471,12 @@ public class TareosMainFragment extends Fragment {
                             try {
                                 List<String> pSqlite = new ArrayList<String>();
                                 JSONArray responses = response.getJSONArray("response");
-//                                LE DAMOS LA VUELTA AL ARRAY PARA EMPEZAR POR EL ID MÁXIMO
+//                                LE DAMOS LA VUELTA AL ARRAY PARA EMPEZAR POR EL ID MÁXIMO EN CASO TENGAMOS UNA LISTA DE ID
+//                                NUEVOS, PARA QUE ESTOS SE VAYAN ACTUALIZANDO DE ACUERDO A LA CORRELATIVIDAD
                                 responses = reverseJSONArray(responses);
                                 for(int i = 0; i < responses.length(); i++){
-
                                     JSONObject responseAnalytic = responses.getJSONObject(i);
                                     System.out.println(responseAnalytic);
-
                                     if(responseAnalytic.getString("message") != null && responseAnalytic.getString("message").equals("Se marcarán los tareos como transferidos por ya existir en la tabla")){
                                         pSqlite.add(responseAnalytic.getString("FechaHoraTransferencia"));
                                         pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));

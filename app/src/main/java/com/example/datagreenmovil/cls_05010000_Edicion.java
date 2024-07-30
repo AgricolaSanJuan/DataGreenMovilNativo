@@ -72,9 +72,15 @@ import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.Logica.ZXingScannerView;
 import com.example.datagreenmovil.Scanner.ui.ScannerViewModel;
+import com.example.datagreenmovil.ui.TareosMain.Dialogs.DialogDetalleTareo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.Result;
 import com.journeyapps.barcodescanner.BarcodeResult;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 //import com.example.datagreenmovil.Logica.InterfazDialog;
 
 public class cls_05010000_Edicion extends AppCompatActivity
@@ -84,7 +90,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     private ScaleGestureDetector scaleGestureDetector;
     private ZXingScannerView scannerView;
     private ScannerViewModel scannerViewModel;
-
+    private Context ctx;
     static ConexionSqlite objSqlite;
     ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
@@ -99,7 +105,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     HashMap<String, Tabla> hmTablas =new HashMap<>();
     //CONTROLES;
     private RecyclerView c007_rvw_Detalle;// = findViewById(R.id.c007_rvw_Detalle_v);
-    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera, fabToggleFlash, fabMostrarEscaner, fabDuplicar;
+    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera,  fabToggleFlash, fabMostrarEscaner, fabDuplicar, fabEditar;
     ConstraintLayout layoutEscaner;
     private AutoCompleteTextView c007_atv_NroDocumento;
     private AutoCompleteTextView c007_atv_NombreTrabajador;
@@ -107,12 +113,13 @@ public class cls_05010000_Edicion extends AppCompatActivity
             c007_txv_Consumidor_Key, c007_txv_Consumidor_Val, c007_txv_Observacion;
     TextView TotalRendimientos, TotalTrabajadores;
     private EditText c007_etx_Horas, c007_etx_Rdtos; //, etxObservaciones;
-
+    private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
     //VARIABLES;
     private String IdDocumentoActual = null;
     private Tareo tareoActual; //= new Tareo();
     //private Registro tareoActual;
-    private final TareoDetalle detalleActual=new TareoDetalle();
+    private TareoDetalle detalleActual=new TareoDetalle();
+    ArrayList<Integer> detallesSeleccionados;
 //    public int largoTextoSpinner = 13;
 
     public String s_Fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;);
@@ -128,6 +135,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     int cantidadInicial, cantidadFinal;
     public ConstraintLayout layoutHoras, layoutRendimientos;
     private FloatingActionButton fabAgregar;
+    JSONArray listaTrabajadores = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +143,11 @@ public class cls_05010000_Edicion extends AppCompatActivity
         setContentView(R.layout.v_05010000_edicion_007);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        ctx = this;
+
+        detallesSeleccionados = new ArrayList<>();
+
         scannerView = findViewById(R.id.scannerView);
-
-//        scannerView.setAspectTolerance(1.2f);
-//        scannerView.setFlash(flashState);
-//        scannerView.setFocusable(1.2f);
-
 
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
 
@@ -213,9 +220,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
             obtenerDataParaControles();
             cargarControles();
             setearControles();
-            mostrarValoresDocumentoActual();
-            manejarLayout();
-//            }
+            listarDetalles();
         }catch (Exception ex){
             Funciones.mostrarError(this,ex);
         }
@@ -234,7 +239,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
         scannerView.resume();
         scannerView.setResultHandler(result -> {
             Context ctx = this;
-
 //            ANALIZAMOS LA CADENA DE TEXTO PARA PODER DESENCRIPTARLA SI FUERA NECESARIO
             String resultadoDesencriptado = "";
             if(result.getText().length() == 10 && !(String.valueOf(result.getText().charAt(0)).equals("S"))) {
@@ -246,19 +250,12 @@ public class cls_05010000_Edicion extends AppCompatActivity
             }else{
                 resultadoDesencriptado = result.getText();
             }
-
-
             CountDownTimer countDownTimer = new CountDownTimer(1500, 1500) {
                 @Override
-                public void onTick(long millisUntilFinished) {
-
-                }
-
+                public void onTick(long millisUntilFinished) {}
                 @Override
                 public void onFinish() {
-//                scannerView.startCamera();
                     setHandlerScanner(ctx);
-
                 }
             };
             resultado(resultadoDesencriptado);
@@ -270,30 +267,66 @@ public class cls_05010000_Edicion extends AppCompatActivity
         // Se llama cuando se detecta un gesto de escala (zoom)
         float scaleFactor = detector.getScaleFactor();
         Log.i("ZOOM", "FINO");
-        // Realizar las operaciones necesarias con el factor de escala
-        // Puedes acceder a scaleFactor para obtener la escala actual
         return true;
     }
-
     @Override
     public boolean onScaleBegin(ScaleGestureDetector detector) {
         return true;
     }
-
     @Override
-    public void onScaleEnd(ScaleGestureDetector detector) {
-
-    }
+    public void onScaleEnd(ScaleGestureDetector detector) {}
     public void listarDetalles(){
         try {
-            obtenerDataParaControles();
-            cargarControles();
-            setearControles();
-            mostrarValoresDocumentoActual();
+            boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
             manejarLayout();
-
+            cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this ,objConfLocal,objSqlite,tareoActual);
+            adaptadorLista.setOnItemSelected(new cls_05010200_RecyclerViewAdapter.OnItemSelected() {
+                @Override
+                public void onItemSelected(String item, boolean agregar) {
+                    if(!!agregar){
+                        detallesSeleccionados.add(Integer.parseInt(item));
+                    }else {
+                        int valorComoInteger = Integer.valueOf(item);
+                        int indexToDelete = detallesSeleccionados.indexOf(valorComoInteger);
+                        detallesSeleccionados.remove(indexToDelete);
+                    }
+                }
+            });
+            c007_rvw_Detalle.setAdapter(adaptadorLista);
+            c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
+            mostrarValoresDocumentoActual();
+            Double sumaTotal = adaptadorLista.obtenerTotalRendimientos();
+            // Formatear el número con dos decimales
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            String sumaFormateada = decimalFormat.format(sumaTotal);
+            if(adaptadorLista.getItemCount() > 0){
+                String lastActividad, lastLabor, lastConsumidor, lastHoras, lastRendimientos;
+                lastActividad = adaptadorLista.getLastActividad();
+                lastLabor = adaptadorLista.getLastLabor();
+                lastConsumidor = adaptadorLista.getLastConsumidor();
+                lastHoras = adaptadorLista.getLastHoras();
+                lastRendimientos = adaptadorLista.getLastRendimientos();
+                c007_txv_Actividad_Key.setText(lastActividad);
+                c007_txv_Labor_Key.setText(lastLabor);
+                c007_txv_Consumidor_Key.setText(lastConsumidor);
+                if(!!modoPacking){
+                    c007_etx_Horas.setText("0.00");
+                    c007_etx_Rdtos.setText("0.00");
+                }else{
+                    c007_etx_Horas.setText(lastHoras);
+                    c007_etx_Rdtos.setText(lastRendimientos);
+                }
+            }
+            TotalRendimientos.setText(String.valueOf(sumaFormateada));
+            int cantidadRegistros = adaptadorLista.getItemCount();
+            TotalTrabajadores.setText(String.valueOf(cantidadRegistros));
+            adaptadorLista.getItemId(cantidadRegistros);
+            if(cantidadRegistros > 0){
+                layoutAbierto = false;
+                manejarLayout();
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Log.e("ERRORLISTAR", e.toString());
         }
     }
 
@@ -301,9 +334,8 @@ public class cls_05010000_Edicion extends AppCompatActivity
     public void onResume() {
         super.onResume();
         listarDetalles();
-//        scannerView.setResultHandler(this);
-//        scannerView.startCamera();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -311,22 +343,14 @@ public class cls_05010000_Edicion extends AppCompatActivity
     }
 
 //    @Override
-//    public void handleResult(Result rawResult) {
-//        // Aquí puedes manejar el resultado del escaneo
-//        Log.d("Scan Result", rawResult.getText());
-//        mScannerView.resumeCameraPreview(this); // Reanudar la vista previa de la cámara después del escaneo
-//    }
-
-//    @Override
     public void resultado(String barcodeValue) {
 
         if(
-//            c007_etx_Horas.length() > 0 &&
             c007_txv_Consumidor_Key.length() > 0 &&
             c007_txv_Actividad_Key.length() > 0 &&
             c007_txv_Labor_Key.length() > 0
         ){
-
+            boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
 
             c007_atv_NroDocumento.setText(barcodeValue.replaceAll("[^0-9]", ""));
 //            Swal.info(this, "ID", barcodeValue.replaceAll("[^0-9]", ""), 5000);
@@ -341,7 +365,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
                 if(switchTipoMarcacion != null && !switchTipoMarcacion.isChecked()){
                     String[] selectionArgs = {tareoActual.getId(), c007_atv_NroDocumento.getText().toString()};
                     cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE td inner join trx_tareos t WHERE td.Idtareo = ? AND td.Dni = ? AND td.salida = '';", selectionArgs);
-                    if(cVerificarSinSalida.getCount() > 0) {
+                    if(cVerificarSinSalida.getCount() > 0 && modoPacking) {
                         Swal.warning(this, "Cuidado", "El trabajador tiene un tareo sin salida, registra su salida y luego vuelve a intentarlo.", 5000);
                     }else{
                         //                if (!switchTipoMarcacion.isChecked()) {
@@ -375,7 +399,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
                         BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
                         Log.i("DIFERENCIAFINA", String.valueOf(horasRedondeadas.doubleValue()));
                         tareoDetalle.setHoras(horasRedondeadas.doubleValue());
-                        mostrarValoresDocumentoActual();
                     }else {
                         Swal.warning(this, "Cuidado", "No se encuentra un tareo de ingreso de este trabajador, pruebe a guardar el tareo y volver a intentar.", 2000);
                     }
@@ -422,7 +445,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                //objRex.Set("IdTurno", c007_txv_Turno_Key.getText().toString());
                 tareoActual.setIdTurno(c007_txv_Turno_Key.getText().toString());
             }
         });
@@ -520,6 +542,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
         //...
         c007_fab_Guardar = findViewById(R.id.c007_fab_Guardar_v);
         fabDuplicar = findViewById(R.id.c007_fab_Duplicar_v);
+        fabEditar = findViewById(R.id.c007_fab_Editar_v);
         c007_fab_AbrirCerrarCabecera = findViewById(R.id.c007_fab_AbrirCerrarCabecera_v);
 
         layoutEscaner = findViewById(R.id.layoutEscaner);
@@ -576,7 +599,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
                 try {
                     String dni = CryptorSJ.desencriptarCadena(code);
 //                    evaluarMarca(dni);
-                    Toast.makeText(this, "Código escaneado: " + dni, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, "Código escaneado: " + dni, Toast.LENGTH_LONG).show();
                     scannerViewModel.setScannedCode(null);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -585,13 +608,47 @@ public class cls_05010000_Edicion extends AppCompatActivity
             }
         });
 
+        fabEditar.setOnClickListener(view -> {
+            if(detallesSeleccionados.size() > 0){
+                Swal.customDialog(ctx, "editar",tareoActual, detallesSeleccionados, (result, sweetAlertDialog1) -> {
+//                    Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
+                }, (success, message)-> {
+                    if(!!success){
+                        Swal.success(ctx, "Correcto!", message, 1500);
+                        listarDetalles();
+                        detallesSeleccionados = new ArrayList<>();
+                    }else {
+                        Swal.error(ctx, "Oops!", message, 1500);
+                        detallesSeleccionados = new ArrayList<>();
+                    }
+                });
+            }else {
+                Swal.warning(ctx, "¡Cuidado!", "Selecciona al menos un trabajador antes.", 2000);
+            }
+        });
+
+        fabDuplicar.setOnClickListener(view -> {
+            if(detallesSeleccionados.size() > 0){
+                Swal.customDialog(ctx, "duplicar",tareoActual, detallesSeleccionados, (result, sweetAlertDialog1) -> {
+                }, (success, message)-> {
+                    if(!!success){
+                        Swal.success(ctx, "Correcto!", message, 1500);
+                        listarDetalles();
+                        detallesSeleccionados = new ArrayList<>();
+                    }else {
+                        Swal.error(ctx, "Oops!", message, 1500);
+                        detallesSeleccionados = new ArrayList<>();
+                    }
+                });
+            }else {
+                Swal.warning(ctx, "¡Cuidado!", "Selecciona al menos un trabajador antes.", 2000);
+            }
+        });
+
         fabMostrarEscaner.setOnLongClickListener(view -> {
-//            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_tareos);
-//            navController.navigate(R.id.nav_tareos_scanner);
             Swal.scanDialog(this, (resultado, sweetAlertDialog)->{
                 Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
             });
-
             return false;
         });
 
@@ -756,16 +813,25 @@ public class cls_05010000_Edicion extends AppCompatActivity
                         p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
                         p.add(detalleActual.getDni());
                         detalleActual.setIdPlanilla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER PLANILLA"), p, "READ", ""));
-                        detalleActual.setNombres(c007_atv_NombreTrabajador.getText().toString());
+
+//                        ESTO SE AGREGA PARA COMPROBAR QUE LA PERSONA QUE SE ESTÁ TAREANDO EXISTA EN LOS REGISTROS DEL TELÉFONO AL MOMENTO DE REALIZAR EL TAREO
+//                                EN CASO NO EXISTA, EL NOMBRE SERÁ AGREGADO COMO LA OBSERVACIÓN PARA QUE LO TENGA EN CUENTA EL ENCARGADO DE HACER
+//                                EL CRUCE DE INFORMACIÓN
+                        Cursor cpersona = objSqlite.doItBaby("select count(*) from mst_personas where nrodocumento = '"+detalleActual.getDni()+"'", null, "READ");
+                        cpersona.moveToFirst();
+                        if(cpersona.getInt(0) > 0){
+                            detalleActual.setNombres(c007_atv_NombreTrabajador.getText().toString());
+                        }else {
+                            detalleActual.setNombres("TRABAJADOR DESCONOCIDO");
+                            detalleActual.setObservacion(c007_atv_NombreTrabajador.getText().toString());
+                        }
 
 //                        INTENSIVO
 
                             if (validarDetalleTareo(detalleActual)) {
                                 tareoActual.agregarDetalle(detalleActual, this);
-                                cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this, objConfLocal, objSqlite, tareoActual);
-                                c007_rvw_Detalle.setAdapter(adaptadorLista);
-                                c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
-                                mostrarValoresDocumentoActual();
+                                Swal.success(ctx, "Correcto!", "Se ha agregado el tareo correctamente", 1500);
+                                listarDetalles();
                             } else {
                                 if (tipoEntrada.equals("lector")) {
                                     Swal.warning(this, "Aviso!", "Trabajador no encontrado, por favor, ingresa el nombre.", 3000);
@@ -779,11 +845,8 @@ public class cls_05010000_Edicion extends AppCompatActivity
                     }else{
                         Swal.warning(this, "Cuidado", "Ya existe el trabajador", 1500);
                     }
-
-//            } else {
-//                Swal.warning(this, "ERROR", "PERSONAL NO TIENE MARCA", 8000);
-//            }
-
+        detalleActual.setDni("");
+        detalleActual.setNombres("");
         c007_atv_NombreTrabajador.setText("");
         c007_atv_NroDocumento.setText("");
     }
@@ -830,10 +893,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
 
     private void cargarControles() {
         try{
-//            Funciones.cargarSpinner(this,spiTurnos, hmTablas.get("TURNOS"),0,1,objConfLocal,2);
-//            Funciones.cargarSpinner(this,spiCultivos, hmTablas.get("CULTIVOS"),0,1,objConfLocal,2);
-//            Funciones.cargarSpinner(this,spiActividades, hmTablas.get("ACTIVIDADES"),0,1,objConfLocal,2);
-//            Funciones.cargarSpinner(this,spiConsumidores, hmTablas.get("CONSUMIDORES"),0,1,objConfLocal,2);
             Funciones.cargarAutoCompleteTextView(this,c007_atv_NroDocumento,ClaveValor.obtenerValores(ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"),  0, 2)));
             Funciones.cargarAutoCompleteTextView(this,c007_atv_NombreTrabajador,ClaveValor.obtenerClaves(ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"),  0, 2)));
         }catch (Exception ex){
@@ -867,9 +926,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
         }catch (Exception ex){
             Log.e("ERROR", ex.toString());
             Swal.error(cls_05010000_Edicion.this, "Error", ex.toString(), 8000);
-//            StackTraceElement z = new Exception().getStackTrace()[0];
-////            String detalleError = z.getFileName() + "\n" + z.getMethodName() + "\n" + z.getLineNumber() + ": \n" + ex.getMessage();
-//            ex.printStackTrace();
         }
     }
 
@@ -926,65 +982,22 @@ public class cls_05010000_Edicion extends AppCompatActivity
 
             s_Fecha=String.format(tareoActual.getFecha().toString(), "yyyy-MM-dd");
             c007_txv_Fecha.setText(Funciones.malograrFecha(s_Fecha));
-
-//        etxObservaciones.setText(tareoActual.getObservaciones());
-            cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this ,objConfLocal,objSqlite,tareoActual);
-            c007_rvw_Detalle.setAdapter(adaptadorLista);
-            c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
-
-            Double sumaTotal = adaptadorLista.obtenerTotalRendimientos();
-
-            // Formatear el número con dos decimales
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            String sumaFormateada = decimalFormat.format(sumaTotal);
-
-            if(adaptadorLista.getItemCount() > 0){
-                String lastActividad, lastLabor, lastConsumidor, lastHoras, lastRendimientos;
-                lastActividad = adaptadorLista.getLastActividad();
-                lastLabor = adaptadorLista.getLastLabor();
-                lastConsumidor = adaptadorLista.getLastConsumidor();
-                lastHoras = adaptadorLista.getLastHoras();
-                lastRendimientos = adaptadorLista.getLastRendimientos();
-
-                c007_txv_Actividad_Key.setText(lastActividad);
-                c007_txv_Labor_Key.setText(lastLabor);
-                c007_txv_Consumidor_Key.setText(lastConsumidor);
-
-                if(!!modoPacking){
-                    c007_etx_Horas.setText("0.00");
-                    c007_etx_Rdtos.setText("0.00");
-                }else{
-                    c007_etx_Horas.setText(lastHoras);
-                    c007_etx_Rdtos.setText(lastRendimientos);
-                }
-            }
-
-            TotalRendimientos.setText(String.valueOf(sumaFormateada));
-            int cantidadRegistros = adaptadorLista.getItemCount();
-            TotalTrabajadores.setText(String.valueOf(cantidadRegistros));
-            adaptadorLista.getItemId(cantidadRegistros);
-
-            if(cantidadRegistros > 0){
-                layoutAbierto = false;
-                manejarLayout();
-            }
         }
     }
     public void eliminarDetalle(int item){
         try{
             if (tareoActual.getIdEstado().equals("PE")){
                 tareoActual.eliminarItemDetalle(item);
-                Funciones.notificar(this, "Detalle elimiado: " + item);
                 tareoActual.guardarDetalle(objSqlite);
-                cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this ,objConfLocal,objSqlite,tareoActual);
-                c007_rvw_Detalle.setAdapter(adaptadorLista);
-                c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
-                //mostrarValoresDocumentoActual();
+                listarDetalles();
+                Funciones.notificar(this, "Detalle elimiado: " + item);
             } else{
                 Funciones.notificar(this,"El tareo no cuenta con el estado PENDIENTE, imposible actualizar.");
             }
         }catch (Exception ex){
             Funciones.notificar(this,ex.getMessage());
+        }finally {
+            detallesSeleccionados = new ArrayList<>();
         }
     }
 
@@ -1045,7 +1058,6 @@ public class cls_05010000_Edicion extends AppCompatActivity
                         }finally {
                             listarDetalles();
                         }
-                        mostrarValoresDocumentoActual();
                         popUp.dismiss();
                     }
                 });

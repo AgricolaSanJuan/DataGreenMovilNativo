@@ -10,7 +10,7 @@ android {
         minSdk 24
         targetSdk 32
         versionCode 8
-        versionName "1.7.2"
+        versionName "1.7.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -93,6 +93,9 @@ dependencies {
 
 //    SWEET ALERT
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
+
+//    LOCATION SERVICES
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
 
 
 }

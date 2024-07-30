@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="ui.TareosMain.Dialogs.DialogDetalleTareo">
+<!--    ACTIVIDAD-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llyPrincipalActividad"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@id/llyPrincipalLabor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyinputsActividad"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lblddtActividadValue">
+
+            <TextView
+                android:id="@+id/lblddtActividad"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Actividad:"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvddtActividad"
+                style="@style/textViewEdicionItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblddtActividad"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/lblddtActividadValue"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="."
+            app:layout_constraintEnd_toEndOf="@+id/llyinputsActividad"
+            app:layout_constraintStart_toStartOf="@+id/llyinputsActividad"
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsActividad"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    LABOR-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llyPrincipalLabor"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@id/llyPrincipalConsumidor"
+        app:layout_constraintEnd_toEndOf="@+id/llyPrincipalActividad"
+        app:layout_constraintStart_toStartOf="@+id/llyPrincipalActividad"
+        app:layout_constraintTop_toBottomOf="@id/llyPrincipalActividad">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyinputsLabor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lblddtLaborValue">
+
+            <TextView
+                android:id="@+id/lblddtLabor"
+                style="@style/textViewEdicionItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Labor:"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvddtLabor"
+                style="@style/textViewEdicionItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblddtLabor"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/lblddtLaborValue"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="."
+            app:layout_constraintEnd_toEndOf="@+id/llyinputsLabor"
+            app:layout_constraintStart_toStartOf="@+id/llyinputsLabor"
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsLabor"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    CONSUMIDOR-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llyPrincipalConsumidor"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@id/llyPrincipalHoras"
+        app:layout_constraintEnd_toEndOf="@+id/llyPrincipalActividad"
+        app:layout_constraintStart_toStartOf="@+id/llyPrincipalActividad"
+        app:layout_constraintTop_toBottomOf="@+id/llyPrincipalLabor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyinputsConsumidor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lblddtConsumidorValue"
+            tools:layout_editor_absoluteX="5dp">
+
+            <TextView
+                android:id="@+id/lblddtConsumidor"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Consumidor:"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvddtConsumidor"
+                style="@style/textViewEdicionItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="."
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblddtConsumidor"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/lblddtConsumidorValue"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="."
+            app:layout_constraintEnd_toEndOf="@+id/llyinputsConsumidor"
+            app:layout_constraintStart_toStartOf="@+id/llyinputsConsumidor"
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsConsumidor"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    HORAS-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llyPrincipalHoras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="14sp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/llyPrincipalRendimientos"
+        app:layout_constraintEnd_toEndOf="@+id/llyPrincipalActividad"
+        app:layout_constraintStart_toStartOf="@+id/llyPrincipalActividad"
+        app:layout_constraintTop_toBottomOf="@+id/llyPrincipalConsumidor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyinputsHoras"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/lblddtHoras"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Horas:"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/txvddtHoras"
+                style="@style/textViewEdicionItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="0.00"
+                android:inputType="numberDecimal"
+                android:padding="2dp"
+                android:textAlignment="viewEnd"
+                android:textColorHint="@color/blancoOficial"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblddtHoras"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    RENDIMIENTOS-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llyPrincipalRendimientos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/fabConfirm"
+        app:layout_constraintEnd_toEndOf="@+id/llyPrincipalActividad"
+        app:layout_constraintStart_toStartOf="@+id/llyPrincipalActividad"
+        app:layout_constraintTop_toBottomOf="@+id/llyPrincipalHoras">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llyinputsRendimientos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_redondeado_gris_transparente"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="5dp">
+
+            <TextView
+                android:id="@+id/lblddtRendimientos"
+                style="@style/textViewEdicionItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Rendimientos:"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/txvddtRendimientos"
+                style="@style/textViewEdicionItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="0.00"
+                android:inputType="numberDecimal"
+                android:padding="2dp"
+                android:textAlignment="viewEnd"
+                android:textColorHint="@color/blancoOficial"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblddtRendimientos"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:clickable="true"
+        android:src="@drawable/ic_check"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llyPrincipalRendimientos"
+        app:maxImageSize="30dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

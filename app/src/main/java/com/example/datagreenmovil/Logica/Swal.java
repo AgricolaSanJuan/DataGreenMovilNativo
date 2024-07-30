@@ -1,21 +1,25 @@
 package com.example.datagreenmovil.Logica;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.view.PreviewView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Scanner.ui.ScannerFragment;
+import com.example.datagreenmovil.databinding.DialogDetalleTareoBinding;
+import com.example.datagreenmovil.ui.TareosMain.Dialogs.DialogDetalleTareo;
 
-import javax.xml.transform.Result;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -171,25 +175,27 @@ public class Swal {
     sweetAlertDialog.show();
   }
 
+  public interface ActionResult{
+    void onActionResult(String result, SweetAlertDialog sweetAlertDialog);
+  }
 
-//  public static void scanDialog(Context ctx, ResultScan resultScan){
-//    String resultado = "";
-//    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ctx, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-//    View custom = LayoutInflater.from(ctx).inflate(R.layout.fragment_scanner, null);
-//
-//    // Inicializa la vista después de inflar el layout
-//    PreviewView previewView = custom.findViewById(R.id.viewFinder);
-//    // Configura la cámara o cualquier otra lógica que necesitas para PreviewView
-//
-//    sweetAlertDialog.setCustomView(custom);
-//    sweetAlertDialog.hideConfirmButton();
-//
-//    if (resultScan != null) {
-//      resultScan.onResultScan(resultado, sweetAlertDialog);
-//    }
-//
-//    sweetAlertDialog.show();
-//  }
+  public interface DismissDialog{
+    void onDismissDialog(boolean success, String message);
+  }
+
+  public static void customDialog(Context ctx, String accion, Tareo tareoActual, ArrayList<Integer> listaTrabajadores, ActionResult actionResult, DismissDialog dismissDialog){
+    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ctx, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+    View custom = LayoutInflater.from(ctx).inflate(R.layout.dialog_detalle_tareo, null);
+
+    DialogDetalleTareoBinding binding = DialogDetalleTareoBinding.bind(custom);
+
+    // Llama al método para configurar la vista
+    DialogDetalleTareo.configureView(binding, accion, tareoActual, listaTrabajadores, actionResult, sweetAlertDialog, dismissDialog);
+
+    sweetAlertDialog.setCustomView(custom);
+    sweetAlertDialog.hideConfirmButton();
+    sweetAlertDialog.show();
+  }
 
 
 }

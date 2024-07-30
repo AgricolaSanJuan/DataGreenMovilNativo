@@ -215,14 +215,10 @@ public class Tareo {
     }
     public void agregarDetalle(TareoDetalle detalle, Context ctx) {
         TareoDetalle aux = new TareoDetalle(detalle);
-
             this.detalle.add(aux);
             this.setTotalHoras(this.getTotalHoras() + aux.getHoras());
             this.setTotalRdtos(this.getTotalRdtos() + aux.getRdtos());
             this.setTotalDetalles(this.getTotalDetalles()+1);
-            Swal.success(ctx, "Correcto!", "Se ha agregado el tareo correctamente", 1500);
-
-
     }
     public boolean eliminarItemDetalle(int item){
         TareoDetalle aux = new TareoDetalle();

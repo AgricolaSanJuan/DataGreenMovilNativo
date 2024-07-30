@@ -484,7 +484,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
             Log.i("Presionado", String.valueOf(touchCounter));
             if (touchCounter == 3) {
                 etxHost.setText("192.168.30.99");
-                etxInstancia.setText("MSSQLSERVER17");
+                etxInstancia.setText("");
                 etxNombreBD.setText("DataGreenMovil");
                 etxUsuario.setText("sa");
                 etx_Password.setText("A20200211sj");

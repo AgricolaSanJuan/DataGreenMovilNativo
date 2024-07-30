@@ -329,4 +329,7 @@ public class TareoDetalle {
         objSqlite.doItBaby(objSqlite.obtQuery("ACTUALIZAR SUBTOTALES trx_Tareos"),p,"WRITE");
         return true;
     }
+
+    public void guardar() {
+    }
 }

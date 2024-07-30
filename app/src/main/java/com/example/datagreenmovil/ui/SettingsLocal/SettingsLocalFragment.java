@@ -143,9 +143,9 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                objSqlite = new ConexionSqlite(context, objConfLocal);
                 editor.putString("EQUIPO_CONFIGURADO", "TRUE").apply();
-                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
+                objSqlite = new ConexionSqlite(context, objConfLocal);
+//                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
                     editor.putString("RED_HOST",binding.c002EtxHostV.getText().toString()).apply();
                     editor.putString("API_SERVER",binding.c002EtxApiServerV.getText().toString()).apply();
@@ -325,7 +325,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
             if (touchCounter == 3) {
                 etxHost.setText("192.168.30.99");
                 etxApiServer.setText("192.168.30.94:8080");
-                etxInstancia.setText("MSSQLSERVER17");
+                etxInstancia.setText("");
                 etxNombreBD.setText("DataGreenMovil");
                 etxUsuario.setText("sa");
                 etx_Password.setText("A20200211sj");

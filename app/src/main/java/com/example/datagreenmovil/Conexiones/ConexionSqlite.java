@@ -47,14 +47,14 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
   SharedPreferences sharedPreferences;
   private static final String DATABASE_NOMBRE = "DataGreenMovil.db"; //="Prueba.db";
   //private static  final String DATABASE_TABLA="Tareos";
-  private static ConfiguracionLocal objConfLocal;
+//  private static ConfiguracionLocal objConfLocal;
   //    private static Context objContext;
 
   public ConexionSqlite(@Nullable Context context, ConfiguracionLocal cl) {
     super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
     //objConfLocal = new ConfiguracionLocal();
     //        SqliteDB =;
-    objConfLocal = cl;
+//    objConfLocal = cl;
     sharedPreferences = context.getSharedPreferences("objConfLocal", context.MODE_PRIVATE);
   }
 
@@ -724,7 +724,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         p.add(f.Item(0));
         //p.add(f.Item(1));
         Cursor c = doItBaby(obtQuery("EXISTE VALOR trx_ConfiguracionesDispositivosMoviles"), p, "READ");
-        c.moveToFirst();
+        c.moveToNext();
         if (c.getString(0).equals("TRUE")) {
           p.clear();
           p.add(f.Item(1)); // valor

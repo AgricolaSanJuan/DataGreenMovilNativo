@@ -748,6 +748,8 @@
             android:id="@+id/c007_fab_volver_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabSize="mini"
+            app:maxImageSize="30dp"
             android:clickable="true"
             android:onClick="onClick"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -760,7 +762,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:onClick="onClick"
+            app:fabSize="mini"
+            app:maxImageSize="30dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -771,13 +775,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:onClick="duplicarRegistros"
-            android:visibility="invisible"
+            app:maxImageSize="30dp"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/i_save" />
+            app:srcCompat="@drawable/duplicate" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c007_fab_Editar_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:clickable="true"
+            android:src="@drawable/edit"
+            app:fabSize="mini"
+            app:maxImageSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/c007_fab_Guardar_v"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
