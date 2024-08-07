@@ -48,7 +48,10 @@ public class cls_01000000_Commutador extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("objConfLocal",MODE_PRIVATE);
         validarPermisosAndroid();
         //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
+        Context appContext = getApplicationContext();
+        String nombreApp = appContext.getString(R.string.app_name);
         sharedPreferences.edit().putString("API_SERVER","192.168.30.94:8080").apply();
+        sharedPreferences.edit().putString("NOMBRE_APP", nombreApp).apply();
 //        sharedPreferences.edit().putString("API_SERVER","56.10.3.24:8000").apply();
 
         try {
@@ -59,6 +62,10 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             objSqlite = new ConexionSqlite(this, null);
             objConfLocal = new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal());
             objSqlite = new ConexionSqlite(this, objConfLocal); //getApplicationContext()
+
+//            AQUI SE SETEA LA VERSION DE SQLITE
+            sharedPreferences.edit().putString("VERSION_DB_SQLITE", objSqlite.obtenerVersionSQLITE()).apply();
+            sharedPreferences.edit().putString("VERSION_DB_DISPONIBLE", objSqlite.obtenerVersionSQLITE()).apply();
             //PENDIENTE: REDEFINIR CONCEPTO DE QUERYS -> LIST<QUERY>
             //SE ESPERA PODER USAR objQuerys.Query("NOMBRE DE QUERY") -> RETORNA STRING
             objQuerys = new Querys(objSqlite.obtenerQuerys());

@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -156,7 +157,7 @@ public class cls_03000000_Login extends AppCompatActivity {
                     try {
                         intentaLogin();
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        Log.e("SQLException","ERROR AL SINCRONIZAR DATA DE USUARIO A SQL");
                     }
                 }
                 return false;
@@ -287,7 +288,6 @@ public class cls_03000000_Login extends AppCompatActivity {
     }
     public void intentaLogin() throws SQLException {
 
-
         try{
             String usuario = etx_Usuario.getText().toString(), password = Funciones.generarMD5(etx_Usuario.getText().toString() + etx_Password.getText().toString());
             List<String> p = new ArrayList<String>();
@@ -323,6 +323,8 @@ public class cls_03000000_Login extends AppCompatActivity {
                     SyncDBSQLToSQLite.sincronizarDatosUsuario(this);
                     iniciarSesion(validacion.getString(2),validacion.getString(3), false);
                     abrirMenuModulos();
+                }else{
+                    Funciones.notificar(this, "Error, usuario o clave incorrectas.");
                 }
             }
         }catch (Exception ex){
@@ -369,10 +371,6 @@ public class cls_03000000_Login extends AppCompatActivity {
             Funciones.mostrarError(this,ex);
         }
     }
-
-
-
-//
 
     private void setearSpinnerEmpresas() {
         try{

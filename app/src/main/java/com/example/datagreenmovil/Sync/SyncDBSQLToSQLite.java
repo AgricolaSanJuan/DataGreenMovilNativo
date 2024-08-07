@@ -87,43 +87,58 @@ public class SyncDBSQLToSQLite {
 //        return tableName;
     }
 
-    public static void sincronizarDatosUsuario(Context ctx) throws SQLException {
-        try {
-            // Crear un ExecutorService con un tiempo de espera de 10 segundos
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Future<Connection> future = executor.submit(() -> {
+    public static void sincronizarDatosUsuario(Context ctx) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        executor.execute(() -> {
+            Connection connection = null;
+            SQLiteDatabase database = null;
+            try {
                 SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
                 String redHost = sharedPreferences.getString("RED_HOST", "!RED_HOST");
                 String redInstancia = sharedPreferences.getString("RED_INSTANCIA", "!RED_INSTANCIA");
                 String redNombreDB = sharedPreferences.getString("RED_NOMBRE_DB", "RED_NOMBRE_DB");
                 String redUsuario = sharedPreferences.getString("RED_USUARIO", "RED_USUARIO");
                 String redPassword = sharedPreferences.getString("RED_PASSWORD", "RED_PASSWORD");
-                String StringConnection = "jdbc:jtds:sqlserver://" + redHost + ";instance=" + redInstancia + ";databaseName=" + redNombreDB + ";user=" + redUsuario + ";password=" + redPassword + ";";
+                String stringConnection = "jdbc:jtds:sqlserver://" + redHost + ";instance=" + redInstancia + ";databaseName=" + redNombreDB + ";user=" + redUsuario + ";password=" + redPassword + ";";
 
-                return DriverManager.getConnection(StringConnection);
-            });
+                connection = DriverManager.getConnection(stringConnection);
 
-            // Esperar hasta 10 segundos para la conexión
-            Connection connection = future.get(2, TimeUnit.SECONDS);
+                if (connection != null) {
+                    Statement statement = connection.createStatement();
+                    database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
+                    Cursor cursor = database.rawQuery("SELECT * from mst_usuarios where suma != '';", null);
 
-            // Verificar si la conexión es exitosa
-            if (connection != null) {
-                Statement statement = connection.createStatement();
+                    while (cursor.moveToNext()) {
+                        String suma = cursor.getString(8);
+                        String id = cursor.getString(1);
+                        statement.execute("UPDATE DataGreenMovil..mst_usuarios SET Suma = '" + suma + "' WHERE Id = '" + id + "'");
+                    }
 
-                SQLiteDatabase database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
-                Cursor c;
-                c = database.rawQuery("SELECT * from mst_usuarios where suma != '';", null);
-                while (c.moveToNext()) {
-                    statement.execute("UPDATE DataGreenMovil..mst_usuarios SET Suma = '" + c.getString(8) + "' WHERE Id = '" + c.getString(1) + "'");
+                    cursor.close();
+                } else {
+                    // Manejar caso de conexión fallida
+                    // Log.e("Sync", "Connection to the SQL Server failed");
                 }
-            } else {
-                // Manejar caso de conexión fallida
+            } catch (Exception e) {
+                // Manejar excepciones
+                // Log.e("Sync", "Error while synchronizing data", e);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        // Log.e("Sync", "Error closing the SQL connection", e);
+                    }
+                }
+                if (database != null) {
+                    database.close();
+                }
+                executor.shutdown();
             }
-
-        } catch (Exception e) {
-            // Manejar excepciones
-        }
+        });
     }
+
     public void sincronizarData(Context ctx, String tableName) throws SQLException {
 
         LocalDateTime now = LocalDateTime.now();

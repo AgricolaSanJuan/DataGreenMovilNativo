@@ -290,7 +290,11 @@ public class ConexionBD implements Serializable {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            String cc="jdbc:jtds:sqlserver://" + confLocal.getString("RED_HOST","!RED_HOST") +";instance="+ confLocal.getString("RED_INSTANCIA","!RED_INSTANCIA") + ";databaseName="+ confLocal.getString("RED_NOMBRE_DB","!RED_NOMBRE_DB") +";user="+ confLocal.getString("RED_USUARIO","!RED_USUARIO") +";password="+ confLocal.getString("RED_PASSWORD","!RED_PASSWORD") +";";
+            String cc = "jdbc:jtds:sqlserver://" + confLocal.getString("RED_HOST","!RED_HOST")
+                    + ";instance=" + confLocal.getString("RED_INSTANCIA","!RED_INSTANCIA")
+                    + ";databaseName=" + confLocal.getString("RED_NOMBRE_DB","!RED_NOMBRE_DB")
+                    + ";user=" + confLocal.getString("RED_USUARIO","!RED_USUARIO")
+                    + ";password=" + confLocal.getString("RED_PASSWORD","!RED_PASSWORD") +";";
             //String c2="jdbc:jtds:sqlserver://192.168.30.99;instance=MSSQLSERVER17;databaseName=DataGreen;user=sa;password=A20200211sj";
             //Host+";instanceName="+inst + ;trustServerCertificate=false;integratedSecurity=true;authentication=SqlPassword;
             //Toast.makeText(getApplicationContext(),cc,Toast.LENGTH_LONG).show();

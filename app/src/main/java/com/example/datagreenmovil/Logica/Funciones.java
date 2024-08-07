@@ -55,6 +55,7 @@ import java.math.BigInteger;
 import java.net.NetworkInterface;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -797,6 +798,7 @@ public class Funciones {
                                            TextView txv_TituloVentana,
                                            TextView txv_PushRed
   ) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
     //PUSH TITULO VENTANA
     if (("EXISTE_DATA_PENDIENTE").equals("TRUE")) {
       txv_TituloVentana.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.black, null));
@@ -806,8 +808,8 @@ public class Funciones {
       txv_TituloVentana.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     }
     //PUSH ESTADO RED
-    txv_PushRed.setText(cl.get("ESTADO_RED"));
-    if (cl.get("ESTADO_RED").equals("ONLINE")) {
+    txv_PushRed.setText(sharedPreferences.getString("ESTADO_RED", "!ESTADO_RED"));
+    if (sharedPreferences.getString("ESTADO_RED", "!ESTADO_RED").equals("ONLINE")) {
       txv_PushRed.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.verde, null));
       txv_PushRed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.grisOscuro, null));
     } else {
@@ -837,7 +839,7 @@ public class Funciones {
 //            txv_PushVersionDataBase.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.blancoOficial, null));
 //        }
     //IDENTIFICADOR
-    String identificador = cl.get("ID_DISPOSITIVO") + " " + cl.get("NOMBRE_USUARIO_ACTUAL");
+    String identificador = sharedPreferences.getString("ID_DISPOSITIVO", "!ID_DISPOSITIVO") + " " + sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL", "!NOMBRE_USUARIO_ACTUAL");
     txv_PushIdentificador.setText(identificador);
   }
 

@@ -99,6 +99,11 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
   //        }
   //    }
 
+  public String obtenerVersionSQLITE(){
+    SQLiteDatabase SqliteDB = getReadableDatabase();
+    int versionDB = SqliteDB.getVersion();
+    return String.valueOf(versionDB);
+  }
   //PENDIENTE:MEJORAR ESTE PROCEDIMIENTO PARA QUE RECONOZCA CORRECTAMENTE EL TIPO DE EJECUCION Y TIPO DE DATO RETORNADO
   public Cursor doItBaby(String q, List<String> p, String crud) throws Exception {
     try {
@@ -722,10 +727,10 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         p.add(sharedPreferences.getString("IMEI","!IMEI"));
         p.add(IdEmpresa);
         p.add(f.Item(0));
-        //p.add(f.Item(1));
         Cursor c = doItBaby(obtQuery("EXISTE VALOR trx_ConfiguracionesDispositivosMoviles"), p, "READ");
         c.moveToNext();
-        if (c.getString(0).equals("TRUE")) {
+        String evaluador = c.getString(0);
+        if (evaluador.equals("TRUE")) {
           p.clear();
           p.add(f.Item(1)); // valor
           p.add("AC"); //idestado
@@ -750,6 +755,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         p.clear();
       }
     } catch (Exception ex) {
+      Log.e("ERROR AL GUARDAR", ex.toString());
       throw ex;
     }
   }

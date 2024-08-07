@@ -3,6 +3,8 @@ package com.example.datagreenmovil;
 import android.app.Dialog;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,6 +38,7 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
     Dialog dlg_PopUp;
     TextView c015_txv_PushIdentificador, c015_txv_PushTituloVentana, c015_txv_PushRed, c015_txv_NombreApp, c015_txv_PushVersionApp, c015_txv_PushVersionDataBase;
     AlertDialog.Builder builderDialogoCerrarSesion;
+    SharedPreferences sharedPreferences;
 
     //VARIABLES ESPECIFICAS
     String s_Fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), s_IdLinea, s_IdCultivo, s_IdVariedad, s_IdEmpaque;
@@ -81,6 +84,7 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
             objSqlite = new ConexionSqlite(this,objConfLocal);
 //            objConfLocal.set("ULTIMA_ACTIVIDAD","NuevoPallet");
             objConexion = new ConexionBD(this);
+            sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
 
             referenciarControles();
             obtenerDataParaControles();
@@ -327,7 +331,9 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
 
         try{
             List<String> p = new ArrayList<String>();
-            p.add(objConfLocal.get("ID_EMPRESA"));
+//            p.add(objConfLocal.get("ID_EMPRESA"));
+            p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
+//            sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA");
             arl_Lineas = objConexion.arrayParaXaPopUpBuscarEnLista(objConexion.doItBaby("sp_Dgm_Gen_ObtenerLineas",p));
             arl_Cultivos = objConexion.arrayParaXaPopUpBuscarEnLista(objConexion.doItBaby("sp_Dgm_Gen_ObtenerCultivosPacking",p));
 //            arl_Variedades = objConexion.arrayParaXaPopUpBuscarEnLista(objConexion.doItBaby("sp_Dgm_Gen_ObtenerLineas",p));
@@ -626,7 +632,8 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
                 p.add(s_IdVariedad);
                 p.add(s_IdEmpaque);
                 p.add(s_IdLinea);
-                p.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
+//                p.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
+                p.add(sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL"));
                 p.add(s_Fecha);
                 ResultSet rs = objConexion.doItBaby("DataGreen..sp_Dg_Packing_Movimientos_LecturaEficiencias_CrearPallet",p);
                 //hmDataParaControles.put("EMPAQUES",ClaveValor.getArrayClaveValor(new MiData(rs),0,2) );

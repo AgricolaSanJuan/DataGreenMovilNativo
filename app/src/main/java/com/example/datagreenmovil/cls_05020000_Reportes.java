@@ -455,10 +455,11 @@ public class cls_05020000_Reportes extends AppCompatActivity {
 
     private void obtenerReporte() {
         try{
+            String idUsuarioActual = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
             List<String> p = new ArrayList<>();
             p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
             p.add(fechaSeleccionada);
-            p.add(idSupervisorSeleccionado);
+            p.add(idUsuarioActual);
             Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 1"),p,"READ");
             inflarRecyclerView1(c);
             c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 2"),p,"READ");

@@ -754,6 +754,7 @@ public class TareosMainFragment extends Fragment {
             p.add(s_ListarIdEstado);
             p.add(s_ListarDesde);
             p.add(s_ListarHasta);
+            p.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
             Log.i("PARAMS",p.toString());
             c_Registros = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_Tareos X ESTADO Y RANGO FECHA"), p, "READ");
             if (c_Registros.moveToFirst()){

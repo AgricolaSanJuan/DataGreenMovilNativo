@@ -157,9 +157,21 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onClick"
+                android:fontFamily="@font/monoespaciada_principal"
                 android:text="@string/btn_login"
                 style="@style/buttonSuccess"
                 android:textSize="24sp" />
+
+            <CheckBox
+                android:id="@+id/cbxRecordarCredenciales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:fontFamily="@font/monoespaciada_principal"
+                android:text="Recordar credenciales"
+                android:textAlignment="center"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -169,18 +181,7 @@
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/monoespaciada_principal"
                 android:onClick="cambiarContrasenia"
-                android:text="Olvidé mi contraseña"
-                android:visibility="invisible" />
-
-            <CheckBox
-                android:id="@+id/cbxRecordarCredenciales"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="Recordar credenciales"
-                android:textAlignment="center"
-                android:visibility="visible" />
+                android:text="Olvidé mi contraseña"/>
 
         </LinearLayout>
 

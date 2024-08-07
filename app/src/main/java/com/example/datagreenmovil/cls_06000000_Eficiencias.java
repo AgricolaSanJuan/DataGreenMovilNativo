@@ -1,6 +1,7 @@
 package com.example.datagreenmovil;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +33,7 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.security.PrivilegedAction;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,6 +47,8 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
     //    ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
     ConexionBD objSql;
+
+    SharedPreferences sharedPreferenes;
 
     //TextView txv_PushIdentificador, txv_TituloVentana, txv_PushRed;
     TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
@@ -90,6 +94,8 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             if(getIntent().getExtras()!=null){
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
             }
+
+            sharedPreferenes = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
 //            objSql = new ConexionBD(objConfLocal);
             objSqlite = new ConexionSqlite(this,objConfLocal);
 //            objConfLocal.set("ULTIMA_ACTIVIDAD","Eficiencias");
@@ -641,7 +647,8 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
         try{
             List<String> p = new ArrayList<String>();
             p.add(idPalletActual);
-            p.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
+            p.add(sharedPreferenes.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL"));
+//            p.add(objConfLocal.get("ID_USUARIO_ACTUAL"));
             ResultSet rs = objSql.doItBaby("sp_Dgm_Gen_CerrarPallet",p);
 //            if (!rs.next()) {
 //                Toast.makeText(cls_06000000_Eficiencias.super.getBaseContext(),"ResultSet Vacio.",Toast.LENGTH_LONG).show();
@@ -673,7 +680,8 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             pText=pText+","+codEmp;
             pText=pText+","+"fechahora";
             pText=pText+","+ idLinea;
-            pText=pText+","+objConfLocal.get("ID_USUARIO_ACTUAL");
+//            pText=pText+","+objConfLocal.get("ID_USUARIO_ACTUAL");
+            pText=pText+","+sharedPreferenes.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
 
             List<String> p = new ArrayList<String>();
             p.add(pText);
@@ -1034,7 +1042,8 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             List<String> p = new ArrayList<String>();
             p.add(s_fecha);
             p.add(s_Estado);
-            p.add(objConfLocal.get(("ID_USUARIO_ACTUAL")));
+//            p.add(objConfLocal.get(("ID_USUARIO_ACTUAL")));
+            p.add(sharedPreferenes.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL"));
 //            Tabla t = new Tabla(objSql.doItBaby("sp_Dgm_Gen_ObtenerPallets",p));
             //arl_Pallets = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"),p,"READ"));
             arl_Pallets = objSql.arrayParaXaPopUpBuscarEnLista(objSql.doItBaby("sp_Dgm_Gen_ObtenerPallets",p));

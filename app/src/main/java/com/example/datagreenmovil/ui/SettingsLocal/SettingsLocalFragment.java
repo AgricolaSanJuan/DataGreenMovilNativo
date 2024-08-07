@@ -165,7 +165,8 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                     navController.navigate(R.id.nav_settings_sync);
                     Swal.info(context, "Vamos allá!", "Ahora debes sincronizar la información.",5000);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+//                    throw new RuntimeException(e);
+                    Swal.error(context, "Oops!", "Error al guardar la información, reintente.", 5000);
                 }
             }
         });
@@ -189,7 +190,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         clAux = new ConfiguracionLocal();
         objConfLocal = clAux;
         objSql = new ConexionBD(context);
-        sharedPreferences = getActivity().getSharedPreferences("objConfLocal", context.MODE_PRIVATE);
+        sharedPreferences = ctxOrigin.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
@@ -261,9 +262,8 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 clAux.set("RED_CONFIGURADA", "TRUE");
                 clAux.set("ESTADO_RED", "ONLINE");
 //                migrar progresivamente a sharedPreferences
-                editor.putString("RED_CONFIGURADA","TRUE");
-                editor.putString("ESTADO_RED","ONLINE");
-                editor.apply();
+                editor.putString("RED_CONFIGURADA","TRUE").apply();
+                editor.putString("ESTADO_RED","ONLINE").apply();
                 objConfLocal = clAux;
                 objSql = cnAux;
                 status = true;
@@ -271,8 +271,8 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 clAux.set("RED_CONFIGURADA", "FALSE");
                 clAux.set("ESTADO_RED", "OFFLINE");
 //                migrar progresivamente a sharedPreferences
-                editor.putString("RED_CONFIGURADA","FALSE");
-                editor.putString("ESTADO_RED","OFFLINE");
+                editor.putString("RED_CONFIGURADA","FALSE").apply();
+                editor.putString("ESTADO_RED","OFFLINE").apply();
                 editor.apply();
                 status = false;
             }
