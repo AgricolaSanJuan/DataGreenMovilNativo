@@ -795,6 +795,19 @@
             app:layout_constraintEnd_toStartOf="@+id/c007_fab_Guardar_v"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c007_fab_Eliminar_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:clickable="true"
+            android:src="@drawable/ic_delete"
+            app:fabSize="mini"
+            app:maxImageSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/c007_fab_Editar_v"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

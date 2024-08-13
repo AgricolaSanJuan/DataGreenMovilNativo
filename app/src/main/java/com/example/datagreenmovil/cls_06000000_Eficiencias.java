@@ -433,10 +433,10 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
             } else if (!validarNroCajas()) {
                 throw new Exception("El limite de cajas se ha superado.");
             }
-//            else if (!validarCodigoLibre()) {
-//                //Toast.makeText(this,mensajeError,Toast.LENGTH_LONG).show();
-//                throw new Exception(mensajeError);
-//            }
+            else if (!validarCodigoLibre()) {
+                //Toast.makeText(this,mensajeError,Toast.LENGTH_LONG).show();
+                throw new Exception(mensajeError);
+            }
             idLaborActual = obtenerLabor();
             if (!validarLaborLibre()) {
                 throw new Exception(mensajeError);

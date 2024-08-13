@@ -367,8 +367,6 @@ public class cls_05020000_Reportes extends AppCompatActivity {
     //...
 
     private void setearSelectorFecha() {
-        fechaReporte.setText(Funciones.malograrFecha(s_ListarDesde));
-
         fechaReporte.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -394,6 +392,9 @@ public class cls_05020000_Reportes extends AppCompatActivity {
                     Tabla t = new Tabla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER SUPERVISORES X DIA"),p,"READ"));
                     if(t.Filas.size()>0){
                         Funciones.cargarSpinner(cls_05020000_Reportes.this,spi_TareosReportesActivity_Supervisores,t,0,1);
+                        if(t.Filas.size() > 0){
+                            spi_TareosReportesActivity_Supervisores.setSelection(0);
+                        }
                     }else{
                         spi_TareosReportesActivity_Supervisores.setAdapter(null);
                         rcv_TareosReportes_RCV1.setAdapter(null);
@@ -406,6 +407,8 @@ public class cls_05020000_Reportes extends AppCompatActivity {
                 }
             }
         });
+
+        fechaReporte.setText(Funciones.malograrFecha(s_ListarDesde));
 
         fechaReporte.setOnClickListener(view -> {
             PopUpCalendario d = new PopUpCalendario(ctx, fechaReporte);

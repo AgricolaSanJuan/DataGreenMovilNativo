@@ -105,7 +105,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
     HashMap<String, Tabla> hmTablas =new HashMap<>();
     //CONTROLES;
     private RecyclerView c007_rvw_Detalle;// = findViewById(R.id.c007_rvw_Detalle_v);
-    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera,  fabToggleFlash, fabMostrarEscaner, fabDuplicar, fabEditar;
+    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera,  fabToggleFlash, fabMostrarEscaner, fabDuplicar, fabEditar, fabEliminar;
     ConstraintLayout layoutEscaner;
     private AutoCompleteTextView c007_atv_NroDocumento;
     private AutoCompleteTextView c007_atv_NombreTrabajador;
@@ -543,6 +543,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
         c007_fab_Guardar = findViewById(R.id.c007_fab_Guardar_v);
         fabDuplicar = findViewById(R.id.c007_fab_Duplicar_v);
         fabEditar = findViewById(R.id.c007_fab_Editar_v);
+        fabEliminar = findViewById(R.id.c007_fab_Eliminar_v);
         c007_fab_AbrirCerrarCabecera = findViewById(R.id.c007_fab_AbrirCerrarCabecera_v);
 
         layoutEscaner = findViewById(R.id.layoutEscaner);
@@ -605,6 +606,25 @@ public class cls_05010000_Edicion extends AppCompatActivity
                     throw new RuntimeException(e);
                 }
 
+            }
+        });
+
+        fabEliminar.setOnClickListener(view -> {
+            if(detallesSeleccionados.size() > 0){
+                Swal.confirm(ctx, "Estás seguro?", "Estás seguro que deseas eliminar los registros seleccionados? Una vez borrados, no se podrán recuperar.")
+                        .setConfirmClickListener(sweetAlertDialog -> {
+                            for (int index:
+                                 detallesSeleccionados) {
+                                tareoActual.eliminarItemDetalle(index);
+                            }
+                            guardarTareo();
+                            
+                            sweetAlertDialog.dismissWithAnimation();
+                        }).setConfirmClickListener(sweetAlertDialog -> {
+                            sweetAlertDialog.dismissWithAnimation();
+                        });
+            }else {
+                Swal.warning(ctx, "¡Cuidado!", "Selecciona al menos un trabajador antes.", 2000);
             }
         });
 
