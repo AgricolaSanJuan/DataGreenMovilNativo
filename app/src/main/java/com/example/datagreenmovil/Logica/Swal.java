@@ -1,6 +1,9 @@
 package com.example.datagreenmovil.Logica;
 
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Entity;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +14,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.datagreenmovil.Entidades.Tareo;
+import com.example.datagreenmovil.Logica.Dialogs.FilterDialog;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Scanner.ui.ScannerFragment;
 import com.example.datagreenmovil.databinding.DialogDetalleTareoBinding;
+import com.example.datagreenmovil.databinding.DialogFiltrosBinding;
 import com.example.datagreenmovil.ui.TareosMain.Dialogs.DialogDetalleTareo;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -191,6 +197,107 @@ public class Swal {
 
     // Llama al método para configurar la vista
     DialogDetalleTareo.configureView(binding, accion, tareoActual, listaTrabajadores, actionResult, sweetAlertDialog, dismissDialog);
+
+    sweetAlertDialog.setCustomView(custom);
+    sweetAlertDialog.hideConfirmButton();
+    sweetAlertDialog.show();
+  }
+
+//  FUNCIONES PARA EL POPUP DE FILTROS
+
+  public static class DialogResult{
+    String mensaje = "", estado = "", anio = "", semana = "", desde = "", hasta = "";
+    int idEstado = -1;
+
+    public int getIdEstado() {
+      return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+      this.idEstado = idEstado;
+    }
+
+    public String getMensaje() {
+      return mensaje.isEmpty() ? "" : mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+      this.mensaje = mensaje;
+    }
+
+    public String getEstado() {
+      return estado.isEmpty() ? "" : estado;
+    }
+
+    public void setEstado(String estado) {
+      this.estado = estado;
+    }
+
+    public String getAnio() {
+      return anio.isEmpty() ? "" : anio;
+    }
+
+    public void setAnio(String anio) {
+      this.anio = anio;
+    }
+
+    public String getSemana() {
+      return semana.isEmpty() ? "" : semana;
+    }
+
+    public void setSemana(String semana) {
+      this.semana = semana;
+    }
+
+    public String getDesde() {
+      return desde.isEmpty() ? "" : desde;
+    }
+
+    public void setDesde(String desde) {
+      this.desde = desde;
+    }
+
+    public String getHasta() {
+      return hasta.isEmpty() ? "" : hasta;
+    }
+
+    public void setHasta(String hasta) {
+      this.hasta = hasta;
+    }
+  }
+  public interface FilterDialogResult{
+    void onFilterDialogResult(DialogResult dialogResult, SweetAlertDialog sweetAlertDialog);
+  }
+  public interface FilterOpenDialog{
+    void onOpenFilterDialog(JSONArray filterOpenDialogParams, SweetAlertDialog sweetAlertDialog);
+  }
+  public interface FilterCloseDialog{
+    void onDismissFilterDialog(JSONArray filterCloseDialogParams, SweetAlertDialog sweetAlertDialog);
+  }
+  public static void filterDialog(Context ctx,
+                                  boolean vistaEstados,
+                                  boolean vistaFechasPeriodo,
+                                  boolean vistaFechasRango,
+                                  JSONObject props,
+                                  FilterOpenDialog filterOpenDialog,
+                                  FilterCloseDialog filterCloseDialog,
+                                  FilterDialogResult filterDialogResult
+                                  ) throws JSONException {
+    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ctx, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+    View custom = LayoutInflater.from(ctx).inflate(R.layout.dialog_filtros, null);
+
+    DialogFiltrosBinding binding = DialogFiltrosBinding.bind(custom);
+
+    // Llama al método para configurar la vista
+    FilterDialog.configureView(binding,
+            vistaEstados,
+            vistaFechasPeriodo,
+            vistaFechasRango,
+            props,
+            filterOpenDialog,
+            filterCloseDialog,
+            filterDialogResult,
+            sweetAlertDialog);
 
     sweetAlertDialog.setCustomView(custom);
     sweetAlertDialog.hideConfirmButton();

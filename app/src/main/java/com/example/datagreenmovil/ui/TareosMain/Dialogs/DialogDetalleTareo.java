@@ -50,6 +50,7 @@ public class DialogDetalleTareo extends DialogFragment {
     static ArrayList<PopUpBuscarEnLista_Item> arl_Labores = null;
     static ArrayList<PopUpBuscarEnLista_Item> arl_Consumidores;
     private static SharedPreferences sharedPreferences;
+    private static String accionFija;
     Context ctx;
 
     @Nullable
@@ -84,21 +85,34 @@ public class DialogDetalleTareo extends DialogFragment {
             throw new RuntimeException(e);
         }
         bindtwo.fabConfirm.setOnClickListener(view -> {
+
             boolean success = false;
             String message = "";
-            try {
-                duplicateWorkers(tareo, listaTrabajadores, ctx, bindtwo);
-                sweetAlertDialog.dismissWithAnimation();
-                success = true;
-                message = "Se han duplicado los detalles correctamente.";
-            } catch (JSONException e) {
-                Log.e("ERROR", e.toString());
-                message = "Ha ocurrido un error al duplicar los detalles: "+e.toString();
-            }
-            String result = bindtwo.txvddtActividad.getText().toString(); // Lógica para obtener el resultado a duplicar
-            if (actionResult != null) {
-                actionResult.onActionResult(result, sweetAlertDialog);
-                dismissDialog.onDismissDialog(success, message);
+            if( accionFija.equals("duplicar") && (bindtwo.lblddtActividadValue.getText().toString().equals(".")
+            || bindtwo.txvddtLabor.getText().toString().equals(".")
+            || bindtwo.txvddtConsumidor.getText().toString().equals("."))){
+                Swal.warning(ctx, "Cuidado!", "Llene todos los datos antes de continuar.", 2000);
+            }else {
+                if(bindtwo.txvddtHoras.getText().toString().isEmpty()){
+                    bindtwo.txvddtHoras.setText("0.00");
+                }
+                if(bindtwo.txvddtRendimientos.getText().toString().isEmpty()){
+                    bindtwo.txvddtRendimientos.setText("0.00");
+                }
+                try {
+                    sweetAlertDialog.dismissWithAnimation();
+                    duplicateWorkers(tareo, listaTrabajadores, ctx, bindtwo);
+                    success = true;
+                    message = "Se han duplicado los detalles correctamente.";
+                } catch (JSONException e) {
+                    Log.e("ERROR", e.toString());
+                    message = "Ha ocurrido un error al duplicar los detalles: "+e.toString();
+                }
+                String result = bindtwo.txvddtActividad.getText().toString(); // Lógica para obtener el resultado a duplicar
+                if (actionResult != null) {
+                    actionResult.onActionResult(result, sweetAlertDialog);
+                    dismissDialog.onDismissDialog(success, message);
+                }
             }
         });
 
@@ -160,8 +174,8 @@ public class DialogDetalleTareo extends DialogFragment {
             boolean success = false;
             String message = "";
             String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
-            Double horasEditar = Double.valueOf(bindtwo.txvddtHoras.getText().toString());
-            Double rendimientosEditar = Double.valueOf(bindtwo.txvddtRendimientos.getText().toString());
+            Double horasEditar = Double.valueOf(!bindtwo.txvddtHoras.getText().toString().isEmpty()  ? bindtwo.txvddtHoras.getText().toString() :"0.00");
+            Double rendimientosEditar = Double.valueOf(!bindtwo.txvddtRendimientos.getText().toString().isEmpty()  ? bindtwo.txvddtRendimientos.getText().toString() :"0.00");;
             for (int itemEditar: listaTrabajadores){
                 TareoDetalle detalleActual = new TareoDetalle();
                 detalleActual = tareo.getDetalle().get(itemEditar - 1);
@@ -192,9 +206,11 @@ public class DialogDetalleTareo extends DialogFragment {
         switch (accion){
             case "duplicar":
                 inicializarDuplicado(ctx, binding, tareo, listaTrabajadores, sweetAlertDialog, actionResult, dismissDialog);
+                accionFija = accion;
                 break;
             case "editar":
                 inicializarEdicion(ctx, binding, tareo, listaTrabajadores, sweetAlertDialog, actionResult, dismissDialog);
+                accionFija = accion;
                 break;
         }
 
@@ -255,15 +271,6 @@ public class DialogDetalleTareo extends DialogFragment {
             } catch (Exception e) {
                 Log.e("ERORRDETALLE", e.toString());
             }
-
-//            tareo.agregarDetalle(detalleActual, ctx);
-//
-//            Log.i("DNIADUPLICAR", dniDuplicar);
-//
-//            Toast.makeText(ctx, dniDuplicar, Toast.LENGTH_SHORT).show();
-//                                                                                  cambia p
-//            String query = "INSERT INTO trx_Tareos_Detalle VALUES('01', '"+tareo.getId()+"', '30', '"+dniDuplicar+"', ')";
-//            Log.i("querysql", query);
         }
     }
 

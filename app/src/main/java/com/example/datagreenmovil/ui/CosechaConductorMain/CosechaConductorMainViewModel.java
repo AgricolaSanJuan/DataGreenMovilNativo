@@ -6,7 +6,7 @@ public class CosechaConductorMainViewModel extends ViewModel {
 
 //    private final MutableLiveData<String> mText;
 //
-//    public GalleryViewModel() {
+//    public EstandaresRegistroViewModel() {
 //        mText = new MutableLiveData<>();
 //        mText.setValue("This is gallery fragment");
 //    }

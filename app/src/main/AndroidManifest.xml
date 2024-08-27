@@ -35,14 +35,15 @@
             android:name=".CosechaActivity"
             android:exported="true"
             android:label="@string/title_activity_cosecha"
-            android:theme="@style/Theme.DataGreenMovilLight.NoActionBar" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:theme="@style/Theme.DataGreenMovilLight.NoActionBar">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-        <!-- tools:replace="android:appComponentFactory" -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity> <!-- tools:replace="android:appComponentFactory" -->
         <activity
             android:name=".TallerActivity"
             android:exported="false"
@@ -54,6 +55,7 @@
         <activity
             android:name=".ASJMessenger"
             android:exported="true">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -163,6 +165,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.estandares.EstandaresActivity"
+            android:exported="true"
+            android:label="@string/title_activity_estandares"
+            android:theme="@style/Theme.DataGreenMovilLight.NoActionBar">
+<!--                        <intent-filter>-->
+<!--                            <action android:name="android.intent.action.MAIN" />-->
+
+<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                        </intent-filter>-->
         </activity>
     </application>
 

@@ -802,11 +802,12 @@
             android:layout_marginEnd="3dp"
             android:clickable="true"
             android:src="@drawable/ic_delete"
+            android:visibility="invisible"
             app:fabSize="mini"
-            app:maxImageSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/c007_fab_Editar_v"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -442,6 +442,7 @@ private FragmentTransportesMainBinding binding;
 //                      Log.i("FINOS",response.toString());
                                     String nuevoId = response.getString("newId");
                                     database.execSQL("PRAGMA FOREIGN_KEYS=1;");
+//                                    PENDIENTE AGREGAR ELIMINACIÓN CUANDO NO HAY DETALLE
                                     String query = "UPDATE trx_serviciostransporte SET ID='"+ nuevoId +"' where ID = '"+idServicioTransporte+"'";
                                     database.execSQL(query);
                                     Swal.warning(ctx, "Importante!","No se ha transferido el registro pero se ha actualizado el identificador, por favor, vuelva a transferirlo",6000);
@@ -452,7 +453,7 @@ private FragmentTransportesMainBinding binding;
 //                                QUE AVECES SE EJECUTA UNA EXCEPCIÓN Y NO HAY NADA QUE LO DIGA.
                                 throw new RuntimeException(e);
                             } catch (Exception e) {
-                                throw new RuntimeException(e);
+                                Swal.error(ctx, "oops.", e.toString(), 5000);
                             }
                         }
                     },

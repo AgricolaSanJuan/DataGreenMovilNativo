@@ -618,9 +618,10 @@ public class cls_05010000_Edicion extends AppCompatActivity
                                 tareoActual.eliminarItemDetalle(index);
                             }
                             guardarTareo();
-                            
+                            detallesSeleccionados = new ArrayList<>();
+                            listarDetalles();
                             sweetAlertDialog.dismissWithAnimation();
-                        }).setConfirmClickListener(sweetAlertDialog -> {
+                        }).setCancelClickListener(sweetAlertDialog -> {
                             sweetAlertDialog.dismissWithAnimation();
                         });
             }else {
