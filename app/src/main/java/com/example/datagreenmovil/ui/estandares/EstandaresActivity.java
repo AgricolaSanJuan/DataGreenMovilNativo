@@ -1,8 +1,19 @@
 package com.example.datagreenmovil.ui.estandares;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
+import com.example.datagreenmovil.Conexiones.AppDatabase;
+import com.example.datagreenmovil.DAO.Estandares.MstMedidasEstandares.MstMedidasEstandares;
+import com.example.datagreenmovil.DAO.Estandares.MstMedidasEstandares.MstMedidasEstandaresDAO;
+import com.example.datagreenmovil.DAO.Estandares.MstTiposBonoEstandar.MstTiposBonoEstandarDAO;
+import com.example.datagreenmovil.DAO.Estandares.MstTiposCostoEstandar.MstTiposCostoEstandar;
+import com.example.datagreenmovil.DAO.Estandares.MstTiposCostoEstandar.MstTiposCostoEstandarDAO;
+import com.example.datagreenmovil.DAO.Estandares.MstTiposEstandar.MstTiposEstandar;
+import com.example.datagreenmovil.DAO.Estandares.MstTiposEstandar.MstTiposEstandarDAO;
+import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNewDAO;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Utilidades.Filtros;
@@ -15,12 +26,21 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import java.util.List;
 
 public class EstandaresActivity extends AppCompatActivity {
 //public class EstandaresActivity extends AppCompatActivity implements Filtros.GetFilterData {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityEstandaresBinding binding;
+
+    private TrxEstandaresNewDAO trxEstandaresNewDAO;
+    private MstTiposEstandarDAO mstTiposEstandarDAO;
+    private MstTiposCostoEstandarDAO mstTiposCostoEstandarDAO;
+    private MstTiposBonoEstandarDAO mstTiposBonoEstandarDAO;
+    private MstMedidasEstandaresDAO mstMedidasEstandaresDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +57,24 @@ public class EstandaresActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_estandares);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        inicializarBase();
+
+//        MstTiposEstandar tiposEstandar = new MstTiposEstandar();
+////        tiposEstandar.setId(1);
+//        tiposEstandar.setDescripcion("finisimo");
+//        tiposEstandar.setNombreCorto("fino");
+//        mstTiposEstandarDAO.insertarTiposEstandar(tiposEstandar);
+
+//        List<MstTiposEstandar> mstTiposEstandarList = mstTiposEstandarDAO.obtenerTiposEstandar();
+
+//        List<MstTiposEstandar> mstTiposEstandarList = mstTiposEstandarDAO.obtenerTiposEstandar();
+//        Log.i("RESULTADOF", mstTiposEstandarList.get(0).getDescripcion());
+//        try {
+//            Swal.info(this,"Hola", mstTiposEstandarList.get(0).getDescripcion(), 5000);
+//        }catch (Exception e){
+//            Swal.error(this,"Hola", "Ocurrió un error", 5000);
+//        }
     }
 
     @Override
@@ -52,8 +90,13 @@ public class EstandaresActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-//    @Override
-//    public void onChangeFilterData(Swal.DialogResult filterData) {
-//        Swal.info(this, "hola", filterData.getMensaje(), 5000);
-//    }
+    private void inicializarBase() {
+        AppDatabase db = DataGreenApp.getAppDatabase();
+//        trxEstandaresNewDAO = db.estandaresNewDAO();
+        mstTiposEstandarDAO = db.mstTiposEstandarDAO();
+//        mstTiposBonoEstandarDAO = db.mstTiposBonoEstandarDAO();
+//        mstTiposCostoEstandarDAO = db.mstTiposCostoEstandarDAO();
+//        mstMedidasEstandaresDAO = db.mstMedidasEstandaresDAO();
+    }
+
 }

@@ -81,7 +81,7 @@
 ////                objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
 //            }
 //            objSql = new ConexionBD(objConfLocal);
-//            objSqlite = new ConexionSqlite(this,objConfLocal);
+//            objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
 //
 //            referenciarControles();

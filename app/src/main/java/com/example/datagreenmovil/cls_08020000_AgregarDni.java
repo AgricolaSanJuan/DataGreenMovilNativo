@@ -86,7 +86,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", true);
 
             objSql = new ConexionBD(this);
-            objSqlite = new ConexionSqlite(this, objConfLocal);
+            objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
             objSqlite.alterarColumnasEnServicioTransporte();
 
             referenciarControles();

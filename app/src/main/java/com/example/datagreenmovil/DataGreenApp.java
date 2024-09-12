@@ -2,18 +2,21 @@ package com.example.datagreenmovil;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.datagreenmovil.Conexiones.AppDatabase;
+import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
+
 public class DataGreenApp extends Application {
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    private static AppDatabase appDatabase;
     boolean darkTheme;
 
     public static boolean isPassPassed() {
@@ -25,12 +28,38 @@ public class DataGreenApp extends Application {
     }
 
     public static boolean passPassed = false;
+    public static ConfiguracionLocal configuracionLocal;
+
+    public static ConfiguracionLocal getConfiguracionLocal() {
+        return configuracionLocal;
+    }
+
+    public static void setConfiguracionLocal(ConfiguracionLocal cl) {
+        configuracionLocal = cl;
+    }
+
+    public static Context appContext;
+
+    public static Integer DB_VERSION(){
+        return Integer.valueOf(sharedPreferences.getString("VERSION_DB_DISPONIBLE", "1"));
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         //        INICIAMOS EL SERVICIO QUE NOS INDICA SI LA APLICACION TIENE UNA ACTUALIZACIÓN
         startService(new Intent(this, DataGreenUpdateService.class));
+
+        appContext = getApplicationContext();
+
+//        INICIALIZAMOS LA BASE DE DATOS PARA PODER USAR DAO CON LAS NUEVAS ENTIDADES
+        appDatabase = AppDatabase.getDatabase(getApplicationContext());
+
+    }
+
+    public static Context getAppContext(){
+        return appContext;
     }
 
     @Override
@@ -40,8 +69,11 @@ public class DataGreenApp extends Application {
         stopService(new Intent(this, DataGreenUpdateService.class));
     }
 
+    public static AppDatabase getAppDatabase(){
+        return appDatabase;
+    }
+
     public void InicializarTema() {
-        sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 //        darkTheme = sharedPreferences.getBoolean("THEME_LIGTH", true);
 //        if(darkTheme){

@@ -1,5 +1,7 @@
 package com.example.datagreenmovil.Conexiones;
 
+import static okio.HashingSink.md5;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -43,18 +45,15 @@ import java.util.Objects;
 public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
 
   //    public SQLiteDatabase SqliteDB;
-  private static final int DATABASE_VERSION = 1;
+  private static int DATABASE_VERSION = 1;
   SharedPreferences sharedPreferences;
   private static final String DATABASE_NOMBRE = "DataGreenMovil.db"; //="Prueba.db";
   //private static  final String DATABASE_TABLA="Tareos";
 //  private static ConfiguracionLocal objConfLocal;
   //    private static Context objContext;
 
-  public ConexionSqlite(@Nullable Context context, ConfiguracionLocal cl) {
-    super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
-    //objConfLocal = new ConfiguracionLocal();
-    //        SqliteDB =;
-//    objConfLocal = cl;
+  public ConexionSqlite(@Nullable Context context, Integer dbVersion) {
+    super(context, DATABASE_NOMBRE, null, dbVersion);
     sharedPreferences = context.getSharedPreferences("objConfLocal", context.MODE_PRIVATE);
   }
 
@@ -848,7 +847,20 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       Log.i("RECORRIENDO",detallesTareoMainArray.toString());
       tareoObject.put("detalles", detallesTareoMainArray);
 
+//      SE ELIMINA EL ELEMENTO FechaHoraActualizacion YA QUE VARIA DE ACUERDO A LA FECHA DE TRANSFERENCIA Y PUEDE TRAER PROBLEMAS, YA QUE ES UN CAMPO QUE VARÍA DE ACUERDO A LA FECHA ACTUAL HASTA POR MILISEGUNDOS
+      String FechaHoraActualizacion = tareoObject.optString("FechaHoraActualizacion", "");
+
+      String FechaHoraTransferencia = tareoObject.optString("FechaHoraTransferencia", "");
+
+      tareoObject.remove("FechaHoraActualizacion");
+      tareoObject.remove("FechaHoraTransferencia");
+      String md5String = Funciones.generarMD5(tareoObject.toString()).toLowerCase();
+      tareoObject.put("FechaHoraActualizacion", FechaHoraActualizacion);
+      tareoObject.put("FechaHoraTransferencia", FechaHoraTransferencia);
+      tareoObject.put("MD5String", md5String);
+
       tareosMainArray.put(tareoObject);
+      Log.i("TAREOSMAINARRAY", tareosMainArray.toString());
     }
     mainJSON.put("tareos", tareosMainArray);
     Log.i("RESULTADO TAREOS", mainJSON.toString());

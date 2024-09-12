@@ -25,7 +25,7 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 public class Filtros extends Fragment{
-    private GetFilterData getFilterData;
+    public static GetFilterData getFilterData;
     UtilidadesFiltrosBinding binding;
     private Context ctx;
     static ConexionSqlite objSqlite;
@@ -33,6 +33,7 @@ public class Filtros extends Fragment{
 //    static boolean vistaEstados, vistaFechasPeriodo, vistaFechasRango;
     static String filtroEstado = "", filtroAnio = "", filtroSemana = "", filtroDesde = "", filtroHasta = "";
     int radioButtonGroupIndexSelected = -1;
+
     public interface GetFilterData {
         void onChangeFilterData(Swal.DialogResult filterData);
     }
@@ -76,18 +77,19 @@ public class Filtros extends Fragment{
                             filtroHasta = dialogResult.getHasta();
                             radioButtonGroupIndexSelected = dialogResult.getIdEstado();
                             binding.lblDescripcionFiltro.setText(dialogResult.getMensaje());
-                            getFilterData.onChangeFilterData(dialogResult);
+                            if(getFilterData != null){
+                                getFilterData.onChangeFilterData(dialogResult);
+                            }
                         }
                 );
             } catch (JSONException e) {
                 Swal.error(ctx, "Oops!", e.toString(), 2000);
             }
-
-    });
+        });
         return root;
     }
     public void setFilterDataCallback(GetFilterData callback) {
-        this.getFilterData = callback;
+        getFilterData = callback;
     }
     private void inicializarDescripcionFiltro() {
         //                        Swal.info(ctx, "Resultado", dialogResult.getMensaje(), 8000);
@@ -113,14 +115,6 @@ public class Filtros extends Fragment{
 
     @Override
     public void onAttach(@NonNull Context context) {
-
-        try {
-            getFilterData = (GetFilterData) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement GetFilterData");
-        }
-
         ctx = context;
         super.onAttach(context);
     }

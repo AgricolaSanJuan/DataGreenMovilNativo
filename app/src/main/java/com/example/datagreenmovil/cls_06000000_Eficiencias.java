@@ -97,7 +97,7 @@ public class cls_06000000_Eficiencias extends AppCompatActivity {
 
             sharedPreferenes = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
 //            objSql = new ConexionBD(objConfLocal);
-            objSqlite = new ConexionSqlite(this,objConfLocal);
+            objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //            objConfLocal.set("ULTIMA_ACTIVIDAD","Eficiencias");
             objSql = new ConexionBD(this);
 

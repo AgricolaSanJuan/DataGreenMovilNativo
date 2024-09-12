@@ -82,7 +82,7 @@ public class cls_08010000_Edicion extends AppCompatActivity {
         s_IdRex = (String) getIntent().getSerializableExtra("s_IdRex");
       }
       objSql = new ConexionBD(this);
-      objSqlite = new ConexionSqlite(this, objConfLocal);
+      objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //      objConfLocal.set("ULTIMA_ACTIVIDAD", "ServicioTransporteEdicion");
       referenciarControles();
       obtenerDataParaControles();

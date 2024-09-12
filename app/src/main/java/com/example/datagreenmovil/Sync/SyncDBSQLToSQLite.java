@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Logica.Swal;
 
@@ -52,7 +53,7 @@ public class SyncDBSQLToSQLite {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
 
-        ConexionSqlite sqliteConn = new ConexionSqlite(ctx, objConfLocal);
+        ConexionSqlite sqliteConn = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
 //        OPEN SQLITE CONNECTION
 
 //                sqLiteDatabase.execSQL("select * from mst_usuarios;");

@@ -35,6 +35,8 @@ import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
+import com.example.datagreenmovil.ui.estandares.EstandaresActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -55,6 +57,7 @@ public class cls_03000000_Login extends AppCompatActivity {
     //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
     //...
+    FloatingActionButton fabOpenEstandares;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Querys objQuerys;
@@ -80,7 +83,7 @@ public class cls_03000000_Login extends AppCompatActivity {
             objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
         }
         objSql = new ConexionBD(this);
-        objSqlite = new ConexionSqlite(this,objConfLocal);
+        objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //        objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
 //        objConfLocal.set("ULTIMA_ACTIVIDAD","Login");
 
@@ -131,6 +134,12 @@ public class cls_03000000_Login extends AppCompatActivity {
         txv_PushVersionApp = findViewById(R.id.c003_txv_PushVersionApp_v);
         txv_PushVersionDataBase = findViewById(R.id.c003_txv_PushVersionDataBase_v);
         txv_PushIdentificador = findViewById(R.id.c003_txv_PushIdentificador_v);
+
+        fabOpenEstandares = findViewById(R.id.fabOpenEstandares);
+        fabOpenEstandares.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EstandaresActivity.class);
+            startActivity(intent);
+        });
 
         //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA

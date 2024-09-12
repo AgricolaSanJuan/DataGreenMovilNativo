@@ -160,7 +160,7 @@ public class cls_05010000_Edicion extends AppCompatActivity
                 IdDocumentoActual =(String) getIntent().getSerializableExtra("IdDocumentoActual");
             }
             objSql = new ConexionBD(objConfLocal);
-            objSqlite = new ConexionSqlite(this,objConfLocal);
+            objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
             referenciarControles();
 
             boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);

@@ -51,7 +51,7 @@ public class cls_04000000_Modulos extends AppCompatActivity {
             }
             sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
             objSql = new ConexionBD(this);
-            objSqlite = new ConexionSqlite(this,objConfLocal);
+            objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //            objConfLocal=new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal(objConfLocal));
 //            objConfLocal.set("ULTIMA_ACTIVIDAD","PlantillaBase");
             sharedPreferences.edit().putString("ULTIMA_ACTIVIDAD","PlantillaBase");

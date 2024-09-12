@@ -17,12 +17,6 @@ import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Utilidades.Filtros;
 import com.example.datagreenmovil.databinding.FragmentEstandaresMainBinding;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.security.PrivilegedAction;
-
 public class EstandaresMainFragment extends Fragment implements Filtros.GetFilterData {
 
     private FragmentEstandaresMainBinding binding;
@@ -40,7 +34,7 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         Filtros filtrosFragment = new Filtros();
 
         // Establecer el callback
-//        filtrosFragment.setFilterDataCallback(this);
+        filtrosFragment.setFilterDataCallback(this);
 
         // Obtener el FragmentManager y comenzar una transacción
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -49,6 +43,10 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         // Añadir o reemplazar el fragmento en el contenedor
         fragmentTransaction.replace(R.id.container_filtros, filtrosFragment);
         fragmentTransaction.commit();  // Confirmar la transacción
+
+        binding.btnCrear.setOnClickListener(v -> {
+
+        });
 
         return root;
     }
@@ -69,6 +67,6 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
 
     @Override
     public void onChangeFilterData(Swal.DialogResult filterData) {
-        Swal.info(ctx, "Hola", "tengo data", 2000);
+
     }
 }

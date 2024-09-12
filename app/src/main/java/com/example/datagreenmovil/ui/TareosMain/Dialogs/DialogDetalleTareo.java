@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ClaveValor;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpBuscarEnLista;
@@ -202,7 +203,7 @@ public class DialogDetalleTareo extends DialogFragment {
     public static void configureView(DialogDetalleTareoBinding binding, String accion, Tareo tareo , ArrayList<Integer> listaTrabajadores, Swal.ActionResult actionResult, SweetAlertDialog sweetAlertDialog, Swal.DismissDialog dismissDialog) {
         Context ctx = binding.getRoot().getContext();
         sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-        objSqlite = new ConexionSqlite(ctx,  null);
+        objSqlite = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
         switch (accion){
             case "duplicar":
                 inicializarDuplicado(ctx, binding, tareo, listaTrabajadores, sweetAlertDialog, actionResult, dismissDialog);

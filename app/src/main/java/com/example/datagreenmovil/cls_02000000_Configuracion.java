@@ -98,7 +98,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
             objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
         }
         objSql = new ConexionBD(this);
-        objSqlite = new ConexionSqlite(this, objConfLocal);
+        objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //        objConfLocal.set("ULTIMA_ACTIVIDAD", "Configuracion");
 
 
@@ -142,7 +142,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
                 objSqlite.close();
                 pbSync.post(() -> pbSync.setProgress(15));
                 this.deleteDatabase("DataGreenMovil.db");
-                objSqlite = new ConexionSqlite(getBaseContext(), objConfLocal);
+                objSqlite = new ConexionSqlite(getBaseContext(), DataGreenApp.DB_VERSION());
                 objQuerys = new Querys(objSql.obtenerQuerys());
                 objSqlite.crearTablas(objQuerys);
                 pbSync.post(() -> pbSync.setProgress(30));
@@ -314,7 +314,7 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
 //                if (flagR == 25) {
 //                    objSqlite.close();
 //                    this.deleteDatabase("DataGreenMovil.db");
-//                    objSqlite = new ConexionSqlite(this, objConfLocal);
+//                    objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 ////                    flagR = 0;
 //                    objConfLocal.set("ID_DISPOSITIVO", "");
 //                    objConfLocal.get("ID_DISPOSITIVO");

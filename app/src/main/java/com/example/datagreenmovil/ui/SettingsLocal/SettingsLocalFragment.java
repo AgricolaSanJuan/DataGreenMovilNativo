@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Logica.Funciones;
@@ -133,18 +134,20 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         btnGenerarBD.setOnClickListener(view -> {
             try {
                 sincronizarBD();
+                objSqlite = new ConexionSqlite(context, DataGreenApp.DB_VERSION());
+                objConfLocal = DataGreenApp.getConfiguracionLocal();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
         if (getActivity().getIntent().getExtras() != null) {
-            objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
+            objConfLocal = DataGreenApp.getConfiguracionLocal();
         }
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                objConfLocal = DataGreenApp.getConfiguracionLocal();
                 editor.putString("EQUIPO_CONFIGURADO", "TRUE").apply();
-                objSqlite = new ConexionSqlite(context, objConfLocal);
 //                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
                     editor.putString("RED_HOST",binding.c002EtxHostV.getText().toString()).apply();
@@ -436,7 +439,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 //                objSqlite.close();
 //                }
                 context.deleteDatabase("DataGreenMovil.db");
-                objSqlite = new ConexionSqlite(context, objConfLocal);
+                objSqlite = new ConexionSqlite(context, DataGreenApp.DB_VERSION());
                 objQuerys = new Querys(objSql.obtenerQuerys());
                 objSqlite.crearTablas(objQuerys);
 

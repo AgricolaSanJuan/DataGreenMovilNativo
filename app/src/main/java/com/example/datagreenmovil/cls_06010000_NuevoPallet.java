@@ -81,7 +81,7 @@ public class cls_06010000_NuevoPallet extends AppCompatActivity {
             if(getIntent().getExtras()!=null){
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
             }
-            objSqlite = new ConexionSqlite(this,objConfLocal);
+            objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //            objConfLocal.set("ULTIMA_ACTIVIDAD","NuevoPallet");
             objConexion = new ConexionBD(this);
             sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);

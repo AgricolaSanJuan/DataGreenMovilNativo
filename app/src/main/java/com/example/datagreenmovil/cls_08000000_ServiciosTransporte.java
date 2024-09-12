@@ -104,7 +104,7 @@ public class cls_08000000_ServiciosTransporte extends AppCompatActivity {
         objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
       }
       objSql = new ConexionBD(this);
-      objSqlite = new ConexionSqlite(this, objConfLocal);
+      objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
 //      objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
       objRex = new Rex(objSqlite, "trx_ServiciosTransporte");
       referenciarControles();

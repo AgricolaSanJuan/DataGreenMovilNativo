@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.PopUpAnio;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.PopUpSemana;
@@ -67,7 +68,7 @@ public class FilterDialog extends DialogFragment {
         vistaEstados = vEstados;
         vistaFechasPeriodo = vFechasPeriodo;
         vistaFechasRango = vFechasRango;
-        objSqlite = new ConexionSqlite(ctx,  null);
+        objSqlite = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
         binding = bindingReceptor;
         //MANEJAMOS LA VISTA
         if (props.getInt("radioButtonGroupIndexSelected") != -1) {

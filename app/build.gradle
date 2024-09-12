@@ -3,16 +3,22 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.datagreenmovil"
         minSdk 24
-        targetSdk 32
+        targetSdk 34
         versionCode 8
-        versionName "1.7.5"
+        versionName "1.7.6"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/"]
+            }
+        }
     }
 
     buildTypes {
@@ -25,11 +31,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
+        coreLibraryDesugaringEnabled false
     }
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.datagreenmovil'
 }
 
 //dependencies {
@@ -59,7 +66,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 //    tableview
-    implementation 'com.evrencoskun.library:tableview:0.8.9.4'
+//    implementation 'com.evrencoskun.library:tableview:0.8.9.4'
+    implementation 'com.github.evrencoskun:TableView:v0.8.9.4'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
@@ -98,6 +106,10 @@ dependencies {
 
 //    LOCATION SERVICES
     implementation 'com.google.android.gms:play-services-location:21.3.0'
+
+//    IMPLEMENTAMOS SQLITE
+    implementation "androidx.room:room-runtime:2.6.1"
+    annotationProcessor "androidx.room:room-compiler:2.6.1"
 
 
 }

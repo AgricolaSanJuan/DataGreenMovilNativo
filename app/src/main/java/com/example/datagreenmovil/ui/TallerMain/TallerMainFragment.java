@@ -115,7 +115,7 @@ public class TallerMainFragment extends Fragment {
                 objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
             }
             objSql = new ConexionBD(ctx);
-            objSqlite = new ConexionSqlite(ctx, objConfLocal);
+            objSqlite = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
 //      objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
             objRex = new Rex(objSqlite, "trx_ServiciosTransporte");
 

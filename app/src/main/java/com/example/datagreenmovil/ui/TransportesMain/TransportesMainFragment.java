@@ -37,6 +37,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.Querys;
@@ -108,7 +109,7 @@ private FragmentTransportesMainBinding binding;
                 objConfLocal = (ConfiguracionLocal) getActivity().getIntent().getSerializableExtra("ConfiguracionLocal");
             }
             objSql = new ConexionBD(ctx);
-            objSqlite = new ConexionSqlite(ctx, objConfLocal);
+            objSqlite = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
 //      objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
             objRex = new Rex(objSqlite, "trx_ServiciosTransporte");
             referenciarControles();
