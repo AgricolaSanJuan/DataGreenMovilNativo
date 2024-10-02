@@ -3,6 +3,7 @@ package com.example.datagreenmovil.DAO.Estandares.MstTiposBonoEstandar;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface MstTiposBonoEstandarDAO {
 
     @Delete
     void eliminarTiposBonoEstandar(List<MstTiposBonoEstandar> trxEstandaresNew);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void sincronizarTiposBonoEstandar(List<MstTiposBonoEstandar> tiposBonoEstandarList);
 }

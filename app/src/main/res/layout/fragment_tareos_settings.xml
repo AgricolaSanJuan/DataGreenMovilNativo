@@ -60,12 +60,14 @@
             android:layout_height="wrap_content"
             android:text="Personas"
             android:textSize="18dp" />
+
         <Switch
-            android:id="@+id/switchMarcas"
+            android:id="@+id/switchActividades"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Marcas"
+            android:text="Actividades"
             android:textSize="18dp" />
+
         <Switch
             android:id="@+id/switchLabores"
             android:layout_width="match_parent"
@@ -89,17 +91,17 @@
             android:textSize="18dp" />
 
         <Switch
-            android:id="@+id/switchDias"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dias"
-            android:textSize="18dp" />
-
-        <Switch
             android:id="@+id/switchVariedades"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Variedades"
+            android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchDias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dias"
             android:textSize="18dp" />
 
         <Switch
@@ -110,11 +112,19 @@
             android:textSize="18dp" />
 
         <Switch
-            android:id="@+id/switchActividades"
+            android:id="@+id/switchUsuarios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Actividades"
+            android:text="Usuarios"
             android:textSize="18dp" />
+
+        <Switch
+            android:id="@+id/switchQuerysSqlite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Querys SQLite"
+            android:textSize="18dp" />
+
 
     </com.google.android.material.chip.ChipGroup>
 

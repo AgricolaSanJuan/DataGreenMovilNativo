@@ -34,12 +34,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+//import org.threeten.bp.LocalDateTime;
+//import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 @SuppressWarnings("serial")
 public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
@@ -52,8 +57,17 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
 //  private static ConfiguracionLocal objConfLocal;
   //    private static Context objContext;
 
-  public ConexionSqlite(@Nullable Context context, Integer dbVersion) {
-    super(context, DATABASE_NOMBRE, null, dbVersion);
+
+
+  public ConexionSqlite(@Nullable Context context, int DBVersion ) {
+    super(context,
+            DATABASE_NOMBRE,
+            null,
+            Objects.requireNonNull(context).getDatabasePath("DataGreenMovil.db").exists() ?
+            SQLiteDatabase.openDatabase(context.getDatabasePath("DataGreenMovil.db").toString(), null,
+                    SQLiteDatabase.OPEN_READWRITE).getVersion()
+            : 1
+    );
     sharedPreferences = context.getSharedPreferences("objConfLocal", context.MODE_PRIVATE);
   }
 
@@ -434,18 +448,16 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
 
   public LocalDateTime obtenerToken() {
     try {
-      //SQLiteDatabase bd = getReadableDatabase();
-      SQLiteDatabase SqliteDB;
-      SqliteDB = getReadableDatabase();
-      //PENDIENTE: MODIFICAR A CONSULTA DINAMICA DE LA BASE SQLITE;
+      SQLiteDatabase SqliteDB = getReadableDatabase();
       Cursor c = SqliteDB.rawQuery("SELECT Valor FROM ConfiguracionLocal WHERE Clave='TOKEN_EXPIRA'", null);
+
       if (c.moveToFirst()) {
-        return LocalDateTime.parse(c.getString(0));//, DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm:ss.SSS"));
+        // Asumiendo que el formato de la fecha es "yyyy-MM-dd HH:mm:ss"
+        return LocalDateTime.parse(c.getString(0), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
       }
-      return LocalDateTime.now();
+      return LocalDateTime .now();
     } catch (Exception ex) {
-      //return LocalDateTime.now();
-      return LocalDateTime.now().plusHours(-1); //HORAS DE DURACION DEL TOKEN;
+      return LocalDateTime.now().minusHours(1); // HORAS DE DURACIÓN DEL TOKEN
     }
   }
 
@@ -881,6 +893,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       return false;
     }
   }
+
   public JSONObject eliminarTareos(ArrayList<String> idSeleccionados) throws JSONException {
     JSONObject jsonObject = new JSONObject();
     Cursor c;
@@ -905,11 +918,15 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
         return jsonObject;
       }
 
-      q = "DELETE FROM trx_tareos_detalle WHERE IdTareo IN "+whereIn;
-      c = doItBaby(q, null, "READ");
-      c.moveToFirst();
+//      SE REEMPLAZA LA ELIMINACIÓN DEL DETALLE POR SOFTDELETE
+//      q = "UPDATE trx_tareos_detalle SET IdEstado = 'EL' WHERE IdTareo IN "+whereIn;
+////      q = "DELETE FROM trx_tareos_detalle WHERE IdTareo IN "+whereIn;
+//      c = doItBaby(q, null, "READ");
+//      c.moveToFirst();
 
-      q = "DELETE FROM trx_tareos WHERE Id IN "+whereIn;
+//      q = "DELETE FROM trx_tareos WHERE Id IN "+whereIn;
+      q = "UPDATE trx_tareos SET IdEstado = 'EL' WHERE Id IN "+whereIn;
+      Log.i("QUERYUPDATE", q);
       c = doItBaby(q, null, "READ");
       c.moveToFirst();
       jsonObject.put("message", "error");
@@ -949,6 +966,15 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       //PASO 4: --SI REGISTROS=1 => CONCATENAR UPDATE
       q = "UPDATE @NombreTabla SET " + concatenarColumnas(tEstructura.toList(1), valores, ",") + " WHERE " + concatenarColumnas(tLLaves.toList(1), valores, "AND");
       q = q.replace("@NombreTabla", nombreTabla);
+//      PRUEBA DE REGEX
+//      SE QUITARÁN DE LA ACTUALIZACIÓN 2 COLUMNAS, FECHAHORACREACION Y IDUSUARIOCREA YA QUE NO SE DEBEN ACTUALIZAR AL EDITAR LOS REGISTROS.
+      String regex = "FechaHoraCreacion\\s*=\\s*'[^']*'\\s*,?";
+      q = q.replaceAll(regex, "");
+      regex = "IdUsuarioCrea\\s*=\\s*'[^']*'\\s*,?";
+      q = q.replaceAll(regex, "");
+      // Imprime la consulta modificada
+      System.out.println(q);
+//      FIN PRUEBA REGEX
       doItBaby(q, null, "WRITE");
     }
     return true;

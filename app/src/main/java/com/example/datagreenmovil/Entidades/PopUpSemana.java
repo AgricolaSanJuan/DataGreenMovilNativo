@@ -13,8 +13,8 @@ import com.example.datagreenmovil.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.WeekFields;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.temporal.WeekFields;
 import java.util.Locale;
 
 public class PopUpSemana extends Dialog {

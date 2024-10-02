@@ -73,7 +73,7 @@ public class cls_04000000_Modulos extends AppCompatActivity {
 
             Cursor c = objSqlite.obtenerModulos();
             inflarRecyclerViewModulos(c);
-            Swal.success(this,"Hola!", "Bienvenido a Data Green!",1500);
+//            Swal.success(this,"Hola!", "Bienvenido a Data Green!",1500);
         }
         catch(Exception ex){
              Funciones.mostrarError(this,ex);

@@ -24,8 +24,8 @@ import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Logica.Funciones;
 
 import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 

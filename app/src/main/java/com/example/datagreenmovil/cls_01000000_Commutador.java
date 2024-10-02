@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
@@ -92,6 +93,8 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             Funciones.mostrarError(this, ex);
             finish();
         }
+
+        //        INICIALIZAMOS LA BASE DE DATOS PARA PODER USAR DAO CON LAS NUEVAS ENTIDADES
     }
 
     public void abrirMenuModulos() {
@@ -162,7 +165,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
                 actualizarBDLocal();
             }
             if (!objSqlite.existeDataLocal()) {
-                descargarData();
+//                descargarData();
                 objSqlite.guardarConfiguracionLocal(objConfLocal);
             } else {
                 if (objSql.hayActualizacionDataLocal(objConfLocal)) {

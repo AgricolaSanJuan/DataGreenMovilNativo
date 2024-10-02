@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,17 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.datagreenmovil.Conexiones.ConexionBD;
-import com.example.datagreenmovil.Conexiones.ConexionSqlite;
-import com.example.datagreenmovil.DataGreenApp;
-import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
-import com.example.datagreenmovil.Entidades.Querys;
-import com.example.datagreenmovil.Logica.Funciones;
-import com.example.datagreenmovil.Logica.Swal;
-
-
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -41,15 +29,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.datagreenmovil.Conexiones.ConexionBD;
+import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DataGreenApp;
+import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
+import com.example.datagreenmovil.Entidades.Querys;
+import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.SettingsActivity;
 import com.example.datagreenmovil.Sync.SyncDBSQLToSQLite;
-import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.databinding.FragmentSettingsLocalBinding;
-import com.google.android.material.internal.NavigationMenuItemView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.NetworkInterface;
 import java.sql.SQLException;
@@ -60,6 +50,7 @@ import java.util.concurrent.Executors;
 
 public class SettingsLocalFragment extends Fragment implements View.OnTouchListener {
 
+    public Context context;
     ConexionBD cnAux;
     ConfiguracionLocal clAux;
     ConfiguracionLocal objConfLocal;
@@ -73,17 +64,14 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     Integer flingCounter = 0;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ConexionSqlite objSqlite;
     private GestureDetector gestureDetector;
     private FragmentSettingsLocalBinding binding;
-    public Context context;
-
-    ConexionSqlite objSqlite;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        SettingsLocalViewModel settingsLocalViewModel =
-                new ViewModelProvider(this).get(SettingsLocalViewModel.class);
+        SettingsLocalViewModel settingsLocalViewModel = new ViewModelProvider(this).get(SettingsLocalViewModel.class);
 
         binding = FragmentSettingsLocalBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -116,19 +104,11 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         txv_PushRed = binding.c002TxvPushRedV;
         txv_NombreApp = binding.c002TxvNombreAppV;
 
-        Funciones.mostrarEstatusGeneral(root.getContext(),
-                objConfLocal,
-                txv_PushTituloVentana,
-                txv_PushRed,
-                txv_NombreApp,
-                txv_PushVersionApp,
-                txv_PushVersionDataBase,
-                txv_PushIdentificador
-        );
+        Funciones.mostrarEstatusGeneral(root.getContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
 
         mostrarValoresDocumentoActual();
         btnProbarConexion.setOnClickListener(view -> {
-                probarConexion();
+            probarConexion();
         });
 
         btnGenerarBD.setOnClickListener(view -> {
@@ -150,23 +130,23 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 editor.putString("EQUIPO_CONFIGURADO", "TRUE").apply();
 //                objConfLocal.set("EQUIPO_CONFIGURADO", "TRUE");
                 try {
-                    editor.putString("RED_HOST",binding.c002EtxHostV.getText().toString()).apply();
-                    editor.putString("API_SERVER",binding.c002EtxApiServerV.getText().toString()).apply();
-                    editor.putString("RED_INSTANCIA",binding.c002EtxInstanciaV.getText().toString()).apply();
-                    editor.putString("RED_NOMBRE_DB",binding.c002EtxNombreBDV.getText().toString()).apply();
-                    editor.putString("RED_USUARIO",binding.c002EtxUsuarioV.getText().toString()).apply();
-                    editor.putString("RED_PASSWORD",binding.c002EtxPasswordV.getText().toString()).apply();
-                    editor.putString("RED_PUERTO_CONEXION",binding.c002EtxPuertoV.getText().toString()).apply();
-                    editor.putString("RED_IMEI",binding.c002EtxImeiV.getText().toString()).apply();
+                    editor.putString("RED_HOST", binding.c002EtxHostV.getText().toString()).apply();
+                    editor.putString("API_SERVER", binding.c002EtxApiServerV.getText().toString()).apply();
+                    editor.putString("RED_INSTANCIA", binding.c002EtxInstanciaV.getText().toString()).apply();
+                    editor.putString("RED_NOMBRE_DB", binding.c002EtxNombreBDV.getText().toString()).apply();
+                    editor.putString("RED_USUARIO", binding.c002EtxUsuarioV.getText().toString()).apply();
+                    editor.putString("RED_PASSWORD", binding.c002EtxPasswordV.getText().toString()).apply();
+                    editor.putString("RED_PUERTO_CONEXION", binding.c002EtxPuertoV.getText().toString()).apply();
+                    editor.putString("RED_IMEI", binding.c002EtxImeiV.getText().toString()).apply();
                     editor.putString("ID_EMPRESA", "01").apply();
-                    editor.putString("RED_MAC",binding.c002EtxMacV.getText().toString()).apply();
-                    editor.putString("NRO_TELEFONICO",binding.c002EtxNroTelefonoV.getText().toString()).apply();
-                    editor.putString("PROPIETARIO",binding.c002EtxPropietarioV.getText().toString()).apply();
+                    editor.putString("RED_MAC", binding.c002EtxMacV.getText().toString()).apply();
+                    editor.putString("NRO_TELEFONICO", binding.c002EtxNroTelefonoV.getText().toString()).apply();
+                    editor.putString("PROPIETARIO", binding.c002EtxPropietarioV.getText().toString()).apply();
 
                     objSqlite.guardarConfiguracionLocal(objConfLocal);
                     NavController navController = Navigation.findNavController(requireView());
                     navController.navigate(R.id.nav_settings_sync);
-                    Swal.info(context, "Vamos allá!", "Ahora debes sincronizar la información.",5000);
+                    Swal.info(context, "Vamos allá!", "Ahora debes sincronizar la información.", 5000);
                 } catch (Exception e) {
 //                    throw new RuntimeException(e);
                     Swal.error(context, "Oops!", "Error al guardar la información, reintente.", 5000);
@@ -209,7 +189,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
         actualizarValoresConfiguracionAuxiliar(context);
         Boolean statusConexion = probarNuevaConexion();
-        if (statusConexion == true) {
+        if (statusConexion) {
             Swal.success(context, "Exito!", "Conexion realizada con éxito!", 1500);
         } else {
             Swal.error(context, "Oops!", "Algo falló en la conexion, comunicate con soporte técnico.", 2500);
@@ -265,8 +245,8 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 clAux.set("RED_CONFIGURADA", "TRUE");
                 clAux.set("ESTADO_RED", "ONLINE");
 //                migrar progresivamente a sharedPreferences
-                editor.putString("RED_CONFIGURADA","TRUE").apply();
-                editor.putString("ESTADO_RED","ONLINE").apply();
+                editor.putString("RED_CONFIGURADA", "TRUE").apply();
+                editor.putString("ESTADO_RED", "ONLINE").apply();
                 objConfLocal = clAux;
                 objSql = cnAux;
                 status = true;
@@ -274,8 +254,8 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 clAux.set("RED_CONFIGURADA", "FALSE");
                 clAux.set("ESTADO_RED", "OFFLINE");
 //                migrar progresivamente a sharedPreferences
-                editor.putString("RED_CONFIGURADA","FALSE").apply();
-                editor.putString("ESTADO_RED","OFFLINE").apply();
+                editor.putString("RED_CONFIGURADA", "FALSE").apply();
+                editor.putString("ESTADO_RED", "OFFLINE").apply();
                 editor.apply();
                 status = false;
             }
@@ -288,14 +268,14 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     }
 
     private void mostrarValoresDocumentoActual() {
-        etxHost.setText(sharedPreferences.getString("RED_HOST","!RED_HOST"));
-        etxApiServer.setText(sharedPreferences.getString("API_SERVER","!API_SERVER"));
+        etxHost.setText(sharedPreferences.getString("RED_HOST", "!RED_HOST"));
+        etxApiServer.setText(sharedPreferences.getString("API_SERVER", "!API_SERVER"));
         etxInstancia.setText(sharedPreferences.getString("RED_INSTANCIA", "!RED_INSTANCIAA"));
-        etxNombreBD.setText(sharedPreferences.getString("RED_NOMBRE_DB","!RED_NOMBRE_DB"));
-        etxUsuario.setText(sharedPreferences.getString("RED_USUARIO","!RED_USUARIO"));
-        etx_Password.setText(sharedPreferences.getString("RED_PASSWORD","!RED_PASSWORD"));
-        etxPuerto.setText(sharedPreferences.getString("RED_PUERTO_CONEXION","!RED_PUERTO_CONEXION"));
-        etxImei.setText(obtenerIMEI().toString());
+        etxNombreBD.setText(sharedPreferences.getString("RED_NOMBRE_DB", "!RED_NOMBRE_DB"));
+        etxUsuario.setText(sharedPreferences.getString("RED_USUARIO", "!RED_USUARIO"));
+        etx_Password.setText(sharedPreferences.getString("RED_PASSWORD", "!RED_PASSWORD"));
+        etxPuerto.setText(sharedPreferences.getString("RED_PUERTO_CONEXION", "!RED_PUERTO_CONEXION"));
+        etxImei.setText(obtenerIMEI());
         etxMac.setText(obtenerMAC());
         if (etxMac.getText().length() == 0 && etxImei.getText().length() > 0) {
             etxMac.setText(etxImei.getText());
@@ -308,8 +288,8 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         if (etxMac.getText().length() == 0) {
             etxMac.setEnabled(true);
         }
-        etxNroTelefono.setText(sharedPreferences.getString("NRO_TELEFONICO","!NRO_TELEFONICO"));
-        etxPropietario.setText(sharedPreferences.getString("PROPIETARIO","!PROPIETARIO"));
+        etxNroTelefono.setText(sharedPreferences.getString("NRO_TELEFONICO", "!NRO_TELEFONICO"));
+        etxPropietario.setText(sharedPreferences.getString("PROPIETARIO", "!PROPIETARIO"));
     }
 
 
@@ -318,41 +298,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         // Pasa el evento táctil al GestureDetector
         gestureDetector.onTouchEvent(event);
         return true;
-    }
-
-    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            touchCounter++;
-            Log.i("Presionado", String.valueOf(touchCounter));
-            if (touchCounter == 3) {
-                etxHost.setText("192.168.30.99");
-                etxApiServer.setText("192.168.30.94:8080");
-                etxInstancia.setText("");
-                etxNombreBD.setText("DataGreenMovil");
-                etxUsuario.setText("sa");
-                etx_Password.setText("A20200211sj");
-                touchCounter = 0;
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            flingCounter += 1;
-
-            if(flingCounter == 2){
-                SettingsActivity settingsActivity = (SettingsActivity) getActivity();
-                if(settingsActivity.obtenerDrawer() != null){
-                    DrawerLayout dl = settingsActivity.obtenerDrawer();
-//                    NavigationMenuItemView syncBtn = dl.findViewById(R.id.nav_item_sync);
-//                    syncBtn.setVisibility(View.INVISIBLE);
-                    dl.openDrawer(GravityCompat.START);
-                }
-                flingCounter = 0;
-            }
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
     }
 
     private String obtenerIMEI() {
@@ -397,8 +342,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 StringBuilder res1 = new StringBuilder();
                 for (byte b : macBytes) {
                     String hex = Integer.toHexString(b & 0xFF);
-                    if (hex.length() == 1)
-                        hex = "0".concat(hex);
+                    if (hex.length() == 1) hex = "0".concat(hex);
                     res1.append(hex.concat(":"));
                 }
 
@@ -425,7 +369,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 objSql = new ConexionBD(context);
                 pbSync.post(() -> pbSync.setVisibility(View.VISIBLE));  // Mostrar ProgressBar en el hilo principal
 
-                getActivity().runOnUiThread(()->{
+                getActivity().runOnUiThread(() -> {
                     actualizarValoresConfiguracionAuxiliar(context);
                     pbSync.post(() -> pbSync.setProgress(15));
                 });
@@ -446,12 +390,12 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 probarNuevaConexion();
 
                 SyncDBSQLToSQLite syncDBSQLToSQLite = new SyncDBSQLToSQLite();
-                getActivity().runOnUiThread(()->{
+                getActivity().runOnUiThread(() -> {
                     try {
                         Log.i("ObjConfLocal", objConfLocal.toString());
                         syncDBSQLToSQLite.sincronizar(context, objConfLocal, "mst_QuerysSqlite", "mst_QuerysSqlite");
                         syncDBSQLToSQLite.sincronizar(context, objConfLocal, "mst_OpcionesConfiguracion", "mst_OpcionesConfiguracion");
-                        syncDBSQLToSQLite.sincronizar(context, objConfLocal,"trx_ConfiguracionesDispositivosMoviles", "trx_ConfiguracionesDispositivosMoviles");
+                        syncDBSQLToSQLite.sincronizar(context, objConfLocal, "trx_ConfiguracionesDispositivosMoviles", "trx_ConfiguracionesDispositivosMoviles");
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -462,29 +406,21 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 pbSync.post(() -> pbSync.setProgress(30));
 //                descargarData();
                 pbSync.post(() -> pbSync.setProgress(90));
-                if (sharedPreferences.getString("RED_CONFIGURADA","FALSE").equals("TRUE")) {
+                if (sharedPreferences.getString("RED_CONFIGURADA", "FALSE").equals("TRUE")) {
                     try {
                         if (registrarDispositivo()) {
                             objConfLocal = clAux;
-                                objSql = cnAux;
-                                getActivity().runOnUiThread(() -> {
-                                    Funciones.mostrarEstatusGeneral(context,
-                                            objConfLocal,
-                                            txv_PushTituloVentana,
-                                            txv_PushRed,
-                                            txv_NombreApp,
-                                            txv_PushVersionApp,
-                                            txv_PushVersionDataBase,
-                                            txv_PushIdentificador
-                                    );
-                                    Toast.makeText(context, "REGISTRADO", Toast.LENGTH_SHORT).show();
-                                    mostrarValoresDocumentoActual();
-                                });
-                            }
-                        }catch (Exception e){
-                            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                            objSql = cnAux;
+                            getActivity().runOnUiThread(() -> {
+                                Funciones.mostrarEstatusGeneral(context, objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
+                                Toast.makeText(context, "REGISTRADO", Toast.LENGTH_SHORT).show();
+                                mostrarValoresDocumentoActual();
+                            });
                         }
+                    } catch (Exception e) {
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                     }
+                }
                 pbSync.post(() -> pbSync.setProgress(90));
 
                 pbSync.post(() -> pbSync.setProgress(100));
@@ -500,13 +436,48 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     private boolean registrarDispositivo() {
         try {
             clAux.set("ID_DISPOSITIVO", cnAux.registrarEquipo(objConfLocal));
-            editor.putString("ID_DISPOSITIVO",cnAux.registrarEquipo(objConfLocal)).apply();
-            Log.i("ENTRAO","ASDASD");
+            editor.putString("ID_DISPOSITIVO", cnAux.registrarEquipo(objConfLocal)).apply();
+            Log.i("ENTRAO", "ASDASD");
             //clAux.actualizarConfiguraciones(cnAux.obtenerConfiguracionesDispositivoMovil());
             return true;
         } catch (Exception ex) {
             Funciones.mostrarError(context, ex);
             return false;
+        }
+    }
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            touchCounter++;
+            Log.i("Presionado", String.valueOf(touchCounter));
+            if (touchCounter == 3) {
+                etxHost.setText("192.168.30.99");
+                etxApiServer.setText("192.168.30.94:8080");
+                etxInstancia.setText("");
+                etxNombreBD.setText("DataGreenMovil");
+                etxUsuario.setText("sa");
+                etx_Password.setText("A20200211sj");
+                touchCounter = 0;
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            flingCounter += 1;
+
+            if (flingCounter == 2) {
+                SettingsActivity settingsActivity = (SettingsActivity) getActivity();
+                if (settingsActivity.obtenerDrawer() != null) {
+                    DrawerLayout dl = settingsActivity.obtenerDrawer();
+//                    NavigationMenuItemView syncBtn = dl.findViewById(R.id.nav_item_sync);
+//                    syncBtn.setVisibility(View.INVISIBLE);
+                    dl.openDrawer(GravityCompat.START);
+                }
+                flingCounter = 0;
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
         }
     }
 }

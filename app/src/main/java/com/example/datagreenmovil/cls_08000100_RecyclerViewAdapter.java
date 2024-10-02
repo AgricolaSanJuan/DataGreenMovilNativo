@@ -255,10 +255,9 @@ public class cls_08000100_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
   }
 
   private void abrirDocumento(String id) {
-    Swal.info(contextoLocal.getApplicationContext(), "HOLI", "BOLI", 2000);
-//    Intent nuevaActividad = new Intent(contextoLocal, cls_08010000_Edicion.class);
-//    nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
-//    nuevaActividad.putExtra("s_IdRex", id);
-//    contextoLocal.startActivity(nuevaActividad);
+    Intent nuevaActividad = new Intent(contextoLocal, cls_08010000_Edicion.class);
+    nuevaActividad.putExtra("ConfiguracionLocal", objConfLocal);
+    nuevaActividad.putExtra("s_IdRex", id);
+    contextoLocal.startActivity(nuevaActividad);
   }
 }

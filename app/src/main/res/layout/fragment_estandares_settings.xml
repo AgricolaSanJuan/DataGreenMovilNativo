@@ -9,8 +9,19 @@
     android:paddingEnd="10dp"
     tools:context=".ui.estandares.EstandaresSettings.EstandaresSettingsFragment">
 
+    <ProgressBar
+        android:id="@+id/pbSync"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/txvTareos2"
+        android:id="@+id/txvEstandares"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="SINCRONIZAR DATOS"
@@ -20,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupTareos"
+        android:id="@+id/chipGroupEstandares"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -29,8 +40,8 @@
         app:chipSpacingHorizontal="20dp"
         app:chipSpacingVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txvTareos2"
-        app:layout_constraintTop_toBottomOf="@+id/txvTareos2"
+        app:layout_constraintStart_toStartOf="@+id/txvEstandares"
+        app:layout_constraintTop_toBottomOf="@+id/txvEstandares"
         app:singleSelection="false">
 
         <Switch
@@ -80,6 +91,6 @@
         android:backgroundTint="@color/azulPrimario"
         android:text="SINCRONIZAR"
         android:textColor="@color/blancoOficial"
-        app:layout_constraintEnd_toEndOf="@+id/chipGroupTareos"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroupTareos" />
+        app:layout_constraintEnd_toEndOf="@+id/chipGroupEstandares"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroupEstandares" />
 </androidx.constraintlayout.widget.ConstraintLayout>

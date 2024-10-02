@@ -92,12 +92,20 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
             });
 
             holder.mainLayout.setOnLongClickListener(view -> {
-                if (listener != null && !holder.txv_IdEstado.getText().equals("TR")) {
+                boolean transferidoSeleccionado = holder.txv_IdEstado.getText().equals("TR");
+                if (listener != null
+//                        && !holder.txv_IdEstado.getText().equals("TR")
+                ) {
                     holder.cbx_Seleccionado.setChecked(!holder.cbx_Seleccionado.isChecked());
                     holder.mainLayout.setBackground(ResourcesCompat.getDrawable(Context.getResources(), !holder.cbx_Seleccionado.isChecked()
                             ? R.drawable.bg_alerta_suave
                             : R.drawable.bg_seleccionado,null));
                     listener.onItemClick(holder.cbx_Seleccionado, holder.txv_IdTareo);
+                    if(holder.txv_IdEstado.getText().toString().equals("TR")){
+                        if(!holder.cbx_Seleccionado.isChecked()){
+                            holder.mainLayout.setBackground(ResourcesCompat.getDrawable(Context.getResources(), R.drawable.bg_transferido, null));
+                        }
+                    }
                 }
                 return true;
             });

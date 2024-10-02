@@ -60,21 +60,17 @@ public class EstandaresActivity extends AppCompatActivity {
 
         inicializarBase();
 
-//        MstTiposEstandar tiposEstandar = new MstTiposEstandar();
-////        tiposEstandar.setId(1);
-//        tiposEstandar.setDescripcion("finisimo");
-//        tiposEstandar.setNombreCorto("fino");
-//        mstTiposEstandarDAO.insertarTiposEstandar(tiposEstandar);
+        mstTiposEstandarDAO.obtenerTiposEstandar();
 
-//        List<MstTiposEstandar> mstTiposEstandarList = mstTiposEstandarDAO.obtenerTiposEstandar();
-
-//        List<MstTiposEstandar> mstTiposEstandarList = mstTiposEstandarDAO.obtenerTiposEstandar();
-//        Log.i("RESULTADOF", mstTiposEstandarList.get(0).getDescripcion());
-//        try {
-//            Swal.info(this,"Hola", mstTiposEstandarList.get(0).getDescripcion(), 5000);
-//        }catch (Exception e){
-//            Swal.error(this,"Hola", "Ocurrió un error", 5000);
-//        }
+        List<MstTiposEstandar> mstTiposEstandarList = mstTiposEstandarDAO.obtenerTiposEstandar();
+        if(!mstTiposEstandarList.isEmpty()){
+            Log.i("RESULTADOF", mstTiposEstandarList.get(0).getDescripcion());
+            try {
+                Swal.info(this,"Hola", mstTiposEstandarList.get(0).getDescripcion(), 5000);
+            }catch (Exception e){
+                Swal.error(this,"Hola", "Ocurrió un error", 5000);
+            }
+        }
     }
 
     @Override
@@ -92,11 +88,11 @@ public class EstandaresActivity extends AppCompatActivity {
 
     private void inicializarBase() {
         AppDatabase db = DataGreenApp.getAppDatabase();
-//        trxEstandaresNewDAO = db.estandaresNewDAO();
+        trxEstandaresNewDAO = db.estandaresNewDAO();
         mstTiposEstandarDAO = db.mstTiposEstandarDAO();
-//        mstTiposBonoEstandarDAO = db.mstTiposBonoEstandarDAO();
-//        mstTiposCostoEstandarDAO = db.mstTiposCostoEstandarDAO();
-//        mstMedidasEstandaresDAO = db.mstMedidasEstandaresDAO();
+        mstTiposBonoEstandarDAO = db.mstTiposBonoEstandarDAO();
+        mstTiposCostoEstandarDAO = db.mstTiposCostoEstandarDAO();
+        mstMedidasEstandaresDAO = db.mstMedidasEstandaresDAO();
     }
 
 }

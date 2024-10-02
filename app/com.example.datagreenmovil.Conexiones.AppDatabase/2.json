@@ -1,0 +1,442 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "9781f6a953c0754806f8c0dfdfda4878",
+    "entities": [
+      {
+        "tableName": "mst_tipos_estandar",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `descripcion` TEXT, `nombreCorto` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "descripcion",
+            "columnName": "descripcion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreCorto",
+            "columnName": "nombreCorto",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_tipos_costo_estandar",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idNisira` INTEGER NOT NULL, `descripcion` TEXT, `nombreCorto` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idNisira",
+            "columnName": "idNisira",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "descripcion",
+            "columnName": "descripcion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreCorto",
+            "columnName": "nombreCorto",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_tipos_bono_estandar",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idNisira` TEXT, `descripcion` TEXT, `nombreCorto` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idNisira",
+            "columnName": "idNisira",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "descripcion",
+            "columnName": "descripcion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreCorto",
+            "columnName": "nombreCorto",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_medidas_estandares",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `descripcion` TEXT, `nombreNISIRA` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "descripcion",
+            "columnName": "descripcion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreNISIRA",
+            "columnName": "nombreNISIRA",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "trx_estandares_new",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idEmpresa` TEXT, `idTipoEstandar` TEXT, `idActividad` TEXT, `idLabor` TEXT, `periodo` TEXT, `fechaInicio` TEXT, `fechaFinal` TEXT, `idMedidaEstandar` INTEGER NOT NULL, `cantidad` REAL, `precio` REAL, `base` REAL, `precioBase` REAL, `idTipoBonoEstandar` INTEGER NOT NULL, `valMinExcedente` REAL, `horas` REAL, `idTipoCostoEstandar` INTEGER NOT NULL, `idConsumidor` TEXT, `porcentajeValidExcedente` REAL, `factorPrecio` REAL, `dniUsuarioCrea` TEXT, `fechaHoraCrea` TEXT, `dniUsuarioActualiza` TEXT, `fechaHoraActualiza` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "idEmpresa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTipoEstandar",
+            "columnName": "idTipoEstandar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idActividad",
+            "columnName": "idActividad",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idLabor",
+            "columnName": "idLabor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "periodo",
+            "columnName": "periodo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaInicio",
+            "columnName": "fechaInicio",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaFinal",
+            "columnName": "fechaFinal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idMedidaEstandar",
+            "columnName": "idMedidaEstandar",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cantidad",
+            "columnName": "cantidad",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "precio",
+            "columnName": "precio",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "base",
+            "columnName": "base",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "precioBase",
+            "columnName": "precioBase",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTipoBonoEstandar",
+            "columnName": "idTipoBonoEstandar",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "valMinExcedente",
+            "columnName": "valMinExcedente",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "horas",
+            "columnName": "horas",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTipoCostoEstandar",
+            "columnName": "idTipoCostoEstandar",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idConsumidor",
+            "columnName": "idConsumidor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "porcentajeValidExcedente",
+            "columnName": "porcentajeValidExcedente",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "factorPrecio",
+            "columnName": "factorPrecio",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dniUsuarioCrea",
+            "columnName": "dniUsuarioCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraCrea",
+            "columnName": "fechaHoraCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dniUsuarioActualiza",
+            "columnName": "dniUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraActualiza",
+            "columnName": "fechaHoraActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_Actividades",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT NOT NULL, `Id` TEXT NOT NULL, `Dex` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`Id`))",
+        "fields": [
+          {
+            "fieldPath": "IdEmpresa",
+            "columnName": "IdEmpresa",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdUsuarioCrea",
+            "columnName": "IdUsuarioCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_labores",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT NOT NULL, `IdActividad` TEXT NOT NULL, `Id` TEXT NOT NULL, `Dex` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`Id`))",
+        "fields": [
+          {
+            "fieldPath": "IdEmpresa",
+            "columnName": "IdEmpresa",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdActividad",
+            "columnName": "IdActividad",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdUsuarioCrea",
+            "columnName": "IdUsuarioCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9781f6a953c0754806f8c0dfdfda4878')"
+    ]
+  }
+}

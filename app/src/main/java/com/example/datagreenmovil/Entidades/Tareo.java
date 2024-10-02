@@ -9,9 +9,9 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,9 +64,13 @@ public class Tareo {
                 this.idEmpresa = sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA");
                 List<String> p = new ArrayList<>();
                 p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
-                p.add(sharedPreferences.getString("MAC","!MAC"));
+//                p.add(sharedPreferences.getString("MAC","!MAC"));
                 p.add(sharedPreferences.getString("IMEI","IMEI"));
-                this.id = Funciones.siguienteCorrelativo(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER ULTIMO trx_Tareos"),p,"READ",""),'A');
+                Cursor lastId = objSqlite.doItBaby("SELECT IFNULL((SELECT MAX(Id) Id FROM trx_Tareos), '000000000')", null, "READ");
+                lastId.moveToFirst();
+                String last = lastId.getString(0);
+                this.id = Funciones.siguienteCorrelativo(last,'A');
+//                ActualizarCorrelativos()
 // //                NOS ASEGURAMOS QUE EL ID CONTENGA EL ID DE DISPOSITIVO
                 if(this.id.length() == 9){
                     this.id = sharedPreferences.getString("ID_DISPOSITIVO", "!ID_DISPOSITIVO") + this.id;

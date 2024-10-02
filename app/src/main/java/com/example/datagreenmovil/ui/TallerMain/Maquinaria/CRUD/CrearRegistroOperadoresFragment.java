@@ -24,8 +24,8 @@ import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.databinding.FragmentTallerMainBinding;
 import com.example.datagreenmovil.databinding.FragmentTallerMaquinariaCrearRegistroOperadoresBinding;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 public class CrearRegistroOperadoresFragment extends Fragment {
 

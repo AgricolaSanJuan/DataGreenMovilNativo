@@ -117,7 +117,7 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -147,10 +147,57 @@
                         android:fontFamily="@font/vmr"
                         android:text="Personas" />
 
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/txv_TareosReportes_RCV3_Horas_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vmr"
+                        android:text="0.00"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/txv_TareosReportes_RCV3_Rdtos_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vmr"
+                        android:text="0"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/txv_TareosReportes_RCV3_Personas_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vmr"
+                        android:text="0"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -186,57 +233,12 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/txv_TareosReportes_RCV3_Horas_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/vmr"
-                        android:text="0.00"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/txv_TareosReportes_RCV3_Rdtos_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/vmr"
-                        android:text="0"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/txv_TareosReportes_RCV3_Personas_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/vmr"
-                        android:text="0"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <TextView
                         android:id="@+id/txv_TareosReportes_RCV3_Jornales_v"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/vmr"
                         android:text="0.00"
-                        android:textAlignment="textEnd"
+                        android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -251,7 +253,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/vmr"
                         android:text="0.00"
-                        android:textAlignment="textEnd"
+                        android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -266,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/vmr"
                         android:text="0"
-                        android:textAlignment="textEnd"
+                        android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </TableRow>

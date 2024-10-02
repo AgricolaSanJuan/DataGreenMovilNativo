@@ -1,7 +1,6 @@
 package com.example.datagreenmovil;
 
-import android.app.DownloadManager;
-import android.app.Notification;
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,16 +20,12 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-
-import com.example.datagreenmovil.Logica.Swal;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -44,9 +39,72 @@ import java.net.URL;
 
 public class DataGreenUpdateService extends Service {
     Context ctx;
-    Snackbar snackbar;
+    private NetworkChangeReceiver networkChangeReceiver;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // Crear canal de notificación
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("mi_canal_id", "Mi Canal", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Verificar y solicitar permisos
+        checkStoragePermissions();
+    }
+
+    private void checkStoragePermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // No tenemos permiso, se podría solicitar aquí
+            // Si estás usando un servicio, considera que esto normalmente se hace en una actividad
+            // Aquí solo estamos mostrando un mensaje, puedes implementar la lógica que necesites
+            Toast.makeText(this, "Se requiere permiso para acceder al almacenamiento", Toast.LENGTH_SHORT).show();
+        } else {
+            // Ya tenemos permiso, puedes proceder
+            proceedWithFileAccess();
+        }
+    }
+
+    private void proceedWithFileAccess() {
+        // Lógica para acceder a archivos o continuar con la descarga
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Inicializa y registra el receptor de cambios en la red
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
+    }
+
+    private boolean isConnectedToInternet() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnected();
+        }
+        return false;
+    }
+
     public class DownloadUpdate extends AsyncTask<String, Void, Void> {
         File outputFile;
+
         @Override
         protected Void doInBackground(String... params) {
             String fileUrl = params[0]; // URL completa del archivo que deseas descargar
@@ -77,8 +135,6 @@ public class DataGreenUpdateService extends Service {
 
                     outputStream.close();
                     inputStream.close();
-
-                    // Notificar al sistema que se ha descargado un archivo
                 } else {
                     Log.e("HTTP", "Error en la solicitud. Código de respuesta: " + responseCode);
                 }
@@ -92,59 +148,48 @@ public class DataGreenUpdateService extends Service {
 
         @Override
         protected void onPostExecute(Void unused) {
-            // Muestra un Toast para indicar que la descarga ha finalizado
             Toast.makeText(ctx, "Descarga completada", Toast.LENGTH_SHORT).show();
 
-            // Comprueba si el dispositivo está ejecutando Android Oreo (API 26) o superior
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // Crea un canal de notificación para Android Oreo y versiones superiores
-                NotificationChannel channel = new NotificationChannel("mi_canal_id", "Mi Canal", NotificationManager.IMPORTANCE_DEFAULT);
-                NotificationManager notificationManager = getSystemService(NotificationManager.class);
-                notificationManager.createNotificationChannel(channel);
+            if (outputFile != null && outputFile.exists()) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri uri = FileProvider.getUriForFile(ctx, "com.example.datagreenmovil.fileprovider", outputFile);
+                intent.setDataAndType(uri, "application/vnd.android.package-archive");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                // Crea el PendingIntent para la notificación
+                PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+                // Crea la notificación de descarga utilizando NotificationCompat.Builder
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, "mi_canal_id")
+                        .setContentTitle("Descarga completada")
+                        .setContentText("Pulsa para instalar la actualización.")
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent) // Asocia el PendingIntent
+                        .setAutoCancel(true); // Cierra la notificación después de hacer clic en ella
+
+                // Finalmente, construye y muestra la notificación
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
+                notificationManager.notify(1, builder.build()); // Puedes usar un ID diferente para cada notificación
+            } else {
+                Toast.makeText(ctx, "Error: archivo no encontrado", Toast.LENGTH_SHORT).show();
             }
-
-            // Define la intención (intent) para abrir el archivo después de la descarga
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri = FileProvider.getUriForFile(ctx, "com.example.datagreenmovil.fileprovider", outputFile);
-            intent.setDataAndType(uri, "application/vnd.android.package-archive");
-
-            // Asegúrate de que el PendingIntent tenga permisos de lectura para la URI del archivo
-            PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            ctx.grantUriPermission("com.android.packageinstaller", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-            // Crea la notificación de descarga utilizando NotificationCompat.Builder
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, "mini_green_update")
-                    .setContentTitle("Descarga completada")
-                    .setContentText("Busque el archivo en la carpeta de descargas y ejecutelo.")
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true); // Cierra la notificación después de hacer clic en ella
-
-            // Finalmente, construye y muestra la notificación
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
-            notificationManager.notify(1, builder.build()); // Puedes usar un ID diferente para cada notificación
         }
 
-
     }
-    private class ApiRequestTask extends AsyncTask<String, Void, String> {
 
+    private class ApiRequestTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             try {
-                // Crear una URL desde el primer parámetro
                 URL url = new URL(params[0]);
-
-                // Abrir una conexión HTTP
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
-                // Leer la respuesta de la API
                 int responseCode = connection.getResponseCode();
-                Log.d("Response Code", String.valueOf(responseCode));
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder response = new StringBuilder();
@@ -154,7 +199,6 @@ public class DataGreenUpdateService extends Service {
                     }
                     return response.toString();
                 } else {
-                    // Manejar errores aquí (por ejemplo, si la respuesta no es HTTP_OK)
                     return null;
                 }
             } catch (Exception e) {
@@ -176,27 +220,24 @@ public class DataGreenUpdateService extends Service {
 
         @Override
         protected void onPostExecute(String result) {
-            // Actualizar la vista con el valor de la respuesta
             if (result != null) {
-
-//                OBTENEMOS LA VERSIONA ACTUAL DE NUESTRA APLICACION
-                String appVersion = ""; // Asigna el valor predeterminado
+                String appVersion = "";
                 try {
                     PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                    appVersion = packageInfo.versionName; // Obtiene la versión de la aplicación desde el archivo build.gradle
+                    appVersion = packageInfo.versionName;
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                if(!appVersion.equals(result) && ctx != null){
+                if (!appVersion.equals(result) && ctx != null) {
                     SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
                     String ServerIP = sharedPreferences.getString("API_SERVER", "");
-                    String fileUrl = "http://192.168.30.99:8090/DataGreenMovil/MiniGreen"+result+".apk";
-                    String fileName = "MiniGreen"+result+".apk";
+                    String fileUrl = "http://192.168.30.99:8090/DataGreenMovil/MiniGreen" + result + ".apk";
+                    String fileName = "MiniGreen" + result + ".apk";
                     new DownloadUpdate().execute(fileUrl, fileName);
 
                     Toast.makeText(DataGreenUpdateService.this, "Se está descargando una versión disponible, por favor espere!", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(ctx, "No hay nueva versión disponible.", Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -205,73 +246,15 @@ public class DataGreenUpdateService extends Service {
         }
     }
 
-    private NetworkChangeReceiver networkChangeReceiver;
-
-    public DataGreenUpdateService() {
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // Inicializa y registra el receptor de cambios en la red
-        networkChangeReceiver = new NetworkChangeReceiver();
-        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, intentFilter);
-
-        // Aquí puedes realizar las operaciones del servicio en segundo plano.
-
-        return START_STICKY; // Esto hace que el servicio se reinicie automáticamente si se detiene.
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Libera recursos y desregistra el receptor cuando se detiene el servicio
-        if (networkChangeReceiver != null) {
-            unregisterReceiver(networkChangeReceiver);
-        }
-    }
-
     public class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             ctx = context;
-            // Verificar el estado de la conexión cuando cambia la red
             if (isConnectedToInternet()) {
-                try {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-                    String ServerIP = sharedPreferences.getString("API_SERVER", "");
-                    new ApiRequestTask().execute("http://"+ServerIP+"/api/minigreen/validar_version");
-                    // Mover la obtención de la versión de la aplicación aquí
-                    PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                    String versionName = packageInfo.versionName;
-                    int versionCode = packageInfo.versionCode;
-                    // Hacer algo con la versión, por ejemplo, mostrarla en un TextView o un Log
-
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-                // Realizar acciones cuando hay conexión a Internet
-                // Iniciar la tarea para obtener la respuesta de la API
-//                Toast.makeText(context, "Conexión a Internet disponible", Toast.LENGTH_SHORT).show();
-            } else {
-                // Realizar acciones cuando no hay conexión a Internet
-//                Toast.makeText(context, "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences = context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+                String ServerIP = sharedPreferences.getString("API_SERVER", "");
+                new ApiRequestTask().execute("http://" + ServerIP + "/api/minigreen/validar_version");
             }
         }
     }
-
-    private boolean isConnectedToInternet() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            return networkInfo != null && networkInfo.isConnected();
-        }
-        return false;
-    }
-
 }

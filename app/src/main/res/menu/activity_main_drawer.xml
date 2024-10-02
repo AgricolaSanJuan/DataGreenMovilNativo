@@ -7,13 +7,13 @@
         <item
             android:id="@+id/nav_estandares_main"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_estandares_registro"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="ESTANDARES" />
         <item
             android:id="@+id/nav_estandares_settings"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="CONFIGURACIONES" />
+        <item
+            android:id="@+id/nav_estandares_registro"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
     </group>

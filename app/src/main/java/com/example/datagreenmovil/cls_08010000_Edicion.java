@@ -32,9 +32,13 @@ import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+//import org.threeten.bp.LocalDate;
+//import org.threeten.bp.LocalDateTime;
+//import org.threeten.bp.format.DateTimeFormatter;
+
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 

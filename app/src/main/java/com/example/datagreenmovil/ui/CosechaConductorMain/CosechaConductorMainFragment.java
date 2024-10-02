@@ -26,8 +26,8 @@ import com.example.datagreenmovil.databinding.FragmentCosechaQrConductorBinding;
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;

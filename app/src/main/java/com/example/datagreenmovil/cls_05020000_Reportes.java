@@ -38,8 +38,8 @@ import com.example.datagreenmovil.Logica.Funciones;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -463,6 +463,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
             p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
             p.add(fechaSeleccionada);
             p.add(idUsuarioActual);
+            Log.i("query1",  objSqlite.obtQuery("TAREOS REPORTE RESUMEN 1"));
             Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 1"),p,"READ");
             inflarRecyclerView1(c);
             c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 2"),p,"READ");

@@ -15,6 +15,10 @@ import com.example.datagreenmovil.Entidades.MiFila;
 import com.example.datagreenmovil.Entidades.PopUpBuscarEnLista_Item;
 import com.example.datagreenmovil.Entidades.Status;
 
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.Duration;
+
 import java.io.Serializable;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -23,9 +27,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+//import org.threeten.bp.Duration;
+//import org.threeten.bp.LocalDateTime;
+//import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,21 +78,25 @@ public class ConexionBD implements Serializable {
     }
 
     public boolean horaActualizada() throws Exception {
-        try{
+        try {
             String horaString = "";
             LocalDateTime horaServidor;
-            horaString=doItBaby("sp_ObtenerFechaHoraActual",null,horaString);
-            horaServidor = LocalDateTime.parse(horaString,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            LocalDateTime horaDispositivo=LocalDateTime.now();
-            //ldt.minusMinutes(hS.);
 
-            Duration diferencia = Duration.between(horaServidor,horaDispositivo);
-            //CONTINUAR AQUI, COMPARAR EL TIEMPO QUE NO SEA MAYOR A 5 MINUTOS;
+            // Llama a tu método para obtener la hora del servidor
+            horaString = doItBaby("sp_ObtenerFechaHoraActual", null, horaString);
 
-            if(diferencia.toMinutes() < -5 || diferencia.toMinutes() > 5){
-                return false;
-            }else return true;
-        }catch (Exception ex){
+            // Parsea la cadena a LocalDateTime
+            horaServidor = LocalDateTime.parse(horaString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+            // Obtiene la hora actual del dispositivo
+            LocalDateTime horaDispositivo = LocalDateTime.now();
+
+            // Calcula la diferencia entre las dos horas
+            Duration diferencia = Duration.between(horaServidor, horaDispositivo);
+
+            // Comprueba si la diferencia está dentro del rango de -5 a 5 minutos
+            return diferencia.toMinutes() >= -5 && diferencia.toMinutes() <= 5;
+        } catch (Exception ex) {
             return false;
         }
     }

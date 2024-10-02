@@ -11,11 +11,13 @@
         android:id="@+id/fabOpenEstandares"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/common_full_open_on_phone" />
+        app:srcCompat="@drawable/common_full_open_on_phone"
+        tools:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/c003_lly_StatusSuperior_v"
@@ -177,11 +179,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center"
                 android:fontFamily="@font/monoespaciada_principal"
+                android:gravity="center"
                 android:text="Recordar credenciales"
-                android:textAlignment="center"
-                android:visibility="visible" />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView7"

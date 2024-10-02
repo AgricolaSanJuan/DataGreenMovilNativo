@@ -10,28 +10,126 @@
     android:foregroundTint="#E62525"
     android:background="@drawable/bg_principal"
     tools:context=".ui.TransportesSettings.TransportesSettingsFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txvTransportes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="SINCRONIZAR INFORMACIÓN"
+            android:textAlignment="textEnd"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupTransportes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            app:chipSpacingHorizontal="20dp"
+            app:chipSpacingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvTransportes"
+            app:singleSelection="false">
+
+            <Switch
+                android:id="@+id/switchPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personas"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchVehiculos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="Vehiculos"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchConductores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conductores"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchRutas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rutas"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchProveedores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Proveedores"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchUsuarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Usuarios"
+                android:textSize="18dp" />
+
+            <Switch
+                android:id="@+id/switchQuerysSqlite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Querys SQLite"
+                android:textSize="18dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <Button
+            android:id="@+id/btnSincronizarTransportes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/azulPrimario"
+            android:text="SINCRONIZAR"
+            android:textColor="@color/blancoOficial"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroupTransportes" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="COMPORTAMIENTO DE MODULO TRANSPORTES"
             android:textAlignment="textEnd"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSincronizarTransportes" />
 
         <Switch
             android:id="@+id/switchTrabajadoresDesconocidos"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:text="Permitir Trabajadores Desconocidos"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="2dp"
+    android:background="@color/azulSuave"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/txvEFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="YYYY/MM/DD"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txvEPeriodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="YYYYMM"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txvEFecha" />
+
+    <TextView
+        android:id="@+id/txvECultivoVariedad"
+        android:layout_width="1px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="."
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvEFecha" />
+
+    <TextView
+        android:id="@+id/txvEConsumidor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="Consumidor"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txvECultivoVariedad" />
+
+    <TextView
+        android:id="@+id/txvEActividad"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="Lubricación, Engrase y Reparación de equipos"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvECultivoVariedad" />
+
+    <TextView
+        android:id="@+id/txvELabor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="Cambio de aceite"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvEActividad" />
+
+    <TextView
+        android:id="@+id/txvECantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="50.00"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txvELabor"
+        app:layout_constraintTop_toBottomOf="@+id/txvELabor" />
+
+    <TextView
+        android:id="@+id/txvEPrecio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="S/0.38"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txvECantidad"
+        app:layout_constraintTop_toTopOf="@+id/txvECantidad" />
+
+    <TextView
+        android:id="@+id/txvEHoras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="8H"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txvECantidad"
+        app:layout_constraintTop_toBottomOf="@+id/txvECantidad" />
+
+    <TextView
+        android:id="@+id/txvEBase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="S/1030.50"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txvEHoras"
+        app:layout_constraintTop_toTopOf="@+id/txvEHoras" />
+
+    <TextView
+        android:id="@+id/txvETipoCosto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="Costo 1"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txvECantidad"
+        app:layout_constraintTop_toBottomOf="@+id/txvEHoras" />
+
+    <TextView
+        android:id="@+id/txvETipoBono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/auxiliar_02"
+        android:text="Tipo Bono 1"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txvETipoCosto"
+        app:layout_constraintTop_toTopOf="@+id/txvETipoCosto" />
+</androidx.constraintlayout.widget.ConstraintLayout>

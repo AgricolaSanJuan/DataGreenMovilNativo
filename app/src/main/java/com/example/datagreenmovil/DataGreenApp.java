@@ -12,11 +12,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 public class DataGreenApp extends Application {
     static SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    private static AppDatabase appDatabase;
     boolean darkTheme;
 
     public static boolean isPassPassed() {
@@ -49,12 +49,12 @@ public class DataGreenApp extends Application {
         super.onCreate();
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         //        INICIAMOS EL SERVICIO QUE NOS INDICA SI LA APLICACION TIENE UNA ACTUALIZACIÓN
-        startService(new Intent(this, DataGreenUpdateService.class));
-
+        startService(new Intent(this, DataGreenUpdateService.class).putExtra("activity_context", this.getClass().getName()));
+        AndroidThreeTen.init(this);
         appContext = getApplicationContext();
 
-//        INICIALIZAMOS LA BASE DE DATOS PARA PODER USAR DAO CON LAS NUEVAS ENTIDADES
-        appDatabase = AppDatabase.getDatabase(getApplicationContext());
+
+
 
     }
 
@@ -70,7 +70,7 @@ public class DataGreenApp extends Application {
     }
 
     public static AppDatabase getAppDatabase(){
-        return appDatabase;
+        return AppDatabase.getDatabase();
     }
 
     public void InicializarTema() {

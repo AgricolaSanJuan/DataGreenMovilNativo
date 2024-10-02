@@ -19,9 +19,9 @@ import com.example.datagreenmovil.databinding.UtilidadesFiltrosBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.WeekFields;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.temporal.WeekFields;
 import java.util.Locale;
 
 public class Filtros extends Fragment{
@@ -44,7 +44,7 @@ public class Filtros extends Fragment{
         View root = binding.getRoot();
 
         inicializarDescripcionFiltro();
-        binding.lyFiltros.setOnClickListener(view -> {
+        binding.lyMainFIltros.setOnClickListener(view -> {
 //            Swal.info(ctx, "Hola", "Aqui se abrirán los filtros pe mafrencito", 5000);
             JSONObject props = new JSONObject();
             try {

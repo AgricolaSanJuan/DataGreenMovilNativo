@@ -9,18 +9,15 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,8 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
@@ -40,27 +35,23 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
-import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
-import com.example.datagreenmovil.TareosActivity;
 import com.example.datagreenmovil.TransportesActivity;
 import com.example.datagreenmovil.cls_08000100_RecyclerViewAdapter;
 import com.example.datagreenmovil.cls_08010000_Edicion;
-import com.example.datagreenmovil.databinding.FragmentSettingsLocalBinding;
 import com.example.datagreenmovil.databinding.FragmentTransportesMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenuItemView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,15 +85,13 @@ public class TransportesMainFragment extends Fragment {
     String s_ListarHasta = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;
     String s_ListarIdEstado = "PE";
     String s_IdRex = "";
-private FragmentTransportesMainBinding binding;
+    private FragmentTransportesMainBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        TransportesMainViewModel transportesMainViewModel =
-                new ViewModelProvider(this).get(TransportesMainViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        TransportesMainViewModel transportesMainViewModel = new ViewModelProvider(this).get(TransportesMainViewModel.class);
 
-    binding = FragmentTransportesMainBinding.inflate(inflater, container, false);
-    View root = binding.getRoot();
+        binding = FragmentTransportesMainBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         try {
             if (getActivity().getIntent().getExtras() != null) {
@@ -115,15 +104,7 @@ private FragmentTransportesMainBinding binding;
             referenciarControles();
 
             setearControles();
-            Funciones.mostrarEstatusGeneral(ctx,
-                    objConfLocal,
-                    txv_PushTituloVentana,
-                    txv_PushRed,
-                    txv_NombreApp,
-                    txv_PushVersionApp,
-                    txv_PushVersionDataBase,
-                    txv_PushIdentificador
-            );
+            Funciones.mostrarEstatusGeneral(ctx, objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
             //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...
@@ -138,14 +119,7 @@ private FragmentTransportesMainBinding binding;
         binding.c022TxvPushRedV.setOnClickListener(view -> {
             try {
                 objSql.probarConexion(objConfLocal);
-                Funciones.mostrarEstatusGeneral(ctx,
-                        objConfLocal,
-                        binding.c022TxvPushTituloVentanaV,
-                        binding.c022TxvPushRedV,
-                        binding.c022TxvNombreAppV,
-                        binding.c022TxvPushVersionAppV,
-                        binding.c022TxvPushVersionDataBaseV,
-                        binding.c022TxvPushIdentificadorV);
+                Funciones.mostrarEstatusGeneral(ctx, objConfLocal, binding.c022TxvPushTituloVentanaV, binding.c022TxvPushRedV, binding.c022TxvNombreAppV, binding.c022TxvPushVersionAppV, binding.c022TxvPushVersionDataBaseV, binding.c022TxvPushIdentificadorV);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -175,12 +149,11 @@ private FragmentTransportesMainBinding binding;
         });
         binding.c022FabOpcionesV.setOnClickListener(view -> {
             TransportesActivity transportesActivity = (TransportesActivity) getActivity();
-            if(transportesActivity.obtenerDrawer() != null){
+            if (transportesActivity.obtenerDrawer() != null) {
                 DrawerLayout dl = transportesActivity.obtenerDrawer();
                 dl.openDrawer(GravityCompat.START);
             }
         });
-
 
 
         return root;
@@ -266,7 +239,7 @@ private FragmentTransportesMainBinding binding;
         try {
             //BINGO! METODO PARA LISTAR EN RECYCLERVIEW DESDE CURSOR
             List<String> p = new ArrayList<String>();
-            p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+            p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
             p.add(s_ListarIdEstado);
             p.add(s_ListarDesde);
             p.add(s_ListarHasta);
@@ -281,21 +254,18 @@ private FragmentTransportesMainBinding binding;
 
                     @Override
                     public void onItemClick(TextView txtIdServicio, String accion) {
-                        if(accion=="transferir"){
-                            Swal.confirm(ctx, "Confirmar","Estás seguro que deseas transferir el registro?")
-                                    .setConfirmClickListener(sweetAlertDialog -> {
-                                        transferirRegistros(txtIdServicio.getText().toString());
-                                        sweetAlertDialog.dismissWithAnimation();
-                                    }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
-                        }else if(accion=="eliminar"){
-                            Swal.confirm(ctx, "Confirmar","Estás seguro que deseas eliminar el registro?")
-                                    .setConfirmClickListener(sweetAlertDialog -> {
-                                        if(eliminarRegistros(txtIdServicio.getText().toString())){
-                                            Swal.success(ctx, "Correcto!","Se ha eliminado el registro con éxito", 1000);
-                                        }
-                                        sweetAlertDialog.dismissWithAnimation();
-                                    })
-                                    .setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
+                        if (accion == "transferir") {
+                            Swal.confirm(ctx, "Confirmar", "Estás seguro que deseas transferir el registro?").setConfirmClickListener(sweetAlertDialog -> {
+                                transferirRegistros(txtIdServicio.getText().toString());
+                                sweetAlertDialog.dismissWithAnimation();
+                            }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
+                        } else if (accion == "eliminar") {
+                            Swal.confirm(ctx, "Confirmar", "Estás seguro que deseas eliminar el registro?").setConfirmClickListener(sweetAlertDialog -> {
+                                if (eliminarRegistros(txtIdServicio.getText().toString())) {
+                                    Swal.success(ctx, "Correcto!", "Se ha eliminado el registro con éxito", 1000);
+                                }
+                                sweetAlertDialog.dismissWithAnimation();
+                            }).setCancelClickListener(sweetAlertDialog -> sweetAlertDialog.dismissWithAnimation());
                         }
                     }
                 });
@@ -336,13 +306,13 @@ private FragmentTransportesMainBinding binding;
     private boolean eliminarRegistros(String idEliminar) {
         try {
             List<String> pSqlite = new ArrayList<String>();
-            pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+            pSqlite.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
             pSqlite.add(idEliminar);
             //objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER REGISTRO trx_ServiciosTransporte"),pSqlite,"READ"));
             objRex = objSqlite.CursorARex(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_ServiciosTransporte"), pSqlite, "READ"));
             if (objRex.Existe("IdEstado") && !objRex.Get("IdEstado").equals("TR")) {
                 pSqlite.clear();
-                pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
+                pSqlite.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
                 pSqlite.add(idEliminar);
                 objSqlite.doItBaby(objSqlite.obtQuery("ELIMINAR trx_ServiciosTransporte_Detalle PENDIENTES X ID"), pSqlite, "WRITE");
                 objSqlite.doItBaby(objSqlite.obtQuery("ELIMINAR trx_ServiciosTransporte PENDIENTES X ID"), pSqlite, "WRITE");
@@ -353,15 +323,7 @@ private FragmentTransportesMainBinding binding;
             }
 
             objSqlite.ActualizarDataPendiente(objConfLocal);
-            Funciones.mostrarEstatusGeneral(ctx,
-                    objConfLocal,
-                    txv_PushTituloVentana,
-                    txv_PushRed,
-                    txv_NombreApp,
-                    txv_PushVersionApp,
-                    txv_PushVersionDataBase,
-                    txv_PushIdentificador
-            );
+            Funciones.mostrarEstatusGeneral(ctx, objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
             listarRegistros();
             return true;
         } catch (Exception ex) {
@@ -371,22 +333,22 @@ private FragmentTransportesMainBinding binding;
     }
 
     private boolean transferirRegistros(String idTransferir) {
-        try{
+        try {
             SQLiteDatabase database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
-            Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='"+ idTransferir +"'", null);
+            Cursor resultsUnidad = database.rawQuery("select * from trx_ServiciosTransporte where id='" + idTransferir + "'", null);
             resultsUnidad.moveToFirst();
             String unidad = "";
-            for(int i = 0; i<resultsUnidad.getColumnCount();i++){
-                unidad += "'"+resultsUnidad.getString(i)+(i == resultsUnidad.getColumnCount() -1 ? "'" : "', ");
+            for (int i = 0; i < resultsUnidad.getColumnCount(); i++) {
+                unidad += "'" + resultsUnidad.getString(i) + (i == resultsUnidad.getColumnCount() - 1 ? "'" : "', ");
             }
-            Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora, coordenadas_marca from trx_ServiciosTransporte_Detalle where idserviciotransporte='"+ idTransferir +"'",null);
+            Cursor results = database.rawQuery("select IdEmpresa, IdServicioTransporte, NroDocumento, Item, FechaHora, coordenadas_marca from trx_ServiciosTransporte_Detalle where idserviciotransporte='" + idTransferir + "'", null);
             JSONArray pasajeros = new JSONArray();
             String servicioTransporte = idTransferir;
-            while(results.moveToNext()){
+            while (results.moveToNext()) {
                 servicioTransporte = results.getString(1);
                 JSONObject elemento = new JSONObject();
-                elemento.put("IdServicioTransporte",servicioTransporte);
+                elemento.put("IdServicioTransporte", servicioTransporte);
                 elemento.put(results.getColumnName(0), results.getString(0));
                 elemento.put(results.getColumnName(1), results.getString(1));
                 elemento.put(results.getColumnName(2), results.getString(2));
@@ -399,8 +361,8 @@ private FragmentTransportesMainBinding binding;
 //      URL DE LA API EN LARAVEL
             SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
             String ServerIP = sharedPreferences.getString("API_SERVER", "");
-            String url = "http://"+ServerIP+"/api/get-users";
-            String mac = String.valueOf(sharedPreferences.getString("MAC","!MAC"));
+            String url = "http://" + ServerIP + "/api/get-users";
+            String mac = sharedPreferences.getString("MAC", "!MAC");
 //            if(mac.length() > 12){
 //                mac = mac.substring(0, 12);
 //            }
@@ -408,13 +370,14 @@ private FragmentTransportesMainBinding binding;
             try {
                 params.put("unidad", unidad);
                 params.put("pasajeros", pasajeros);
-                params.put("idServicioTransporte",servicioTransporte);
-                params.put("idDispositivo",sharedPreferences.getString("ID_DISPOSITIVO","!ID_DISPOSITIVO"));
-                params.put("idEmpresa", sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
-                params.put("userLogin", sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL","!NOMBRE_USUARIO_ACTUAL"));
+                params.put("idServicioTransporte", servicioTransporte);
+                params.put("idDispositivo", sharedPreferences.getString("ID_DISPOSITIVO", "!ID_DISPOSITIVO"));
+                params.put("idEmpresa", sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
+                params.put("userLogin", sharedPreferences.getString("NOMBRE_USUARIO_ACTUAL", "!NOMBRE_USUARIO_ACTUAL"));
                 params.put("app", "MiniGreen");
                 params.put("mac", mac);
-                params.put("usuario", sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
+                params.put("usuario", sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL"));
+//                Log.i("PARAMS", params.toString());
                 // Agrega otros campos según las expectativas del servidor
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -422,58 +385,58 @@ private FragmentTransportesMainBinding binding;
             Log.i("params", params.toString());
 
             String idServicioTransporte = servicioTransporte;
-            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                int code = response.getInt("code");
-                                List<String> pSqlite = new ArrayList<String>();
+            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, params, response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    String message = response.getString("message");
+//                    int code = response.getInt("code");
+                    List<String> pSqlite = new ArrayList<String>();
 
-                                if(code == 200){
-                                    pSqlite.clear();
-                                    pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
-                                    pSqlite.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
-                                    pSqlite.add(idServicioTransporte);
-                                    objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
-                                    listarRegistros();
-                                    Swal.success(ctx, "Correcto!","El registro se ha guardado correctamente!",3000);
-                                    objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", idServicioTransporte);
-                                } else if (code == 500) {
-//                      Log.i("FINOS",response.toString());
-                                    String nuevoId = response.getString("newId");
-                                    database.execSQL("PRAGMA FOREIGN_KEYS=1;");
-//                                    PENDIENTE AGREGAR ELIMINACIÓN CUANDO NO HAY DETALLE
-                                    String query = "UPDATE trx_serviciostransporte SET ID='"+ nuevoId +"' where ID = '"+idServicioTransporte+"'";
-                                    database.execSQL(query);
-                                    Swal.warning(ctx, "Importante!","No se ha transferido el registro pero se ha actualizado el identificador, por favor, vuelva a transferirlo",6000);
-                                    listarRegistros();
-                                }
-                            } catch (JSONException e) {
-                                //AGREGAR COMPROBACIÓN DE EXISTENCIA DE REGISTRO EN LA BASE DE DATOS DE SQL SERVER CON LA CANTIDAD DE ITEMS, YA
-//                                QUE AVECES SE EJECUTA UNA EXCEPCIÓN Y NO HAY NADA QUE LO DIGA.
-                                throw new RuntimeException(e);
-                            } catch (Exception e) {
-                                Swal.error(ctx, "oops.", e.toString(), 5000);
-                            }
+                    if (success) {
+                        // Manejo de la respuesta exitosa
+                        pSqlite.clear();
+                        pSqlite.add(sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL"));
+                        pSqlite.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
+                        pSqlite.add(idServicioTransporte);
+                        objSqlite.doItBaby(objSqlite.obtQuery("MARCAR trx_ServiciosTransporte COMO TRANSFERIDO"), pSqlite, "WRITE", "");
+                        listarRegistros();
+                        Swal.success(ctx, "Correcto!", message, 3000);
+                        objSqlite.ActualizarCorrelativos(objConfLocal, "trx_ServiciosTransporte", idServicioTransporte);
+                    } else {
+                        // Manejo de errores desde la API
+                        String errorMessage = response.getString("error");
+                        if (response.has("newId")) {
+                            String nuevoId = response.getString("newId");
+                            String query = "UPDATE trx_serviciostransporte SET ID='" + nuevoId + "' WHERE ID = '" + idServicioTransporte + "'";
+                            database.execSQL(query);
+                            Swal.warning(ctx, "Importante!", "No se ha transferido el registro pero se ha actualizado el identificador: " + nuevoId + ". Por favor, vuelva a transferirlo.", 6000);
+                        } else {
+                            Swal.error(ctx, "Error!", errorMessage, 5000);
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null && error.networkResponse.data != null) {
-                                String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                                Swal.error(ctx,"Ha ocurrido un error al insertar el registro",errorMessage,15000);
-                            } else {
-                                Log.i("ERROR API", error.toString());
-                                Swal.error(ctx,"Oops!","Ha ocurrido un error al insertar el registro",15000);
-                            }
-                        }
-                    });
+                    }
+
+                } catch (JSONException e) {
+                    Swal.error(ctx, "Oops!", "Error en la respuesta JSON: " + e.getMessage(), 5000);
+                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+                    Swal.error(ctx, "Oops!", "Error en SQLITE: " + e.getMessage(), 5000);
+                }
+            },error -> {
+                // Manejo de errores de red o de respuesta
+                if (error.networkResponse != null && error.networkResponse.data != null) {
+                    String errorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                    Swal.error(ctx, "Error de red", errorMessage, 15000);
+                } else {
+                    // Error de red sin respuesta
+                    Log.i("ERROR API", error.toString());
+                    Swal.error(ctx, "Oops!", error.toString(), 15000);
+                }
+            });
+
 // Agregar la solicitud a la cola de solicitudes
             requestQueue.add(stringRequest);
-        }catch (Exception e){
-            Swal.error(ctx, "Error al transferir",e.toString(),15000);
+        } catch (Exception e) {
+            Swal.error(ctx, "Error al transferir", e.toString(), 15000);
         }
         return true;
     }
@@ -511,9 +474,10 @@ private FragmentTransportesMainBinding binding;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ctx = context;
-        sharedPreferences = ctx.getSharedPreferences("objConfLocal", ctx.MODE_PRIVATE);
+        sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
     }
-@Override
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;

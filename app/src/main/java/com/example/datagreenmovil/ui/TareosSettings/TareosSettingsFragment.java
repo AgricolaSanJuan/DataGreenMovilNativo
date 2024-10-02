@@ -225,13 +225,24 @@ public class TareosSettingsFragment extends Fragment {
             }
         });
 
-        binding.switchMarcas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding.switchUsuarios.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(!!b){
-                    tablasSeleccionadas.add("mst_marcasTareo");
+                    tablasSeleccionadas.add("mst_usuarios");
                 }else {
-                    tablasSeleccionadas.remove("mst_marcasTareo");
+                    tablasSeleccionadas.remove("mst_usuarios");
+                }
+            }
+        });
+
+        binding.switchQuerysSqlite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!!b){
+                    tablasSeleccionadas.add("mst_querysSqlite");
+                }else {
+                    tablasSeleccionadas.remove("mst_querysSqlite");
                 }
             }
         });
