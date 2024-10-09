@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -51,6 +52,15 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
     private List<TareoDetalle> tareoDetallesLazy; // Nueva lista para lazy load
     boolean isLoading = false; // Bandera para evitar múltiples llamadas al cargar datos
 
+
+    public void updateData(List<TareoDetalle> newRegistros) {
+        DiffUtil.Callback diffCallback = new cls_05000100_DiffCallback(this.tareoDetallesLazy, newRegistros);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        this.tareoDetallesLazy.clear();
+        this.tareoDetallesLazy.addAll(newRegistros);
+        diffResult.dispatchUpdatesTo(this);
+    }
 
     public cls_05010200_RecyclerViewAdapter(Context ct, ConfiguracionLocal objConfLocal_, ConexionSqlite pSqlite, Tareo tareo_) {
         //super(objConfLocal_,ct,tareo_);

@@ -276,7 +276,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                     if (!adaptadorLista.isLoading && layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == adaptadorLista.getItemCount() - 1) {
                         // Llegamos al final de la lista
                         adaptadorLista.isLoading = true; // Cambiar la bandera de carga para evitar llamadas repetidas
-
+                        Log.i("LazyLoad","cargando mas data");
                         // Aquí es donde deberías cargar más datos (puede ser de una base de datos o una API)
                         cargarMasDatos(adaptadorLista);
                     }
