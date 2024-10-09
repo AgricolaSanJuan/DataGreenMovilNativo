@@ -350,8 +350,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Ingreso:"
                 android:fontFamily="@font/monoespaciada_principal"
+                android:text="Ingreso:"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
@@ -372,8 +372,8 @@
                 android:id="@+id/textView64"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Salida:"
                 android:fontFamily="@font/monoespaciada_principal"
+                android:text="Salida:"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView63"
                 app:layout_constraintTop_toBottomOf="@+id/textView63" />
@@ -401,12 +401,13 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvSalida"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelAlmuerzo" />
+
             <TextView
                 android:id="@+id/labelAlmuerzo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Almuerzo"
                 android:fontFamily="@font/monoespaciada_principal"
+                android:text="Almuerzo"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/spinnerAlmuerzo"
                 app:layout_constraintTop_toTopOf="@+id/tvIngreso" />

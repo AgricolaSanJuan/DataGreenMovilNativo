@@ -13,11 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:clickable="true"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/common_full_open_on_phone"
-        tools:visibility="invisible" />
+        app:srcCompat="@drawable/common_full_open_on_phone" />
 
     <LinearLayout
         android:id="@+id/c003_lly_StatusSuperior_v"

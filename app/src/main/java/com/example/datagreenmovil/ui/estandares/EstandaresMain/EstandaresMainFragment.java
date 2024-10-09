@@ -21,6 +21,7 @@ import com.example.datagreenmovil.DAO.Estandares.ReporteEstandares.ReporteEstand
 import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNew;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
+import com.example.datagreenmovil.Utilidades.AppInfo;
 import com.example.datagreenmovil.Utilidades.Filtros;
 import com.example.datagreenmovil.databinding.FragmentEstandaresMainBinding;
 
@@ -52,6 +53,7 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
 
         // Crear una instancia del fragmento
         Filtros filtrosFragment = new Filtros();
+        AppInfo appInfo = new AppInfo();
 
         // Establecer el callback
         filtrosFragment.setFilterDataCallback(this);
@@ -62,6 +64,8 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
 
         // Añadir o reemplazar el fragmento en el contenedor
         fragmentTransaction.replace(R.id.container_filtros, filtrosFragment);
+//        fragmentTransaction.commit();  // Confirmar la transacción
+        fragmentTransaction.replace(R.id.container_info, appInfo);
         fragmentTransaction.commit();  // Confirmar la transacción
 
         return root;

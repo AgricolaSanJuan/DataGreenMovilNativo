@@ -502,15 +502,15 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-<!--                    <me.dm7.barcodescanner.zbar.ZBarScannerView-->
-<!--                        android:id="@+id/zBarScannerView"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!--                    <me.dm7.barcodescanner.zbar.ZBarScannerView-->
+                    <!--                        android:id="@+id/zBarScannerView"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="100dp"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fabToggleFlash"
@@ -748,13 +748,13 @@
             android:id="@+id/c007_fab_volver_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="mini"
-            app:maxImageSize="30dp"
             android:clickable="true"
             android:onClick="onClick"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp"
             app:srcCompat="@drawable/i_keyboard_backspace" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -762,12 +762,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:fabSize="mini"
-            app:maxImageSize="30dp"
             android:visibility="invisible"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp"
             app:srcCompat="@drawable/i_save" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -775,11 +775,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:maxImageSize="30dp"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp"
             app:srcCompat="@drawable/duplicate" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -790,10 +790,10 @@
             android:clickable="true"
             android:src="@drawable/edit"
             app:fabSize="mini"
-            app:maxImageSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/c007_fab_Guardar_v"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/c007_fab_Eliminar_v"

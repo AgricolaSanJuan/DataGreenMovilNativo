@@ -27,6 +27,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -250,11 +251,38 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     public void onScaleEnd(ScaleGestureDetector detector) {
     }
 
+    // Método que simula la carga de más datos
+    private void cargarMasDatos(cls_05010200_RecyclerViewAdapter adapter) {
+        // Simular una carga de datos nuevos (esto podría ser de una API o base de datos)
+        List<TareoDetalle> nuevosDatos = tareoActual.getDetalle();
+
+        // Llamar al método del adaptador para añadir más elementos
+        adapter.addMoreItems(nuevosDatos);
+    }
+
     public void listarDetalles() {
         try {
             boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
             manejarLayout();
             cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this, objConfLocal, objSqlite, tareoActual);
+
+//            PRUEBA DE SCROLL LAZYLOAD
+            c007_rvw_Detalle.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    if (!adaptadorLista.isLoading && layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == adaptadorLista.getItemCount() - 1) {
+                        // Llegamos al final de la lista
+                        adaptadorLista.isLoading = true; // Cambiar la bandera de carga para evitar llamadas repetidas
+
+                        // Aquí es donde deberías cargar más datos (puede ser de una base de datos o una API)
+                        cargarMasDatos(adaptadorLista);
+                    }
+                }
+            });
+//            END PRUEBA DE SCROLL LAZY LOAD
             adaptadorLista.setOnItemSelected(new cls_05010200_RecyclerViewAdapter.OnItemSelected() {
                 @Override
                 public void onItemSelected(String item, boolean agregar) {

@@ -10,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -35,7 +33,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -46,9 +46,13 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
     Tareo tareo;
     ConfiguracionLocal objConfLocal;
     ConexionSqlite objSqlite;
-    int itemSeleccionado=0;
+    int itemSeleccionado = 0;
+    private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
+    private List<TareoDetalle> tareoDetallesLazy; // Nueva lista para lazy load
+    boolean isLoading = false; // Bandera para evitar múltiples llamadas al cargar datos
 
-    public cls_05010200_RecyclerViewAdapter(Context ct, ConfiguracionLocal objConfLocal_, ConexionSqlite pSqlite, Tareo tareo_){
+
+    public cls_05010200_RecyclerViewAdapter(Context ct, ConfiguracionLocal objConfLocal_, ConexionSqlite pSqlite, Tareo tareo_) {
         //super(objConfLocal_,ct,tareo_);
         //super();
         mContext = ct;
@@ -56,6 +60,16 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         objConfLocal = objConfLocal_;
         objSqlite = pSqlite;
         sharedPreferences = mContext.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+        tareoDetallesLazy = new ArrayList<>(tareo_.getDetalle()); // Inicializar la lista con los datos iniciales
+
+    }
+
+    // Método para añadir más elementos a la lista
+    public void addMoreItems(List<TareoDetalle> newItems) {
+        int initialSize = tareoDetallesLazy.size();
+        tareoDetallesLazy.addAll(newItems); // Añadir los nuevos datos a la lista
+        notifyItemRangeInserted(initialSize, newItems.size()); // Notificar al adaptador sobre los nuevos datos
+        isLoading = false; // Restablecer la bandera de carga
     }
 
     public Double obtenerTotalRendimientos() {
@@ -67,16 +81,12 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         return suma;
     }
 
-    public JSONObject obtenerUltimosDatos(){
+    public JSONObject obtenerUltimosDatos() {
         JSONObject ultimoRegistro = new JSONObject();
         TareoDetalle tareoDetalle = new TareoDetalle();
         return ultimoRegistro;
     }
 
-    public interface OnItemSelected {
-        void onItemSelected(String texto, boolean agregar);
-    }
-    private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
     public void setOnItemSelected(cls_05010200_RecyclerViewAdapter.OnItemSelected listener) {
         this.listener = listener;
     }
@@ -84,38 +94,39 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(mContext);
-        View view=inflater.inflate(R.layout.v_05010100_item_recyclerview_010,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.v_05010100_item_recyclerview_010, parent, false);
         return new MyViewHolder(view);
     }
 
     @SuppressLint("RestrictedApi")
     @Override
     public void onBindViewHolder(@NonNull cls_05010200_RecyclerViewAdapter.MyViewHolder holder, int position) {
-        String s ="";
-        TareoDetalle td = tareo.getDetalle().get(position);
+        String s = "";
+//        TareoDetalle td = tareo.getDetalle().get(position);
+        TareoDetalle td = tareoDetallesLazy.get(position);
         holder.c010_txv_Item.setText(String.valueOf(td.getItem()));
         holder.c010_txv_Dni.setText(td.getDni());
-        holder.c010_txv_Nombres.setText(td.getNombres() != null ? td.getNombres() : "TRABAJADOR DESCONOCIDO" );
-        s = String.format("(%s)",td.getIdCultivo().trim());
+        holder.c010_txv_Nombres.setText(td.getNombres() != null ? td.getNombres() : "TRABAJADOR DESCONOCIDO");
+        s = String.format("(%s)", td.getIdCultivo().trim());
         holder.c010_txv_IdCultivo.setText(s);
-        s = String.format("%s",td.getCultivo().trim());
+        s = String.format("%s", td.getCultivo().trim());
         holder.c010_txv_Cultivo.setText(s);
-        s = String.format("(%s)",td.getIdVariedad().trim());
+        s = String.format("(%s)", td.getIdVariedad().trim());
         holder.c010_txv_IdVariedad.setText(s);
-        s = String.format("%s",td.getVariedad().trim());
+        s = String.format("%s", td.getVariedad().trim());
         holder.c010_txv_Variedad.setText(s);
-        s = String.format("(%s)",td.getIdActividad().trim());
+        s = String.format("(%s)", td.getIdActividad().trim());
         holder.c010_txv_IdActividad.setText(s);
-        s = String.format("%s",td.getActividad().trim());
+        s = String.format("%s", td.getActividad().trim());
         holder.c010_txv_Actividad.setText(s);
-        s = String.format("(%s)",td.getIdLabor().trim());
+        s = String.format("(%s)", td.getIdLabor().trim());
         holder.c010_txv_IdLabor.setText(s);
-        s = String.format("%s",td.getLabor().trim());
+        s = String.format("%s", td.getLabor().trim());
         holder.c010_txv_Labor.setText(s);
-        s = String.format("(%s)",td.getIdConsumidor().trim());
+        s = String.format("(%s)", td.getIdConsumidor().trim());
         holder.c010_txv_IdConsumidor.setText(s);
-        s = String.format("%s",td.getConsumidor().trim());
+        s = String.format("%s", td.getConsumidor().trim());
         holder.c010_txv_Consumidor.setText(s);
         Log.i("HORASENTIDAD", String.valueOf(td.getHoras()));
         holder.c010_txv_Horas.setText(String.valueOf(td.getHoras()));
@@ -139,7 +150,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         // Asignar el adaptador al Spinner
         holder.spinnerAlmuerzo.setAdapter(adapter);
 
-        if(!!modoPacking) {
+        if (modoPacking) {
             AtomicBoolean openByUser = new AtomicBoolean(true);
 
             holder.spinnerAlmuerzo.setOnTouchListener((view, motionEvent) -> {
@@ -164,7 +175,6 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
                             Date dateComparar2 = sdf.parse(td.getSalida());
 
 
-
                             // Calcular la diferencia en milisegundos
                             long diferenciaMilisegundos = date2.getTime() - date1.getTime();
                             long diferenciaMilisegundosComparar = dateComparar2.getTime() - dateComparar1.getTime();
@@ -179,28 +189,28 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
                             double horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
                             Log.i("horasCalculadasComparar", String.valueOf(horasCalculadasComparar));
                             Log.i("horasCalculadas", String.valueOf(horasCalculadasComparar));
-                            if(horasCalculadas != td.getHoras()){
+                            if (horasCalculadas != td.getHoras()) {
                                 double diferencia = horasCalculadas - td.getHoras();
                                 boolean cambiar = false;
                                 int indexSelect = 0;
-                                if(diferencia == 0.5){
+                                if (diferencia == 0.5) {
                                     indexSelect = 1;
                                     cambiar = true;
                                 } else if (diferencia == 1.0) {
                                     indexSelect = 2;
                                     cambiar = true;
-                                }else if (diferencia == 0.0){
+                                } else if (diferencia == 0.0) {
                                     indexSelect = 0;
                                     cambiar = true;
                                 }
-                                if(cambiar){
+                                if (cambiar) {
                                     holder.spinnerAlmuerzo.setSelection(indexSelect, true);
                                     selectedValue = Double.parseDouble(holder.spinnerAlmuerzo.getItemAtPosition(indexSelect).toString());
                                 }
                                 horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
                                 td.setHoras(horasCalculadas);
                                 holder.c010_txv_Horas.setText(String.valueOf(td.getHoras()));
-                            }else{
+                            } else {
                                 selectedValue = Double.parseDouble(holder.spinnerAlmuerzo.getSelectedItem().toString());
                                 horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
                                 td.setHoras(horasCalculadas);
@@ -214,7 +224,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 
                         } catch (ParseException e) {
                             e.printStackTrace();
-                        }finally {
+                        } finally {
                             openByUser.set(false);
                         }
                     }
@@ -225,37 +235,12 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
                     double selectedValue = Double.parseDouble(holder.spinnerAlmuerzo.getSelectedItem().toString());
                 }
             });
-        }else {
+        } else {
             holder.spinnerAlmuerzo.setVisibility(View.GONE);
             holder.labelAlmuerzo.setVisibility(View.GONE);
         }
-
-//        SETEAR LAS HORAS SI ENCUENTRA AMBAS
-//        if(!td.getIngreso().equals("") && !td.getSalida().equals("")){
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            try {
-//                // Convertir las cadenas a objetos Date
-//                Date date1 = sdf.parse(td.getIngreso());
-//                Date date2 = sdf.parse(td.getSalida());
-//
-//                // Calcular la diferencia en milisegundos
-//                long diferenciaMilisegundos = date2.getTime() - date1.getTime();
-//
-//                // Convertir la diferencia de milisegundos a horas
-//                long diferenciaHoras = TimeUnit.MILLISECONDS.toHours(diferenciaMilisegundos);
-//
-//                // Mostrar la diferencia de horas
-//                holder.c010_txv_Horas.setText(String.valueOf(diferenciaHoras));
-//                tareo.getDetalle().get(position).setHoras(diferenciaHoras);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//        SETEAR LAS HORAS SI ENCUENTRA AMBAS
-
         holder.c010_lly_Principal.setOnLongClickListener(view -> {
-            if (listener != null){
+            if (listener != null) {
                 holder.selected = !holder.selected;
                 holder.imageCheck.setVisibility(holder.selected ? View.VISIBLE : View.INVISIBLE);
                 listener.onItemSelected(holder.c010_txv_Item.getText().toString(), holder.selected);
@@ -270,32 +255,33 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
                 itemSeleccionado = Integer.parseInt(holder.c010_txv_Item.getText().toString());
                 mostrarMenuDetalle(holder.c010_lly_Principal);
             }
+
             public void mostrarMenuDetalle(View v) {
                 PopupMenu popup = new PopupMenu(mContext, v);
                 popup.setOnMenuItemClickListener(this::onMenuItemClick);
                 popup.inflate(R.menu.mnu_05010101_opciones_detalle);
                 popup.show();
             }
+
             public boolean onMenuItemClick(MenuItem item) {
-                try{
+                try {
                     int idOpcionClickeada = item.getItemId();
-                    if(idOpcionClickeada == R.id.opc_05010101_EliminarDetalle_v){
-                        Swal.confirm(mContext, "Estás seguro?", "Una vez eliminado este detalle no se podrá recuperar").
-                                setConfirmClickListener(sweetAlertDialog -> {
-                                    if (mContext instanceof cls_05010000_Edicion) {
-                                        ((cls_05010000_Edicion)mContext).eliminarDetalle(itemSeleccionado);
-                                    }
-                                    sweetAlertDialog.dismissWithAnimation();
-                                }).setCancelClickListener(sweetAlertDialog -> {
-                                    sweetAlertDialog.dismissWithAnimation();
-                                });
+                    if (idOpcionClickeada == R.id.opc_05010101_EliminarDetalle_v) {
+                        Swal.confirm(mContext, "Estás seguro?", "Una vez eliminado este detalle no se podrá recuperar").setConfirmClickListener(sweetAlertDialog -> {
+                            if (mContext instanceof cls_05010000_Edicion) {
+                                ((cls_05010000_Edicion) mContext).eliminarDetalle(itemSeleccionado);
+                            }
+                            sweetAlertDialog.dismissWithAnimation();
+                        }).setCancelClickListener(sweetAlertDialog -> {
+                            sweetAlertDialog.dismissWithAnimation();
+                        });
                     } else if (idOpcionClickeada == R.id.opc_05010101_ActualizarDetalle_v) {
                         if (mContext instanceof cls_05010000_Edicion) {
-                            ((cls_05010000_Edicion)mContext).popUpActualizarDetalleTareos(td);
+                            ((cls_05010000_Edicion) mContext).popUpActualizarDetalleTareos(td);
                         }
                     }
-                }catch(Exception ex){
-                    Funciones.mostrarError(mContext,ex);
+                } catch (Exception ex) {
+                    Funciones.mostrarError(mContext, ex);
                     return false;
                 }
                 return false;
@@ -303,45 +289,54 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
         });
     }
 
+//    @Override
+//    public int getItemCount() {
+//        return tareo.getDetalle().size();
+//    }
+
     @Override
-    public int getItemCount()
-    {
-        return tareo.getDetalle().size();
+    public int getItemCount() {
+        return tareoDetallesLazy.size(); // Cambiado para reflejar la nueva lista
     }
 
-    public String getLastActividad(){
+    public String getLastActividad() {
         int cantidad = tareo.getTotalDetalles();
-        return tareo.getDetalle().get(cantidad-1).getIdActividad();
+        return tareo.getDetalle().get(cantidad - 1).getIdActividad();
     }
-    public String getLastLabor(){
+
+    public String getLastLabor() {
         int cantidad = tareo.getTotalDetalles();
-        return tareo.getDetalle().get(cantidad-1).getIdLabor();
+        return tareo.getDetalle().get(cantidad - 1).getIdLabor();
     }
-    public String getLastConsumidor(){
+
+    public String getLastConsumidor() {
         int cantidad = tareo.getTotalDetalles();
-        return tareo.getDetalle().get(cantidad-1).getIdConsumidor();
+        return tareo.getDetalle().get(cantidad - 1).getIdConsumidor();
     }
-    public int getTotalDetalles(){
+
+    public int getTotalDetalles() {
         int cantidad = tareo.getTotalDetalles();
         return cantidad;
     }
 
     public String getLastHoras() {
         int cantidad = tareo.getTotalDetalles();
-        return String.valueOf(tareo.getDetalle().get(cantidad-1).getHoras());
+        return String.valueOf(tareo.getDetalle().get(cantidad - 1).getHoras());
     }
 
     public String getLastRendimientos() {
         int cantidad = tareo.getTotalDetalles();
-        return String.valueOf(tareo.getDetalle().get(cantidad-1).getRdtos());
+        return String.valueOf(tareo.getDetalle().get(cantidad - 1).getRdtos());
     }
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder {
+    public interface OnItemSelected {
+        void onItemSelected(String texto, boolean agregar);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         boolean selected = false;
         ImageView imageCheck;
-        TextView c010_txv_Item, c010_txv_Dni, c010_txv_Nombres, c010_txv_IdCultivo, c010_txv_Cultivo,
-                c010_txv_IdVariedad, c010_txv_Variedad, c010_txv_IdConsumidor, c010_txv_Consumidor,
-                c010_txv_IdActividad, c010_txv_Actividad, c010_txv_IdLabor, c010_txv_Labor, c010_txv_Horas, c010_txv_Rdtos, c010_txv_Observacion, labelAlmuerzo;
+        TextView c010_txv_Item, c010_txv_Dni, c010_txv_Nombres, c010_txv_IdCultivo, c010_txv_Cultivo, c010_txv_IdVariedad, c010_txv_Variedad, c010_txv_IdConsumidor, c010_txv_Consumidor, c010_txv_IdActividad, c010_txv_Actividad, c010_txv_IdLabor, c010_txv_Labor, c010_txv_Horas, c010_txv_Rdtos, c010_txv_Observacion, labelAlmuerzo;
         Spinner spinnerAlmuerzo;
         TextView tvIngreso, tvSalida;
         ConstraintLayout c010_lly_Principal;
@@ -349,24 +344,24 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<cls_0
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            c010_lly_Principal = (ConstraintLayout) itemView.findViewById(R.id.c010_lly_Principal_v);
-            c010_txv_Item = (TextView) itemView.findViewById(R.id.c010_txv_Item_v);
-            c010_txv_Dni = (TextView) itemView.findViewById(R.id.c010_txv_Dni_v);
-            c010_txv_Nombres = (TextView) itemView.findViewById(R.id.c010_txv_Nombres_v);
-            c010_txv_IdCultivo = (TextView) itemView.findViewById(R.id.c010_txv_IdCultivo_v);
-            c010_txv_Cultivo = (TextView) itemView.findViewById(R.id.c010_txv_Cultivo_v);
-            c010_txv_IdVariedad = (TextView) itemView.findViewById(R.id.c010_txv_IdVariedad_v);
-            c010_txv_Variedad = (TextView) itemView.findViewById(R.id.c010_txv_Variedad_v);
-            c010_txv_IdActividad = (TextView) itemView.findViewById(R.id.c010_txv_IdActividad_v);
-            c010_txv_Actividad = (TextView) itemView.findViewById(R.id.c010_txv_Actividad_v);
-            c010_txv_IdLabor = (TextView) itemView.findViewById(R.id.c010_txv_IdLabor_v);
-            c010_txv_Labor = (TextView) itemView.findViewById(R.id.c010_txv_Labor_v);
-            c010_txv_IdConsumidor = (TextView) itemView.findViewById(R.id.c010_txv_IdConsumidor_v);
-            c010_txv_Consumidor = (TextView) itemView.findViewById(R.id.c010_txv_Consumidor_v);
-            c010_txv_Horas = (TextView) itemView.findViewById(R.id.c010_txv_Horas_v);
-            c010_txv_Rdtos = (TextView) itemView.findViewById(R.id.c010_txv_Rdtos_v);
-            c010_lly_CultivoVariedad = (LinearLayout) itemView.findViewById(R.id.c010_lly_CultivoVariedad_v);
-            c010_txv_Observacion = (TextView)  itemView.findViewById(R.id.c010_txv_Observacion_v);
+            c010_lly_Principal = itemView.findViewById(R.id.c010_lly_Principal_v);
+            c010_txv_Item = itemView.findViewById(R.id.c010_txv_Item_v);
+            c010_txv_Dni = itemView.findViewById(R.id.c010_txv_Dni_v);
+            c010_txv_Nombres = itemView.findViewById(R.id.c010_txv_Nombres_v);
+            c010_txv_IdCultivo = itemView.findViewById(R.id.c010_txv_IdCultivo_v);
+            c010_txv_Cultivo = itemView.findViewById(R.id.c010_txv_Cultivo_v);
+            c010_txv_IdVariedad = itemView.findViewById(R.id.c010_txv_IdVariedad_v);
+            c010_txv_Variedad = itemView.findViewById(R.id.c010_txv_Variedad_v);
+            c010_txv_IdActividad = itemView.findViewById(R.id.c010_txv_IdActividad_v);
+            c010_txv_Actividad = itemView.findViewById(R.id.c010_txv_Actividad_v);
+            c010_txv_IdLabor = itemView.findViewById(R.id.c010_txv_IdLabor_v);
+            c010_txv_Labor = itemView.findViewById(R.id.c010_txv_Labor_v);
+            c010_txv_IdConsumidor = itemView.findViewById(R.id.c010_txv_IdConsumidor_v);
+            c010_txv_Consumidor = itemView.findViewById(R.id.c010_txv_Consumidor_v);
+            c010_txv_Horas = itemView.findViewById(R.id.c010_txv_Horas_v);
+            c010_txv_Rdtos = itemView.findViewById(R.id.c010_txv_Rdtos_v);
+            c010_lly_CultivoVariedad = itemView.findViewById(R.id.c010_lly_CultivoVariedad_v);
+            c010_txv_Observacion = itemView.findViewById(R.id.c010_txv_Observacion_v);
             imageCheck = itemView.findViewById(R.id.imageCheck);
             tvIngreso = itemView.findViewById(R.id.tvIngreso);
             tvSalida = itemView.findViewById(R.id.tvSalida);

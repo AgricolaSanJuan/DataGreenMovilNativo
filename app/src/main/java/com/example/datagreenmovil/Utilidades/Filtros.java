@@ -3,7 +3,6 @@ package com.example.datagreenmovil.Utilidades;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,25 +17,21 @@ import com.example.datagreenmovil.databinding.UtilidadesFiltrosBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.temporal.WeekFields;
+
 import java.util.Locale;
 
-public class Filtros extends Fragment{
+public class Filtros extends Fragment {
     public static GetFilterData getFilterData;
-    UtilidadesFiltrosBinding binding;
-    private Context ctx;
     static ConexionSqlite objSqlite;
     static SharedPreferences sharedPreferences;
-//    static boolean vistaEstados, vistaFechasPeriodo, vistaFechasRango;
     static String filtroEstado = "", filtroAnio = "", filtroSemana = "", filtroDesde = "", filtroHasta = "";
+    UtilidadesFiltrosBinding binding;
     int radioButtonGroupIndexSelected = -1;
+    private Context ctx;
 
-    public interface GetFilterData {
-        void onChangeFilterData(Swal.DialogResult filterData);
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,7 +40,6 @@ public class Filtros extends Fragment{
 
         inicializarDescripcionFiltro();
         binding.lyMainFIltros.setOnClickListener(view -> {
-//            Swal.info(ctx, "Hola", "Aqui se abrirán los filtros pe mafrencito", 5000);
             JSONObject props = new JSONObject();
             try {
                 props.put("radioButtonGroupIndexSelected", radioButtonGroupIndexSelected);
@@ -58,41 +52,34 @@ public class Filtros extends Fragment{
                 throw new RuntimeException(e);
             }
             try {
-                Swal.filterDialog(ctx,
-                        true,
-                        true,
-                        true,
-                        props,
-                        (filterOpenDialogParams, sweetAlertDialog) -> {
+                Swal.filterDialog(ctx, true, true, true, props, (filterOpenDialogParams, sweetAlertDialog) -> {
 
-                        },
-                        (filterCloseDialogParams, sweetAlertDialog) -> {
-                        },
-                        (dialogResult, sweetAlertDialog) ->{
-                            sweetAlertDialog.dismissWithAnimation();
-                            filtroEstado = dialogResult.getEstado();
-                            filtroAnio = dialogResult.getAnio();
-                            filtroSemana = dialogResult.getSemana();
-                            filtroDesde = dialogResult.getDesde();
-                            filtroHasta = dialogResult.getHasta();
-                            radioButtonGroupIndexSelected = dialogResult.getIdEstado();
-                            binding.lblDescripcionFiltro.setText(dialogResult.getMensaje());
-                            if(getFilterData != null){
-                                getFilterData.onChangeFilterData(dialogResult);
-                            }
-                        }
-                );
+                }, (filterCloseDialogParams, sweetAlertDialog) -> {
+                }, (dialogResult, sweetAlertDialog) -> {
+                    sweetAlertDialog.dismissWithAnimation();
+                    filtroEstado = dialogResult.getEstado();
+                    filtroAnio = dialogResult.getAnio();
+                    filtroSemana = dialogResult.getSemana();
+                    filtroDesde = dialogResult.getDesde();
+                    filtroHasta = dialogResult.getHasta();
+                    radioButtonGroupIndexSelected = dialogResult.getIdEstado();
+                    binding.lblDescripcionFiltro.setText(dialogResult.getMensaje());
+                    if (getFilterData != null) {
+                        getFilterData.onChangeFilterData(dialogResult);
+                    }
+                });
             } catch (JSONException e) {
                 Swal.error(ctx, "Oops!", e.toString(), 2000);
             }
         });
         return root;
     }
+
     public void setFilterDataCallback(GetFilterData callback) {
         getFilterData = callback;
     }
+
     private void inicializarDescripcionFiltro() {
-        //                        Swal.info(ctx, "Resultado", dialogResult.getMensaje(), 8000);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate actualDate = LocalDate.now();
 
@@ -101,21 +88,24 @@ public class Filtros extends Fragment{
 
         filtroAnio = String.valueOf(actualDate.getYear());
         filtroSemana = String.valueOf(numeroSemana);
-        filtroDesde = String.valueOf(actualDate.minusDays(7).format(formatter));
-        filtroHasta = String.valueOf(actualDate.format(formatter));
+        filtroDesde = actualDate.minusDays(7).format(formatter);
+        filtroHasta = actualDate.format(formatter);
         radioButtonGroupIndexSelected = 0;
-        binding.lblDescripcionFiltro.setText("Mostrando todos los estandares en el periodo "+actualDate.getYear()+numeroSemana + " desde el "+actualDate.minusDays(7).format(formatter)+" al "+actualDate.format(formatter));
+        binding.lblDescripcionFiltro.setText("Mostrando todos los estandares en el periodo " + actualDate.getYear() + numeroSemana + " desde el " + actualDate.minusDays(7).format(formatter) + " al " + actualDate.format(formatter));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i("aea", "mongol");
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         ctx = context;
         super.onAttach(context);
+    }
+
+    public interface GetFilterData {
+        void onChangeFilterData(Swal.DialogResult filterData);
     }
 }

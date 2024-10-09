@@ -88,7 +88,7 @@ public class DataGreenApp extends Application {
     }
 
     public void setMainTheme(Activity activity,View view) {
-        sharedPreferences = this.getSharedPreferences("objConfLocal", this.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         darkTheme = sharedPreferences.getBoolean("THEME_LIGTH", true);
         editor = sharedPreferences.edit();
         Toast.makeText(this, String.valueOf(darkTheme), Toast.LENGTH_SHORT).show();

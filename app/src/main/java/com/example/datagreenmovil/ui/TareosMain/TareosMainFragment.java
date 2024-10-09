@@ -794,7 +794,8 @@ public class TareosMainFragment extends Fragment {
             p.add(s_ListarHasta);
             p.add(sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL"));
             Log.i("PARAMS", p.toString());
-            c_Registros = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER trx_Tareos X ESTADO Y RANGO FECHA"), p, "READ");
+            String query = objSqlite.obtQuery("OBTENER trx_Tareos X ESTADO Y RANGO FECHA");
+            c_Registros = objSqlite.doItBaby(query, p, "READ");
             if (c_Registros.moveToFirst()) {
                 miAdaptador = new cls_05000100_Item_RecyclerView(ctx, c_Registros, objConfLocal, al_RegistrosSeleccionados);
                 binding.c005RcvRecicladorV.setAdapter(miAdaptador);
