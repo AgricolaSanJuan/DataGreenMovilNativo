@@ -1,5 +1,6 @@
 package com.example.datagreenmovil;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -281,7 +282,12 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 
     private void validarPermisosAndroid() {
         int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.READ_PHONE_STATE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.MANAGE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA
+        String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.READ_PHONE_STATE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE
 
         };
         if (!tienePermisos(this, PERMISSIONS)) {

@@ -214,6 +214,8 @@ public class Tareo {
 
     public List<TareoDetalle> getDetalle() { return detalle; }
 
+
+
     public void setDetalle(ArrayList<TareoDetalle> detalle) {
         this.detalle = detalle;
     }

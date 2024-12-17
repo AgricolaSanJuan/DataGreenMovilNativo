@@ -117,7 +117,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 objSqlite = new ConexionSqlite(context, DataGreenApp.DB_VERSION());
                 objConfLocal = DataGreenApp.getConfiguracionLocal();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                Swal.error(context, "Error al registrar", e.toString(), 5000);
             }
         });
         if (getActivity().getIntent().getExtras() != null) {
@@ -149,7 +149,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                     Swal.info(context, "Vamos allá!", "Ahora debes sincronizar la información.", 5000);
                 } catch (Exception e) {
 //                    throw new RuntimeException(e);
-                    Swal.error(context, "Oops!", "Error al guardar la información, reintente.", 5000);
+                    Swal.error(context, "Oops!", "Error al guardar la información, reintente. - " + e.toString(), 5000);
                 }
             }
         });
@@ -314,7 +314,9 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 }
                 return deviceID.toUpperCase();
             } catch (Exception ex) {
-                throw ex;
+//                throw ex;
+                Swal.info(context, "IMEI no obtenido!", "El IMEI no se ha podido obtener!", 2000);
+                return "!IMEI";
             }
         } else {
             try {
@@ -356,7 +358,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         return "";
     }
 
-    public void sincronizarBD() throws Exception {
+    public void sincronizarBD() {
         // Lanzar la tarea en segundo plano
 
         Executor executor = Executors.newSingleThreadExecutor();
@@ -374,14 +376,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                     pbSync.post(() -> pbSync.setProgress(15));
                 });
 
-//                Cursor c;
-//                c = objSqlite.doItBaby(objSqlite.obtQuery("EXISTE DATA PENDIENTE"), null, "READ");
-//                c.moveToFirst();
-//                if (objSqlite.existeConfiguracionLocal() && c.getString(0).equals("1")) {
-//                    Funciones.notificar(ctx,"Existe data pendiente de transferir. Imposible sincronizar.");
-//                }else{
-//                objSqlite.close();
-//                }
                 context.deleteDatabase("DataGreenMovil.db");
                 objSqlite = new ConexionSqlite(context, DataGreenApp.DB_VERSION());
                 objQuerys = new Querys(objSql.obtenerQuerys());
@@ -397,7 +391,7 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                         syncDBSQLToSQLite.sincronizar(context, objConfLocal, "mst_OpcionesConfiguracion", "mst_OpcionesConfiguracion");
                         syncDBSQLToSQLite.sincronizar(context, objConfLocal, "trx_ConfiguracionesDispositivosMoviles", "trx_ConfiguracionesDispositivosMoviles");
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        Swal.error(context, "Error!", "No se han podido sincronizar las tablas de configuración. - " + e, 5000);
                     }
 
                 });
@@ -413,19 +407,25 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                             objSql = cnAux;
                             getActivity().runOnUiThread(() -> {
                                 Funciones.mostrarEstatusGeneral(context, objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
-                                Toast.makeText(context, "REGISTRADO", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "REGISTRADO", Toast.LENGTH_SHORT).show();
+                                Swal.success(context, "Registrado!", "El dispositivo se ha registrado correctamente en los servidores.", 5000);
                                 mostrarValoresDocumentoActual();
                             });
                         }
                     } catch (Exception e) {
-                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                        getActivity().runOnUiThread(() -> {
+                            Swal.error(context, "Error!", "Error al registrar el dispositivo" + e, 5000);
+                        });
+//                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 pbSync.post(() -> pbSync.setProgress(90));
 
                 pbSync.post(() -> pbSync.setProgress(100));
             } catch (Exception e) {
-                Log.d("ERROR", e.toString());
+                getActivity().runOnUiThread(() -> {
+                    Swal.error(context, "Error!", e.toString(), 5000);
+                });
             } finally {
                 pbSync.post(() -> pbSync.setProgress(0));
                 pbSync.post(() -> pbSync.setVisibility(View.INVISIBLE));
@@ -437,8 +437,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         try {
             clAux.set("ID_DISPOSITIVO", cnAux.registrarEquipo(objConfLocal));
             editor.putString("ID_DISPOSITIVO", cnAux.registrarEquipo(objConfLocal)).apply();
-            Log.i("ENTRAO", "ASDASD");
-            //clAux.actualizarConfiguraciones(cnAux.obtenerConfiguracionesDispositivoMovil());
             return true;
         } catch (Exception ex) {
             Funciones.mostrarError(context, ex);
@@ -471,8 +469,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
                 SettingsActivity settingsActivity = (SettingsActivity) getActivity();
                 if (settingsActivity.obtenerDrawer() != null) {
                     DrawerLayout dl = settingsActivity.obtenerDrawer();
-//                    NavigationMenuItemView syncBtn = dl.findViewById(R.id.nav_item_sync);
-//                    syncBtn.setVisibility(View.INVISIBLE);
                     dl.openDrawer(GravityCompat.START);
                 }
                 flingCounter = 0;

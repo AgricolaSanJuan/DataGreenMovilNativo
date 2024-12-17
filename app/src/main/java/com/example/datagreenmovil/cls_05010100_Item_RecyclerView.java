@@ -68,7 +68,7 @@ public class cls_05010100_Item_RecyclerView extends ArrayAdapter<TareoDetalle> {
         convertView = inflador.inflate(mResource,parent,false);
 
         LinearLayout c010_lly_Principal = (LinearLayout) convertView.findViewById(R.id.c010_lly_Principal_v);
-        LinearLayout c010_lly_CultivoVariedad = (LinearLayout) convertView.findViewById(R.id.c010_lly_CultivoVariedad_v);
+//        LinearLayout c010_lly_CultivoVariedad = (LinearLayout) convertView.findViewById(R.id.c010_lly_CultivoVariedad_v);
 
         TextView txvAVL_ItemTareo = (TextView) convertView.findViewById(R.id.c010_txv_Item_v);
         TextView txvAVL_Dni = (TextView) convertView.findViewById(R.id.c010_txv_Dni_v);
@@ -92,7 +92,7 @@ public class cls_05010100_Item_RecyclerView extends ArrayAdapter<TareoDetalle> {
         txvAVL_Horas.setText(Double.toString(horas));
         txvAVL_Rdtos.setText(Double.toString(rdtos));
 
-        c010_lly_CultivoVariedad.setVisibility(View.GONE);
+//        c010_lly_CultivoVariedad.setVisibility(View.GONE);
 
         c010_lly_Principal.setOnClickListener(new View.OnClickListener() {
             @Override

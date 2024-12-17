@@ -1,26 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <style name="Theme.DataGreenMovilLight" parent="Theme.AppCompat.Light.NoActionBar">-->
-<!--        <item name="android:windowFullscreen">true</item>-->
-<!--        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>-->
-<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-<!--        <item name="android:fitsSystemWindows"> false </item>-->
+    <!--    <style name="Theme.DataGreenMovilLight" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--        <item name="android:windowFullscreen">true</item>-->
+    <!--        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>-->
+    <!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+    <!--        <item name="android:fitsSystemWindows"> false </item>-->
 
-<!--        <item name="android:background"> @color/grisPrimario </item>-->
-<!--        <item name="android:windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-<!--        <item name="textInputStyle"> @style/textInputLayoutStyle </item>-->
-<!--        <item name="editTextStyle"> @style/editTextStyle </item>-->
-<!--        <item name="floatingActionButtonStyle"> @style/floatingActionButtonStyle </item>-->
-<!--        <item name="spinnerStyle"> @style/spinnerStyle </item>-->
-<!--        <item name="cardViewStyle"> @style/CardView </item>-->
-<!--        <item name="android:textViewStyle"> @style/textViewStyle </item>-->
-<!--        &lt;!&ndash;        <item name="android:background"> @color/azulOscuro </item>&ndash;&gt;-->
-<!--        <item name="buttonStyle"> @style/buttonStyle </item>-->
-<!--    </style>-->
+    <!--        <item name="android:background"> @color/grisPrimario </item>-->
+    <!--        <item name="android:windowActionBar">false</item>-->
+    <!--        <item name="windowNoTitle">true</item>-->
+    <!--        <item name="textInputStyle"> @style/textInputLayoutStyle </item>-->
+    <!--        <item name="editTextStyle"> @style/editTextStyle </item>-->
+    <!--        <item name="floatingActionButtonStyle"> @style/floatingActionButtonStyle </item>-->
+    <!--        <item name="spinnerStyle"> @style/spinnerStyle </item>-->
+    <!--        <item name="cardViewStyle"> @style/CardView </item>-->
+    <!--        <item name="android:textViewStyle"> @style/textViewStyle </item>-->
+    <!--        &lt;!&ndash;        <item name="android:background"> @color/azulOscuro </item>&ndash;&gt;-->
+    <!--        <item name="buttonStyle"> @style/buttonStyle </item>-->
+    <!--    </style>-->
 
-<!--    <style name="Theme.DataGreenMovilDark" parent="ThemeOverlay.AppCompat.Dark">-->
+    <!--    <style name="Theme.DataGreenMovilDark" parent="ThemeOverlay.AppCompat.Dark">-->
 
-<!--    </style>-->
+    <!--    </style>-->
 
+
+    <style name="ThemeOverlay.DataGreenMovil.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_900</item>
+        <item name="fullscreenTextColor">@color/light_blue_A400</item>
+    </style>
 </resources>

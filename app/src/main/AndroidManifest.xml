@@ -32,6 +32,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataGreenMovilLight">
         <activity
+            android:name=".QRViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_qrview"
+            android:theme="@style/Theme.DataGreenMovilLight.Fullscreen" />
+        <activity
+            android:name=".FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/Theme.DataGreenMovilLight.Fullscreen" />
+        <activity
             android:name=".CosechaActivity"
             android:exported="true"
             android:label="@string/title_activity_cosecha"
@@ -171,11 +183,13 @@
             android:exported="true"
             android:label="@string/title_activity_estandares"
             android:theme="@style/Theme.DataGreenMovilLight.NoActionBar">
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
 
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
     </application>
 

@@ -10,22 +10,22 @@
     <color name="button_pressed_color">#FF8F8F8F</color>
     <color name="button_default_color">#FFD9D9D9</color>
 
-<!--    <color name="redError">#ED0000</color>-->
+    <!--    <color name="redError">#ED0000</color>-->
 
     <color name="verde">#00AF90</color>
-<!--    <color name="gris">#7A7A7A</color>-->
+    <!--    <color name="gris">#7A7A7A</color>-->
 
-<!--    <color name="verdeClaro">#8CFFBB</color>-->
-<!--    <color name="azulClaro">#8CBBFF</color>-->
-<!--    <color name="grisClaro">#ADADAD</color>-->
+    <!--    <color name="verdeClaro">#8CFFBB</color>-->
+    <!--    <color name="azulClaro">#8CBBFF</color>-->
+    <!--    <color name="grisClaro">#ADADAD</color>-->
     <color name="alerta">#EE3366</color>
-<!--    &lt;!&ndash;    <color name="AuxiliarSuave">#FFF6A2B8</color>&ndash;&gt;-->
+    <!--    &lt;!&ndash;    <color name="AuxiliarSuave">#FFF6A2B8</color>&ndash;&gt;-->
     <color name="alertaSuave">#F9C8D6</color>
-<!--    &lt;!&ndash;GRIStRANSPARENTE #99DDDDDD&ndash;&gt;-->
-<!--    <color name="grisPrimario">#A3A3A3</color>-->
-<!--    &lt;!&ndash; <color name="claro">#FFDCFAFA</color>&ndash;&gt;-->
-<!--    <color name="blancoOficial">#FFFFFF</color>-->
-<!--    <color name="grisSuave">#DDDDDD</color>-->
+    <!--    &lt;!&ndash;GRIStRANSPARENTE #99DDDDDD&ndash;&gt;-->
+    <!--    <color name="grisPrimario">#A3A3A3</color>-->
+    <!--    &lt;!&ndash; <color name="claro">#FFDCFAFA</color>&ndash;&gt;-->
+    <!--    <color name="blancoOficial">#FFFFFF</color>-->
+    <!--    <color name="grisSuave">#DDDDDD</color>-->
 
 
     <!--    colores existentes que se reemplazaron:-->
@@ -34,8 +34,8 @@
     <!--    <color name="grisOscuro">#3D3D3D</color>-->
 
     <!--    nuevos colores-->
-    <color name="AuxiliarSuave"> #FFC2E8 </color>
-    <color name="AuxiliarFuerte"> #FF5555 </color>
+    <color name="AuxiliarSuave">#FFC2E8</color>
+    <color name="AuxiliarFuerte">#FF5555</color>
     <color name="grisPrimario">#A3A3A3</color>
     <color name="verdePrimario">#00DDAA</color>
     <color name="azulPrimario">#00AADD</color>
@@ -49,12 +49,12 @@
     <color name="negroOficial">#141414</color>
     <!--    fin nuevos colores-->
     }
-<!--    COLORES DE TABLA-->
+    <!--    COLORES DE TABLA-->
     <color name="cell_background_color">#ffffff</color>
     <color name="header_line_color">#0a0a0a</color>
     <color name="table_view_default_text_color">#0a0a0a</color>
 
-<!--    COLORES DE TEMA-->
+    <!--    COLORES DE TEMA-->
     <color name="backgroundPrimaryLight">@color/blancoOficial</color>
     <color name="backgroundPrimaryDark">#243447</color>
 
@@ -63,5 +63,10 @@
 
     <color name="textColorMutedLight">#757575</color>
     <color name="textColorMutedDark">@color/grisSuave</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
     <!--    FIN COLORES DE TEMA-->
 </resources>

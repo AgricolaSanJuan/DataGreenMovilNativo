@@ -52,7 +52,7 @@ public class CosechaQrTransferenciasFragment extends Fragment {
         new QRHelper(bitmap -> {
             // Aquí puedes manejar el bitmap generado, por ejemplo, mostrarlo en un ImageView
             if (bitmap != null) {
-                binding.imageQR.setImageBitmap(bitmap);
+                binding.imageQR.setImageBitmap(bitmap.get(0));
                 binding.pbQr.setVisibility(View.GONE);
             } else {
                 Swal.error(ctx, "Oops!", "La generación del código QR ha tenido un error", 4000);

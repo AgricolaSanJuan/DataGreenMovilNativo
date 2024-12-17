@@ -8,15 +8,15 @@
     android:layout_margin="5dp"
     android:layout_marginBottom="10dp">
 
-    <ImageView
-        android:id="@+id/imageCheck"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:tint="@color/verde"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_check" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageCheck"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:tint="@color/verde"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_check" />-->
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -28,31 +28,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout15"
             style="@style/cabeceraCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/c010_txv_Item_v"
-                android:layout_width="35dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="It"
                 android:textAlignment="center"
                 android:textColor="@color/blancoOficial"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="15.5dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/c010_txv_Dni_v"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/c010_txv_Dni_v"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="Dni"
                 android:textColor="@color/blancoOficial"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="15.5dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/c010_txv_Item_v"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/c010_txv_Item_v"
+                app:layout_constraintTop_toTopOf="@+id/c010_txv_Item_v" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -61,19 +72,28 @@
                 android:fontFamily="@font/auxiliar_02"
                 android:text=" - "
                 android:textColor="@color/blancoOficial"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="15.5dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/c010_txv_Dni_v"
+                app:layout_constraintEnd_toStartOf="@+id/c010_txv_Nombres_v"
+                app:layout_constraintStart_toEndOf="@+id/c010_txv_Dni_v"
+                app:layout_constraintTop_toTopOf="@+id/c010_txv_Dni_v" />
 
             <TextView
                 android:id="@+id/c010_txv_Nombres_v"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:fontFamily="@font/auxiliar_02"
                 android:text="Nombres"
                 android:textColor="@color/blancoOficial"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:textSize="15.5dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/llyBody"
@@ -82,334 +102,375 @@
             android:background="@drawable/fondo_delineado_3"
             android:padding="5dp">
 
-            <LinearLayout
-                android:id="@+id/c010_lly_CultivoVariedad_v"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingLeft="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/vmr"
-                    android:text="Cultivo:"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/c010_txv_IdCultivo_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/vmr"
-                    android:text="(0002)"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c010_txv_Cultivo_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/vmr"
-                    android:text="Desc Cultivo"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/vmr"
-                    android:text="Variedad:"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/c010_txv_IdVariedad_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/vmr"
-                    android:text="(001)"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c010_txv_Variedad_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/vmr"
-                    android:text="Desc Variedad"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout10"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/c010_lly_CultivoVariedad_v"
-                tools:layout_editor_absoluteX="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Actividad:"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/c010_txv_IdActividad_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="(UP2)"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c010_txv_Actividad_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Desc Actividad"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout11"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="1dp"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
-                tools:layout_editor_absoluteX="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Labor:"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/c010_txv_IdLabor_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="(003)"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/c010_txv_Labor_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Desc Labor"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
-                android:layout_width="match_parent"
+                android:id="@+id/constraintLayout7"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout10"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="1dp">
 
-                <TextView
-                    android:id="@+id/textView38"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Consumidor:"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/c010_txv_IdConsumidor_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="(101-R)"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/textView38" />
-
-                <TextView
-                    android:id="@+id/c010_txv_Consumidor_v"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="DescCon"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@+id/c010_txv_IdConsumidor_v" />
-                />
-
-                <TextView
-                    android:id="@id/textView39"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Horas:"
-                    android:textSize="16sp"
+                    android:layout_marginBottom="2dp"
+                    android:paddingStart="2dp"
+                    app:layout_constraintBottom_toTopOf="@+id/c010_txv_Observacion_v"
+                    app:layout_constraintEnd_toStartOf="@+id/clSeleccionables"
+                    app:layout_constraintHorizontal_weight="8"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView38" />
-                />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/c010_txv_Horas_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="0.00"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/textView39"
-                    app:layout_constraintTop_toTopOf="@+id/textView39" />
-                />
+                    <TextView
+                        android:id="@+id/textView65"
+                        android:layout_width="0.2px"
+                        android:layout_height="0.2px"
+                        android:fontFamily="@font/vmr"
+                        android:text="Cultivo:"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView40"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="Rdtos:"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@id/c010_txv_Rdtos_v"
-                    app:layout_constraintTop_toTopOf="@+id/textView39" />
+                    <TextView
+                        android:id="@+id/c010_txv_IdCultivo_v"
+                        android:layout_width="0.2px"
+                        android:layout_height="0.2px"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/vmr"
+                        android:text="(0002)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView65"
+                        app:layout_constraintTop_toTopOf="@+id/textView65" />
 
-                <TextView
-                    android:id="@+id/c010_txv_Rdtos_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/monoespaciada_principal"
-                    android:text="0"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    <TextView
+                        android:id="@+id/c010_txv_Cultivo_v"
+                        android:layout_width="0.2px"
+                        android:layout_height="0.2px"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/vmr"
+                        android:text="Desc Cultivo"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/c010_txv_IdCultivo_v"
+                        app:layout_constraintTop_toTopOf="@+id/c010_txv_IdCultivo_v" />
+
+                    <TextView
+                        android:id="@+id/textView68"
+                        android:layout_width="0.2px"
+                        android:layout_height="0.2px"
+                        android:fontFamily="@font/vmr"
+                        android:text="Variedad:"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textView65"
+                        app:layout_constraintTop_toBottomOf="@+id/textView65" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_IdVariedad_v"
+                        android:layout_width="0.2px"
+                        android:layout_height="0.2px"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/vmr"
+                        android:text="(001)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView68"
+                        app:layout_constraintTop_toTopOf="@+id/textView68" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_Variedad_v"
+                        android:layout_width="0.2px"
+                        android:layout_height="0.2px"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/vmr"
+                        android:text="Desc Variedad"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/c010_txv_IdVariedad_v"
+                        app:layout_constraintTop_toTopOf="@+id/c010_txv_IdVariedad_v" />
+
+                    <TextView
+                        android:id="@+id/textView69"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Actividad:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toStartOf="@+id/textView68"
+                        app:layout_constraintTop_toBottomOf="@+id/textView68" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_IdActividad_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="(UP2)"
+                        android:textColor="@color/black"
+                        android:textSize="15.5dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView69"
+                        app:layout_constraintTop_toTopOf="@+id/textView69" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_Actividad_v"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:maxLines="1"
+                        android:text="Desc Actividad"
+                        android:textSize="15.5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/c010_txv_IdActividad_v"
+                        app:layout_constraintTop_toTopOf="@+id/textView69" />
+
+                    <TextView
+                        android:id="@+id/textView70"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Labor:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toStartOf="@+id/textView69"
+                        app:layout_constraintTop_toBottomOf="@+id/c010_txv_Actividad_v" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_IdLabor_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="(003)"
+                        android:textColor="@color/black"
+                        android:textSize="15.5dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView70"
+                        app:layout_constraintTop_toTopOf="@+id/textView70" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_Labor_v"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:maxLines="1"
+                        android:text="Desc Labor"
+                        android:textSize="15.5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/c010_txv_IdLabor_v"
+                        app:layout_constraintTop_toTopOf="@+id/textView70" />
+
+                    <TextView
+                        android:id="@+id/textView38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Consumidor:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toStartOf="@+id/textView70"
+                        app:layout_constraintTop_toBottomOf="@+id/c010_txv_Labor_v" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_IdConsumidor_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="(101-R)"
+                        android:textColor="@color/black"
+                        android:textSize="15.5dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView38"
+                        app:layout_constraintTop_toTopOf="@+id/textView38" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_Consumidor_v"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:maxLines="1"
+                        android:text="DescCon"
+                        android:textSize="15.5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/c010_txv_IdConsumidor_v"
+                        app:layout_constraintTop_toTopOf="@+id/textView38" />
+
+                    <TextView
+                        android:id="@id/textView39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Horas:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toStartOf="@+id/textView38"
+                        app:layout_constraintTop_toBottomOf="@+id/c010_txv_Consumidor_v" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_Horas_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="0.00"
+                        android:textColor="@color/black"
+                        android:textSize="15.5dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView39"
+                        app:layout_constraintTop_toTopOf="@+id/textView39" />
+
+                    <TextView
+                        android:id="@+id/textView40"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Rdtos:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintEnd_toStartOf="@+id/c010_txv_Rdtos_v"
+                        app:layout_constraintTop_toTopOf="@+id/c010_txv_Horas_v" />
+
+                    <TextView
+                        android:id="@+id/c010_txv_Rdtos_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="0.00"
+                        android:textColor="@color/black"
+                        android:textSize="15.5dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView40" />
+
+                    <TextView
+                        android:id="@+id/textView63"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Ingreso:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toStartOf="@+id/textView39"
+                        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+                    <TextView
+                        android:id="@+id/tvIngreso"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="YYYY-MM-DD HH:SS:mm"
+                        android:textSize="15.5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView63"
+                        app:layout_constraintTop_toTopOf="@+id/textView63" />
+
+                    <TextView
+                        android:id="@+id/textView71"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Salida:"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toStartOf="@+id/textView63"
+                        app:layout_constraintTop_toBottomOf="@+id/textView63" />
+
+                    <TextView
+                        android:id="@+id/tvSalida"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="YYYY-MM-DD HH:SS:mm"
+                        android:textSize="15.5dp"
+                        app:layout_constraintStart_toEndOf="@+id/textView71"
+                        app:layout_constraintTop_toTopOf="@+id/textView71" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSeleccionables"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/clInfo"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView40" />
+                    app:layout_constraintHorizontal_weight="2.5"
+                    app:layout_constraintStart_toEndOf="@+id/clInfo"
+                    app:layout_constraintTop_toTopOf="@+id/clInfo">
+
+                    <TextView
+                        android:id="@+id/lblDescanso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Permiso"
+                        android:textSize="15.5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cbDescanso" />
+
+                    <CheckBox
+                        android:id="@+id/cbDescanso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/spinnerAlmuerzo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:textSize="15.5dp"
+                        app:layout_constraintBottom_toTopOf="@+id/labelAlmuerzo"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/labelAlmuerzo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Almuerzo"
+                        android:textSize="15.5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/cbDescanso"
+                        app:layout_constraintStart_toStartOf="@+id/cbDescanso" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/c010_txv_Observacion_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/monoespaciada_principal"
+                    android:text="Observacion..."
+                    android:textSize="15.5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout12"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:visibility="gone"
-                tools:layout_editor_absoluteX="5dp"
-                tools:layout_editor_absoluteY="5dp">
 
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/c010_txv_Observacion_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:text="Observacion..."
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/textView64" />
-
-            <TextView
-                android:id="@+id/textView63"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Ingreso:"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
-
-            <TextView
-                android:id="@+id/tvIngreso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:text="YYYY-MM-DD HH:SS:mm"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView63"
-                app:layout_constraintStart_toEndOf="@+id/textView63"
-                app:layout_constraintTop_toTopOf="@+id/textView63" />
-
-            <TextView
-                android:id="@+id/textView64"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Salida:"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/textView63"
-                app:layout_constraintTop_toBottomOf="@+id/textView63" />
-
-            <TextView
-                android:id="@+id/tvSalida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:text="YYYY-MM-DD HH:SS:mm"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView64"
-                app:layout_constraintStart_toEndOf="@+id/textView64"
-                app:layout_constraintTop_toTopOf="@+id/textView64" />
-
-
-            <Spinner
-                android:id="@+id/spinnerAlmuerzo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvSalida"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/labelAlmuerzo" />
-            <TextView
-                android:id="@+id/labelAlmuerzo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Almuerzo"
-                android:fontFamily="@font/monoespaciada_principal"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/spinnerAlmuerzo"
-                app:layout_constraintTop_toTopOf="@+id/tvIngreso" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

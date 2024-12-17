@@ -48,6 +48,7 @@ public class TareosActivity extends AppCompatActivity {
         database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
         boolean columnaIngresoExiste = false;
         boolean columnaSalidaExiste = false;
+        boolean columnaHomologarExiste = false;
 
 
 
@@ -64,9 +65,12 @@ public class TareosActivity extends AppCompatActivity {
                 columnaIngresoExiste = true;
             } else if ("salida".equals(columnName)) {
                 columnaSalidaExiste = true;
+            } else if("homologar".equals(columnName)){
+                columnaHomologarExiste = true;
             }
 
         }
+
         if (!columnaIngresoExiste) {
             database.execSQL("ALTER TABLE trx_tareos_detalle ADD COLUMN ingreso TEXT;");
             database.execSQL("UPDATE trx_tareos_detalle set ingreso = ''");
@@ -75,6 +79,11 @@ public class TareosActivity extends AppCompatActivity {
         if (!columnaSalidaExiste) {
             database.execSQL("ALTER TABLE trx_tareos_detalle ADD COLUMN salida TEXT;");
             database.execSQL("UPDATE trx_tareos_detalle set salida = ''");
+        }
+
+        if (!columnaHomologarExiste) {
+            database.execSQL("ALTER TABLE trx_tareos_detalle ADD COLUMN homologar INTEGER;");
+            database.execSQL("UPDATE trx_tareos_detalle set homologar = 0");
         }
 
         database.close();

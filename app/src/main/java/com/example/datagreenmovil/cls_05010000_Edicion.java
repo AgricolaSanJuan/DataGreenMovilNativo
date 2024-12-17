@@ -3,22 +3,27 @@ package com.example.datagreenmovil;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +32,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +58,7 @@ import com.example.datagreenmovil.Scanner.ui.ScannerViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
@@ -61,22 +68,28 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 //import com.example.datagreenmovil.Logica.InterfazDialog;
 
-public class cls_05010000_Edicion extends AppCompatActivity implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener {
-    //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
+public class cls_05010000_Edicion extends AppCompatActivity implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener, cls_05010200_RecyclerViewAdapter.OnDataChangeListener {
 
     static ConexionSqlite objSqlite;
+    private static boolean AGREGAR_SOLO_CAMARA_TAREOS = false;
+    private static boolean REPRODUCIR_SONIDO_TAREOS = false;
+    private static boolean MOSTRAR_CONTROLES_HORAS_TAREOS = false;
+    private static int ITEMS_PER_PAGE = 10; // Cambia esto a la cantidad de elementos que desees por página
     //private Registro tareoActual;
     private final TareoDetalle detalleActual = new TareoDetalle();
     public String s_Fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;);
     public LinearLayout c007_lly_Turno, c007_lly_Actividad, c007_lly_Labor, c007_lly_Consumidor, c007_lly_Cabecera, c007_lly_Actividad_Val, c007_lly_Labor_Val, c007_lly_Consumidor_Val, c007_lly_Observacion, c007_lly_Detalle2;
-    public Switch switchTipoMarcacion;
+    public Switch switchTipoTareo;
     public ConstraintLayout layoutHoras, layoutRendimientos;
     ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
@@ -84,37 +97,37 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     Dialog dlg_PopUp;
     SharedPreferences sharedPreferences;
     HashMap<String, Tabla> hmTablas = new HashMap<>();
-    ConstraintLayout layoutEscaner;
+    ConstraintLayout layoutEscaner, llyNombres;
     TextView TotalRendimientos, TotalTrabajadores;
     ArrayList<Integer> detallesSeleccionados;
     ArrayList<PopUpBuscarEnLista_Item> arl_Turnos, arl_Actividades, arl_Labores = null, arl_Consumidores;
     boolean layoutAbierto = true;
     boolean flashState = false;
     boolean mostrarEscaner = false;
-    int cantidadInicial, cantidadFinal;
-    JSONArray listaTrabajadores = new JSONArray();
     private ScaleGestureDetector scaleGestureDetector;
     private ZXingScannerView scannerView;
     private ScannerViewModel scannerViewModel;
     private Context ctx;
-    //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-    //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-    //...
-//    Querys objQuerys;
     private SQLiteDatabase database;
-    //    public int largoTextoSpinner = 13;
     //CONTROLES;
-    private RecyclerView c007_rvw_Detalle;// = findViewById(R.id.c007_rvw_Detalle_v);
-    private FloatingActionButton c007_fab_Guardar, c007_fab_AbrirCerrarCabecera, fabToggleFlash, fabMostrarEscaner, fabDuplicar, fabEditar, fabEliminar;
+    private RecyclerView c007_rvw_Detalle;
+    private FloatingActionButton fabToggleFlash, fabMostrarEscaner, fabDuplicar, fabEditar, fabEliminar, fabFirst, fabLast, fabGenerarQR;
     private AutoCompleteTextView c007_atv_NroDocumento;
     private AutoCompleteTextView c007_atv_NombreTrabajador;
     private TextView c007_txv_Id, c007_txv_Fecha, c007_txv_Turno_Key, c007_txv_Turno_Val, c007_txv_Actividad_Key, c007_txv_Actividad_Val, c007_txv_Labor_Key, c007_txv_Labor_Val, c007_txv_Consumidor_Key, c007_txv_Consumidor_Val, c007_txv_Observacion;
-    private EditText c007_etx_Horas, c007_etx_Rdtos; //, etxObservaciones;
-    private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
+    private EditText c007_etx_Horas, c007_etx_Rdtos;
     //VARIABLES;
     private String IdDocumentoActual = null;
-    private Tareo tareoActual; //= new Tareo();
+    private Tareo tareoActual;
     private FloatingActionButton fabAgregar;
+    private GestureDetector gestureDetector;
+    private int currentPage = 0;
+    private TextView txvPagination;
+    private cls_05010200_RecyclerViewAdapter adaptadorLista;
+    private int startIndex;
+    private int endIndex;
+    private MediaPlayer mediaPlayer;
+    private boolean VALIDAR_TRABAJADOR_REPETIDO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +143,14 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
 
-        //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
+//        DEFINIMOS PARAMETROS PARA LA PAGINACIÓN
+        ITEMS_PER_PAGE = sharedPreferences.getInt("ITEMS_PER_PAGE_TAREOS", 20);
+        MOSTRAR_CONTROLES_HORAS_TAREOS = sharedPreferences.getBoolean("MOSTRAR_CONTROLES_HORAS_TAREOS", false);
+        AGREGAR_SOLO_CAMARA_TAREOS = sharedPreferences.getBoolean("AGREGAR_SOLO_CAMARA_TAREOS", false);
+        REPRODUCIR_SONIDO_TAREOS = sharedPreferences.getBoolean("REPRODUCIR_SONIDO_TAREOS", false);
+
+        VALIDAR_TRABAJADOR_REPETIDO = sharedPreferences.getBoolean("VALIDAR_TRABAJADOR_REPETIDO", false);
+
         scaleGestureDetector = new ScaleGestureDetector(this, this);
         database = SQLiteDatabase.openDatabase(this.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
         try {
@@ -143,13 +163,25 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             referenciarControles();
 
             boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
-            switchTipoMarcacion = findViewById(R.id.swTipoTareo);
+            switchTipoTareo = findViewById(R.id.swTipoTareo);
+            txvPagination = findViewById(R.id.txvPagination);
             layoutHoras = findViewById(R.id.layoutHoras);
             layoutRendimientos = findViewById(R.id.layoutRendimientos);
             fabAgregar = findViewById(R.id.c007_fab_Agregar_v);
 
+            if (!MOSTRAR_CONTROLES_HORAS_TAREOS) {
+                layoutHoras.setMaxHeight(0);
+                layoutRendimientos.setMaxHeight(0);
+            }
+
+            if (AGREGAR_SOLO_CAMARA_TAREOS) {
+                llyNombres.setMaxHeight(0);
+            }
+
             if (modoPacking) {
-                switchTipoMarcacion.setVisibility(View.VISIBLE);
+                llyNombres.setMaxHeight(0);
+                switchTipoTareo.setVisibility(View.VISIBLE);
+//                txvPagination.setVisibility(View.VISIBLE);
                 layoutHoras.setVisibility(View.GONE);
                 layoutRendimientos.setVisibility(View.GONE);
                 fabAgregar.setVisibility(View.INVISIBLE);
@@ -157,32 +189,29 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 c007_atv_NombreTrabajador.setHeight(1);
             } else {
                 // Definir LayoutParams con wrap_content para ancho y alto
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                switchTipoMarcacion.setVisibility(View.GONE);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                switchTipoTareo.setVisibility(View.GONE);
+//                txvPagination.setVisibility(View.GONE);
                 layoutHoras.setVisibility(View.VISIBLE);
                 layoutRendimientos.setVisibility(View.VISIBLE);
-                c007_atv_NombreTrabajador.setLayoutParams(params);
+//                c007_atv_NombreTrabajador.setLayoutParams(params);
                 c007_atv_NombreTrabajador.setVisibility(View.VISIBLE);
                 fabAgregar.setVisibility(View.VISIBLE);
             }
 
-            if (switchTipoMarcacion != null) {
-                switchTipoMarcacion.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (switchTipoTareo != null) {
+                switchTipoTareo.setOnCheckedChangeListener((compoundButton, b) -> {
                     if (!b) {
-                        switchTipoMarcacion.setText("INGRESO");
+                        switchTipoTareo.setText("INGRESO");
                     } else {
-                        switchTipoMarcacion.setText("SALIDA");
+                        switchTipoTareo.setText("SALIDA");
                     }
                 });
             }
 
-//            }
             c007_txv_Fecha.setText(Funciones.malograrFecha(s_Fecha));
-//            setearControles();
             Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
-            //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-            //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-            //...
+
             tareoActual = new Tareo(IdDocumentoActual, objSqlite, this);
             detalleActual.setIdEmpresa(tareoActual.getIdEmpresa());
             obtenerDataParaControles();
@@ -193,21 +222,48 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             Funciones.mostrarError(this, ex);
         }
 
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                float diffX = e2.getX() - e1.getX();
+                float diffY = e2.getY() - e1.getY();
+
+                // Convertir 40 mm (4 cm) a píxeles
+                float minDistanceInMm = 30f; // 4 cm = 40 mm
+                float minDistanceInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, minDistanceInMm, getResources().getDisplayMetrics());
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minDistanceInPixels && Math.abs(velocityX) > 100) {
+                    if (diffX > 0) {
+                        onSwipeRight();
+                    } else {
+                        onSwipeLeft();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
+
+    private void onSwipeRight() {
+        previousPage();
+    }
+
+    private void onSwipeLeft() {
+        nextPage();
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.i("TOUCH", "Touch event received");
-        // Pasar el evento de toque al detector de gestos de escala
         scaleGestureDetector.onTouchEvent(event);
         return true;
     }
 
-    void setHandlerScanner(Context context) {
+    void setHandlerScanner() {
         scannerView.resume();
         scannerView.setResultHandler(result -> {
             Context ctx = this;
-//            ANALIZAMOS LA CADENA DE TEXTO PARA PODER DESENCRIPTARLA SI FUERA NECESARIO
             String resultadoDesencriptado = "";
             if (result.getText().length() == 10 && !(String.valueOf(result.getText().charAt(0)).equals("S"))) {
                 try {
@@ -225,7 +281,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
                 @Override
                 public void onFinish() {
-                    setHandlerScanner(ctx);
+                    setHandlerScanner();
                 }
             };
             resultado(resultadoDesencriptado);
@@ -252,49 +308,62 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
     public void listarDetalles() {
         try {
-            boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
             manejarLayout();
-            cls_05010200_RecyclerViewAdapter adaptadorLista = new cls_05010200_RecyclerViewAdapter(this, objConfLocal, objSqlite, tareoActual);
-            adaptadorLista.setOnItemSelected(new cls_05010200_RecyclerViewAdapter.OnItemSelected() {
-                @Override
-                public void onItemSelected(String item, boolean agregar) {
-                    if (agregar) {
-                        detallesSeleccionados.add(Integer.parseInt(item));
-                    } else {
-                        int valorComoInteger = Integer.valueOf(item);
-                        detallesSeleccionados.remove((Integer) valorComoInteger);
-                    }
+
+            // Calcular el inicio y el fin de la lista para la paginación
+            startIndex = currentPage * ITEMS_PER_PAGE;
+            endIndex = Math.min(startIndex + ITEMS_PER_PAGE, tareoActual.getDetalle().size());
+            txvPagination.setText("Del: " + (startIndex + 1) + " Al: " + endIndex);
+            // Obtener la sublista para la página actual
+            List<TareoDetalle> detallesPaginated = tareoActual.getDetalle().subList(startIndex, endIndex);
+
+            adaptadorLista = new cls_05010200_RecyclerViewAdapter(this, detallesPaginated);
+
+            adaptadorLista.setOnDataChangeListener(this);
+
+            adaptadorLista.setOnItemSelected((item, agregar) -> {
+                if (agregar) {
+                    detallesSeleccionados.add(Integer.parseInt(item));
+                } else {
+                    int valorComoInteger = Integer.parseInt(item);
+                    detallesSeleccionados.remove((Integer) valorComoInteger);
                 }
             });
+
             c007_rvw_Detalle.setAdapter(adaptadorLista);
+
             c007_rvw_Detalle.setLayoutManager(new LinearLayoutManager(this));
+
             mostrarValoresDocumentoActual();
+
+            c007_rvw_Detalle.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                    gestureDetector.onTouchEvent(e);
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+
+            obtenerUltimaData();
+
             Double sumaTotal = adaptadorLista.obtenerTotalRendimientos();
-            // Formatear el número con dos decimales
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             String sumaFormateada = decimalFormat.format(sumaTotal);
-            if (adaptadorLista.getItemCount() > 0) {
-                String lastActividad, lastLabor, lastConsumidor, lastHoras, lastRendimientos;
-                lastActividad = adaptadorLista.getLastActividad();
-                lastLabor = adaptadorLista.getLastLabor();
-                lastConsumidor = adaptadorLista.getLastConsumidor();
-                lastHoras = adaptadorLista.getLastHoras();
-                lastRendimientos = adaptadorLista.getLastRendimientos();
-                c007_txv_Actividad_Key.setText(lastActividad);
-                c007_txv_Labor_Key.setText(lastLabor);
-                c007_txv_Consumidor_Key.setText(lastConsumidor);
-                if (modoPacking) {
-                    c007_etx_Horas.setText("0.00");
-                    c007_etx_Rdtos.setText("0.00");
-                } else {
-                    c007_etx_Horas.setText(lastHoras);
-                    c007_etx_Rdtos.setText(lastRendimientos);
-                }
-            }
+
             TotalRendimientos.setText(String.valueOf(sumaFormateada));
             int cantidadRegistros = adaptadorLista.getItemCount();
             TotalTrabajadores.setText(String.valueOf(cantidadRegistros));
-            adaptadorLista.getItemId(cantidadRegistros);
+
             if (cantidadRegistros > 0) {
                 layoutAbierto = false;
                 manejarLayout();
@@ -302,6 +371,60 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         } catch (Exception e) {
             Log.e("ERRORLISTAR", e.toString());
         }
+    }
+
+    public void obtenerUltimaData() {
+        boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
+//        if (adaptadorLista. getItemCount() > 0) {
+        if (!tareoActual.getDetalle().isEmpty()) {
+            String lastActividad, lastLabor, lastConsumidor, lastHoras, lastRendimientos;
+
+            int cantidad = tareoActual.getTotalDetalles();
+            TareoDetalle lastDetalle = tareoActual.getDetalle().get(cantidad - 1);
+
+            lastActividad = lastDetalle.getIdActividad();
+            lastLabor = lastDetalle.getIdLabor();
+            lastConsumidor = lastDetalle.getIdConsumidor();
+            lastHoras = String.valueOf(lastDetalle.getHoras());
+            lastRendimientos = String.valueOf(lastDetalle.getRdtos());
+            c007_txv_Actividad_Key.setText(lastActividad);
+            c007_txv_Labor_Key.setText(lastLabor);
+            c007_txv_Consumidor_Key.setText(lastConsumidor);
+            if (modoPacking) {
+                c007_etx_Horas.setText("0.00");
+                c007_etx_Rdtos.setText("0.00");
+            } else {
+                c007_etx_Horas.setText(lastHoras);
+                c007_etx_Rdtos.setText(lastRendimientos);
+            }
+        }
+    }
+
+    public void nextPage() {
+        if ((currentPage + 1) * ITEMS_PER_PAGE < tareoActual.getDetalle().size()) {
+            currentPage++;
+            actualizarDatos();
+        }
+    }
+
+    public void previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            actualizarDatos();
+        }
+    }
+
+    public void firstPage() {
+        if (currentPage > 0) {
+            currentPage = 0;
+            actualizarDatos();
+        }
+    }
+
+    public void lastPage() {
+        currentPage = tareoActual.getDetalle().size() / ITEMS_PER_PAGE;
+//        listarDetalles();
+        actualizarDatos();
     }
 
     @Override
@@ -318,35 +441,27 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
     //    @Override
     public void resultado(String barcodeValue) {
-
+        Log.i("ESCANER", barcodeValue);
         if (c007_txv_Consumidor_Key.length() > 0 && c007_txv_Actividad_Key.length() > 0 && c007_txv_Labor_Key.length() > 0) {
             boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
-
             c007_atv_NroDocumento.setText(barcodeValue.replaceAll("[^0-9]", ""));
-//            Swal.info(this, "ID", barcodeValue.replaceAll("[^0-9]", ""), 5000);
-            // Obtener la fecha y hora actual
             Calendar calendar = Calendar.getInstance();
-
             // Formatear la fecha y hora actual
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             String fechaHoraFormateada = sdf.format(calendar.getTime());
             Cursor cVerificarSinSalida;
             try {
-                if (switchTipoMarcacion != null && !switchTipoMarcacion.isChecked()) {
+                if (switchTipoTareo != null && !switchTipoTareo.isChecked()) {
                     String[] selectionArgs = {tareoActual.getId(), c007_atv_NroDocumento.getText().toString()};
                     cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE td inner join trx_tareos t WHERE td.Idtareo = ? AND td.Dni = ? AND td.salida = '';", selectionArgs);
-                    if (cVerificarSinSalida.getCount() > 0 && modoPacking) {
+                    if (cVerificarSinSalida.getCount() > 0 && modoPacking && VALIDAR_TRABAJADOR_REPETIDO) {
                         Swal.warning(this, "Cuidado", "El trabajador tiene un tareo sin salida, registra su salida y luego vuelve a intentarlo.", 5000);
                     } else {
-                        //                if (!switchTipoMarcacion.isChecked()) {
+                        //                if (!switchTipoTareo.isChecked()) {
                         obtenerDataTrabajador(hmTablas.get("PERSONAS"));
                         agregarDetalle("lector");
                     }
                 } else {
-//                    ESTO SOLO SE EJECUTARÁ CUANDO SE MARQUE LA SALIDA, MAS NO CUANDO SE CARGUEN LOS DETALLES,
-//                    Y ES DONDE SE DEBE HACER EL CÁLCULO PARA LA CANTIDAD DE HORAS DE ACUERDO A LA HORA DE INGRESO Y A LA HORA DE SALIDA
-//
-//                    OBTENEMOS EL ULTIMO TAREO QUE NO TENGA UNA FECHA DE SALIDA
                     String[] selectionArgs = {tareoActual.getId(), c007_atv_NroDocumento.getText().toString()};
                     cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE WHERE Idtareo = ? AND Dni = ? AND salida = ''", selectionArgs);
                     if (cVerificarSinSalida.getCount() > 0) {
@@ -355,30 +470,27 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                         itemIndex = cVerificarSinSalida.getColumnIndex("Item");
                         String itemIndexU;
                         itemIndexU = cVerificarSinSalida.getString(itemIndex);
-
-                        TareoDetalle tareoDetalle = tareoActual.getDetalle().get(Integer.parseInt(itemIndexU) - 1);
-                        Date date1 = sdf.parse(tareoDetalle.getIngreso());
+                        Optional<TareoDetalle> resultado = tareoActual.getDetalle().stream().filter(detalle -> detalle.getItem() == Integer.parseInt(itemIndexU)).findFirst();
+                        Date date1 = sdf.parse(resultado.get().getIngreso());
                         Date date2 = sdf.parse(fechaHoraFormateada);
-
                         // Calcular la diferencia en milisegundos
                         long diferenciaMilisegundos = date2.getTime() - date1.getTime();
                         // Convertir la diferencia de milisegundos a horas
-                        long diferenciaHoras = TimeUnit.MILLISECONDS.toHours(diferenciaMilisegundos);
-                        tareoDetalle.setSalida(fechaHoraFormateada);
+                        resultado.get().setSalida(fechaHoraFormateada);
                         double horas = diferenciaMilisegundos / 3600000.00;
                         BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
-                        Log.i("DIFERENCIAFINA", String.valueOf(horasRedondeadas.doubleValue()));
-                        tareoDetalle.setHoras(horasRedondeadas.doubleValue());
+                        resultado.get().setHoras(horasRedondeadas.doubleValue());
                     } else {
                         Swal.warning(this, "Cuidado", "No se encuentra un tareo de ingreso de este trabajador, pruebe a guardar el tareo y volver a intentar.", 2000);
                     }
                 }
                 guardarTareo();
                 cVerificarSinSalida.close();
+                tareoActual = new Tareo(IdDocumentoActual, objSqlite, this);
+                actualizarDatos();
             } catch (Exception e) {
                 Log.e("ERROR!", e.getMessage());
                 Swal.error(this, "Error!", e.toString(), 8000);
-                throw new RuntimeException(e);
             } finally {
                 c007_atv_NroDocumento.setText("");
                 c007_atv_NombreTrabajador.setText("");
@@ -389,7 +501,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         }
     }
 
-    //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     private void setearControles() {
 
         c007_txv_Fecha.addTextChangedListener(new TextWatcher() {
@@ -404,7 +515,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             @Override
             public void afterTextChanged(Editable editable) {
                 s_Fecha = Funciones.arreglarFecha(c007_txv_Fecha.getText().toString());
-                //LocalDate localDate = LocalDate.parse(s_Fecha);
                 tareoActual.setFecha(LocalDate.parse(s_Fecha));
             }
         });
@@ -435,14 +545,11 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
             @Override
             public void afterTextChanged(Editable editable) {
-                //objRex.Set("IdActividad",c007_txv_Actividad_Key.getText().toString());
-                //tareoActual.setIdTurno(c007_txv_Actividad_Key.getText().toString());
                 detalleActual.setIdActividad(c007_txv_Actividad_Key.getText().toString());
 
                 List<String> p = new ArrayList<>();
                 p.add(tareoActual.getIdEmpresa()); //PENDIENTE: OBTENER EMPRESA DINAMICAMENTE;
                 p.add(detalleActual.getIdActividad());
-                //hmTablas.put("LABORES", new Tabla(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"),p,"READ")));
                 try {
                     arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"), p, "READ"));
                 } catch (Exception e) {
@@ -465,7 +572,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
             @Override
             public void afterTextChanged(Editable editable) {
-                //objRex.Set("IdActividad",c007_txv_Actividad_Key.getText().toString());
                 detalleActual.setIdLabor(c007_txv_Labor_Key.getText().toString());
             }
         });
@@ -481,7 +587,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
             @Override
             public void afterTextChanged(Editable editable) {
-                //objRex.Set("IdActividad",c007_txv_Actividad_Key.getText().toString());
                 detalleActual.setIdConsumidor(c007_txv_Consumidor_Key.getText().toString());
             }
         });
@@ -520,14 +625,20 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         TotalRendimientos = findViewById(R.id.c007_txv_TotalRendimientosView);
         TotalTrabajadores = findViewById(R.id.c007_txv_TotalTrabajadoresView);
 
+        llyNombres = findViewById(R.id.llyNombres);
+
         //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
         //...
-        c007_fab_Guardar = findViewById(R.id.c007_fab_Guardar_v);
+//        c007_fab_Guardar = findViewById(R.id.c007_fab_Guardar_v);
         fabDuplicar = findViewById(R.id.c007_fab_Duplicar_v);
         fabEditar = findViewById(R.id.c007_fab_Editar_v);
         fabEliminar = findViewById(R.id.c007_fab_Eliminar_v);
-        c007_fab_AbrirCerrarCabecera = findViewById(R.id.c007_fab_AbrirCerrarCabecera_v);
+        fabGenerarQR = findViewById(R.id.c007_fab_GenerarQR_v);
+
+        fabFirst = findViewById(R.id.First);
+        fabLast = findViewById(R.id.Last);
+//        c007_fab_AbrirCerrarCabecera = findViewById(R.id.c007_fab_AbrirCerrarCabecera_v);
 
         layoutEscaner = findViewById(R.id.layoutEscaner);
         fabToggleFlash = findViewById(R.id.fabToggleFlash);
@@ -558,7 +669,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         c007_lly_Observacion = findViewById(R.id.c007_lly_Observacion_v);
         c007_lly_Detalle2 = findViewById(R.id.c007_lly_Detalle2_v);
 
-
         c007_etx_Horas = findViewById(R.id.etxHoras_v);
         c007_etx_Rdtos = findViewById(R.id.etxRtos_v);
 
@@ -582,8 +692,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 // Hacer algo con el código escaneado
                 try {
                     String dni = CryptorSJ.desencriptarCadena(code);
-//                    evaluarMarca(dni);
-//                    Toast.makeText(this, "Código escaneado: " + dni, Toast.LENGTH_LONG).show();
                     scannerViewModel.setScannedCode(null);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -592,32 +700,75 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             }
         });
 
+        fabGenerarQR.setOnClickListener(v -> {
+            navigateToQR();
+        });
+
+
         fabEliminar.setOnClickListener(view -> {
             if (detallesSeleccionados.size() > 0) {
-                Swal.confirm(ctx, "Estás seguro?", "Estás seguro que deseas eliminar los registros seleccionados? Una vez borrados, no se podrán recuperar.").setConfirmClickListener(sweetAlertDialog -> {
-                    for (int index : detallesSeleccionados) {
-                        tareoActual.eliminarItemDetalle(index);
+                Swal.confirm(ctx, "¿Estás seguro?", "Estás seguro que deseas eliminar los tareos seleccionados?").setConfirmClickListener(sweetAlertDialog -> {
+                    sweetAlertDialog.dismissWithAnimation();
+                    String whereIn = "(";
+                    for (int i = 0; i < detallesSeleccionados.size(); i++) {
+                        if (i == detallesSeleccionados.size() - 1) {
+                            whereIn += "'" + detallesSeleccionados.get(i) + "')";
+                            Log.i("CANTIDAD - 1", String.valueOf(i));
+                        } else {
+                            whereIn += "'" + detallesSeleccionados.get(i) + "',";
+                        }
                     }
-                    guardarTareo();
-                    detallesSeleccionados = new ArrayList<>();
-                    listarDetalles();
-                    sweetAlertDialog.dismissWithAnimation();
-                }).setCancelClickListener(sweetAlertDialog -> {
-                    sweetAlertDialog.dismissWithAnimation();
-                });
+                    try {
+                        detallesSeleccionados.sort(Collections.reverseOrder());
+                        for (Integer item : detallesSeleccionados) {
+                            tareoActual.eliminarItemDetalle(item);
+                            tareoActual.guardarDetalle(objSqlite);
+                        }
+                        tareoActual.guardar(objSqlite, null);
+                        tareoActual = new Tareo(IdDocumentoActual, objSqlite, this);
+                        actualizarDatos();
+                    } catch (Exception e) {
+                        Swal.error(ctx, "Oops!", "Ocurrió un error al eliminar los detalles seleccionados", 5000);
+                    } finally {
+                        detallesSeleccionados = new ArrayList<>();
+                    }
+
+                }).setCancelClickListener(SweetAlertDialog::dismissWithAnimation);
             } else {
                 Swal.warning(ctx, "¡Cuidado!", "Selecciona al menos un trabajador antes.", 2000);
             }
+
+        });
+
+        fabFirst.setOnClickListener(v -> {
+            previousPage();
+            detallesSeleccionados = new ArrayList<>();
+        });
+
+        fabFirst.setOnLongClickListener(v -> {
+            firstPage();
+            detallesSeleccionados = new ArrayList<>();
+            return false;
+        });
+
+        fabLast.setOnClickListener(v -> {
+            nextPage();
+            detallesSeleccionados = new ArrayList<>();
+        });
+
+        fabLast.setOnLongClickListener(v -> {
+            lastPage();
+            detallesSeleccionados = new ArrayList<>();
+            return false;
         });
 
         fabEditar.setOnClickListener(view -> {
             if (detallesSeleccionados.size() > 0) {
                 Swal.customDialog(ctx, "editar", tareoActual, detallesSeleccionados, (result, sweetAlertDialog1) -> {
-//                    Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
                 }, (success, message) -> {
                     if (success) {
                         Swal.success(ctx, "Correcto!", message, 1500);
-                        listarDetalles();
+                        actualizarDatos();
                         detallesSeleccionados = new ArrayList<>();
                     } else {
                         Swal.error(ctx, "Oops!", message, 1500);
@@ -635,7 +786,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 }, (success, message) -> {
                     if (success) {
                         Swal.success(ctx, "Correcto!", message, 1500);
-                        listarDetalles();
+                        actualizarDatos();
                         detallesSeleccionados = new ArrayList<>();
                     } else {
                         Swal.error(ctx, "Oops!", message, 1500);
@@ -659,21 +810,39 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             if (mostrarEscaner) {
                 layoutEscaner.setVisibility(View.VISIBLE);
 
-                setHandlerScanner(this);
+                setHandlerScanner();
 
-//                scannerView.setResultHandler(this);
-//                scannerView.set (1000);
-
-//                scannerView.setAutoFocus(false);
-//                scannerView.startCamera();
-//                scannerView.setAutoFocus(false);
-//                scannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
             } else {
                 scannerView.pause();
                 layoutEscaner.setVisibility(View.GONE);
             }
         });
+    }
 
+    public void navigateToQR() {
+        JSONArray jsonDetallesPersonal = new JSONArray();
+        try {
+
+            Cursor cursorTrabajadores = objSqlite.doItBaby("select Dni from trx_tareos_detalle where Idtareo = '"+tareoActual.getId()+"'", null, "READ");
+
+            while (cursorTrabajadores.moveToNext()) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("dni", cursorTrabajadores.getString(0));
+                jsonDetallesPersonal.put(jsonObject);
+            }
+            Log.i("detallestrabajadores", jsonDetallesPersonal.toString());
+        } catch (Exception e) {
+            Swal.error(ctx, "Oops!", "No se han podido obtener los trabajadores", 5000);
+        }
+//        // Obtener los trabajadores de la actividad implementando la interfaz
+//        // Crear Bundle y pasar los trabajadores como String
+        Bundle parametros = new Bundle();
+        parametros.putString("trabajadores", jsonDetallesPersonal.toString());
+
+        Intent intent = new Intent(this, QRViewActivity.class);
+        intent.putExtras(parametros);
+
+        startActivity(intent);
     }
 
     public void mostrarMenuUsuario(View v) {
@@ -713,11 +882,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             } else if (idControlClickeado == R.id.c007_txv_PushIdentificador_v) {
 //                showNoticeDialog();
                 mostrarMenuUsuario(this.txv_PushIdentificador);
-            }
-            //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-            //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-            //...
-            else if (idControlClickeado == R.id.c007_txv_Fecha) {
+            } else if (idControlClickeado == R.id.c007_txv_Fecha) {
                 PopUpCalendario d = new PopUpCalendario(this, c007_txv_Fecha);
                 d.show();
             } else if (idControlClickeado == R.id.c007_lly_Turno_v) {
@@ -754,30 +919,20 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         }
     }
 
-    public void duplicarRegistros(View view) {
-        Swal.info(this, "CLICK", "DUPLICITY", 5000);
-    }
-
     private void agregarDetalle(String tipoEntrada) throws Exception {
 
         boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
-//            if (objSqlite.verificarExistenciaMarca(this.detalleActual.getDni(), validarMarca)) {
-        // Obtener la fecha y hora actual
         Calendar calendar = Calendar.getInstance();
 
         // Formatear la fecha y hora actual
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String fechaHoraFormateada = sdf.format(calendar.getTime());
 
-        //                AGREGAMOS EL VALOR A INGRESO O SALIDA SEGÚN CORRESPONDA
-        //                CHECK ES SALIDA, UNCHECK ENTRADA
-//            SI ES ENTRADA, QUE REALICE EL NUEVO REGISTRO, SI NO, QUE ACTUALICE LA SALIDA
-
         boolean validarMarca = sharedPreferences.getBoolean("PERMITIR_SIN_TAREO", true);
         boolean marcaExistente = false;
 //        VALIDACION DE EXISTENCIA
         for (TareoDetalle td : tareoActual.getDetalle()) {
-            if (td.getDni().equals(this.detalleActual.getDni()) && td.getIdActividad().equals(this.detalleActual.getIdActividad()) && td.getIdConsumidor().equals(this.detalleActual.getIdConsumidor()) && td.getIdLabor().equals(this.detalleActual.getIdLabor())) {
+            if (VALIDAR_TRABAJADOR_REPETIDO && td.getDni().equals(this.detalleActual.getDni()) && td.getIdActividad().equals(this.detalleActual.getIdActividad()) && td.getIdConsumidor().equals(this.detalleActual.getIdConsumidor()) && td.getIdLabor().equals(this.detalleActual.getIdLabor())) {
                 marcaExistente = true;
                 break;
             }
@@ -796,6 +951,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             }
             detalleActual.setRdtos(Double.parseDouble(c007_etx_Rdtos.getText().length() > 0 ? c007_etx_Rdtos.getText().toString() : "0"));
             detalleActual.setDni(c007_atv_NroDocumento.getText().toString());
+
+            detalleActual.setHomologar(0);
 
             List<String> p = new ArrayList<>();
             p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
@@ -818,8 +975,15 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
             if (validarDetalleTareo(detalleActual)) {
                 tareoActual.agregarDetalle(detalleActual, this);
-                Swal.success(ctx, "Correcto!", "Se ha agregado el tareo correctamente", 1500);
-                listarDetalles();
+
+                if (REPRODUCIR_SONIDO_TAREOS) {
+                    mediaPlayer = MediaPlayer.create(ctx, R.raw.notificacion);
+                    mediaPlayer.start();
+                } else {
+                    Swal.success(ctx, "Correcto!", "Se ha agregado el tareo correctamente", 1200);
+                }
+//                listarDetalles();
+                actualizarDatos();
             } else {
                 if (tipoEntrada.equals("lector")) {
                     Swal.warning(this, "Aviso!", "Trabajador no encontrado, por favor, ingresa el nombre.", 3000);
@@ -846,8 +1010,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 if (tareoActual.guardar(objSqlite, objConfLocal)) {
                     objSqlite.ActualizarDataPendiente(objConfLocal);
                     Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
-//                    SE QUITA PARA PODER CONTINUAR SIN AVISO
-//                    Funciones.notificar(this, "Tareo guardado correctamente.");
+
                 }
             } else {
                 Funciones.notificar(this, "El tareo no cuenta con el estado PENDIENTE, imposible actualizar.");
@@ -965,24 +1128,28 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         }
     }
 
+    public void eliminarDetalles() {
+//        detallesSeleccionados
+    }
+
     public void eliminarDetalle(int item) {
         try {
             if (tareoActual.getIdEstado().equals("PE")) {
                 tareoActual.eliminarItemDetalle(item);
                 tareoActual.guardarDetalle(objSqlite);
-                listarDetalles();
-                Funciones.notificar(this, "Detalle elimiado: " + item);
+//                List<TareoDetalle> detallesPaginated = tareoActual.getDetalle().subList(startIndex, endIndex);
+                actualizarDatos();
+                Funciones.notificar(this, "Detalle eliminado: " + item);
             } else {
-                Funciones.notificar(this, "El tareo no cuenta con el estado PENDIENTE, imposible actualizar.");
+                Swal.warning(ctx, "No se puede realizar la acción", "El tareo no cuenta con el estado PENDIENTE, imposible actualizar.", 5000);
             }
         } catch (Exception ex) {
-            Funciones.notificar(this, ex.getMessage());
+            Swal.error(ctx, "Oops!", ex.getMessage(), 8000);
         } finally {
             detallesSeleccionados = new ArrayList<>();
         }
     }
 
-    //////////////////////////////////////////// PRUEBA 2
     public void popUpActualizarDetalleTareos(TareoDetalle detalle) {
 
         scannerView.pause();
@@ -990,7 +1157,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             if (tareoActual.getIdEstado().equals("PE")) {
                 Dialog popUp = new Dialog(this);
                 popUp.setContentView(R.layout.popup_actualizar_detalle_tareo_021);
-                // Aplica los atributos a la ventana del diálogo
                 popUp.getWindow().setBackgroundDrawableResource(R.drawable.bg_popup);
 
                 //MANEJO DE CONTROLES INTERNOR DEL POPUP
@@ -1037,7 +1203,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         } finally {
-                            listarDetalles();
+//                            listarDetalles();
+                            actualizarDatos();
                         }
                         popUp.dismiss();
                     }
@@ -1067,8 +1234,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         } catch (Exception ex) {
             Funciones.mostrarError(super.getBaseContext(), ex);
         } finally {
-            setHandlerScanner(this);
-//            scannerView.resumeCameraPreview(cls_05010000_Edicion.this::handleResult);
+            setHandlerScanner();
         }
     }
 
@@ -1095,5 +1261,24 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        // Aquí puedes notificar al adaptador sobre los cambios
+        if (adaptadorLista != null) {
+            adaptadorLista.notifyDataSetChanged();
+        }
+    }
+
+    // Método que se ejecuta cuando tienes nuevos datos
+    public void actualizarDatos() {
+        obtenerUltimaData();
+        startIndex = currentPage * ITEMS_PER_PAGE;
+        endIndex = Math.min(startIndex + ITEMS_PER_PAGE, tareoActual.getDetalle().size());
+        List<TareoDetalle> nuevosDatos = tareoActual.getDetalle().subList(startIndex, endIndex);
+        adaptadorLista.addData(nuevosDatos);
+        adaptadorLista.notifyDataChangedExternally();
+        txvPagination.setText("Del: " + (startIndex + 1) + " Al: " + endIndex);
     }
 }

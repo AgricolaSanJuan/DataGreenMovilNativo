@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QRViewActivity">
+
+    <ImageView
+        android:id="@+id/imageQR"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="@+id/imageQR"
+        app:layout_constraintTop_toBottomOf="@+id/imageQR"
+        app:srcCompat="@drawable/ic_previous_pagination" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="@+id/imageQR"
+        app:layout_constraintTop_toBottomOf="@+id/imageQR"
+        app:srcCompat="@drawable/ic_next_pagination" />
+
+    <ProgressBar
+        android:id="@+id/pbQr"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageQR"
+        app:layout_constraintStart_toStartOf="@+id/imageQR"
+        app:layout_constraintTop_toTopOf="@+id/imageQR" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

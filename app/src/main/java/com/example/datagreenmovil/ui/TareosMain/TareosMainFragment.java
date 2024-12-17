@@ -460,7 +460,7 @@ public class TareosMainFragment extends Fragment {
 //            URL DE LA API EN LARAVEL
         SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
         String ServerIP = sharedPreferences.getString("API_SERVER", "");
-        ServerIP = "56.10.3.24:8000";
+//        ServerIP = "56.10.3.24:8000";
         String url = "http://" + ServerIP + "/api/tareos/insertar_tareos";
 
         for (int i = 0; i < idsSeleccionados.size(); i++) {
@@ -482,6 +482,7 @@ public class TareosMainFragment extends Fragment {
             String ultimoCorrelativo = "N/A";
             Cursor correlativoCursor = objSqlite.doItBaby("SELECT Correlativo from trx_correlativos where MacDispositivoMovil = '"+mac+"' and ImeiDispositivoMovil = '"+imei+"' and IdTabla = '00G'", null, "READ");
             correlativoCursor.moveToFirst();
+
             if(!correlativoCursor.getString(0).isEmpty()){
                 ultimoCorrelativo = correlativoCursor.getString(0);
             }
@@ -789,6 +790,7 @@ public class TareosMainFragment extends Fragment {
             //BINGO! METODO PARA LISTAR EN RECYCLERVIEW DESDE CURSOR
             List<String> p = new ArrayList<String>();
             p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
+            p.add(s_ListarIdEstado);
             p.add(s_ListarIdEstado);
             p.add(s_ListarDesde);
             p.add(s_ListarHasta);

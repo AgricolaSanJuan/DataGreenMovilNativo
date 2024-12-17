@@ -82,6 +82,7 @@
                     android:text="Rdtos.: "
                     android:textColor="@color/grisOscuro"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
@@ -94,6 +95,7 @@
                     android:text="0.00"
                     android:textColor="@color/grisOscuro"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
                     app:layout_constraintStart_toEndOf="@+id/c007_txv_TotalRendimientos"
                     app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
@@ -106,6 +108,7 @@
                     android:text="Trabajadores.: "
                     android:textColor="@color/grisOscuro"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/c007_txv_TotalTrabajadoresView"
                     app:layout_constraintTop_toTopOf="@+id/c007_fab_AbrirCerrarCabecera_v" />
@@ -119,6 +122,7 @@
                     android:text="0"
                     android:textColor="@color/grisOscuro"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/c007_txv_TotalRendimientos"
                     app:layout_constraintEnd_toStartOf="@+id/c007_fab_AbrirCerrarCabecera_v"
                     app:layout_constraintTop_toTopOf="@+id/c007_txv_TotalRendimientos" />
@@ -130,9 +134,11 @@
                     android:clickable="true"
                     android:foregroundGravity="fill"
                     android:onClick="onClick"
+                    app:fabSize="mini"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:maxImageSize="25dp"
                     app:srcCompat="@drawable/i_crop" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -305,7 +311,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="29dp"
                 android:layout_marginEnd="5dp"
                 android:orientation="vertical"
                 android:padding="2dp">
@@ -502,15 +507,15 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-<!--                    <me.dm7.barcodescanner.zbar.ZBarScannerView-->
-<!--                        android:id="@+id/zBarScannerView"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="100dp"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!--                    <me.dm7.barcodescanner.zbar.ZBarScannerView-->
+                    <!--                        android:id="@+id/zBarScannerView"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="100dp"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fabToggleFlash"
@@ -563,21 +568,20 @@
                         app:fabSize="mini"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:maxImageSize="25dp" />
+                        app:maxImageSize="23dp" />
 
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/llyNombres"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical">
 
                     <AutoCompleteTextView
                         android:id="@+id/c007_atv_NombreTrabajador_v"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:layout_weight="3"
                         android:background="@drawable/bg_redondeado_gris_transparente"
                         android:fontFamily="@font/auxiliar_02"
                         android:hint="Nombre Trabajador"
@@ -585,8 +589,23 @@
                         android:textColor="@color/blancoOficial"
                         android:textColorHint="@color/blancoOficial"
                         android:textSize="20dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/c007_fab_Agregar_v"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/c007_fab_Agregar_v" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/c007_fab_Agregar_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:maxImageSize="27dp"
+                        app:srcCompat="@drawable/i_person_add" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/c007_cly_HorasRdtos_v"
@@ -605,9 +624,10 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toStartOf="@+id/c007_fab_Agregar_v"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -615,109 +635,135 @@
                             android:id="@+id/swTipoTareo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
                             android:text="INGRESO"
                             android:textOff="INGRESO"
                             android:textOn="SALIDA"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layoutHoras"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_redondeado_gris_transparente"
-                        android:orientation="horizontal"
-                        android:paddingStart="7dp"
-                        android:paddingEnd="7dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-                        <TextView
-                            style="@style/textViewEdicionItems"
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/Last"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Horas:"
-                            android:textColor="@color/blancoOficial"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/etxHoras_v"
-                            app:layout_constraintEnd_toStartOf="@+id/etxHoras_v"
-                            app:layout_constraintTop_toTopOf="@+id/etxHoras_v" />
+                            android:backgroundTint="@color/azulPrimario"
+                            android:clickable="true"
+                            android:onClick="firstPage"
+                            app:fabSize="mini"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/First"
+                            app:maxImageSize="30dp"
+                            app:srcCompat="@drawable/ic_next_pagination" />
 
-                        <EditText
-                            android:id="@+id/etxHoras_v"
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/First"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:backgroundTint="@color/azulPrimario"
+                            android:clickable="true"
+                            app:fabSize="mini"
+                            app:layout_constraintEnd_toStartOf="@+id/Last"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:maxImageSize="30dp"
+                            app:srcCompat="@drawable/ic_previous_pagination" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutHoras"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_redondeado_gris_transparente"
+                            android:orientation="horizontal"
+                            android:paddingStart="7dp"
+                            android:paddingEnd="7dp"
+                            app:layout_constraintTop_toBottomOf="@+id/swTipoTareo"
+                            tools:layout_editor_absoluteX="2dp">
+
+                            <TextView
+                                style="@style/textViewEdicionItems"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Horas:"
+                                android:textColor="@color/blancoOficial"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/etxHoras_v"
+                                app:layout_constraintEnd_toStartOf="@+id/etxHoras_v"
+                                app:layout_constraintTop_toTopOf="@+id/etxHoras_v" />
+
+                            <EditText
+                                android:id="@+id/etxHoras_v"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center|center_vertical"
+                                android:hint="0.00"
+                                android:inputType="numberDecimal"
+                                android:textColor="@color/blancoOficial"
+                                android:textColorHint="@color/blancoOficial"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutRendimientos"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:gravity="center|center_vertical"
-                            android:hint="0.00"
-                            android:inputType="numberDecimal"
-                            android:textColor="@color/blancoOficial"
-                            android:textColorHint="@color/blancoOficial"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_margin="2dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_redondeado_gris_transparente"
+                            android:orientation="horizontal"
+                            android:paddingStart="7dp"
+                            android:paddingEnd="7dp"
+                            app:layout_constraintStart_toEndOf="@+id/layoutHoras"
+                            app:layout_constraintTop_toTopOf="@+id/layoutHoras">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layoutRendimientos"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_redondeado_gris_transparente"
-                        android:orientation="horizontal"
-                        android:paddingStart="7dp"
-                        android:paddingEnd="7dp"
-                        app:layout_constraintStart_toEndOf="@+id/layoutHoras"
-                        app:layout_constraintTop_toTopOf="@+id/layoutHoras">
+                            <EditText
+                                android:id="@+id/etxRtos_v"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:hint="0.00"
+                                android:inputType="numberDecimal"
+                                android:paddingTop="10dp"
+                                android:textColor="@color/blancoOficial"
+                                android:textColorHint="@color/blancoOficial"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        <EditText
-                            android:id="@+id/etxRtos_v"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:hint="0.00"
-                            android:inputType="numberDecimal"
-                            android:paddingTop="10dp"
-                            android:textColor="@color/blancoOficial"
-                            android:textColorHint="@color/blancoOficial"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <TextView
+                                android:id="@+id/textView37"
+                                style="@style/textViewEdicionItems"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rdtos:"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/etxRtos_v"
+                                app:layout_constraintEnd_toStartOf="@+id/etxRtos_v"
+                                app:layout_constraintTop_toTopOf="@+id/etxRtos_v" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/textView37"
+                            android:id="@+id/txvPagination"
                             style="@style/textViewEdicionItems"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rdtos:"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/etxRtos_v"
-                            app:layout_constraintEnd_toStartOf="@+id/etxRtos_v"
-                            app:layout_constraintTop_toTopOf="@+id/etxRtos_v" />
+                            android:text="Pagination"
+                            android:textColor="@color/black"
+                            android:textSize="14dp"
+                            app:layout_constraintEnd_toEndOf="@+id/Last"
+                            app:layout_constraintStart_toStartOf="@+id/First"
+                            app:layout_constraintTop_toBottomOf="@+id/First" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/c007_fab_Agregar_v"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:onClick="onClick"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/i_person_add" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -748,13 +794,13 @@
             android:id="@+id/c007_fab_volver_v"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="mini"
-            app:maxImageSize="30dp"
             android:clickable="true"
             android:onClick="onClick"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp"
             app:srcCompat="@drawable/i_keyboard_backspace" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -762,12 +808,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:fabSize="mini"
-            app:maxImageSize="30dp"
             android:visibility="invisible"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="30dp"
             app:srcCompat="@drawable/i_save" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -775,11 +821,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:maxImageSize="30dp"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="25dp"
             app:srcCompat="@drawable/duplicate" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -790,10 +836,10 @@
             android:clickable="true"
             android:src="@drawable/edit"
             app:fabSize="mini"
-            app:maxImageSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/c007_fab_Guardar_v"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="25dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/c007_fab_Eliminar_v"
@@ -802,15 +848,28 @@
             android:layout_marginEnd="3dp"
             android:clickable="true"
             android:src="@drawable/ic_delete"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/c007_fab_Editar_v"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="30dp" />
+            app:maxImageSize="25dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c007_fab_GenerarQR_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:clickable="true"
+            android:src="@drawable/ic_qr_code"
+            android:visibility="invisible"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/c007_fab_Eliminar_v"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="25dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <LinearLayout
         android:id="@+id/c007_lly_StatusInferior_v"
@@ -878,5 +937,6 @@
             android:text="]" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

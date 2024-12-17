@@ -7,18 +7,6 @@
     android:padding="20dp"
     tools:context=".ui.TareosSettings.TareosSettingsFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAbrirDrawer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginBottom="20dp"
-        android:clickable="true"
-        app:elevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/chipGroupTareos"
-        app:srcCompat="@drawable/i_list" />
-
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
@@ -30,144 +18,278 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txvTareos2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="SINCRONIZAR DATOS"
-        android:textAlignment="textEnd"
-        android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupTareos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical"
-        app:chipSpacingHorizontal="20dp"
-        app:chipSpacingVertical="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txvTareos2"
-        app:layout_constraintTop_toBottomOf="@+id/txvTareos2"
-        app:singleSelection="false">
-
-        <Switch
-            android:id="@+id/switchPersonas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Personas"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchActividades"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Actividades"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchLabores"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:text="Labores"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchConsumidores"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Consumidores"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchCultivos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cultivos"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchVariedades"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Variedades"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchDias"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dias"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchTurnos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Turnos"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchUsuarios"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Usuarios"
-            android:textSize="18dp" />
-
-        <Switch
-            android:id="@+id/switchQuerysSqlite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Querys SQLite"
-            android:textSize="18dp" />
-
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <Button
-        android:id="@+id/btnSincronizarTareos"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAbrirDrawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/azulPrimario"
-        android:text="SINCRONIZAR"
-        android:textColor="@color/blancoOficial"
-        app:layout_constraintEnd_toEndOf="@+id/chipGroupTareos"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroupTareos" />
+        android:clickable="true"
+        app:elevation="0dp"
 
-    <TextView
-        android:id="@+id/txvOpciones"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="OPCIONES"
-        android:textAlignment="textEnd"
-        android:textSize="25dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSincronizarTareos" />
+        app:maxImageSize="26dp"
+        app:srcCompat="@drawable/i_list" />
 
-    <Switch
-        android:id="@+id/switchPermitirSinTareo"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="Permitir sin tareo"
-        android:textSize="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/txvOpciones"
-        tools:layout_editor_absoluteX="20dp" />
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/fabAbrirDrawer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Switch
-        android:id="@+id/switchModoPacking"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Modo Packing"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@+id/switchPermitirSinTareo"
-        app:layout_constraintTop_toBottomOf="@+id/switchPermitirSinTareo" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txvTareos2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="SINCRONIZAR DATOS"
+                android:textAlignment="textEnd"
+                android:textSize="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupTareos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:chipSpacingHorizontal="20dp"
+                app:chipSpacingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txvTareos2"
+                app:singleSelection="false">
+
+                <Switch
+                    android:id="@+id/switchPersonas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Personas"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchActividades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Actividades"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchLabores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="Labores"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchConsumidores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Consumidores"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchCultivos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cultivos"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchVariedades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Variedades"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchDias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dias"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchTurnos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Turnos"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchUsuarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Usuarios"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/switchQuerysSqlite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Querys SQLite"
+                    android:textSize="18dp" />
+
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <Button
+                android:id="@+id/btnSincronizarTareos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/azulPrimario"
+                android:text="SINCRONIZAR"
+                android:textColor="@color/blancoOficial"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chipGroupTareos" />
+
+            <TextView
+                android:id="@+id/txvOpciones"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="OPCIONES"
+                android:textAlignment="textEnd"
+                android:textSize="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSincronizarTareos" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabLockOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:fabSize="mini"
+                app:maxImageSize="30dp"
+                android:src="@drawable/ic_unlock"
+                app:layout_constraintBottom_toBottomOf="@+id/txvOpciones"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txvOpciones" />
+
+            <Switch
+                android:id="@+id/switchPermitirSinTareo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="Permitir sin tareo"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fabLockOptions" />
+
+            <Switch
+                android:id="@+id/switchModoPacking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Modo Packing"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchPermitirSinTareo" />
+
+            <Switch
+                android:id="@+id/switchMostrarControlesHoras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Mostrar Controles de Horas y Rendimientos"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchModoPacking" />
+
+            <Switch
+                android:id="@+id/switchAgregarSoloCamara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Agregar solo con cámara"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchMostrarControlesHoras" />
+
+            <Switch
+                android:id="@+id/switchReproducirSonido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Reproducir sonido"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchAgregarSoloCamara" />
+
+            <Switch
+                android:id="@+id/switchValidarTrabajadorRepetido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Validar trabajador repetido"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchReproducirSonido" />
+
+            <Switch
+                android:id="@+id/switchActivarPermiso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Activar switch permiso"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchValidarTrabajadorRepetido" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/switchActivarPermiso">
+
+                <TextView
+                    android:id="@+id/lblItemsPerPage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="Items por página"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/etItemsPerPage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/etItemsPerPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:ems="10"
+                    android:hint="20"
+                    android:inputType="number"
+                    android:text="20"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/lblItemsPerPage"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

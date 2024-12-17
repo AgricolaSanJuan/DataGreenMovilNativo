@@ -51,24 +51,6 @@ public class DataGreenUpdateService extends Service {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Verificar y solicitar permisos
-        checkStoragePermissions();
-    }
-
-    private void checkStoragePermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // No tenemos permiso, se podría solicitar aquí
-            // Si estás usando un servicio, considera que esto normalmente se hace en una actividad
-            // Aquí solo estamos mostrando un mensaje, puedes implementar la lógica que necesites
-            Toast.makeText(this, "Se requiere permiso para acceder al almacenamiento", Toast.LENGTH_SHORT).show();
-        } else {
-            // Ya tenemos permiso, puedes proceder
-            proceedWithFileAccess();
-        }
-    }
-
-    private void proceedWithFileAccess() {
-        // Lógica para acceder a archivos o continuar con la descarga
     }
 
     @Override
@@ -142,7 +124,6 @@ public class DataGreenUpdateService extends Service {
                 Log.e("ERROR AL DESCARGAR", e.toString());
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -176,7 +157,6 @@ public class DataGreenUpdateService extends Service {
                 Toast.makeText(ctx, "Error: archivo no encontrado", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     private class ApiRequestTask extends AsyncTask<String, Void, String> {

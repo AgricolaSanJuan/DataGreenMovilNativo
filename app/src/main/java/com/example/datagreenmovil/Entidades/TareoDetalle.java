@@ -8,6 +8,8 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class TareoDetalle {
     private String idEmpresa;
     private String idTareo;
@@ -30,6 +32,7 @@ public class TareoDetalle {
     private String observacion;
     private String ingreso;
     private String salida;
+    private int homologar;
 
     public TareoDetalle() {
 
@@ -54,6 +57,7 @@ public class TareoDetalle {
         this.observacion ="";
         this.ingreso = "";
         this.salida = "";
+        this.homologar = 0;
     }
 
     public TareoDetalle(TareoDetalle td) {
@@ -78,6 +82,7 @@ public class TareoDetalle {
         this.observacion = td.observacion;
         this.ingreso = td.ingreso;
         this.salida = td.salida;
+        this.homologar = td.homologar;
     }
 
     public TareoDetalle(Cursor c, int i) {
@@ -105,6 +110,7 @@ public class TareoDetalle {
         this.observacion = c.getString(18);
         this.ingreso = c.getString(19) == null ? "" : c.getString(19);
         this.salida = c.getString(20) == null ? "" : c.getString(20);
+        this.homologar = c.getInt(21);
     }
 
     /*
@@ -291,6 +297,12 @@ public class TareoDetalle {
         this.salida = salida;
     }
 
+    public int getHomologar() { return homologar; }
+
+    public void setHomologar(int homologar){
+        this.homologar = homologar;
+    }
+
     //PENDIENTE: IMPLEMENTAR UN METOD PARA CONVERTIR CUALQUIER ENTIDAD EN LIST, EJEMPLO LA ENTIDAD TAREDODETALLE->LIST PARA QUE? PARA PODER USARLA EN LA NUEVA IMPLEMENTACION
     //DE LA CLASE CONEXIONSQLITE LA CUAL GUARDA CUALQUIER ENTIDAD COMO "REGISTRO" GENERICO Y NO ENTIDAD POR ENTIDAD
     public boolean guardar(ConexionSqlite objSqlite, String IdUsuario) throws Exception {
@@ -314,6 +326,7 @@ public class TareoDetalle {
         l.add(this.observacion);
         l.add(this.ingreso);
         l.add(this.salida);
+        l.add(String.valueOf(this.homologar));
         objSqlite.GuardarRegistro("trx_Tareos_Detalle",l);
         //RECALCULAR SUBTOTALES GENERALES
         List<String> p = new ArrayList<>();
@@ -330,6 +343,5 @@ public class TareoDetalle {
         return true;
     }
 
-    public void guardar() {
-    }
+
 }

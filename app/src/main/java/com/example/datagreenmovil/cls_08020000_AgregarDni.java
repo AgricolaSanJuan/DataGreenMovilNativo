@@ -34,7 +34,6 @@ import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Helpers.LocationHelper;
 import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
-import com.myaconsultancy.packages.GetLastLocation;
 
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;

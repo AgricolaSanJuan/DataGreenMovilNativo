@@ -98,20 +98,6 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
     }
   }
 
-
-  //    public void crearTabla(String nombreTabla){
-  //        String q = "CREATE TABLE " + nombreTabla + "(Id text, Nombre text, Apellido text";
-  //        SqlDB.execSQL("CREATE TABLE TablaPrueba(Id text, Nombre text, Apellido text)");
-  //    }{
-  //    public String rapidin(String q){
-  //        try{
-  //            SqliteDB.execSQL(q);
-  //            return "true";
-  //        }catch(Exception ex){
-  //            return ex.getMessage();
-  //        }
-  //    }
-
   public String obtenerVersionSQLITE(){
     SQLiteDatabase SqliteDB = getReadableDatabase();
     int versionDB = SqliteDB.getVersion();
