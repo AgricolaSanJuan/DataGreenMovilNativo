@@ -2,6 +2,8 @@ package com.example.datagreenmovil.ui.TareosMain.Dialogs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,12 +33,17 @@ import com.example.datagreenmovil.databinding.DialogDetalleTareoBinding;
 import org.json.JSONException;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -219,6 +226,10 @@ public class DialogDetalleTareo extends DialogFragment {
     }
 
     private static void duplicateWorkers(Tareo tareo, ArrayList<Integer> listaTrabajadores, Context ctx, DialogDetalleTareoBinding bindtwo) throws JSONException {
+        SQLiteDatabase database;
+        database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
+
+
         String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
         Calendar calendar = Calendar.getInstance();
         for (int itemDuplicar: listaTrabajadores
@@ -231,6 +242,62 @@ public class DialogDetalleTareo extends DialogFragment {
             String dniDuplicar = tareo.getDetalle().get(itemDuplicar - 1).getDni();
             String observacionDuplicar = tareo.getDetalle().get(itemDuplicar - 1).getObservacion();
             String idPlanillaDuplicar = "";
+
+
+            boolean SALIDA_AUTOMATICA = sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false);
+//            AGREGAR SALIDA
+            if(SALIDA_AUTOMATICA) {
+                Cursor cVerificarSinSalida;
+
+                //                        MARCAR LA SALIDA Y HACER RECURSIVIDAD PARA LUEGO MARCAR SU ENTRADA:
+                            String[] selectionArgs = {tareo.getId(), dniDuplicar};
+                cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE WHERE Idtareo = ? AND Dni = ? AND salida = ''", selectionArgs);
+                if (cVerificarSinSalida.getCount() > 0) {
+                    cVerificarSinSalida.moveToFirst();
+                    int itemIndex;
+                    itemIndex = cVerificarSinSalida.getColumnIndex("Item");
+                    String itemIndexU;
+                    itemIndexU = cVerificarSinSalida.getString(itemIndex);
+                    Optional<TareoDetalle> resultado = tareo.getDetalle().stream().filter(detalle -> detalle.getItem() == Integer.parseInt(itemIndexU)).findFirst();
+                    Date date1 = null;
+                    Date date2 = null;
+                    try {
+                        date1 = sdf.parse(resultado.get().getIngreso());
+                        date2 = sdf.parse(fechaHoraFormateada);
+                    } catch (ParseException e) {
+                        Swal.error(ctx, "Error", "No se ha podido convertir la fecha", 2000);
+                    }
+                    // Calcular la diferencia en milisegundos
+                    long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+                    // Convertir la diferencia de milisegundos a horas
+                    resultado.get().setSalida(fechaHoraFormateada);
+                    double horas = diferenciaMilisegundos / 3600000.00;
+                    BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
+                    resultado.get().setHoras(horasRedondeadas.doubleValue());
+                } else {
+                    Swal.warning(ctx, "Cuidado", "No se encuentra un tareo de ingreso de este trabajador, pruebe a guardar el tareo y volver a intentar.", 2000);
+                }
+
+                try {
+                    tareo.guardarDetalle(objSqlite);
+                } catch (Exception e) {
+                    Swal.error(ctx, "Error", "Error al guardar el detalle", 5000);
+                }
+
+                try {
+                    if (!tareo.getIdEstado().equals("TR")) {
+
+                        if (tareo.guardar(objSqlite, null)) {
+                            objSqlite.ActualizarDataPendiente(null);
+                        }
+                    } else {
+                        Funciones.notificar(ctx, "El tareo no cuenta con el estado PENDIENTE, imposible actualizar.");
+                    }
+                } catch (Exception ex) {
+                    Funciones.mostrarError(ctx, ex);
+                }
+            }
+//            FIN AGREGAR SALIDA
 
 
             List<String> p = new ArrayList<>();
@@ -264,6 +331,7 @@ public class DialogDetalleTareo extends DialogFragment {
             detalleActual.setRdtos(rendimientosDuplicar);
             detalleActual.setIdTareo(tareo.getId());
             detalleActual.setObservacion(observacionDuplicar);
+
             try {
                 detalleActual.guardar(objSqlite, idUsuario);
                 tareo.agregarDetalle(detalleActual, ctx);
@@ -272,8 +340,10 @@ public class DialogDetalleTareo extends DialogFragment {
             } catch (Exception e) {
                 Log.e("ERORRDETALLE", e.toString());
             }
+
         }
     }
+
 
     @Override
     public void onDestroyView() {

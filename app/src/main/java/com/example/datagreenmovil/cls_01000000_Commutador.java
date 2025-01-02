@@ -56,6 +56,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
         //CONTINUAR AQUI: EL PROCESO ENTRA A TOKEN NO EXISTE;
         Context appContext = getApplicationContext();
         String nombreApp = appContext.getString(R.string.app_name);
+//        sharedPreferences.edit().putString("API_SERVER", "56.10.3.24:8000").apply();
         sharedPreferences.edit().putString("API_SERVER", "192.168.30.94:8080").apply();
         sharedPreferences.edit().putString("NOMBRE_APP", nombreApp).apply();
 

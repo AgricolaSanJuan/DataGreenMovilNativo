@@ -114,9 +114,7 @@
                     android:id="@+id/clInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
                     android:paddingStart="2dp"
-                    app:layout_constraintBottom_toTopOf="@+id/c010_txv_Observacion_v"
                     app:layout_constraintEnd_toStartOf="@+id/clSeleccionables"
                     app:layout_constraintHorizontal_weight="8"
                     app:layout_constraintStart_toStartOf="parent"
@@ -459,14 +457,38 @@
 
                 <TextView
                     android:id="@+id/c010_txv_Observacion_v"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="3dp"
                     android:fontFamily="@font/monoespaciada_principal"
                     android:text="Observacion..."
                     android:textSize="15.5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/constraintLayout3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clInfo" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/c010_txv_Observacion_v">
+
+                    <Button
+                        android:id="@+id/btnTransferir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/monoespaciada_principal"
+                        android:text="Transferir"
+                        android:textSize="15.5dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

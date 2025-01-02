@@ -67,10 +67,6 @@ public class TransportesMainFragment extends Fragment {
     Context ctx;
     SharedPreferences sharedPreferences;
     ArrayList<String> idsSeleccionados;
-    //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-    //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-    //...
-
     TextView c022_txv_DesdeFecha, c022_txv_HastaFecha;
     RadioButton c022_rad_Todos, c022_rad_Pendiente;
     RadioGroup c022_rgr_Estado;
@@ -99,17 +95,12 @@ public class TransportesMainFragment extends Fragment {
             }
             objSql = new ConexionBD(ctx);
             objSqlite = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
-//      objConfLocal.set("ULTIMA_ACTIVIDAD", "PlantillaBase");
             objRex = new Rex(objSqlite, "trx_ServiciosTransporte");
             referenciarControles();
 
             setearControles();
             Funciones.mostrarEstatusGeneral(ctx, objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
-            //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-            //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-            //...
-//            c022_txv_DesdeFecha.setText(s_ListarDesde);
-//            c022_txv_HastaFecha.setText(s_ListarHasta);
+
         } catch (Exception ex) {
             Funciones.mostrarError(ctx, ex);
         }
@@ -160,11 +151,6 @@ public class TransportesMainFragment extends Fragment {
     }
 
     private void setearControles() {
-        //        builderDialogoCerrarSesion= Funciones.setearAlertDialogParaCerrarSesion_(objConfLocal,objSqlite,this);
-
-        //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-        //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-        //...
 
         c022_txv_DesdeFecha.setText(Funciones.malograrFecha(s_ListarDesde));
         c022_txv_HastaFecha.setText(Funciones.malograrFecha(s_ListarHasta));
@@ -181,14 +167,10 @@ public class TransportesMainFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-//                String s_Valor = "";
-//                s_Valor = c022_txv_DesdeFecha.getText().toString();
                 s_ListarDesde = Funciones.arreglarFecha(c022_txv_DesdeFecha.getText().toString());
-//                s_ListarDesde = Funciones.arreglarFecha(s_Valor);
                 try {
                     listarRegistros();
                 } catch (Exception ex) {
-                    //throw new RuntimeException(e);
                     Funciones.mostrarError(ctx, ex);
                 }
             }
@@ -210,7 +192,6 @@ public class TransportesMainFragment extends Fragment {
                 try {
                     listarRegistros();
                 } catch (Exception ex) {
-                    //throw new RuntimeException(e);
                     Funciones.mostrarError(ctx, ex);
                 }
             }
@@ -222,13 +203,11 @@ public class TransportesMainFragment extends Fragment {
                     //Toast.makeText(getBaseContext(),"todos",Toast.LENGTH_LONG).show();
                     s_ListarIdEstado = "**";
                 } else if (i == R.id.c022_rad_Pendiente_v) {
-                    //Toast.makeText(getBaseContext(),"pendientes",Toast.LENGTH_LONG).show();
                     s_ListarIdEstado = "PE";
                 }
                 try {
                     listarRegistros();
                 } catch (Exception ex) {
-                    //throw new RuntimeException(e);
                     Funciones.mostrarError(ctx, ex);
                 }
             }
@@ -449,10 +428,6 @@ public class TransportesMainFragment extends Fragment {
         txv_PushVersionApp = binding.c022TxvPushVersionAppV;
         txv_PushVersionDataBase = binding.c022TxvPushVersionDataBaseV;
         txv_PushIdentificador = binding.c022TxvPushIdentificadorV;
-
-        //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
-        //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
-        //...
 
         c022_txv_DesdeFecha = binding.c022TxtDesdeFechaV;
         c022_txv_HastaFecha = binding.c022TxtHastaFechaV;
