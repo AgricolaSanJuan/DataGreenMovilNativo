@@ -10,21 +10,23 @@ import android.location.Address;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
@@ -34,6 +36,9 @@ import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Helpers.LocationHelper;
 import com.example.datagreenmovil.Logica.CryptorSJ;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.QRCodeScannerView;
+import com.example.datagreenmovil.Logica.Swal;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -54,12 +59,13 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     //    VARIABLES DE COMPORTAMIENTO DEL MÓDULO
-    Boolean permitirTrabajadoresDesconocidos;
+    Boolean permitirTrabajadoresDesconocidos, reproducirSonidoAlerta, agregarConCamara, encenderFlash = false;
     LinearLayout c025_lly_IngresoDni;
     TextView c025_txv_Contador, c025_txv_DniMarcado, c025_txv_NombreMarcado, c025_txv_ApellidoMarcado;
     EditText c025_et_IngresoDni;
     Button c025_btn_1, c025_btn_2, c025_btn_3, c025_btn_4, c025_btn_5, c025_btn_6, c025_btn_7, c025_btn_8, c025_btn_9, c025_btn_0, c025_btn_X, c025_btn_Ok;
-    TextureView tvLector;
+    FloatingActionButton fabFlash;
+    ConstraintLayout llyTeclado, llyLector;
     Rex objRex;
     String s_DniMarcado = "", s_IdRex;
     int i_Items, i_Capacidad;
@@ -68,7 +74,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
     private LocationHelper locationHelper;
     private String coordinates = "";
     private GetLastLocation getLastLocation;
-
+    private QRCodeScannerView qrCodeScannerView;
+    private TextView scannedTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +94,8 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             editor = sharedPreferences.edit();
 
             permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", true);
+            reproducirSonidoAlerta = sharedPreferences.getBoolean("REPRODUCIR_SONIDO_ALERTA", false);
+            agregarConCamara = sharedPreferences.getBoolean("AGREGAR_CON_CAMARA", true);
 
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
@@ -98,8 +107,17 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             //@Jota:2023-05-27 -> FIN DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
 
+            if(agregarConCamara){
+                llyTeclado.setVisibility(View.GONE);
+                llyLector.setVisibility(View.VISIBLE);
+                inicializarCamara();
+            }else {
+                llyTeclado.setVisibility(View.VISIBLE);
+                llyLector.setVisibility(View.GONE);
+            }
+
             obtenerRexActual();
-            if (objRex.Get("IdServicioTransporte") != null && !objRex.Get("IdServicioTransporte").equals("")) {
+            if (objRex.Get("IdServicioTransporte") != null && !objRex.Get("IdServicioTransporte").isEmpty()) {
                 mostrarValoresRexActual();
             }
         } catch (Exception ex) {
@@ -110,6 +128,27 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
         c025_et_IngresoDni.requestFocus();
         s_DniMarcado = "";
+    }
+
+    private void inicializarCamara() {
+        qrCodeScannerView = findViewById(R.id.qrScannerView);
+        qrCodeScannerView.setOnCodeScannedListener(result -> {
+            qrCodeScannerView.stopScanning();
+//            Swal.info(this, "info", result, 8000);
+
+            c025_et_IngresoDni.setText(result);
+
+            getLastLocation = new GetLastLocation(this, (address) -> {
+                procesarDNILector(address, null);
+            }, (emptyAddress, message) -> {
+                procesarDNILector(null, emptyAddress);
+            });
+            getLastLocation.getGeoDataDetails();
+
+            new Handler().postDelayed(()->{
+                qrCodeScannerView.startCamera();
+            }, 1000);
+        });
     }
 
     //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
@@ -165,6 +204,9 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
         c025_btn_X = findViewById(R.id.c025_btn_X_v);
         c025_btn_Ok = findViewById(R.id.c025_btn_Ok_v);
 
+        llyTeclado = findViewById(R.id.llyTeclado);
+        llyLector = findViewById(R.id.llyLector);
+
         c025_et_IngresoDni.setOnKeyListener((view, i, keyEvent) -> {
             if (i == KeyEvent.KEYCODE_ENTER && (keyEvent.getAction() == KeyEvent.ACTION_UP)) {
                 getLastLocation = new GetLastLocation(this, (address) -> {
@@ -175,6 +217,17 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 getLastLocation.getGeoDataDetails();
             }
             return false;
+        });
+
+        fabFlash = findViewById(R.id.fabFlash);
+
+        fabFlash.setOnClickListener(v -> {
+            encenderFlash = !encenderFlash;
+            if(encenderFlash){
+                qrCodeScannerView.enableFlash();
+            }else {
+                qrCodeScannerView.disableFlash();
+            }
         });
     }
 
@@ -201,7 +254,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 c025_txv_ApellidoMarcado.setText("INVÁLIDO");
                 c025_et_IngresoDni.setText("");
                 s_DniMarcado = "";
-                Error.start();
+                if(reproducirSonidoAlerta){
+                    Error.start();
+                }else {
+                    Swal.error(this, "Error", "CÓDIGO INVÁLIDO", 3000);
+                }
                 dniRestringido = "no_permitido";
             }
         } else if (s_DniMarcado.startsWith("SJ")) {
@@ -210,7 +267,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             c025_txv_ApellidoMarcado.setText("PREFIJOS");
             c025_et_IngresoDni.setText("");
             s_DniMarcado = "";
-            Error.start();
+            if(reproducirSonidoAlerta){
+                Error.start();
+            }else {
+                Swal.error(this, "Error", "NO SE PERMITEN PREFIJOS", 3000);
+            }
             dniRestringido = "no_permitido";
         } else {
             try {
@@ -276,7 +337,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                 c025_txv_ApellidoMarcado.setText("INVÁLIDO");
                 c025_et_IngresoDni.setText("");
                 s_DniMarcado = "";
-                Error.start();
+                if(reproducirSonidoAlerta){
+                    Error.start();
+                }else {
+                    Swal.error(this, "Error", "CÓDIGO INVÁLIDO", 3000);
+                }
                 dniRestringido = "no_permitido";
             }
         } else if (s_DniMarcado.startsWith("SJ")) {
@@ -285,7 +350,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
             c025_txv_ApellidoMarcado.setText("PREFIJOS");
             c025_et_IngresoDni.setText("");
             s_DniMarcado = "";
-            Error.start();
+            if(reproducirSonidoAlerta){
+                Error.start();
+            }else {
+                Swal.error(this, "Error", "NO PERMITE PREFIJOS", 3000);
+            }
             dniRestringido = "no_permitido";
         } else {
             try {
@@ -459,7 +528,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
             if (verificarRegistroExiste.getInt(0) <= 0) {
                 if (permitirTrabajadoresDesconocidos) {
-                    Notificacion.start();
+                    if(reproducirSonidoAlerta){
+                        Notificacion.start();
+                    }else {
+                        Swal.success(this, "Correcto!", "TRABAJADOR AGREGADO", 3000);
+                    }
                     dniRestringido = "permitido";
                     try {
                         if (objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex)) {
@@ -470,7 +543,11 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                     }
                 } else {
                     if (verificarExistencia.getInt(0) > 0) {
-                        Notificacion.start();
+                        if(reproducirSonidoAlerta){
+                            Notificacion.start();
+                        }else {
+                            Swal.success(this, "Correcto!", "TRABAJADOR AGREGADO", 3000);
+                        }
                         dniRestringido = "permitido";
                         try {
                             if (objSqlite.GuardarRex(objConfLocal, "trx_ServiciosTransporte_Detalle", objRex)) {
@@ -480,12 +557,20 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                     } else {
-                        Error.start();
+                        if(reproducirSonidoAlerta){
+                            Error.start();
+                        }else {
+                            Swal.error(this, "Error", "NO PERMITIDO", 3000);
+                        }
                         dniRestringido = "no_permitido";
                     }
                 }
             } else {
-                Error.start();
+                if(reproducirSonidoAlerta){
+                    Error.start();
+                }else {
+                    Swal.error(this, "Error", "NO PERMITIDO", 3000);
+                }
                 dniRestringido = "repetido";
             }
             return true;

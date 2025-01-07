@@ -25,10 +25,10 @@ import androidx.navigation.Navigation;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.databinding.FragmentScannerBinding;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.barcode.Barcode;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
-import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
 import java.util.List;

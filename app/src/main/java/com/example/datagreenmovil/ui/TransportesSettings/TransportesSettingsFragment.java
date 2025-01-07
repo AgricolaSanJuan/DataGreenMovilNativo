@@ -26,7 +26,7 @@ public class TransportesSettingsFragment extends Fragment {
     Context ctx;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    Boolean permitirTrabajadoresDesconocidos;
+    Boolean permitirTrabajadoresDesconocidos, reproducirSonidoAlerta, agregarConCamara;
     List<String> tablasSeleccionadas = new ArrayList<>();
     private FragmentTransportesSettingsBinding binding;
     private boolean stateTareos;
@@ -34,6 +34,8 @@ public class TransportesSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TransportesSettingsViewModel transportesSettingsViewModel = new ViewModelProvider(this).get(TransportesSettingsViewModel.class);
         permitirTrabajadoresDesconocidos = sharedPreferences.getBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", true);
+        reproducirSonidoAlerta = sharedPreferences.getBoolean("REPRODUCIR_SONIDO_ALERTA", true);
+        agregarConCamara = sharedPreferences.getBoolean("AGREGAR_CON_CAMARA", true);
 
 
         binding = FragmentTransportesSettingsBinding.inflate(inflater, container, false);
@@ -41,6 +43,8 @@ public class TransportesSettingsFragment extends Fragment {
 
         binding.switchTrabajadoresDesconocidos.setEnabled(false);
         binding.switchTrabajadoresDesconocidos.setChecked(permitirTrabajadoresDesconocidos);
+        binding.switchReproducirSonidoAlerta.setChecked(reproducirSonidoAlerta);
+        binding.switchAgregarConCamara.setChecked(agregarConCamara);
 
         binding.txvTransportes.setOnClickListener(v -> {
             stateTareos = !stateTareos;
@@ -106,11 +110,29 @@ public class TransportesSettingsFragment extends Fragment {
 
         binding.switchTrabajadoresDesconocidos.setOnCheckedChangeListener((compoundButton, b) -> {
             editor.putBoolean("PERMITIR_TRABAJADORES_DESCONOCIDOS", b).apply();
-            if (b) {
-                Swal.success(ctx, "CAMBIO CORRECTO!", "Ahora se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
-            } else {
-                Swal.warning(ctx, "CAMBIO CORRECTO!", "Ahora no se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
-            }
+//            if (b) {
+//                Swal.success(ctx, "CAMBIO CORRECTO!", "Ahora se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+//            } else {
+//                Swal.warning(ctx, "CAMBIO CORRECTO!", "Ahora no se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+//            }
+        });
+
+        binding.switchReproducirSonidoAlerta.setOnCheckedChangeListener((compoundButton, b) -> {
+            editor.putBoolean("REPRODUCIR_SONIDO_ALERTA", b).apply();
+//            if (b) {
+//                Swal.success(ctx, "CAMBIO CORRECTO!", "Ahora se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+//            } else {
+//                Swal.warning(ctx, "CAMBIO CORRECTO!", "Ahora no se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+//            }
+        });
+
+        binding.switchAgregarConCamara.setOnCheckedChangeListener((compoundButton, b) -> {
+            editor.putBoolean("AGREGAR_CON_CAMARA", b).apply();
+//            if (b) {
+//                Swal.success(ctx, "CAMBIO CORRECTO!", "Ahora se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+//            } else {
+//                Swal.warning(ctx, "CAMBIO CORRECTO!", "Ahora no se permitirán los trabajadores que no están registrados en la base de datos local.", 3000);
+//            }
         });
 
         binding.btnSincronizarTransportes.setOnClickListener(view -> {
