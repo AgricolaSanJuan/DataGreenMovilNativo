@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -50,6 +54,10 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         EstandaresListAdapter estandaresListAdapter = new EstandaresListAdapter(reporteEstandaresList);
         binding.rvEstandaresList.setAdapter(estandaresListAdapter);
 
+//        registerForContextMenu(binding.fabMenu);
+        binding.fabMenu.setOnClickListener(v -> {
+            showPopupMenu(binding.fabMenu);
+        });
         // Crear una instancia del fragmento
         Filtros filtrosFragment = new Filtros();
 
@@ -86,5 +94,62 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
     @Override
     public void onChangeFilterData(Swal.DialogResult filterData) {
 
+    }
+
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        if (v.getId() == R.id.fabMenu) {
+//            MenuInflater inflater = getActivity().getMenuInflater();
+//            inflater.inflate(R.menu.context_menu_estandares, menu);
+//        }
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(@NonNull MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.action_filter) {
+//            // Handle filter action
+//            // You can potentially open your filtrosFragment here
+//            return true;
+//        } else if (id == R.id.action_sort) {
+//            // Handle sort action
+//            // Implement your sorting logic here
+//            return true;
+//        }
+//        return super.onContextItemSelected(item);
+//    }
+
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(requireContext(), view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.context_menu_estandares, popupMenu.getMenu()); // Utiliza el mismo archivo de menú
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // Maneja los clics en los elementos del menú
+                int id = item.getItemId();
+                if (id == R.id.action_add) {
+                    Swal.info(ctx, "PUSH!", "Presionaste agregar", 5000);
+                    return true;
+                } else if (id == R.id.action_delete) {
+                    Swal.info(ctx, "PUSH!", "Presionaste eliminar", 5000);
+                    return true;
+                } else if (id == R.id.action_transfer) {
+                    Swal.info(ctx, "PUSH!", "Presionaste transferir", 5000);
+                    return true;
+                } else if (id == R.id.action_select_all) {
+                    Swal.info(ctx, "PUSH!", "Presionaste seleccionar todo", 5000);
+                    return true;
+                } else if (id == R.id.action_duplicity) {
+                    Swal.info(ctx, "PUSH!", "Presionaste duplicar", 5000);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
     }
 }

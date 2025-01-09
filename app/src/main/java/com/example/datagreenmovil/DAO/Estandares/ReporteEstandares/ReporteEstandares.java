@@ -7,7 +7,9 @@ public class ReporteEstandares {
     private int id;
     private String idEmpresa;
     private String tipoEstandar;
+    private String idActividad;
     private String descripcionActividad;
+    private String idLabor;
     private String descripcionLabor;
     private String periodo;
     private String fechaInicio;
@@ -44,12 +46,28 @@ public class ReporteEstandares {
         this.tipoEstandar = tipoEstandar;
     }
 
+    public String getIdActividad() {
+        return idActividad;
+    }
+
+    public void setIdActividad(String idActividad) {
+        this.idActividad = idActividad;
+    }
+
     public String getDescripcionActividad() {
         return descripcionActividad;
     }
 
     public void setDescripcionActividad(String descripcionActividad) {
         this.descripcionActividad = descripcionActividad;
+    }
+
+    public String getIdLabor() {
+        return idLabor;
+    }
+
+    public void setIdLabor(String idLabor) {
+        this.idLabor = idLabor;
     }
 
     public String getDescripcionLabor() {
