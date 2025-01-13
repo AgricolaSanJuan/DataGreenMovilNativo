@@ -212,7 +212,8 @@ public class DataGreenUpdateService extends Service {
                 if (!appVersion.equals(result) && ctx != null) {
                     SharedPreferences sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
                     String ServerIP = sharedPreferences.getString("API_SERVER", "");
-                    String fileUrl = "http://192.168.30.99:8090/DataGreenMovil/MiniGreen" + result + ".apk";
+//                    String fileUrl = "http://192.168.30.99:8090/DataGreenMovil/MiniGreen" + result + ".apk";
+                    String fileUrl = "http://192.168.30.94:8080/download/MiniGreen"+result+".apk";
                     String fileName = "MiniGreen" + result + ".apk";
                     new DownloadUpdate().execute(fileUrl, fileName);
 

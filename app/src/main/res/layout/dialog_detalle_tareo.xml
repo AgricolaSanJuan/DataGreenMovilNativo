@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="ui.TareosMain.Dialogs.DialogDetalleTareo">
-<!--    ACTIVIDAD-->
+    <!--    ACTIVIDAD-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalActividad"
         android:layout_width="match_parent"
@@ -26,19 +26,28 @@
             android:background="@drawable/bg_redondeado_gris_transparente"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/lblddtActividadValue">
+            app:layout_constraintBottom_toTopOf="@+id/lblddtActividadValue"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <CheckBox
+                android:id="@+id/cbActividad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/blancoOficial"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lblddtActividad" />
 
             <TextView
                 android:id="@+id/lblddtActividad"
                 style="@style/textViewEdicionItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:padding="2dp"
                 android:text="Actividad:"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cbActividad"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -53,6 +62,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/lblddtActividad"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -60,13 +70,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/llyinputsActividad"
             app:layout_constraintStart_toStartOf="@+id/llyinputsActividad"
-            app:layout_constraintTop_toBottomOf="@+id/llyinputsActividad"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsActividad" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    LABOR-->
+    <!--    LABOR-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalLabor"
         android:layout_width="match_parent"
@@ -87,19 +97,28 @@
             android:background="@drawable/bg_redondeado_gris_transparente"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/lblddtLaborValue">
+            app:layout_constraintBottom_toTopOf="@+id/lblddtLaborValue"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <CheckBox
+                android:id="@+id/cbLabor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/blancoOficial"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lblddtLabor" />
 
             <TextView
                 android:id="@+id/lblddtLabor"
                 style="@style/textViewEdicionItems"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:padding="2dp"
                 android:text="Labor:"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cbLabor"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -121,13 +140,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/llyinputsLabor"
             app:layout_constraintStart_toStartOf="@+id/llyinputsLabor"
-            app:layout_constraintTop_toBottomOf="@+id/llyinputsLabor"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsLabor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    CONSUMIDOR-->
+    <!--    CONSUMIDOR-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalConsumidor"
         android:layout_width="match_parent"
@@ -148,20 +167,29 @@
             android:background="@drawable/bg_redondeado_gris_transparente"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/lblddtConsumidorValue"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="5dp">
+
+            <CheckBox
+                android:id="@+id/cbConsumidor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/blancoOficial"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lblddtConsumidor" />
 
             <TextView
                 android:id="@+id/lblddtConsumidor"
                 style="@style/textViewEdicionItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:padding="2dp"
                 android:text="Consumidor:"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cbConsumidor"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -183,13 +211,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/llyinputsConsumidor"
             app:layout_constraintStart_toStartOf="@+id/llyinputsConsumidor"
-            app:layout_constraintTop_toBottomOf="@+id/llyinputsConsumidor"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsConsumidor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    HORAS-->
+    <!--    HORAS-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalHoras"
         android:layout_width="match_parent"
@@ -213,16 +241,25 @@
             android:paddingEnd="2dp"
             app:layout_constraintTop_toTopOf="parent">
 
+            <CheckBox
+                android:id="@+id/cbHoras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/blancoOficial"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lblddtHoras" />
+
             <TextView
                 android:id="@+id/lblddtHoras"
                 style="@style/textViewEdicionItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:padding="2dp"
                 android:text="Horas:"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cbHoras"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
@@ -242,7 +279,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    RENDIMIENTOS-->
+    <!--    RENDIMIENTOS-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalRendimientos"
         android:layout_width="match_parent"
@@ -266,16 +303,25 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="5dp">
 
+            <CheckBox
+                android:id="@+id/cbRendimientos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/blancoOficial"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lblddtRendimientos" />
+
             <TextView
                 android:id="@+id/lblddtRendimientos"
                 style="@style/textViewEdicionItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:padding="2dp"
                 android:text="Rendimientos:"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cbRendimientos"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
@@ -295,6 +341,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/txtInfo"
+        style="@style/textViewEdicionItems"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Recuerda que solo se actualizarán los datos que tienen el check activado"
+        android:textColor="@color/negroOficial"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/fabConfirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fabConfirm" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabConfirm"

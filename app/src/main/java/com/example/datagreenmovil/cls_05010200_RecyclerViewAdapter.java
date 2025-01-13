@@ -2,16 +2,15 @@ package com.example.datagreenmovil;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -22,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,8 +49,14 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     int itemSeleccionado = 0;
     SharedPreferences sharedPreferences;
     private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
+    private cls_05010200_RecyclerViewAdapter.OnButtonClickListener onButtonClickListener;
+
     public interface OnItemSelected {
         void onItemSelected(String texto, boolean agregar);
+    }
+
+    public interface OnButtonClickListener {
+        void onButtonClickListener(String texto);
     }
 
     // Interfaz para comunicar cambios
@@ -163,6 +170,10 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.listener = listener;
     }
 
+    public void setOnButtonClickListener(cls_05010200_RecyclerViewAdapter.OnButtonClickListener onButtonClickListener) {
+        this.onButtonClickListener = onButtonClickListener;
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         // Define tus views aquí
         boolean selected = false;
@@ -172,6 +183,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         TextView tvIngreso, tvSalida;
         ConstraintLayout c010_lly_Principal, llyBody;
         CheckBox cboHomologar;
+        Button btnTransferir;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             c010_lly_Principal = itemView.findViewById(R.id.c010_lly_Principal_v);
@@ -198,6 +210,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             labelAlmuerzo = itemView.findViewById(R.id.labelAlmuerzo);
             spinnerAlmuerzo = itemView.findViewById(R.id.spinnerAlmuerzo);
             cboHomologar = itemView.findViewById(R.id.cbDescanso);
+            btnTransferir = itemView.findViewById(R.id.btnTransferir);
         }
 
         public void bind(TareoDetalle tareoDetalle) {
@@ -242,6 +255,10 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
             cboHomologar.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 tareoDetalle.setHomologar(isChecked ? 1 : 0);
+            });
+
+            btnTransferir.setOnClickListener(v -> {
+                onButtonClickListener.onButtonClickListener(c010_txv_Item.getText().toString());
             });
 
             c010_lly_Principal.setOnClickListener(new View.OnClickListener() {
