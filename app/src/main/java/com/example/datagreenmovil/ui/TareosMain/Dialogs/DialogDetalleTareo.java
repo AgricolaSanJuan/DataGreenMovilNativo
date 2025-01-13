@@ -20,7 +20,6 @@ import androidx.fragment.app.DialogFragment;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Entidades.ClaveValor;
-import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpBuscarEnLista;
 import com.example.datagreenmovil.Entidades.PopUpBuscarEnLista_Item;
 import com.example.datagreenmovil.Entidades.Tabla;
@@ -32,7 +31,6 @@ import com.example.datagreenmovil.databinding.DialogDetalleTareoBinding;
 
 import org.json.JSONException;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
@@ -49,29 +47,16 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DialogDetalleTareo extends DialogFragment {
 
-    private static DialogDetalleTareoBinding binding;
     static ConexionSqlite objSqlite;
     static HashMap<String, Tabla> hmTablas = new HashMap<>();
     static ArrayList<PopUpBuscarEnLista_Item> arl_Turnos;
     static ArrayList<PopUpBuscarEnLista_Item> arl_Actividades;
     static ArrayList<PopUpBuscarEnLista_Item> arl_Labores = null;
     static ArrayList<PopUpBuscarEnLista_Item> arl_Consumidores;
+    private static DialogDetalleTareoBinding binding;
     private static SharedPreferences sharedPreferences;
     private static String accionFija;
     Context ctx;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DialogDetalleTareoBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ctx = view.getContext();
-    }
 
     private static void obtenerDataParaControles(Context ctx) {
         try {
@@ -86,7 +71,7 @@ public class DialogDetalleTareo extends DialogFragment {
         }
     }
 
-    public static void inicializarDuplicado(Context ctx, DialogDetalleTareoBinding bindtwo, Tareo tareo, ArrayList<Integer> listaTrabajadores, SweetAlertDialog sweetAlertDialog, Swal.ActionResult actionResult, Swal.DismissDialog dismissDialog){
+    public static void inicializarDuplicado(Context ctx, DialogDetalleTareoBinding bindtwo, Tareo tareo, ArrayList<Integer> listaTrabajadores, SweetAlertDialog sweetAlertDialog, Swal.ActionResult actionResult, Swal.DismissDialog dismissDialog) {
         try {
             obtenerDataParaControles(ctx);
         } catch (Exception e) {
@@ -96,15 +81,15 @@ public class DialogDetalleTareo extends DialogFragment {
 
             boolean success = false;
             String message = "";
-            if( accionFija.equals("duplicar") && (bindtwo.lblddtActividadValue.getText().toString().equals(".")
-            || bindtwo.txvddtLabor.getText().toString().equals(".")
-            || bindtwo.txvddtConsumidor.getText().toString().equals("."))){
+            if (accionFija.equals("duplicar") && (bindtwo.lblddtActividadValue.getText().toString().equals(".")
+                    || bindtwo.txvddtLabor.getText().toString().equals(".")
+                    || bindtwo.txvddtConsumidor.getText().toString().equals("."))) {
                 Swal.warning(ctx, "Cuidado!", "Llene todos los datos antes de continuar.", 2000);
-            }else {
-                if(bindtwo.txvddtHoras.getText().toString().isEmpty()){
+            } else {
+                if (bindtwo.txvddtHoras.getText().toString().isEmpty()) {
                     bindtwo.txvddtHoras.setText("0.00");
                 }
-                if(bindtwo.txvddtRendimientos.getText().toString().isEmpty()){
+                if (bindtwo.txvddtRendimientos.getText().toString().isEmpty()) {
                     bindtwo.txvddtRendimientos.setText("0.00");
                 }
                 try {
@@ -114,7 +99,7 @@ public class DialogDetalleTareo extends DialogFragment {
                     message = "Se han duplicado los detalles correctamente.";
                 } catch (JSONException e) {
                     Log.e("ERROR", e.toString());
-                    message = "Ha ocurrido un error al duplicar los detalles: "+e.toString();
+                    message = "Ha ocurrido un error al duplicar los detalles: " + e.toString();
                 }
                 String result = bindtwo.txvddtActividad.getText().toString(); // Lógica para obtener el resultado a duplicar
                 if (actionResult != null) {
@@ -146,7 +131,7 @@ public class DialogDetalleTareo extends DialogFragment {
                     List<String> p = new ArrayList<>();
                     p.add("01"); //PENDIENTE: OBTENER EMPRESA DINAMICAMENTE;
                     p.add(bindtwo.txvddtActividad.getText().toString());
-                    arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"),p,"READ"));
+                    arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"), p, "READ"));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -199,21 +184,23 @@ public class DialogDetalleTareo extends DialogFragment {
         bindtwo.fabConfirm.setOnClickListener(view -> {
             boolean success = false;
             String message = "";
-            String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
-            Double horasEditar = Double.valueOf(!bindtwo.txvddtHoras.getText().toString().isEmpty()  ? bindtwo.txvddtHoras.getText().toString() :"0.00");
+            String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
+            Double horasEditar = Double.valueOf(!bindtwo.txvddtHoras.getText().toString().isEmpty() ? bindtwo.txvddtHoras.getText().toString() : "0.00");
             String idActividadEditar = bindtwo.txvddtActividad.getText().toString();
             String actividadEditar = bindtwo.lblddtActividad.getText().toString();
             String idLaborEditar = bindtwo.txvddtLabor.getText().toString();
             String laborEditar = bindtwo.lblddtLabor.getText().toString();
-            String consumidorEditar = bindtwo.txvddtConsumidor.getText().toString();
-            Double rendimientosEditar = Double.valueOf(!bindtwo.txvddtRendimientos.getText().toString().isEmpty()  ? bindtwo.txvddtRendimientos.getText().toString() :"0.00");;
-            for (int itemEditar: listaTrabajadores){
+            String idConsumidorEditar = bindtwo.txvddtConsumidor.getText().toString();
+            String consumidorEditar = bindtwo.lblddtConsumidor.getText().toString();
+            Double rendimientosEditar = Double.valueOf(!bindtwo.txvddtRendimientos.getText().toString().isEmpty() ? bindtwo.txvddtRendimientos.getText().toString() : "0.00");
+            ;
+            for (int itemEditar : listaTrabajadores) {
                 TareoDetalle detalleActual = new TareoDetalle();
                 detalleActual = tareo.getDetalle().get(itemEditar - 1);
 //                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
 //                ACTIVIDAD
-                if(bindtwo.cbActividad.isChecked()){
-                    if(!bindtwo.txvddtActividad.getText().toString().equals(".") || !bindtwo.txvddtLabor.getText().toString().equals(".")){
+                if (bindtwo.cbActividad.isChecked()) {
+                    if (!bindtwo.txvddtActividad.getText().toString().equals(".") || !bindtwo.txvddtLabor.getText().toString().equals(".")) {
                         detalleActual.setIdActividad(idActividadEditar);
                         detalleActual.setActividad(actividadEditar);
                         detalleActual.setIdLabor(idLaborEditar);
@@ -226,18 +213,21 @@ public class DialogDetalleTareo extends DialogFragment {
 //
 //                }
 //                CONSUMIDOR
-                if(bindtwo.cbConsumidor.isChecked()){
-                    if(!bindtwo.txvddtConsumidor.getText().toString().equals(".")) {
+                if (bindtwo.cbConsumidor.isChecked()) {
+                    if (!bindtwo.txvddtConsumidor.getText().toString().equals(".")) {
+                        detalleActual.setIdConsumidor(idConsumidorEditar);
                         detalleActual.setConsumidor(consumidorEditar);
+                    } else {
+                        Swal.warning(ctx, "Cuidado!", "Llene todos los datos antes de continuar.", 2000);
                     }
                 }
 //                HORAS
-                if(bindtwo.cbHoras.isChecked()){
-                detalleActual.setHoras(horasEditar);
+                if (bindtwo.cbHoras.isChecked()) {
+                    detalleActual.setHoras(horasEditar);
                 }
 //                RENDIMIENTOS
-                if(bindtwo.cbRendimientos.isChecked()){
-                detalleActual.setRdtos(rendimientosEditar);
+                if (bindtwo.cbRendimientos.isChecked()) {
+                    detalleActual.setRdtos(rendimientosEditar);
 
                 }
 
@@ -281,7 +271,7 @@ public class DialogDetalleTareo extends DialogFragment {
                     List<String> p = new ArrayList<>();
                     p.add("01"); //PENDIENTE: OBTENER EMPRESA DINAMICAMENTE;
                     p.add(bindtwo.txvddtActividad.getText().toString());
-                    arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"),p,"READ"));
+                    arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"), p, "READ"));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -302,12 +292,13 @@ public class DialogDetalleTareo extends DialogFragment {
             d.show();
         });
     }
+
     // Método para configurar la vista
-    public static void configureView(DialogDetalleTareoBinding binding, String accion, Tareo tareo , ArrayList<Integer> listaTrabajadores, Swal.ActionResult actionResult, SweetAlertDialog sweetAlertDialog, Swal.DismissDialog dismissDialog) {
+    public static void configureView(DialogDetalleTareoBinding binding, String accion, Tareo tareo, ArrayList<Integer> listaTrabajadores, Swal.ActionResult actionResult, SweetAlertDialog sweetAlertDialog, Swal.DismissDialog dismissDialog) {
         Context ctx = binding.getRoot().getContext();
         sharedPreferences = ctx.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
         objSqlite = new ConexionSqlite(ctx, DataGreenApp.DB_VERSION());
-        switch (accion){
+        switch (accion) {
             case "duplicar":
                 inicializarDuplicado(ctx, binding, tareo, listaTrabajadores, sweetAlertDialog, actionResult, dismissDialog);
                 accionFija = accion;
@@ -326,10 +317,10 @@ public class DialogDetalleTareo extends DialogFragment {
         database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
 
-        String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
+        String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
         Calendar calendar = Calendar.getInstance();
-        for (int itemDuplicar: listaTrabajadores
-             ) {
+        for (int itemDuplicar : listaTrabajadores
+        ) {
             // Obtener la fecha y hora actual
             // Formatear la fecha y hora actual
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -342,11 +333,11 @@ public class DialogDetalleTareo extends DialogFragment {
 
             boolean SALIDA_AUTOMATICA = sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false);
 //            AGREGAR SALIDA
-            if(SALIDA_AUTOMATICA) {
+            if (SALIDA_AUTOMATICA) {
                 Cursor cVerificarSinSalida;
 
                 //                        MARCAR LA SALIDA Y HACER RECURSIVIDAD PARA LUEGO MARCAR SU ENTRADA:
-                            String[] selectionArgs = {tareo.getId(), dniDuplicar};
+                String[] selectionArgs = {tareo.getId(), dniDuplicar};
                 cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE WHERE Idtareo = ? AND Dni = ? AND salida = ''", selectionArgs);
                 if (cVerificarSinSalida.getCount() > 0) {
                     cVerificarSinSalida.moveToFirst();
@@ -401,10 +392,10 @@ public class DialogDetalleTareo extends DialogFragment {
             p.add(dniDuplicar);
 
             try {
-                nombres= ClaveValor.obtenerValorDesdeClave(dniDuplicar ,ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"),  0, 2));
+                nombres = ClaveValor.obtenerValorDesdeClave(dniDuplicar, ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"), 0, 2));
                 idPlanillaDuplicar = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER PLANILLA"), p, "READ", "");
             } catch (Exception e) {
-                Log.e("ERROR","ERROR AL OBTENER NOMBRES");
+                Log.e("ERROR", "ERROR AL OBTENER NOMBRES");
             }
 
             String laborDuplicar = bindtwo.txvddtLabor.getText().toString();
@@ -438,6 +429,19 @@ public class DialogDetalleTareo extends DialogFragment {
             }
 
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DialogDetalleTareoBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ctx = view.getContext();
     }
 
     @Override

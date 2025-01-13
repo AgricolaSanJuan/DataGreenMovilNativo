@@ -20,6 +20,7 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -94,6 +95,52 @@ public class cls_01000000_Commutador extends AppCompatActivity {
         } catch (Exception ex) {
             Funciones.mostrarError(this, ex);
             finish();
+        }
+
+//        CAMBIAR ESTO
+        String nuevaConsulta = "SELECT TD.IdEmpresa," +
+                "        TD.IdTareo," +
+                "        TD.Item," +
+                "        TD.Dni," +
+                "        PER.IdPlanilla," +
+                "        PER.Nombres || '' '' || PER.Paterno || '' '' || PER.Materno Nombres," +
+                "        '''' IdCultivo," +
+                "        '''' Cultivo," +
+                "        '''' IdVariedad," +
+                "        '''' Variedad," +
+                "        TD.idConsumidor," +
+                "        CON.Dex Consumidor," +
+                "        TD.idActividad," +
+                "        ACT.Dex Actividad," +
+                "        TD.idLabor," +
+                "        LAB.Dex Labor," +
+                "        TD.SubTotalRendimiento," +
+                "        TD.SubTotalHoras," +
+                "        TD.Observacion," +
+                "        TD.ingreso," +
+                "        TD.salida," +
+                "        TD.homologar" +
+                "   FROM trx_Tareos_Detalle TD" +
+                "        LEFT JOIN" +
+                "        mst_Personas PER ON RTRIM(TD.Dni) = RTRIM(PER.NroDocumento) " +
+                "        INNER JOIN" +
+                "        mst_Consumidores CON ON RTRIM(TD.IdConsumidor) = RTRIM(CON.Id) " +
+                "        INNER JOIN" +
+                "        mst_Actividades ACT ON RTRIM(TD.IdActividad) = RTRIM(ACT.Id) " +
+                "        INNER JOIN" +
+                "        mst_Labores LAB ON RTRIM(TD.IdActividad) = RTRIM(LAB.IdActividad) AND " +
+                "                           RTRIM(TD.IdLabor) = RTRIM(LAB.Id) " +
+                "  WHERE TD.IdEmpresa = ? AND " +
+                "        TD.IdTareo = ?" +
+                " ORDER BY " +
+                " CASE WHEN TD.Salida IS NULL OR TRIM(TD.Salida) = '''' THEN 0 ELSE 1 END ASC " +
+                " ";
+
+        String query = "UPDATE mst_QuerysSqlite SET QuerySqlite = '" + nuevaConsulta + "' WHERE Id = '210'";
+        try {
+            objSqlite.doItBaby(query, null, "UPDATE");
+        } catch (Exception e) {
+            Log.i("ERROR AL ACTUALIZAR", e.toString());
         }
 
         //        INICIALIZAMOS LA BASE DE DATOS PARA PODER USAR DAO CON LAS NUEVAS ENTIDADES

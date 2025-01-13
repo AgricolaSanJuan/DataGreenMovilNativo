@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="ui.TareosMain.Dialogs.DialogDetalleTareo">
-<!--    ACTIVIDAD-->
+    <!--    ACTIVIDAD-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalActividad"
         android:layout_width="match_parent"
@@ -26,8 +26,8 @@
             android:background="@drawable/bg_redondeado_gris_transparente"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/lblddtActividadValue">
+            app:layout_constraintBottom_toTopOf="@+id/lblddtActividadValue"
+            app:layout_constraintTop_toTopOf="parent">
 
             <CheckBox
                 android:id="@+id/cbActividad"
@@ -70,13 +70,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/llyinputsActividad"
             app:layout_constraintStart_toStartOf="@+id/llyinputsActividad"
-            app:layout_constraintTop_toBottomOf="@+id/llyinputsActividad"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsActividad" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    LABOR-->
+    <!--    LABOR-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalLabor"
         android:layout_width="match_parent"
@@ -97,8 +97,8 @@
             android:background="@drawable/bg_redondeado_gris_transparente"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/lblddtLaborValue">
+            app:layout_constraintBottom_toTopOf="@+id/lblddtLaborValue"
+            app:layout_constraintTop_toTopOf="parent">
 
             <CheckBox
                 android:id="@+id/cbLabor"
@@ -140,13 +140,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/llyinputsLabor"
             app:layout_constraintStart_toStartOf="@+id/llyinputsLabor"
-            app:layout_constraintTop_toBottomOf="@+id/llyinputsLabor"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsLabor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    CONSUMIDOR-->
+    <!--    CONSUMIDOR-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalConsumidor"
         android:layout_width="match_parent"
@@ -167,8 +167,8 @@
             android:background="@drawable/bg_redondeado_gris_transparente"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/lblddtConsumidorValue"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="5dp">
 
             <CheckBox
@@ -211,13 +211,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="."
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/llyinputsConsumidor"
             app:layout_constraintStart_toStartOf="@+id/llyinputsConsumidor"
-            app:layout_constraintTop_toBottomOf="@+id/llyinputsConsumidor"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/llyinputsConsumidor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    HORAS-->
+    <!--    HORAS-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalHoras"
         android:layout_width="match_parent"
@@ -279,7 +279,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    RENDIMIENTOS-->
+    <!--    RENDIMIENTOS-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llyPrincipalRendimientos"
         android:layout_width="match_parent"
@@ -344,14 +344,14 @@
 
     <TextView
         android:id="@+id/txtInfo"
+        style="@style/textViewEdicionItems"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
-        style="@style/textViewEdicionItems"
+        android:text="Recuerda que solo se actualizarán los datos que tienen el check activado"
         android:textColor="@color/negroOficial"
         android:textSize="12dp"
-        android:text="Recuerda que solo se actualizarán los datos que tienen el check activado"
         app:layout_constraintEnd_toStartOf="@+id/fabConfirm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fabConfirm" />

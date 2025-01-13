@@ -44,6 +44,8 @@ public class TareosActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         ctx = this;
 
+
+
 //        editor.putBoolean("MODO_PACKING", true).apply();
 
 
