@@ -55,17 +55,34 @@ public class TareosSettingsFragment extends Fragment {
 //            <!--            REPRODUCIR_SONIDO_TAREOS = sharedPreferences.getBoolean("REPRODUCIR_SONIDO_TAREOS", false);-->
 
         binding.switchMostrarControlesHoras.setChecked(sharedPreferences.getBoolean("MOSTRAR_CONTROLES_HORAS_TAREOS", false));
+        binding.switchMostrarControlesRdtos.setChecked(sharedPreferences.getBoolean("MOSTRAR_CONTROLES_RDTOS_TAREOS", false));
         binding.switchReproducirSonido.setChecked(sharedPreferences.getBoolean("REPRODUCIR_SONIDO_TAREOS", false));
         binding.switchAgregarSoloCamara.setChecked(sharedPreferences.getBoolean("AGREGAR_SOLO_CAMARA_TAREOS", false));
         binding.etItemsPerPage.setText(String.valueOf(sharedPreferences.getInt("ITEMS_PER_PAGE_TAREOS", 20)));
         binding.switchValidarTrabajadorRepetido.setChecked(sharedPreferences.getBoolean("VALIDAR_TRABAJADOR_REPETIDO", false));
         binding.switchActivarPermiso.setChecked(sharedPreferences.getBoolean("ACTIVAR_PERMISO", false));
+        binding.switchAutoSalida.setChecked(sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false));
+        binding.switchMostrarSwitchEntradaSalida.setChecked(sharedPreferences.getBoolean("MOSTRAR_ENTRADA_SALIDA", false));
 
         activarControles(false);
 
+        binding.switchMostrarSwitchEntradaSalida.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("MOSTRAR_ENTRADA_SALIDA", isChecked).apply();
+        });
+
+        binding.switchAutoSalida.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("SALIDA_AUTOMATICA", isChecked).apply();
+        });
+
         binding.switchMostrarControlesHoras.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("MOSTRAR_CONTROLES_HORAS_TAREOS", isChecked).apply();
-        });binding.switchActivarPermiso.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        });
+
+        binding.switchMostrarControlesRdtos.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("MOSTRAR_CONTROLES_RDTOS_TAREOS", isChecked).apply();
+        });
+
+        binding.switchActivarPermiso.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("ACTIVAR_PERMISO", isChecked).apply();
         });
 
@@ -316,13 +333,16 @@ public class TareosSettingsFragment extends Fragment {
     }
 
     private void activarControles(boolean b) {
-        binding.switchModoPacking.setEnabled(b);
-        binding.switchMostrarControlesHoras.setEnabled(b);
-        binding.switchAgregarSoloCamara.setEnabled(b);
-        binding.switchReproducirSonido.setEnabled(b);
-        binding.etItemsPerPage.setEnabled(b);
-        binding.switchValidarTrabajadorRepetido.setEnabled(b);
-        binding.switchActivarPermiso.setEnabled(b);
+//        binding.switchModoPacking.setEnabled(b);
+//        binding.switchMostrarControlesHoras.setEnabled(b);
+//        binding.switchMostrarControlesRdtos.setEnabled(b);
+//        binding.switchAgregarSoloCamara.setEnabled(b);
+//        binding.switchReproducirSonido.setEnabled(b);
+//        binding.etItemsPerPage.setEnabled(b);
+//        binding.switchValidarTrabajadorRepetido.setEnabled(b);
+//        binding.switchMostrarSwitchEntradaSalida.setEnabled(b);
+//        binding.switchActivarPermiso.setEnabled(b);
+//        binding.switchAutoSalida.setEnabled(b);
         if(b){
             binding.fabLockOptions.setImageDrawable(getResources().getDrawable(R.drawable.ic_unlock));
         }else{

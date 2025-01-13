@@ -44,6 +44,11 @@ public class TareosActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         ctx = this;
 
+
+
+//        editor.putBoolean("MODO_PACKING", true).apply();
+
+
 //        PACKINGINTENSIVO
         database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
         boolean columnaIngresoExiste = false;
@@ -60,7 +65,7 @@ public class TareosActivity extends AppCompatActivity {
             cursorText.moveToNext();
             posicionColumna = cursorText.getColumnIndex("name");
             String columnName = cursorText.getString(posicionColumna);
-            Log.i("COLUMNA", columnName);
+//            Log.i("COLUMNA", columnName);
             if ("ingreso".equals(columnName)) {
                 columnaIngresoExiste = true;
             } else if ("salida".equals(columnName)) {
