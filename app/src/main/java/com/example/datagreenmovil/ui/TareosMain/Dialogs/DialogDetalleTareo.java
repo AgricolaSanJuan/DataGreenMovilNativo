@@ -51,7 +51,6 @@ public class DialogDetalleTareo extends DialogFragment {
 
     private static DialogDetalleTareoBinding binding;
     static ConexionSqlite objSqlite;
-    ConfiguracionLocal objConfLocal;
     static HashMap<String, Tabla> hmTablas = new HashMap<>();
     static ArrayList<PopUpBuscarEnLista_Item> arl_Turnos;
     static ArrayList<PopUpBuscarEnLista_Item> arl_Actividades;
@@ -86,6 +85,7 @@ public class DialogDetalleTareo extends DialogFragment {
             Funciones.mostrarError(ctx, ex);
         }
     }
+
     public static void inicializarDuplicado(Context ctx, DialogDetalleTareoBinding bindtwo, Tareo tareo, ArrayList<Integer> listaTrabajadores, SweetAlertDialog sweetAlertDialog, Swal.ActionResult actionResult, Swal.DismissDialog dismissDialog){
         try {
             obtenerDataParaControles(ctx);
@@ -169,26 +169,79 @@ public class DialogDetalleTareo extends DialogFragment {
     }
 
     private static void inicializarEdicion(Context ctx, DialogDetalleTareoBinding bindtwo, Tareo tareo, ArrayList<Integer> listaTrabajadores, SweetAlertDialog sweetAlertDialog, Swal.ActionResult actionResult, Swal.DismissDialog dismissDialog) {
+        try {
+            obtenerDataParaControles(ctx);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        boolean hideHours = sharedPreferences.getBoolean("ACTUALIZAR_HORAS", true);
 //        OCULTAMOS LOS VALORES QUE NO DEBERÍAMOS TENER EN CUENTA
 //        bindtwo.lblddtActividadValue.setVisibility(View.GONE);
-        bindtwo.llyPrincipalActividad.setVisibility(View.GONE);
+//        bindtwo.llyPrincipalActividad.setVisibility(View.GONE);
 //        bindtwo.llyddtActividad.setVisibility(View.GONE);
-        bindtwo.llyPrincipalLabor.setVisibility(View.GONE);
+
+        if (hideHours) {
+            bindtwo.llyPrincipalHoras.setVisibility(View.GONE);
+        } else {
+            bindtwo.llyPrincipalHoras.setVisibility(View.VISIBLE);
+        }
+
+//        bindtwo.llyddtActividad.setVisibility(View.GONE);
+//        bindtwo.llyPrincipalLabor.setVisibility(View.GONE);
 //        bindtwo.llyddtLabor.setVisibility(View.GONE);
-        bindtwo.llyPrincipalConsumidor.setVisibility(View.GONE);
+//        bindtwo.llyPrincipalConsumidor.setVisibility(View.GONE);
 //        bindtwo.llyddtConsumidor.setVisibility(View.GONE);
+
+        //                ACTIVIDAD
+        bindtwo.cbActividad.setOnCheckedChangeListener((buttonView, isChecked) -> bindtwo.cbLabor.setChecked(isChecked));
+        bindtwo.cbLabor.setOnCheckedChangeListener((buttonView, isChecked) -> bindtwo.cbActividad.setChecked(isChecked));
 
         bindtwo.fabConfirm.setOnClickListener(view -> {
             boolean success = false;
             String message = "";
             String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL");
             Double horasEditar = Double.valueOf(!bindtwo.txvddtHoras.getText().toString().isEmpty()  ? bindtwo.txvddtHoras.getText().toString() :"0.00");
+            String idActividadEditar = bindtwo.txvddtActividad.getText().toString();
+            String actividadEditar = bindtwo.lblddtActividad.getText().toString();
+            String idLaborEditar = bindtwo.txvddtLabor.getText().toString();
+            String laborEditar = bindtwo.lblddtLabor.getText().toString();
+            String consumidorEditar = bindtwo.txvddtConsumidor.getText().toString();
             Double rendimientosEditar = Double.valueOf(!bindtwo.txvddtRendimientos.getText().toString().isEmpty()  ? bindtwo.txvddtRendimientos.getText().toString() :"0.00");;
             for (int itemEditar: listaTrabajadores){
                 TareoDetalle detalleActual = new TareoDetalle();
                 detalleActual = tareo.getDetalle().get(itemEditar - 1);
+//                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
+//                ACTIVIDAD
+                if(bindtwo.cbActividad.isChecked()){
+                    if(!bindtwo.txvddtActividad.getText().toString().equals(".") || !bindtwo.txvddtLabor.getText().toString().equals(".")){
+                        detalleActual.setIdActividad(idActividadEditar);
+                        detalleActual.setActividad(actividadEditar);
+                        detalleActual.setIdLabor(idLaborEditar);
+                        detalleActual.setLabor(laborEditar);
+                    }
+                }
+//                LABOR
+//                if(bindtwo.cbLabor.isChecked()){
+////                    bindtwo.cbActividad.setChecked(bindtwo.cbLabor.isChecked());
+//
+//                }
+//                CONSUMIDOR
+                if(bindtwo.cbConsumidor.isChecked()){
+                    if(!bindtwo.txvddtConsumidor.getText().toString().equals(".")) {
+                        detalleActual.setConsumidor(consumidorEditar);
+                    }
+                }
+//                HORAS
+                if(bindtwo.cbHoras.isChecked()){
                 detalleActual.setHoras(horasEditar);
+                }
+//                RENDIMIENTOS
+                if(bindtwo.cbRendimientos.isChecked()){
                 detalleActual.setRdtos(rendimientosEditar);
+
+                }
+
+//                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
                 try {
                     detalleActual.guardar(objSqlite, idUsuario);
                     sweetAlertDialog.dismissWithAnimation();
@@ -204,6 +257,49 @@ public class DialogDetalleTareo extends DialogFragment {
                 actionResult.onActionResult("result", sweetAlertDialog);
                 dismissDialog.onDismissDialog(success, message);
             }
+        });
+
+        bindtwo.llyinputsActividad.setOnClickListener(view1 -> {
+            PopUpBuscarEnLista d = new PopUpBuscarEnLista(ctx, arl_Actividades, bindtwo.txvddtActividad, bindtwo.lblddtActividadValue);
+            d.show();
+        });
+
+        bindtwo.lblddtActividadValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    List<String> p = new ArrayList<>();
+                    p.add("01"); //PENDIENTE: OBTENER EMPRESA DINAMICAMENTE;
+                    p.add(bindtwo.txvddtActividad.getText().toString());
+                    arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"),p,"READ"));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        bindtwo.llyinputsLabor.setOnClickListener(view1 -> {
+            if (arl_Labores == null) {
+                Funciones.notificar(ctx, "Primero debe de seleccionar una actividad.");
+            } else {
+                PopUpBuscarEnLista d = new PopUpBuscarEnLista(ctx, arl_Labores, bindtwo.txvddtLabor, bindtwo.lblddtLaborValue);
+                d.show();
+            }
+        });
+
+        bindtwo.llyinputsConsumidor.setOnClickListener(view1 -> {
+            PopUpBuscarEnLista d = new PopUpBuscarEnLista(ctx, arl_Consumidores, bindtwo.txvddtConsumidor, bindtwo.lblddtConsumidorValue);
+            d.show();
         });
     }
     // Método para configurar la vista
@@ -343,7 +439,6 @@ public class DialogDetalleTareo extends DialogFragment {
 
         }
     }
-
 
     @Override
     public void onDestroyView() {
