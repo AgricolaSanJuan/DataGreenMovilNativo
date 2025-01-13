@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="5dp"
+    android:padding="5dp">
+
+    <!--  FECHA  -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="2dp">
+
+        <TextView
+            android:id="@+id/txvEFechaInicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Fecha : 12/01/24"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="7dp" />
+
+
+        <TextView
+            android:id="@+id/txvMaquinaria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Maquinaria : M074"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvEFechaInicio"
+            app:layout_constraintTop_toBottomOf="@+id/txvEFechaInicio" />
+
+        <!--    OPERARIO-->
+
+        <TextView
+            android:id="@+id/txvOperario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Operario : Céspedes Mera José"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvMaquinaria"
+            app:layout_constraintTop_toBottomOf="@+id/txvMaquinaria" />
+
+        <!--TURNO Y TOTAL HORAS-->
+
+        <TextView
+            android:id="@+id/txvTurno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Turno: 01"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvOperario"
+            app:layout_constraintTop_toBottomOf="@+id/txvOperario" />
+
+        <!--OBSERVACIONES-->
+
+        <TextView
+            android:id="@+id/txvTotalHoras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Total Horas: 4.5"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/txvTurno"
+            app:layout_constraintTop_toTopOf="@+id/txvTurno" />
+
+        <TextView
+            android:id="@+id/txvObservaciones"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Observacion : Ninguna obersavion por el momento"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvTurno"
+            app:layout_constraintTop_toBottomOf="@+id/txvTurno" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

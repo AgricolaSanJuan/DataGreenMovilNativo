@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.dashboard.MaquinariaFragment">
+
+    <!-- Campo Fecha -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_fecha_maquinaria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:focusable="false"
+        android:hint="Fecha actual"
+        android:inputType="none" />
+
+    <!-- Campo Horómetro Inicial -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Horómetro Inicial:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_horometro_inicial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="04:20"
+        android:inputType="numberDecimal" />
+
+    <!-- Campo Horómetro Final -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Horómetro Final:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_horometro_final"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="06:20"
+        android:inputType="numberDecimal" />
+
+    <!-- Campo Número -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Número:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_numero_maquinaria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=""
+        android:inputType="number" />
+
+    <!-- Campo Número de Tancadas -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Número Tancadas:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_numero_tancadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=""
+        android:inputType="number" />
+
+    <!-- Botones Registrar y Cancelar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Botón Cancelar -->
+        <Button
+            android:id="@+id/btn_cancelar_maquinaria"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:text="Cancelar"
+            android:textColor="@android:color/white" />
+
+        <!-- Botón Registrar -->
+        <Button
+            android:id="@+id/btn_registrar_maquinaria"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:text="Registrar"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</LinearLayout>

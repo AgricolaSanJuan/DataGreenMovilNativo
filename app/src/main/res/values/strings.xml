@@ -95,6 +95,10 @@ ACCESO A BASE DE DATOS SQL: https://www.youtube.com/watch?v=OOm03ezazAI (NO OLVI
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_qrview">QRViewActivity</string>
+    <string name="title_activity_new_taller">NewTallerActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!--
     <string-array name="ModulosDisponibles">

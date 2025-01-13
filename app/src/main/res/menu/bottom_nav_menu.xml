@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_operadores"
+        android:title="Operadores" />
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_parron"
+        android:title="Parron" />
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_maquinaria"
+        android:title="Maquinaria" />
+</menu>

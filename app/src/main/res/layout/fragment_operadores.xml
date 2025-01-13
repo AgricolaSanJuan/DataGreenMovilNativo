@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp"
+    tools:context=".ui.TallerOperario.OperarioFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Fecha -->
+        <TextView
+            android:id="@+id/tvFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvFechaHoy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp" />
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Reporte Diario - Operadores SSAA"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Sucursal -->
+        <TextView
+            android:id="@+id/tvSucursalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Sucursal"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etSucursal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="002"
+            android:textSize="16sp" />
+
+        <!-- Maquinaria -->
+        <TextView
+            android:id="@+id/tvMaquinariaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Maquinaria"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerMaquinaria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Operario -->
+        <TextView
+            android:id="@+id/tvOperarioLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Operario"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerOperario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Turno -->
+        <TextView
+            android:id="@+id/tvTurnoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Turno"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerTurno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Total horas -->
+        <TextView
+            android:id="@+id/tvTotalHorasLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Total Horas"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etTotalHoras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="16sp" />
+
+        <!-- Observaciones -->
+        <TextView
+            android:id="@+id/tvObservacionesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Observaciones"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etObservaciones"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:inputType="textMultiLine"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

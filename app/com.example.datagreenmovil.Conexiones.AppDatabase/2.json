@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9781f6a953c0754806f8c0dfdfda4878",
+    "identityHash": "6c0bccadb5c517f095abab97ca31bc23",
     "entities": [
       {
         "tableName": "mst_tipos_estandar",
@@ -303,54 +303,48 @@
         "foreignKeys": []
       },
       {
-        "tableName": "mst_Actividades",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT NOT NULL, `Id` TEXT NOT NULL, `Dex` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`Id`))",
+        "tableName": "trx_ParteMaquinaria",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdParteMaquinaria` TEXT NOT NULL, `Fecha` TEXT, `IdEmpresa` TEXT, `IdSucursal` TEXT, `IdMaquinaria` TEXT, `IdOperario` TEXT, `IdTurno` TEXT, PRIMARY KEY(`IdParteMaquinaria`))",
         "fields": [
+          {
+            "fieldPath": "IdParteMaquinaria",
+            "columnName": "IdParteMaquinaria",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Fecha",
+            "columnName": "Fecha",
+            "affinity": "TEXT",
+            "notNull": false
+          },
           {
             "fieldPath": "IdEmpresa",
             "columnName": "IdEmpresa",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "Id",
-            "columnName": "Id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "Dex",
-            "columnName": "Dex",
+            "fieldPath": "IdSucursal",
+            "columnName": "IdSucursal",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "IdEstado",
-            "columnName": "IdEstado",
+            "fieldPath": "IdMaquinaria",
+            "columnName": "IdMaquinaria",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "IdUsuarioCrea",
-            "columnName": "IdUsuarioCrea",
+            "fieldPath": "IdOperario",
+            "columnName": "IdOperario",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "FechaHoraCreacion",
-            "columnName": "FechaHoraCreacion",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "IdUsuarioActualiza",
-            "columnName": "IdUsuarioActualiza",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "FechaHoraActualizacion",
-            "columnName": "FechaHoraActualizacion",
+            "fieldPath": "IdTurno",
+            "columnName": "IdTurno",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -358,67 +352,105 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "Id"
+            "IdParteMaquinaria"
           ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "mst_labores",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT NOT NULL, `IdActividad` TEXT NOT NULL, `Id` TEXT NOT NULL, `Dex` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`Id`))",
+        "tableName": "trx_DParteMaquinaria",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdParteMaquinaria` TEXT NOT NULL, `Item` TEXT, `IdConsumidor` TEXT, `TotalHoras` REAL, `HorometroInicial` REAL, `HorometroFinal` REAL, `IdImplemento` TEXT, `IdActividad` TEXT, `IdLabor` TEXT, `IdCombustible` TEXT, `Cantidad` REAL, PRIMARY KEY(`IdParteMaquinaria`))",
         "fields": [
           {
-            "fieldPath": "IdEmpresa",
-            "columnName": "IdEmpresa",
+            "fieldPath": "IdParteMaquinaria",
+            "columnName": "IdParteMaquinaria",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "Item",
+            "columnName": "Item",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdConsumidor",
+            "columnName": "IdConsumidor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "TotalHoras",
+            "columnName": "TotalHoras",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "HorometroInicial",
+            "columnName": "HorometroInicial",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "HorometroFinal",
+            "columnName": "HorometroFinal",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdImplemento",
+            "columnName": "IdImplemento",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "IdActividad",
             "columnName": "IdActividad",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdLabor",
+            "columnName": "IdLabor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdCombustible",
+            "columnName": "IdCombustible",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Cantidad",
+            "columnName": "Cantidad",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdParteMaquinaria"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Maquinaria",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdMaquinaria` TEXT NOT NULL, `Descripcion` TEXT, PRIMARY KEY(`IdMaquinaria`))",
+        "fields": [
+          {
+            "fieldPath": "IdMaquinaria",
+            "columnName": "IdMaquinaria",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "Id",
-            "columnName": "Id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "Dex",
-            "columnName": "Dex",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "IdEstado",
-            "columnName": "IdEstado",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "IdUsuarioCrea",
-            "columnName": "IdUsuarioCrea",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "FechaHoraCreacion",
-            "columnName": "FechaHoraCreacion",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "IdUsuarioActualiza",
-            "columnName": "IdUsuarioActualiza",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "FechaHoraActualizacion",
-            "columnName": "FechaHoraActualizacion",
+            "fieldPath": "Descripcion",
+            "columnName": "Descripcion",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -426,7 +458,97 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "Id"
+            "IdMaquinaria"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Implemento",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdImplemento` TEXT NOT NULL, `Descripcion` TEXT, PRIMARY KEY(`IdImplemento`))",
+        "fields": [
+          {
+            "fieldPath": "IdImplemento",
+            "columnName": "IdImplemento",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Descripcion",
+            "columnName": "Descripcion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdImplemento"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Operario",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdOperario` TEXT NOT NULL, `NombreCompleto` TEXT, `NroDocumento` TEXT, PRIMARY KEY(`IdOperario`))",
+        "fields": [
+          {
+            "fieldPath": "IdOperario",
+            "columnName": "IdOperario",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "NombreCompleto",
+            "columnName": "NombreCompleto",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "NroDocumento",
+            "columnName": "NroDocumento",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdOperario"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ConsumidoresTaller",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdConsumidor` TEXT NOT NULL, `Descripcion` TEXT, `Tipo` TEXT, PRIMARY KEY(`IdConsumidor`))",
+        "fields": [
+          {
+            "fieldPath": "IdConsumidor",
+            "columnName": "IdConsumidor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Descripcion",
+            "columnName": "Descripcion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Tipo",
+            "columnName": "Tipo",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdConsumidor"
           ]
         },
         "indices": [],
@@ -436,7 +558,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9781f6a953c0754806f8c0dfdfda4878')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c0bccadb5c517f095abab97ca31bc23')"
     ]
   }
 }

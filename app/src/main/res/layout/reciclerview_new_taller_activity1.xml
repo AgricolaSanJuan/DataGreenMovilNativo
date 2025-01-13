@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="5dp"
+    android:padding="5dp">
+
+    <!-- FECHA -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="168dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp">
+
+        <!-- FECHA -->
+        <TextView
+            android:id="@+id/txvFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Fecha : 12/01/24"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- TURNO Y TOTAL HORAS -->
+        <TextView
+            android:id="@+id/txvParron"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Parron: 1103-R"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvFecha"
+            app:layout_constraintTop_toBottomOf="@+id/txvFecha" />
+
+        <TextView
+            android:id="@+id/txvItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Item : 005"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/txvParron"
+            app:layout_constraintTop_toTopOf="@+id/txvParron" />
+
+        <!-- OBSERVACIONES -->
+        <TextView
+            android:id="@+id/txvCombustible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Combustible : 260800100000001"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvParron"
+            app:layout_constraintTop_toBottomOf="@+id/txvParron" />
+
+        <TextView
+            android:id="@+id/txvHorInicial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Horómetro Inicial : 11426"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvCombustible"
+            app:layout_constraintTop_toBottomOf="@+id/txvCombustible" />
+
+        <TextView
+            android:id="@+id/txvHorFinal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Horómetro Final : 11428"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/txvHorInicial"
+            app:layout_constraintTop_toTopOf="@+id/txvHorInicial" />
+
+        <TextView
+            android:id="@+id/txvActividad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Actividad : P03"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvHorInicial"
+            app:layout_constraintTop_toBottomOf="@+id/txvHorInicial" />
+
+        <TextView
+            android:id="@+id/txvLabor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Labor : 006"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/txvActividad"
+            app:layout_constraintTop_toTopOf="@+id/txvActividad" />
+
+        <TextView
+            android:id="@+id/txvCantidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/auxiliar_02"
+            android:text="Cantidad: 5.5"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txvActividad"
+            app:layout_constraintTop_toBottomOf="@+id/txvActividad" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -32,6 +32,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataGreenMovilLight">
         <activity
+            android:name=".NewTallerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_new_taller" />
+        <activity
             android:name=".QRViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
