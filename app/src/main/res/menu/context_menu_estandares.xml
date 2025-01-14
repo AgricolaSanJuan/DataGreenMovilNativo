@@ -15,4 +15,7 @@
     <item
         android:id="@+id/action_duplicity"
         android:title="Duplicar" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="Configuraciones" />
 </menu>

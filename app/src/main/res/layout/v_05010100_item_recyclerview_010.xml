@@ -96,7 +96,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/llyBody"
+            android:id="@+id/lyBody"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/fondo_delineado_3"

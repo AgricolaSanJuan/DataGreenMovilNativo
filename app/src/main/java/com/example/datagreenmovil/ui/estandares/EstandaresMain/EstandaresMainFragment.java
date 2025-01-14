@@ -3,8 +3,6 @@ package com.example.datagreenmovil.ui.estandares.EstandaresMain;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,18 +20,21 @@ import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.DAO.Estandares.Adapters.EstandaresListAdapter;
 import com.example.datagreenmovil.DAO.Estandares.ReporteEstandares.ReporteEstandares;
 import com.example.datagreenmovil.DAO.Estandares.ReporteEstandares.ReporteEstandaresHelper;
-import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNew;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Utilidades.Filtros;
 import com.example.datagreenmovil.databinding.FragmentEstandaresMainBinding;
+import com.example.datagreenmovil.ui.estandares.EstandaresActivity;
+import com.example.datagreenmovil.ui.estandares.EstandaresMain.Dialogs.DialogEstandaresForm;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-public class EstandaresMainFragment extends Fragment implements Filtros.GetFilterData {
+public class EstandaresMainFragment extends Fragment implements Filtros.GetFilterData/*, DialogEstandaresForm.SetAction*/ {
 
     ReporteEstandaresHelper reporteEstandaresHelper;
     GridLayoutManager gridLayoutManager;
+    NavigationView navigationView;
     private FragmentEstandaresMainBinding binding;
     private Context ctx;
     private SharedPreferences sharedPreferences;
@@ -46,13 +47,8 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         binding = FragmentEstandaresMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        TRAEMOS LA DATA PARA EL RECYCLER VIEW|
-        reporteEstandaresList = reporteEstandaresHelper.getReporteEstandares();
-//        DEFINIMOS EL FRID LAYOUT MANAGER PARA EL RECYCLER VIEW
-        gridLayoutManager = new GridLayoutManager(ctx, 2);
-        binding.rvEstandaresList.setLayoutManager(gridLayoutManager);
-        EstandaresListAdapter estandaresListAdapter = new EstandaresListAdapter(reporteEstandaresList);
-        binding.rvEstandaresList.setAdapter(estandaresListAdapter);
+        listarEstandares();
+
 
 //        registerForContextMenu(binding.fabMenu);
         binding.fabMenu.setOnClickListener(v -> {
@@ -73,6 +69,16 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         fragmentTransaction.commit();  // Confirmar la transacción
 
         return root;
+    }
+
+    private void listarEstandares() {
+        //        TRAEMOS LA DATA PARA EL RECYCLER VIEW|
+        reporteEstandaresList = reporteEstandaresHelper.getReporteEstandares();
+//        DEFINIMOS EL FRID LAYOUT MANAGER PARA EL RECYCLER VIEW
+        gridLayoutManager = new GridLayoutManager(ctx, 2);
+        binding.rvEstandaresList.setLayoutManager(gridLayoutManager);
+        EstandaresListAdapter estandaresListAdapter = new EstandaresListAdapter(reporteEstandaresList);
+        binding.rvEstandaresList.setAdapter(estandaresListAdapter);
     }
 
     @Override
@@ -128,23 +134,47 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                // Maneja los clics en los elementos del menú
-                int id = item.getItemId();
-                if (id == R.id.action_add) {
-                    Swal.info(ctx, "PUSH!", "Presionaste agregar", 5000);
-                    return true;
-                } else if (id == R.id.action_delete) {
-                    Swal.info(ctx, "PUSH!", "Presionaste eliminar", 5000);
-                    return true;
-                } else if (id == R.id.action_transfer) {
-                    Swal.info(ctx, "PUSH!", "Presionaste transferir", 5000);
-                    return true;
-                } else if (id == R.id.action_select_all) {
-                    Swal.info(ctx, "PUSH!", "Presionaste seleccionar todo", 5000);
-                    return true;
-                } else if (id == R.id.action_duplicity) {
-                    Swal.info(ctx, "PUSH!", "Presionaste duplicar", 5000);
-                    return true;
+                EstandaresActivity estandaresActivity = (EstandaresActivity) getActivity();
+                if (estandaresActivity != null) {
+                    // Maneja los clics en los elementos del menú
+                    int id = item.getItemId();
+                    if (id == R.id.action_add) {
+                        DialogEstandaresForm dialogEstandaresForm = new DialogEstandaresForm(ctx, true, true, true,
+                                new DialogEstandaresForm.SetAction() {
+                                    @Override
+                                    public void setPositiveAction() {
+                                        Swal.error(ctx, "POSITIVO", "A ALCALOIDE DE COCAINA, TAS ARRESTAO MI KING 👮‍♂️🚓🚨", 8000);
+                                    }
+
+                                    @Override
+                                    public void setNegativeAction() {
+                                        Swal.success(ctx, "BIEN MANO", "LLENAS DE ORGULLO A TU NACIÓN 👮‍♂️👌", 80000);
+                                    }
+
+                                    @Override
+                                    public void setNeutralAction() {
+                                        Swal.success(ctx, "UHMMMM", "MEJOR NO TE REVISO MANO, QUIERO ESTAR TRANQUILO 👮‍🙂‍↔️", 80000);
+                                    }
+                                }
+                        );
+                        dialogEstandaresForm.show(getChildFragmentManager(), "DialogEstandaresForm");
+                        return true;
+                    } else if (id == R.id.action_delete) {
+                        Swal.info(ctx, "PUSH!", "Presionaste eliminar", 5000);
+                        return true;
+                    } else if (id == R.id.action_transfer) {
+                        Swal.info(ctx, "PUSH!", "Presionaste transferir", 5000);
+                        return true;
+                    } else if (id == R.id.action_select_all) {
+                        Swal.info(ctx, "PUSH!", "Presionaste seleccionar todo", 5000);
+                        return true;
+                    } else if (id == R.id.action_duplicity) {
+                        Swal.info(ctx, "PUSH!", "Presionaste duplicar", 5000);
+                        return true;
+                    } else if (id == R.id.action_settings) {
+                        estandaresActivity.goTo(R.id.nav_estandares_settings);
+                        return true;
+                    }
                 }
                 return false;
             }

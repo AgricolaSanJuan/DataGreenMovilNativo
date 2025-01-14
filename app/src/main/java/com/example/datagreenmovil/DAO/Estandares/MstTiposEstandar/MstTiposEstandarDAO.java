@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.datagreenmovil.ui.estandares.EstandaresMain.Dialogs.DaoItem;
+
 import java.util.List;
 
 @Dao
@@ -15,6 +17,9 @@ public interface MstTiposEstandarDAO {
 
     @Query("SELECT * from mst_tipos_estandar")
     List<MstTiposEstandar> obtenerTiposEstandar();
+
+    @Query("SELECT id, descripcion from mst_tipos_estandar")
+    List<DaoItem> obtenerTiposEstandarParaLista();
 
     @Delete
     void eliminarTiposEstandar(List<MstTiposEstandar> trxEstandaresNew);

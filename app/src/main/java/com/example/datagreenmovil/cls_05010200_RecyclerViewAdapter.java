@@ -21,7 +21,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.datagreenmovil.Entidades.Tareo;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
@@ -30,7 +29,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -203,7 +201,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             c010_txv_Horas = itemView.findViewById(R.id.c010_txv_Horas_v);
             c010_txv_Rdtos = itemView.findViewById(R.id.c010_txv_Rdtos_v);
             c010_txv_Observacion = itemView.findViewById(R.id.c010_txv_Observacion_v);
-            llyBody = itemView.findViewById(R.id.llyBody);
+            llyBody = itemView.findViewById(R.id.lyBody);
 //            imageCheck = itemView.findViewById(R.id.imageCheck);
             tvIngreso = itemView.findViewById(R.id.tvIngreso);
             tvSalida = itemView.findViewById(R.id.tvSalida);
