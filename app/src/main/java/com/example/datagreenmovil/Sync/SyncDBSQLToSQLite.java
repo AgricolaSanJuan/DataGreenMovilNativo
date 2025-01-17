@@ -201,7 +201,7 @@ public class SyncDBSQLToSQLite {
                         regis += "'" + resultSet.getString(columnName) + (i == columnCount ? "'" : "', ");
                     }
                 }
-                Log.i("QUERY REEMPLAZO", "INSERT OR REPLACE INTO " + tableName + " VALUES (" + regis + ")");
+//                Log.i("QUERY REEMPLAZO", "INSERT OR REPLACE INTO " + tableName + " VALUES (" + regis + ")");
                 database.execSQL("INSERT OR REPLACE INTO " + tableName + " VALUES (" + regis + ")");
             }
             database.close();

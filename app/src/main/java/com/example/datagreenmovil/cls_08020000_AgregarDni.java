@@ -132,6 +132,7 @@ public class cls_08020000_AgregarDni extends AppCompatActivity {
 
     private void inicializarCamara() {
         qrCodeScannerView = findViewById(R.id.qrScannerView);
+        qrCodeScannerView.setImagesParams(120, 90, 260, 40, 20);
         qrCodeScannerView.setOnCodeScannedListener(result -> {
             qrCodeScannerView.stopScanning();
 //            Swal.info(this, "info", result, 8000);

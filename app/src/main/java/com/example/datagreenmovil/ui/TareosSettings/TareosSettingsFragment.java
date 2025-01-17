@@ -42,7 +42,6 @@ public class TareosSettingsFragment extends Fragment {
     private boolean manualPush = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TareosSettingsViewModel tareosSettingsViewModel = new ViewModelProvider(this).get(TareosSettingsViewModel.class);
 
         sharedPreferences = this.getContext().getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -58,13 +57,19 @@ public class TareosSettingsFragment extends Fragment {
         binding.switchMostrarControlesRdtos.setChecked(sharedPreferences.getBoolean("MOSTRAR_CONTROLES_RDTOS_TAREOS", false));
         binding.switchReproducirSonido.setChecked(sharedPreferences.getBoolean("REPRODUCIR_SONIDO_TAREOS", false));
         binding.switchAgregarSoloCamara.setChecked(sharedPreferences.getBoolean("AGREGAR_SOLO_CAMARA_TAREOS", false));
+        binding.etDelayPorLectura.setText(String.valueOf(sharedPreferences.getInt("DELAY_POR_LECTURA", 2)));
         binding.etItemsPerPage.setText(String.valueOf(sharedPreferences.getInt("ITEMS_PER_PAGE_TAREOS", 20)));
         binding.switchValidarTrabajadorRepetido.setChecked(sharedPreferences.getBoolean("VALIDAR_TRABAJADOR_REPETIDO", false));
         binding.switchActivarPermiso.setChecked(sharedPreferences.getBoolean("ACTIVAR_PERMISO", false));
         binding.switchAutoSalida.setChecked(sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false));
+        binding.switchLecturaContinua.setChecked(sharedPreferences.getBoolean("LECTURA_CONTINUA", false));
         binding.switchMostrarSwitchEntradaSalida.setChecked(sharedPreferences.getBoolean("MOSTRAR_ENTRADA_SALIDA", false));
 
         activarControles(false);
+
+        binding.switchLecturaContinua.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("LECTURA_CONTINUA", isChecked).apply();
+        });
 
         binding.switchMostrarSwitchEntradaSalida.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("MOSTRAR_ENTRADA_SALIDA", isChecked).apply();
@@ -154,6 +159,35 @@ public class TareosSettingsFragment extends Fragment {
                     editor.putInt("ITEMS_PER_PAGE_TAREOS", 20).apply();
                 }else {
                     editor.putInt("ITEMS_PER_PAGE_TAREOS", Integer.parseInt(newText)).apply();
+                }
+                returnDefault = false;
+            }
+        });
+
+        binding.etDelayPorLectura.addTextChangedListener(new TextWatcher() {
+            String oldText = "";
+            String newText = "";
+            boolean returnDefault = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                oldText = s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().isEmpty()){
+//                    binding.etItemsPerPage.setText(oldText);
+                    returnDefault = true;
+                }
+                newText = binding.etDelayPorLectura.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(returnDefault){
+                    editor.putInt("DELAY_POR_LECTURA", 20).apply();
+                }else {
+                    editor.putInt("DELAY_POR_LECTURA", Integer.parseInt(newText)).apply();
                 }
                 returnDefault = false;
             }
