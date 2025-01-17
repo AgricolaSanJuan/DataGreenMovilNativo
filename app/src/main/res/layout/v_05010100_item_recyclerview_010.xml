@@ -210,7 +210,7 @@
                         android:fontFamily="@font/monoespaciada_principal"
                         android:text="(UP2)"
                         android:textColor="@color/black"
-                        android:textSize="15.5dp"
+                            android:textSize="15.5dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/textView69"
                         app:layout_constraintTop_toTopOf="@+id/textView69" />
