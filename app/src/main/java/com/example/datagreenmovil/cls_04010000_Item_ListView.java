@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.ui.TallerMain.TallerMainFragment;
+import com.example.datagreenmovil.ui.estandares.EstandaresActivity;
 
 import java.util.List;
 
@@ -183,7 +184,7 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
                         break;
                     case "Estandares":
                         //Intent intent2 = new Intent(Context, cls_06000000_Eficiencias.class);
-                        intent = new Intent(Context, cls_07000000_Estandares.class);
+                        intent = new Intent(Context, EstandaresActivity.class);
                         break;
                     case "Servicios De Transporte":
                         //Intent intent2 = new Intent(Context, cls_06000000_Eficiencias.class);

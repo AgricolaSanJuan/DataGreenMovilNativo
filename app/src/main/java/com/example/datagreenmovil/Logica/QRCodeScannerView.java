@@ -3,7 +3,9 @@ package com.example.datagreenmovil.Logica;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraControl;
@@ -27,6 +29,36 @@ import java.util.concurrent.ExecutionException;
 
 public class QRCodeScannerView extends FrameLayout {
 
+    public void setImagesParams(int widthLogo, int heightLogo, int widthText, int heightText, int marginBottomText) {
+        logoSanJuan = findViewById(R.id.imageSanJuan);
+        textoSanJuan = findViewById(R.id.imageTextSanJuan);
+
+        // Convertir dp a píxeles
+        float scale = getResources().getDisplayMetrics().density;
+        int widthPxLogo = (int) (widthLogo * scale + 0.5f);
+        int heightPxLogo = (int) (heightLogo * scale + 0.5f);
+        int widthPxTexto = (int) (widthText * scale + 0.5f);
+        int heightPxTexto = (int) (heightText * scale + 0.5f);
+        int marginBottomPxTexto = (int) (marginBottomText * scale + 0.5f);
+
+        // Aplicar el ancho y alto al ImageView
+        ViewGroup.LayoutParams layoutParamsLogo = logoSanJuan.getLayoutParams();
+        layoutParamsLogo.width = widthPxLogo;
+        layoutParamsLogo.height = heightPxLogo;
+        logoSanJuan.setLayoutParams(layoutParamsLogo);
+
+        ViewGroup.LayoutParams layoutParamsTexto = textoSanJuan.getLayoutParams();
+        layoutParamsTexto.width = widthPxTexto;
+        layoutParamsTexto.height = heightPxTexto;
+
+        if (layoutParamsTexto instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams marginLayoutParamsTexto = (ViewGroup.MarginLayoutParams) layoutParamsTexto;
+            marginLayoutParamsTexto.setMargins(0, 0, 0, marginBottomPxTexto);
+        }
+
+        textoSanJuan.setLayoutParams(layoutParamsTexto);
+    }
+
     public interface OnCodeScanned {
         void onCodeScanned(String result);
     }
@@ -36,6 +68,7 @@ public class QRCodeScannerView extends FrameLayout {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private OnCodeScanned onCodeScanned;
     private Camera camera;
+    private ImageView logoSanJuan, textoSanJuan;
 
     public QRCodeScannerView(Context context) {
         super(context);
