@@ -11,17 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.datagreenmovil.databinding.FragmentEstandaresMainBinding;
+import com.example.datagreenmovil.databinding.FragmentEstandaresRegistroBinding;
 
 public class EstandaresRegistroFragment extends Fragment {
 
-    private FragmentEstandaresMainBinding binding;
+    private FragmentEstandaresRegistroBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        EstandaresRegistroViewModel galleryViewModel =
-                new ViewModelProvider(this).get(EstandaresRegistroViewModel.class);
+//        EstandaresRegistroViewModel galleryViewModel =
+//                new ViewModelProvider(this).get(EstandaresRegistroViewModel.class);
 
-        binding = FragmentEstandaresMainBinding.inflate(inflater, container, false);
+        binding = FragmentEstandaresRegistroBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 //        final TextView textView = binding.textGallery;

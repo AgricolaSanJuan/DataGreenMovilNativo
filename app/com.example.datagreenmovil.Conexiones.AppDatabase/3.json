@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "e32bba05eba6bfc3ac55c674236cf808",
+    "identityHash": "fe5e89cd4e1b44e648948314baedd24a",
     "entities": [
       {
         "tableName": "mst_tipos_estandar",
@@ -301,12 +301,233 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "trx_Tareos",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idEmpresa` TEXT, `id` TEXT NOT NULL, `idUsuario` TEXT, `fecha` TEXT, `idTurno` TEXT, `idEstado` TEXT, `totalDetalles` INTEGER NOT NULL, `totalHoras` REAL NOT NULL, `totalRdtos` REAL NOT NULL, `observaciones` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "idEmpresa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idUsuario",
+            "columnName": "idUsuario",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fecha",
+            "columnName": "fecha",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTurno",
+            "columnName": "idTurno",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idEstado",
+            "columnName": "idEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalDetalles",
+            "columnName": "totalDetalles",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalHoras",
+            "columnName": "totalHoras",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalRdtos",
+            "columnName": "totalRdtos",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "observaciones",
+            "columnName": "observaciones",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "trx_Tareos_Detalle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idEmpresa` TEXT, `idTareo` TEXT NOT NULL, `item` INTEGER NOT NULL, `dni` TEXT, `idPlanilla` TEXT, `nombres` TEXT, `idCultivo` TEXT, `cultivo` TEXT, `idVariedad` TEXT, `variedad` TEXT, `idConsumidor` TEXT, `consumidor` TEXT, `idActividad` TEXT, `actividad` TEXT, `idLabor` TEXT, `labor` TEXT, `rdtos` REAL, `horas` REAL, `observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`idTareo`, `item`))",
+        "fields": [
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "idEmpresa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTareo",
+            "columnName": "idTareo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "item",
+            "columnName": "item",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dni",
+            "columnName": "dni",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idPlanilla",
+            "columnName": "idPlanilla",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombres",
+            "columnName": "nombres",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idCultivo",
+            "columnName": "idCultivo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cultivo",
+            "columnName": "cultivo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idVariedad",
+            "columnName": "idVariedad",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "variedad",
+            "columnName": "variedad",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idConsumidor",
+            "columnName": "idConsumidor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "consumidor",
+            "columnName": "consumidor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idActividad",
+            "columnName": "idActividad",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "actividad",
+            "columnName": "actividad",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idLabor",
+            "columnName": "idLabor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "labor",
+            "columnName": "labor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rdtos",
+            "columnName": "rdtos",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "horas",
+            "columnName": "horas",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "observacion",
+            "columnName": "observacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ingreso",
+            "columnName": "ingreso",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "salida",
+            "columnName": "salida",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "homologar",
+            "columnName": "homologar",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "idTareo",
+            "item"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e32bba05eba6bfc3ac55c674236cf808')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fe5e89cd4e1b44e648948314baedd24a')"
     ]
   }
 }

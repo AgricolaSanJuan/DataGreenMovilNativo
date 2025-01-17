@@ -59,14 +59,12 @@ public class EstandaresListAdapter extends RecyclerView.Adapter<EstandaresListAd
         holder.txvEPeriodo.setText(data.get(position).getPeriodo());
 //        holder.txvECultivoVariedad.setText(data.get(position));
         holder.txvEConsumidor.setText(data.get(position).getIdConsumidor());
-        holder.txvEActividad.setText(data.get(position).getDescripcionActividad());
-        holder.txvELabor.setText(data.get(position).getDescripcionLabor());
-        holder.txvECantidad.setText(String.valueOf(data.get(position).getCantidad()));
+        holder.txvEActividad.setText(data.get(position).getIdActividad() + " - " + data.get(position).getDescripcionActividad());
+        holder.txvELabor.setText(data.get(position).getIdLabor() + " - " + data.get(position).getDescripcionLabor());
+        holder.txvECantidad.setText(String.valueOf(data.get(position).getCantidad() + " " + data.get(position).getMedida()));
         holder.txvEPrecio.setText("S/" + data.get(position).getPrecio());
-        holder.txvEHoras.setText(String.valueOf(data.get(position).getHoras()));
+        holder.txvEHoras.setText(String.valueOf(data.get(position).getHoras() + " Horas"));
         holder.txvEBase.setText("S/"+ data.get(position).getBase());
-        holder.txvETipoCosto.setText("Tipo de Costo: " + data.get(position).getTipoCosto());
-        holder.txvETipoBono.setText("Tipo de Bono: " + data.get(position).getTipoBono());
     }
 
     @Override
@@ -85,8 +83,6 @@ public class EstandaresListAdapter extends RecyclerView.Adapter<EstandaresListAd
         TextView txvEPrecio;
         TextView txvEHoras;
         TextView txvEBase;
-        TextView txvETipoCosto;
-        TextView txvETipoBono;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,8 +96,6 @@ public class EstandaresListAdapter extends RecyclerView.Adapter<EstandaresListAd
             txvEPrecio = itemView.findViewById(R.id.txvEPrecio);
             txvEHoras = itemView.findViewById(R.id.txvEHoras);
             txvEBase = itemView.findViewById(R.id.txvEBase);
-            txvETipoCosto = itemView.findViewById(R.id.txvETipoCosto);
-            txvETipoBono = itemView.findViewById(R.id.txvETipoBono);
         }
     }
 }

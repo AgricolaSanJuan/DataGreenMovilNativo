@@ -23,23 +23,23 @@
         android:layout_height="wrap_content"
         android:text="Scanned QR Code will appear here"
         android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageSanJuan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="120dp"
-        android:layout_height="90dp"
+        android:id="@+id/imageSanJuan"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/isotipo_sj" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:id="@+id/imageTextSanJuan"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

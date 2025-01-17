@@ -2,6 +2,7 @@ package com.example.datagreenmovil;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.datagreenmovil.Entidades.Tareo;
+import com.example.datagreenmovil.Conexiones.AppDatabase;
+import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.TareoDetalles;
 import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
@@ -30,7 +32,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -40,31 +41,27 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     private static final int VIEW_TYPE_ITEM = 0;
     private static final int VIEW_TYPE_LOADING = 1;
-
-    private List<TareoDetalle> tareoDetalleList;
-    private Context mContext;
-    private boolean isLoading = false;
-    private boolean ACTIVAR_PERMISO = false;
     Double[] values = {0.0, 0.5, 1.0};
     int itemSeleccionado = 0;
     SharedPreferences sharedPreferences;
+    AppDatabase db;
+    String idTareoActual;
+    private List<TareoDetalles> tareoDetalleList;
+    private Context mContext;
+    private boolean isLoading = false;
+    private boolean ACTIVAR_PERMISO = false;
     private cls_05010200_RecyclerViewAdapter.OnItemSelected listener;
     private cls_05010200_RecyclerViewAdapter.OnButtonClickListener onButtonClickListener;
-
-    public interface OnItemSelected {
-        void onItemSelected(String texto, boolean agregar);
-    }
-
-    public interface OnButtonClickListener {
-        void onButtonClickListener(String texto);
-    }
-
-    // Interfaz para comunicar cambios
-    public interface OnDataChangeListener {
-        void onDataChanged();
-    }
-
     private OnDataChangeListener dataChangeListener;
+
+    //    public cls_05010200_RecyclerViewAdapter(Context context, List<TareoDetalle> tareoDetalleList) {
+    public cls_05010200_RecyclerViewAdapter(Context context, List<TareoDetalles> tareoDetalleList, AppDatabase db, String idTareoActual) {
+        this.mContext = context;
+        this.tareoDetalleList = tareoDetalleList;
+        this.db = db;
+        this.idTareoActual = idTareoActual;
+        sharedPreferences = mContext.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+    }
 
     // Método para asignar el listener
     public void setOnDataChangeListener(OnDataChangeListener listener) {
@@ -78,19 +75,16 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         }
     }
 
-    public cls_05010200_RecyclerViewAdapter(Context context, List<TareoDetalle> tareoDetalleList) {
-        this.mContext = context;
-        this.tareoDetalleList = tareoDetalleList;
-        sharedPreferences = mContext.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-    }
-
     public Double obtenerTotalRendimientos() {
-        Double suma = 0.00;
+//        return db.tareoDetallesDAO().obtenerCantidadDetalles(idTareoActual);
+        return 0.0;
+//        Double suma = 0.00;
+//
+//        for (TareoDetalle detalle : tareoDetalleList) {
+//            suma += detalle.getRdtos(); // Asume que hay un método getRdtos() en TareoDetalle
+//        }
+//        return suma;
 
-        for (TareoDetalle detalle : tareoDetalleList) {
-            suma += detalle.getRdtos(); // Asume que hay un método getRdtos() en TareoDetalle
-        }
-        return suma;
     }
 
     public String getLastActividad() {
@@ -110,12 +104,12 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     public String getLastHoras() {
         int cantidad = tareoDetalleList.size();
-        return String.valueOf(tareoDetalleList.get(cantidad - 1).getHoras());
+        return String.valueOf(tareoDetalleList.get(cantidad - 1).getSubTotalHoras());
     }
 
     public String getLastRendimientos() {
         int cantidad = tareoDetalleList.size();
-        return String.valueOf(tareoDetalleList.get(cantidad - 1).getRdtos());
+        return String.valueOf(tareoDetalleList.get(cantidad - 1).getSubTotalRendimiento());
     }
 
     @Override
@@ -138,8 +132,8 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            TareoDetalle tareoDetalle = tareoDetalleList.get(position);
-            ((ItemViewHolder) holder).bind(tareoDetalle);
+            TareoDetalles tareoDetalles = tareoDetalleList.get(position);
+            ((ItemViewHolder) holder).bind(tareoDetalles);
 
             // Definir los valores para el Spinner
         } else if (holder instanceof LoadingViewHolder) {
@@ -149,10 +143,11 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public int getItemCount() {
-        return tareoDetalleList == null ? 0 : tareoDetalleList.size();
+        return tareoDetalleList != null ? tareoDetalleList.size() : 0;
     }
 
-    public void addData(List<TareoDetalle> newItems) {
+
+    public void addData(List<TareoDetalles> newItems) {
         int startPosition = newItems.size();
         tareoDetalleList = newItems;
         notifyItemRangeInserted(startPosition, newItems.size());
@@ -174,16 +169,28 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.onButtonClickListener = onButtonClickListener;
     }
 
+    public interface OnItemSelected {
+        void onItemSelected(String texto, boolean agregar);
+    }
+
+    public interface OnButtonClickListener {
+        void onButtonClickListener(String texto);
+    }
+
+    // Interfaz para comunicar cambios
+    public interface OnDataChangeListener {
+        void onDataChanged();
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        // Define tus views aquí
         boolean selected = false;
-        ImageView imageCheck;
         TextView c010_txv_Item, c010_txv_Dni, c010_txv_Nombres, c010_txv_IdCultivo, c010_txv_Cultivo, c010_txv_IdVariedad, c010_txv_Variedad, c010_txv_IdConsumidor, c010_txv_Consumidor, c010_txv_IdActividad, c010_txv_Actividad, c010_txv_IdLabor, c010_txv_Labor, c010_txv_Horas, c010_txv_Rdtos, c010_txv_Observacion, labelAlmuerzo;
         Spinner spinnerAlmuerzo;
         TextView tvIngreso, tvSalida;
         ConstraintLayout c010_lly_Principal, llyBody;
         CheckBox cboHomologar;
         Button btnTransferir;
+
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             c010_lly_Principal = itemView.findViewById(R.id.c010_lly_Principal_v);
@@ -203,8 +210,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             c010_txv_Horas = itemView.findViewById(R.id.c010_txv_Horas_v);
             c010_txv_Rdtos = itemView.findViewById(R.id.c010_txv_Rdtos_v);
             c010_txv_Observacion = itemView.findViewById(R.id.c010_txv_Observacion_v);
-            llyBody = itemView.findViewById(R.id.llyBody);
-//            imageCheck = itemView.findViewById(R.id.imageCheck);
+            llyBody = itemView.findViewById(R.id.lyBody);
             tvIngreso = itemView.findViewById(R.id.tvIngreso);
             tvSalida = itemView.findViewById(R.id.tvSalida);
             labelAlmuerzo = itemView.findViewById(R.id.labelAlmuerzo);
@@ -213,7 +219,7 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             btnTransferir = itemView.findViewById(R.id.btnTransferir);
         }
 
-        public void bind(TareoDetalle tareoDetalle) {
+        public void bind(TareoDetalles tareoDetalle) {
             ACTIVAR_PERMISO = sharedPreferences.getBoolean("ACTIVAR_PERMISO", false);
 
             c010_txv_Item.setText(String.valueOf(tareoDetalle.getItem()));
@@ -229,25 +235,22 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             c010_txv_Labor.setText(String.format("%s", tareoDetalle.getLabor().trim()));
             c010_txv_IdConsumidor.setText(String.format("(%s)", tareoDetalle.getIdConsumidor().trim()));
             c010_txv_Consumidor.setText(String.format("%s", tareoDetalle.getConsumidor().trim()));
-            c010_txv_Horas.setText(String.valueOf(tareoDetalle.getHoras()));
-            c010_txv_Rdtos.setText(String.valueOf(tareoDetalle.getRdtos()));
+            c010_txv_Horas.setText(String.valueOf(tareoDetalle.getSubTotalHoras()));
+            c010_txv_Rdtos.setText(String.valueOf(tareoDetalle.getSubTotalRendimiento()));
             c010_txv_Observacion.setText(tareoDetalle.getObservacion());
-//            c010_lly_CultivoVariedad.setVisibility(View.GONE);
             tvIngreso.setText(tareoDetalle.getIngreso());
             tvSalida.setText(tareoDetalle.getSalida());
             cboHomologar.setChecked(tareoDetalle.getHomologar() == 1);
+            llyBody.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.fondo_delineado_3, null));
+            selected = false;
 
             c010_lly_Principal.setOnLongClickListener(view -> {
+//                Swal.info(mContext, "🦊 ZORRO!", "NO TE LO LLEVES 👧🏽🐒🥾", 12000);
+//                MediaPlayer mediaPlayer = MediaPlayer.create(mContext, R.raw.zorro_no_te_lo_lleves);
+//                mediaPlayer.start();
                 if (listener != null) {
                     selected = !selected;
-//                    imageCheck.setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
-
-
-                    llyBody.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), selected ? R.drawable.fondo_delineado_seleccionado : R.drawable.fondo_delineado_3, null) );
-//                    llyBody.setBackground(view.getResources().getDrawable(selected ? R.drawable.fondo_delineado_seleccionado : R.drawable.fondo_delineado_3, null));
-
-
-
+                    llyBody.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), selected ? R.drawable.fondo_delineado_seleccionado : R.drawable.fondo_delineado_3, null));
                     listener.onItemSelected(c010_txv_Item.getText().toString(), selected);
                 }
                 return true;
@@ -300,116 +303,111 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                     return false;
                 }
             });
-
-
             //        DEFINIMOS SI ESTAMOS EN MODO PACKING O NO
             boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
             // Crear el ArrayAdapter usando un layout simple de Spinner
             ArrayAdapter<Double> adapter = new ArrayAdapter<>(mContext, R.layout.simple_list_item_custom, values);
-
             // Especificar el layout a usar cuando se despliegan las opciones
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             // Asignar el adaptador al Spinner
             spinnerAlmuerzo.setAdapter(adapter);
-
             if (modoPacking) {
                 AtomicBoolean openByUser = new AtomicBoolean(true);
-
                 spinnerAlmuerzo.setOnTouchListener((view, motionEvent) -> {
                     openByUser.set(true);
                     return false;
                 });
 
-                spinnerAlmuerzo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        double selectedValue = Double.parseDouble(spinnerAlmuerzo.getItemAtPosition(i).toString());
-
-                        if (!tareoDetalle.getIngreso().equals("") && !tareoDetalle.getSalida().equals("") && openByUser.get()) {
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            try {
-                                // Convertir las cadenas a objetos Date
-                                Date date1 = sdf.parse(tareoDetalle.getIngreso());
-                                Date date2 = sdf.parse(tareoDetalle.getSalida());
-
-                                Date dateComparar1 = sdf.parse(tareoDetalle.getIngreso());
-                                Date dateComparar2 = sdf.parse(tareoDetalle.getSalida());
-
-
-                                // Calcular la diferencia en milisegundos
-                                long diferenciaMilisegundos = date2.getTime() - date1.getTime();
-                                long diferenciaMilisegundosComparar = dateComparar2.getTime() - dateComparar1.getTime();
-
-                                // Convertir la diferencia de milisegundos a horas
-                                long diferenciaHoras = TimeUnit.MILLISECONDS.toHours(diferenciaMilisegundos);
-                                double horas = diferenciaMilisegundos / 3600000.00;
-                                double horasComparar = diferenciaMilisegundosComparar / 3600000.00;
-                                BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
-                                BigDecimal horasRedondeadasComparar = new BigDecimal(horasComparar).setScale(2, RoundingMode.HALF_UP);
-                                double horasCalculadasComparar = horasRedondeadasComparar.doubleValue();
-                                double horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
-//                            Log.i("horasCalculadasComparar", String.valueOf(horasCalculadasComparar));
-//                            Log.i("horasCalculadas", String.valueOf(horasCalculadasComparar));
-                                if (horasCalculadas != tareoDetalle.getHoras()) {
-                                    double diferencia = horasCalculadas - tareoDetalle.getHoras();
-                                    boolean cambiar = false;
-                                    int indexSelect = 0;
-                                    if (diferencia == 0.5) {
-                                        indexSelect = 1;
-                                        cambiar = true;
-                                    } else if (diferencia == 1.0) {
-                                        indexSelect = 2;
-                                        cambiar = true;
-                                    } else if (diferencia == 0.0) {
-                                        indexSelect = 0;
-                                        cambiar = true;
-                                    }
-                                    if (cambiar) {
-                                        spinnerAlmuerzo.setSelection(indexSelect, true);
-                                        selectedValue = Double.parseDouble(spinnerAlmuerzo.getItemAtPosition(indexSelect).toString());
-                                    }
-                                    horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
-                                    tareoDetalle.setHoras(horasCalculadas);
-                                    c010_txv_Horas.setText(String.valueOf(tareoDetalle.getHoras()));
-                                } else {
-                                    selectedValue = Double.parseDouble(spinnerAlmuerzo.getSelectedItem().toString());
-                                    horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
-                                    tareoDetalle.setHoras(horasCalculadas);
-                                    c010_txv_Horas.setText(String.valueOf(tareoDetalle.getHoras()));
-                                    if (horasCalculadas < 0.00) {
-                                        horasCalculadas = 0.00;
-                                    }
-                                    tareoDetalle.setHoras(horasCalculadas);
-                                    c010_txv_Horas.setText(String.valueOf(tareoDetalle.getHoras()));
-                                }
-
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            } finally {
-                                openByUser.set(false);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                        double selectedValue = Double.parseDouble(spinnerAlmuerzo.getSelectedItem().toString());
-                    }
-                });
+//                spinnerAlmuerzo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+////                    REVISAR ESTE MÉTODO
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                        double selectedValue = Double.parseDouble(spinnerAlmuerzo.getItemAtPosition(i).toString());
+//
+//                        if (!tareoDetalle.getIngreso().isEmpty() && !tareoDetalle.getSalida().isEmpty() && openByUser.get()) {
+//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                            try {
+//                                // Convertir las cadenas a objetos Date
+//                                Date date1 = sdf.parse(tareoDetalle.getIngreso());
+//                                Date date2 = sdf.parse(tareoDetalle.getSalida());
+//
+//                                Date dateComparar1 = sdf.parse(tareoDetalle.getIngreso());
+//                                Date dateComparar2 = sdf.parse(tareoDetalle.getSalida());
+//
+//
+//                                // Calcular la diferencia en milisegundos
+//                                long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+//                                long diferenciaMilisegundosComparar = dateComparar2.getTime() - dateComparar1.getTime();
+//
+//                                // Convertir la diferencia de milisegundos a horas
+//                                long diferenciaHoras = TimeUnit.MILLISECONDS.toHours(diferenciaMilisegundos);
+//                                double horas = diferenciaMilisegundos / 3600000.00;
+//                                double horasComparar = diferenciaMilisegundosComparar / 3600000.00;
+//                                BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
+//                                BigDecimal horasRedondeadasComparar = new BigDecimal(horasComparar).setScale(2, RoundingMode.HALF_UP);
+//                                double horasCalculadasComparar = horasRedondeadasComparar.doubleValue();
+//                                double horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
+////                            Log.i("horasCalculadasComparar", String.valueOf(horasCalculadasComparar));
+////                            Log.i("horasCalculadas", String.valueOf(horasCalculadasComparar));
+//                                if (horasCalculadas != tareoDetalle.getSubTotalHoras()) {
+//                                    double diferencia = horasCalculadas - tareoDetalle.getSubTotalHoras();
+//                                    boolean cambiar = false;
+//                                    int indexSelect = 0;
+//                                    if (diferencia == 0.5) {
+//                                        indexSelect = 1;
+//                                        cambiar = true;
+//                                    } else if (diferencia == 1.0) {
+//                                        indexSelect = 2;
+//                                        cambiar = true;
+//                                    } else if (diferencia == 0.0) {
+//                                        indexSelect = 0;
+//                                        cambiar = true;
+//                                    }
+//                                    if (cambiar) {
+//                                        spinnerAlmuerzo.setSelection(indexSelect, true);
+//                                        selectedValue = Double.parseDouble(spinnerAlmuerzo.getItemAtPosition(indexSelect).toString());
+//                                    }
+//                                    horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
+//                                    tareoDetalle.setSubTotalHoras(horasCalculadas);
+//                                    c010_txv_Horas.setText(String.valueOf(tareoDetalle.getSubTotalHoras()));
+//                                } else {
+//                                    selectedValue = Double.parseDouble(spinnerAlmuerzo.getSelectedItem().toString());
+//                                    horasCalculadas = horasRedondeadas.doubleValue() - selectedValue;
+//                                    tareoDetalle.setSubTotalHoras(horasCalculadas);
+//                                    c010_txv_Horas.setText(String.valueOf(tareoDetalle.getSubTotalHoras()));
+//                                    if (horasCalculadas < 0.00) {
+//                                        horasCalculadas = 0.00;
+//                                    }
+//                                    tareoDetalle.setSubTotalHoras(horasCalculadas);
+//                                    c010_txv_Horas.setText(String.valueOf(tareoDetalle.getSubTotalHoras()));
+//                                }
+//
+//                            } catch (ParseException e) {
+//                                e.printStackTrace();
+//                            } finally {
+//                                openByUser.set(false);
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> adapterView) {
+//                        double selectedValue = Double.parseDouble(spinnerAlmuerzo.getSelectedItem().toString());
+//                    }
+//                });
             } else {
                 spinnerAlmuerzo.setVisibility(View.GONE);
                 labelAlmuerzo.setVisibility(View.GONE);
             }
 
-            if(ACTIVAR_PERMISO) {
+            if (ACTIVAR_PERMISO) {
                 cboHomologar.setVisibility(View.INVISIBLE);
             }
 
 
         }
     }
-
 
 
     public class LoadingViewHolder extends RecyclerView.ViewHolder {

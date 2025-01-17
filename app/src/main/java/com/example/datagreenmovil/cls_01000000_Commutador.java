@@ -8,19 +8,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.Querys;
 import com.example.datagreenmovil.Logica.Funciones;
-import com.example.datagreenmovil.Logica.Swal;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -71,7 +68,9 @@ public class cls_01000000_Commutador extends AppCompatActivity {
             //SE ESPERA PODER USAR objQuerys.Query("NOMBRE DE QUERY") -> RETORNA STRING
             objQuerys = new Querys(objSqlite.obtenerQuerys());
             //OBTENER VERSION APP
+
             String versionApp = BuildConfig.VERSION_NAME;
+
             sharedPreferences.edit().putString("VERSION_APP", versionApp).apply();
 
             if (check()) {

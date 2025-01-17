@@ -500,7 +500,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <com.example.datagreenmovil.Logica.ZXingScannerView
+                    <com.example.datagreenmovil.Logica.QRCodeScannerView
                         android:id="@+id/scannerView"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
@@ -508,8 +508,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <!--                    <me.dm7.barcodescanner.zbar.ZBarScannerView-->
-                    <!--                        android:id="@+id/zBarScannerView"-->
+
+                    <!--                    <com.example.datagreenmovil.Logica.ZXingScannerView-->
+                    <!--                        android:id="@+id/scannerView"-->
                     <!--                        android:layout_width="0dp"-->
                     <!--                        android:layout_height="100dp"-->
                     <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
@@ -521,11 +522,10 @@
                         android:id="@+id/fabToggleFlash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:clickable="true"
                         android:src="@drawable/ic_flash"
                         app:fabSize="mini"
-                        app:layout_constraintBottom_toBottomOf="@+id/zBarScannerView"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:maxImageSize="25dp" />
 
@@ -582,6 +582,7 @@
                         android:id="@+id/c007_atv_NombreTrabajador_v"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
                         android:background="@drawable/bg_redondeado_gris_transparente"
                         android:fontFamily="@font/auxiliar_02"
                         android:hint="Nombre Trabajador"
@@ -590,6 +591,7 @@
                         android:textColorHint="@color/blancoOficial"
                         android:textSize="20dp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/c007_fab_Agregar_v"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/c007_fab_Agregar_v" />

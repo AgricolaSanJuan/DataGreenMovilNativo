@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.datagreenmovil.Entidades.Tareo;
+import com.example.datagreenmovil.DAO.Tareo.TrxTareo.Tareo;
+import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.TareoDetalles;
 import com.example.datagreenmovil.Logica.Dialogs.FilterDialog;
 import com.example.datagreenmovil.R;
 import com.example.datagreenmovil.Scanner.ui.ScannerFragment;
@@ -26,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -181,22 +183,22 @@ public class Swal {
     sweetAlertDialog.show();
   }
 
-  public interface ActionResult{
-    void onActionResult(String result, SweetAlertDialog sweetAlertDialog);
-  }
+//  public interface ActionResult{
+//    void onActionResult(String result, SweetAlertDialog sweetAlertDialog);
+//  }
 
   public interface DismissDialog{
-    void onDismissDialog(boolean success, String message);
+    void onDismissDialog(boolean success, String message, SweetAlertDialog sweetAlertDialog);
   }
 
-  public static void customDialog(Context ctx, String accion, Tareo tareoActual, ArrayList<Integer> listaTrabajadores, ActionResult actionResult, DismissDialog dismissDialog){
+  public static void customDialog(Context ctx, String accion, List<TareoDetalles> tareoActual, ArrayList<Integer> listaTrabajadores, /*ActionResult actionResult,*/ DismissDialog dismissDialog){
     SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ctx, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
     View custom = LayoutInflater.from(ctx).inflate(R.layout.dialog_detalle_tareo, null);
 
     DialogDetalleTareoBinding binding = DialogDetalleTareoBinding.bind(custom);
 
     // Llama al método para configurar la vista
-    DialogDetalleTareo.configureView(binding, accion, tareoActual, listaTrabajadores, actionResult, sweetAlertDialog, dismissDialog);
+    DialogDetalleTareo.configureView(binding, accion, tareoActual, listaTrabajadores, sweetAlertDialog, dismissDialog);
 
     sweetAlertDialog.setCustomView(custom);
     sweetAlertDialog.hideConfirmButton();

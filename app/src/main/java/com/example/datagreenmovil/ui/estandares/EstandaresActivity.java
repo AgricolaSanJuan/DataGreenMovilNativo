@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import java.util.List;
+import java.util.Objects;
 
 public class EstandaresActivity extends AppCompatActivity {
 //public class EstandaresActivity extends AppCompatActivity implements Filtros.GetFilterData {
@@ -41,6 +42,7 @@ public class EstandaresActivity extends AppCompatActivity {
     private MstTiposCostoEstandarDAO mstTiposCostoEstandarDAO;
     private MstTiposBonoEstandarDAO mstTiposBonoEstandarDAO;
     private MstMedidasEstandaresDAO mstMedidasEstandaresDAO;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class EstandaresActivity extends AppCompatActivity {
                 R.id.nav_estandares_main, R.id.nav_estandares_registro, R.id.nav_estandares_settings)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_estandares);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_estandares);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         inicializarBase();
@@ -81,7 +83,7 @@ public class EstandaresActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_estandares);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_estandares);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
@@ -93,6 +95,26 @@ public class EstandaresActivity extends AppCompatActivity {
         mstTiposBonoEstandarDAO = db.mstTiposBonoEstandarDAO();
         mstTiposCostoEstandarDAO = db.mstTiposCostoEstandarDAO();
         mstMedidasEstandaresDAO = db.mstMedidasEstandaresDAO();
+    }
+
+    public void goTo(int resId){
+//    public void goTo(String vista){
+            navController.navigate(resId);
+//        if (Objects.equals(vista, "agregar")) {
+//        }
+//        else if (vista == R.vista.action_delete) {
+//            Swal.info(ctx, "PUSH!", "Presionaste eliminar", 5000);
+//            return true;
+//        } else if (vista == R.vista.action_transfer) {
+//            Swal.info(ctx, "PUSH!", "Presionaste transferir", 5000);
+//            return true;
+//        } else if (vista == R.vista.action_select_all) {
+//            Swal.info(ctx, "PUSH!", "Presionaste seleccionar todo", 5000);
+//            return true;
+//        } else if (vista == R.vista.action_duplicity) {
+//            Swal.info(ctx, "PUSH!", "Presionaste duplicar", 5000);
+//            return true;
+//        }
     }
 
 }

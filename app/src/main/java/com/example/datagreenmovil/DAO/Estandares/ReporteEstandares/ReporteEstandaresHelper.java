@@ -19,21 +19,23 @@ public class ReporteEstandaresHelper {
     public List<ReporteEstandares> getReporteEstandares() {
         // Define la consulta SQL
         String queryObtenerReporte = "SELECT " +
-                "    en.id, " +
-                "    en.idEmpresa, " +
-                "    te.descripcion AS tipoEstandar, " +
-                "    a.Dex AS descripcionActividad, " +
-                "    l.Dex AS descripcionLabor, " +
-                "    en.periodo, " +
-                "    en.fechaInicio, " +
-                "    me.descripcion AS medida, " +
-                "    en.cantidad, " +
-                "    en.precio, " +
-                "    en.base, " +
-                "    tbe.descripcion AS tipoBono, " +
-                "    en.horas, " +
-                "    tce.descripcion AS tipoCosto, " +
-                "    en.idConsumidor " +
+                "    TRIM(en.id) AS id, " +
+                "    TRIM(en.idEmpresa) AS idEmpresa, " +
+                "    TRIM(te.descripcion) AS tipoEstandar, " +
+                "    TRIM(a.Id) AS idActividad, " +
+                "    TRIM(a.Dex) AS descripcionActividad, " +
+                "    TRIM(l.Id) AS idLabor, " +
+                "    TRIM(l.Dex) AS descripcionLabor, " +
+                "    TRIM(en.periodo) AS periodo, " +
+                "    TRIM(en.fechaInicio) AS fechaInicio, " +
+                "    TRIM(me.descripcion) AS medida, " +
+                "    TRIM(en.cantidad) AS cantidad, " +
+                "    TRIM(en.precio) AS precio, " +
+                "    TRIM(en.base) AS base, " +
+                "    TRIM(tbe.descripcion) AS tipoBono, " +
+                "    TRIM(en.horas) AS horas, " +
+                "    TRIM(tce.descripcion) AS tipoCosto, " +
+                "    TRIM(en.idConsumidor) AS idConsumidor " +
                 "FROM trx_estandares_new en " +
                 "INNER JOIN mst_Actividades a ON a.Id = en.idActividad " +
                 "INNER JOIN mst_Labores l ON l.Id = en.idLabor AND l.IdActividad = en.idActividad " +
