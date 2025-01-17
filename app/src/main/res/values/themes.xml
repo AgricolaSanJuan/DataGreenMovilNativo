@@ -13,7 +13,7 @@
         <item name="textInputStyle">@style/textInputLayoutStyle</item>
         <item name="editTextStyle">@style/editTextStyle</item>
         <item name="floatingActionButtonStyle">@style/floatingActionButtonStyle</item>
-        <item name="spinnerStyle">@style/spinnerStyle</item>
+<!--        <item name="spinnerStyle">@style/spinnerStyle</item>-->
         <!--        <item name="cardViewStyle"> @style/CardView </item>-->
         <item name="android:textViewStyle">@style/textViewStyle</item>
         <!--        <item name="android:background"> @color/azulOscuro </item>-->
