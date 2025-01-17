@@ -58,6 +58,8 @@ public class cls_01000000_Commutador extends AppCompatActivity {
         sharedPreferences.edit().putString("API_SERVER", "192.168.30.94:8080").apply();
         sharedPreferences.edit().putString("NOMBRE_APP", nombreApp).apply();
 
+
+
         try {
 
             objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
@@ -143,6 +145,7 @@ public class cls_01000000_Commutador extends AppCompatActivity {
 //        }
 
         //        INICIALIZAMOS LA BASE DE DATOS PARA PODER USAR DAO CON LAS NUEVAS ENTIDADES
+        DataGreenApp.getAppDatabase();
     }
 
     public void abrirMenuModulos() {
