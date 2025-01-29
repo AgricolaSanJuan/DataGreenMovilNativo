@@ -191,14 +191,14 @@ public class Swal {
     void onDismissDialog(boolean success, String message, SweetAlertDialog sweetAlertDialog);
   }
 
-  public static void customDialog(Context ctx, String accion, List<TareoDetalles> tareoActual, ArrayList<Integer> listaTrabajadores, /*ActionResult actionResult,*/ DismissDialog dismissDialog){
+  public static void customDialog(Context ctx, String accion, List<TareoDetalles> listaDetalles, ArrayList<Integer> listaTrabajadores, /*ActionResult actionResult,*/ DismissDialog dismissDialog){
     SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ctx, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
     View custom = LayoutInflater.from(ctx).inflate(R.layout.dialog_detalle_tareo, null);
 
     DialogDetalleTareoBinding binding = DialogDetalleTareoBinding.bind(custom);
 
     // Llama al método para configurar la vista
-    DialogDetalleTareo.configureView(binding, accion, tareoActual, listaTrabajadores, sweetAlertDialog, dismissDialog);
+    DialogDetalleTareo.configureView(binding, accion, listaDetalles, listaTrabajadores, sweetAlertDialog, dismissDialog);
 
     sweetAlertDialog.setCustomView(custom);
     sweetAlertDialog.hideConfirmButton();

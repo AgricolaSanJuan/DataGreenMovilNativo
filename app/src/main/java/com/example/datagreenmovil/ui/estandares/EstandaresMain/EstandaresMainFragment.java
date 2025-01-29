@@ -47,7 +47,7 @@ public class EstandaresMainFragment extends Fragment implements Filtros.GetFilte
         binding = FragmentEstandaresMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        listarEstandares();
+//        listarEstandares();
 
 
 //        registerForContextMenu(binding.fabMenu);

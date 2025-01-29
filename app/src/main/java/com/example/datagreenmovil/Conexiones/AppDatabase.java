@@ -68,7 +68,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             })
                             .allowMainThreadQueries().build();
                 } catch (Exception e) {
-                    INSTANCE = null; // Reiniciar el intento de creación
+                    INSTANCE = null;
                 }
             }
         }
@@ -98,5 +98,4 @@ public abstract class AppDatabase extends RoomDatabase {
 //    Turno.class,
 //    Tareo.class,
 //    TareoDetalles.class
-
 }

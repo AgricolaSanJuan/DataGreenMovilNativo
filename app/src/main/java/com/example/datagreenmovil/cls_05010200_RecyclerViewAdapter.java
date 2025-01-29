@@ -230,11 +230,11 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             c010_txv_IdVariedad.setText(String.format("(%s)", tareoDetalle.getIdVariedad().trim()));
             c010_txv_Variedad.setText(String.format("%s", tareoDetalle.getVariedad().trim()));
             c010_txv_IdActividad.setText(String.format("(%s)", tareoDetalle.getIdActividad().trim()));
-            c010_txv_Actividad.setText(String.format("%s", tareoDetalle.getActividad().trim()));
+            c010_txv_Actividad.setText(tareoDetalle.getActividad() != null ? String.format("%s", tareoDetalle.getActividad().trim()) : "No definido");
             c010_txv_IdLabor.setText(String.format("(%s)", tareoDetalle.getIdLabor().trim()));
-            c010_txv_Labor.setText(String.format("%s", tareoDetalle.getLabor().trim()));
+            c010_txv_Labor.setText(tareoDetalle.getLabor() != null ? String.format("%s", tareoDetalle.getLabor().trim()) : "No Definido");
             c010_txv_IdConsumidor.setText(String.format("(%s)", tareoDetalle.getIdConsumidor().trim()));
-            c010_txv_Consumidor.setText(String.format("%s", tareoDetalle.getConsumidor().trim()));
+            c010_txv_Consumidor.setText(tareoDetalle.getConsumidor() != null ? String.format("%s", tareoDetalle.getConsumidor().trim()) : "No definido");
             c010_txv_Horas.setText(String.valueOf(tareoDetalle.getSubTotalHoras()));
             c010_txv_Rdtos.setText(String.valueOf(tareoDetalle.getSubTotalRendimiento()));
             c010_txv_Observacion.setText(tareoDetalle.getObservacion());
@@ -264,45 +264,45 @@ public class cls_05010200_RecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 onButtonClickListener.onButtonClickListener(c010_txv_Item.getText().toString());
             });
 
-            c010_lly_Principal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    itemSeleccionado = Integer.parseInt(c010_txv_Item.getText().toString());
-                    mostrarMenuDetalle(c010_lly_Principal);
-                }
-
-                public void mostrarMenuDetalle(View v) {
-                    PopupMenu popup = new PopupMenu(mContext, v);
-                    popup.setOnMenuItemClickListener(this::onMenuItemClick);
-                    popup.inflate(R.menu.mnu_05010101_opciones_detalle);
-                    popup.show();
-                }
-
-                public boolean onMenuItemClick(MenuItem item) {
-                    try {
-                        int idOpcionClickeada = item.getItemId();
-                        if (idOpcionClickeada == R.id.opc_05010101_EliminarDetalle_v) {
-                            Swal.confirm(mContext, "Estás seguro?", "Una vez eliminado este detalle no se podrá recuperar").setConfirmClickListener(sweetAlertDialog -> {
-                                if (mContext instanceof cls_05010000_Edicion) {
-                                    ((cls_05010000_Edicion) mContext).eliminarDetalle(itemSeleccionado);
-                                }
-                                sweetAlertDialog.dismissWithAnimation();
-                            }).setCancelClickListener(sweetAlertDialog -> {
-                                sweetAlertDialog.dismissWithAnimation();
-                            });
-                        } else if (idOpcionClickeada == R.id.opc_05010101_ActualizarDetalle_v) {
-                            if (mContext instanceof cls_05010000_Edicion) {
-                                ((cls_05010000_Edicion) mContext).popUpActualizarDetalleTareos(tareoDetalle);
-                            }
-                        }
-                    } catch (Exception ex) {
-                        Funciones.mostrarError(mContext, ex);
-                        return false;
-                    }
-                    return false;
-                }
-            });
+//            c010_lly_Principal.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    itemSeleccionado = Integer.parseInt(c010_txv_Item.getText().toString());
+//                    mostrarMenuDetalle(c010_lly_Principal);
+//                }
+//
+//                public void mostrarMenuDetalle(View v) {
+//                    PopupMenu popup = new PopupMenu(mContext, v);
+//                    popup.setOnMenuItemClickListener(this::onMenuItemClick);
+//                    popup.inflate(R.menu.mnu_05010101_opciones_detalle);
+//                    popup.show();
+//                }
+//
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    try {
+//                        int idOpcionClickeada = item.getItemId();
+//                        if (idOpcionClickeada == R.id.opc_05010101_EliminarDetalle_v) {
+//                            Swal.confirm(mContext, "Estás seguro?", "Una vez eliminado este detalle no se podrá recuperar").setConfirmClickListener(sweetAlertDialog -> {
+//                                if (mContext instanceof cls_05010000_Edicion) {
+//                                    ((cls_05010000_Edicion) mContext).eliminarDetalle(itemSeleccionado);
+//                                }
+//                                sweetAlertDialog.dismissWithAnimation();
+//                            }).setCancelClickListener(sweetAlertDialog -> {
+//                                sweetAlertDialog.dismissWithAnimation();
+//                            });
+//                        } else if (idOpcionClickeada == R.id.opc_05010101_ActualizarDetalle_v) {
+//                            if (mContext instanceof cls_05010000_Edicion) {
+//                                ((cls_05010000_Edicion) mContext).popUpActualizarDetalleTareos(tareoDetalle);
+//                            }
+//                        }
+//                    } catch (Exception ex) {
+//                        Funciones.mostrarError(mContext, ex);
+//                        return false;
+//                    }
+//                    return false;
+//                }
+//            });
             //        DEFINIMOS SI ESTAMOS EN MODO PACKING O NO
             boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
             // Crear el ArrayAdapter usando un layout simple de Spinner

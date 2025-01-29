@@ -1,16 +1,26 @@
 package com.example.datagreenmovil;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +29,8 @@ import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
+
+import android.Manifest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +50,9 @@ public class cls_04000000_Modulos extends AppCompatActivity {
     RecyclerView reciclador;
     List<String> modulos;
 
+    private static final int STORAGE_PERMISSION_CODE = 100;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try{
@@ -49,6 +64,30 @@ public class cls_04000000_Modulos extends AppCompatActivity {
                 objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
 
             }
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                // Android 11 y superiores: Verificar permiso MANAGE_EXTERNAL_STORAGE
+//                if (!Environment.isExternalStorageManager()) {
+//                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//                    intent.setData(Uri.parse("package:" + getPackageName()));
+//                    startActivity(intent);
+//                } else {
+//                    // Permiso ya otorgado, iniciar el servicio
+//                    startService(new Intent(this, DataGreenUpdateService.class));
+//                }
+//            } else {
+//                // Para Android 10 (API 29) y versiones inferiores
+//                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(this,
+//                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                            STORAGE_PERMISSION_CODE);
+//                } else {
+//                    // Permiso ya otorgado, iniciar el servicio
+//                    startService(new Intent(this, DataGreenUpdateService.class));
+//                }
+//            }
+
+
             sharedPreferences = this.getSharedPreferences("objConfLocal",MODE_PRIVATE);
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
@@ -79,6 +118,20 @@ public class cls_04000000_Modulos extends AppCompatActivity {
              Funciones.mostrarError(this,ex);
         }
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == STORAGE_PERMISSION_CODE) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // Permiso otorgado, iniciar servicio
+//                startService(new Intent(this, DataGreenUpdateService.class));
+//            } else {
+//                // Permiso denegado, mostrar mensaje al usuario
+//                Toast.makeText(this, "Se necesita el permiso de almacenamiento para descargar archivos.", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     //@Jota:2023-05-27 -> LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
     private void setearControles() {

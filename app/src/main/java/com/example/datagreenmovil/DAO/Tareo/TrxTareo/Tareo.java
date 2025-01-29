@@ -52,13 +52,13 @@ import com.example.datagreenmovil.Logica.Funciones;
 )
 public class Tareo {
 
+    @ColumnInfo(name = "IdEmpresa")
+    private String idEmpresa;
+
     @PrimaryKey
     @ColumnInfo(name = "Id")
     @NonNull
     private String id;
-
-    @ColumnInfo(name = "IdEmpresa")
-    private String idEmpresa;
 
     @ColumnInfo(name = "Fecha")
     private String fecha; // Puede ser String o Long si usas timestamp

@@ -64,6 +64,7 @@ public class TareosSettingsFragment extends Fragment {
         binding.switchAutoSalida.setChecked(sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false));
         binding.switchLecturaContinua.setChecked(sharedPreferences.getBoolean("LECTURA_CONTINUA", false));
         binding.switchMostrarSwitchEntradaSalida.setChecked(sharedPreferences.getBoolean("MOSTRAR_ENTRADA_SALIDA", false));
+        binding.switchMostrarSwitchTareoAsistencia.setChecked(sharedPreferences.getBoolean("MOSTRAR_TAREO_ASISTENCIA", false));
 
         activarControles(false);
 
@@ -73,6 +74,10 @@ public class TareosSettingsFragment extends Fragment {
 
         binding.switchMostrarSwitchEntradaSalida.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("MOSTRAR_ENTRADA_SALIDA", isChecked).apply();
+        });
+
+        binding.switchMostrarSwitchTareoAsistencia.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor.putBoolean("MOSTRAR_TAREO_ASISTENCIA", isChecked).apply();
         });
 
         binding.switchAutoSalida.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -367,16 +372,19 @@ public class TareosSettingsFragment extends Fragment {
     }
 
     private void activarControles(boolean b) {
-//        binding.switchModoPacking.setEnabled(b);
-//        binding.switchMostrarControlesHoras.setEnabled(b);
-//        binding.switchMostrarControlesRdtos.setEnabled(b);
-//        binding.switchAgregarSoloCamara.setEnabled(b);
-//        binding.switchReproducirSonido.setEnabled(b);
+        binding.switchModoPacking.setEnabled(b);
+        binding.switchMostrarControlesHoras.setEnabled(b);
+        binding.switchMostrarControlesRdtos.setEnabled(b);
+        binding.switchAgregarSoloCamara.setEnabled(b);
+        binding.switchReproducirSonido.setEnabled(b);
 //        binding.etItemsPerPage.setEnabled(b);
-//        binding.switchValidarTrabajadorRepetido.setEnabled(b);
-//        binding.switchMostrarSwitchEntradaSalida.setEnabled(b);
-//        binding.switchActivarPermiso.setEnabled(b);
-//        binding.switchAutoSalida.setEnabled(b);
+        binding.etDelayPorLectura.setEnabled(b);
+        binding.switchValidarTrabajadorRepetido.setEnabled(b);
+        binding.switchMostrarSwitchEntradaSalida.setEnabled(b);
+        binding.switchMostrarSwitchTareoAsistencia.setEnabled(b);
+        binding.switchActivarPermiso.setEnabled(b);
+        binding.switchAutoSalida.setEnabled(b);
+        binding.switchLecturaContinua.setEnabled(b);
         if(b){
             binding.fabLockOptions.setImageDrawable(getResources().getDrawable(R.drawable.ic_unlock));
         }else{

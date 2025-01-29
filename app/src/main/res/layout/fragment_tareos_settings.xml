@@ -264,6 +264,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/switchValidarTrabajadorRepetido" />
 
             <Switch
+                android:id="@+id/switchMostrarSwitchTareoAsistencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Mostrar Switch Tareo/Asistencia"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchActivarPermiso" />
+
+            <Switch
                 android:id="@+id/switchMostrarSwitchEntradaSalida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,7 +283,7 @@
                 android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switchActivarPermiso" />
+                app:layout_constraintTop_toBottomOf="@+id/switchMostrarSwitchTareoAsistencia" />
 
             <Switch
                 android:id="@+id/switchAutoSalida"
