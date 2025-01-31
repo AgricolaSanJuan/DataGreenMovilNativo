@@ -52,29 +52,7 @@ public class TareosActivity extends AppCompatActivity {
 //        PACKINGINTENSIVO
         database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
 
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_IdEmpresa ON trx_Tareos(IdEmpresa);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Fecha ON trx_Tareos (Fecha);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_IdTurno ON trx_Tareos (IdTurno);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_IdEstado ON trx_Tareos (IdEstado);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_IdUsuarioCrea ON trx_Tareos (IdUsuarioCrea);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_IdUsuarioActualiza ON trx_Tareos (IdUsuarioActualiza);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_Dni ON trx_Tareos_Detalle (Dni);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_IdPlanilla ON trx_Tareos_Detalle (IdPlanilla);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_IdConsumidor ON trx_Tareos_Detalle (IdConsumidor);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_IdCultivo ON trx_Tareos_Detalle (IdCultivo);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_IdVariedad ON trx_Tareos_Detalle (IdVariedad);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_IdActividad ON trx_Tareos_Detalle(IdActividad);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_trx_Tareos_Detalle_IdLabor ON trx_Tareos_Detalle (IdLabor);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Usuarios_IdEmpresa ON mst_Usuarios (IdEmpresa);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Usuarios_NroDocumento ON mst_Usuarios (NroDocumento);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Empresas_IdEstado ON mst_Empresas (IdEstado);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Dias_Semana ON mst_Dias (Semana);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Dias_Mes ON mst_Dias (Mes);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Dias_Anio ON mst_Dias (Anio);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Turnos_IdEmpresa ON mst_Turnos (IdEmpresa);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Turnos_IdEstado ON mst_Turnos (IdEstado);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Estados_IdUsuarioCrea ON mst_Estados (IdUsuarioCrea);");
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_mst_Estados_IdUsuarioActualiza ON mst_Estados (IdUsuarioActualiza);");
+
 
         boolean columnaIngresoExiste = false;
         boolean columnaSalidaExiste = false;
