@@ -35,8 +35,14 @@
         android:theme="@style/Theme.DataGreenMovilLight">
         <activity
             android:name=".EvaluacionesActivity"
-            android:exported="false"
-            android:label="@string/title_activity_evaluaciones" />
+            android:exported="true"
+            android:label="@string/title_activity_evaluaciones" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            </activity>
         <activity
             android:name=".QRViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -135,7 +141,9 @@
             android:exported="false" />
         <activity
             android:name=".cls_08000000_ServiciosTransporte"
-            android:exported="false" />
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".cls_07000100_Item_RecyclerView"
             android:exported="false" />
@@ -159,14 +167,17 @@
             android:name=".cls_06000000_Eficiencias"
             android:exported="false" />
         <activity
-            android:name=".cls_05000000_Tareos"
-            android:exported="false" />
+            android:name="cls_05000000_Tareos"
+            android:exported="false" >
+        </activity>
         <activity
             android:name=".cls_02000000_Configuracion"
             android:exported="false" />
         <activity
             android:name=".cls_03000000_Login"
-            android:exported="false" />
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".cls_05010000_Edicion"
             android:exported="false"
@@ -174,14 +185,17 @@
         <activity
             android:name=".cls_04000000_Modulos"
             android:exported="false"
-            android:parentActivityName=".cls_04000000_Modulos" />
+            android:parentActivityName=".cls_04000000_Modulos" >
+
+        </activity>
+
         <activity
             android:name=".cls_01000000_Commutador"
             android:exported="true">
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
+<!--                        <intent-filter>-->
+<!--                            <action android:name="android.intent.action.MAIN" />-->
+<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                        </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.estandares.EstandaresActivity"

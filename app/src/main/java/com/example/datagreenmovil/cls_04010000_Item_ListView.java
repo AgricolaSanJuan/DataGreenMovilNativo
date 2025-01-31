@@ -194,6 +194,9 @@ public class cls_04010000_Item_ListView extends RecyclerView.Adapter<cls_0401000
                     case "Taller":
                         intent = new Intent(Context, TallerActivity.class);
                         break;
+                    case "Evaluaciones":
+                        intent = new Intent(Context, EvaluacionesActivity.class);
+                        break;
                     default:
                         //return getResources().getStringArray(R.array.DEFAULT);
                         intent = new Intent();

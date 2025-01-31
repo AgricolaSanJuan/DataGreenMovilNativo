@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home_main">
+
+    <fragment
+        android:id="@+id/navigation_home_main"
+        android:name="com.example.datagreenmovil.ui.Evaluaciones.EvaluacionesMain.EvaluacionesMainFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_evaluaciones_main" >
+        <action
+            android:id="@+id/action_navigation_home_main_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.datagreenmovil.ui.Evaluaciones.EvaluacionesFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_evaluaciones" />
+
+</navigation>

@@ -15,6 +15,7 @@ import com.example.datagreenmovil.databinding.ActivityEvaluacionesBinding;
 public class EvaluacionesActivity extends AppCompatActivity {
 
     private ActivityEvaluacionesBinding binding;
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +24,23 @@ public class EvaluacionesActivity extends AppCompatActivity {
         binding = ActivityEvaluacionesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_evaluaciones);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        // Configuración de navegación
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_evaluaciones);
+
+        // Sin necesidad de AppBarConfiguration si no vas a usar ActionBar
+        mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        // Comentar o eliminar esta línea ya que no usarás el ActionBar
+        // NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
+        // Si no deseas el ActionBar, esta línea puede ser omitida también
+        // NavigationUI.setupWithNavController(this, navController);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Navegar hacia arriba sin ActionBar
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_evaluaciones);
+        return navController.navigateUp() || super.onSupportNavigateUp();
+    }
 }

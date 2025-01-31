@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/evaluaciones_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="ui.Evaluaciones.EvaluacionesMain.EvaluacionesMainFragment">
+
+    <!-- poner recycler view, titulo -->
+    <LinearLayout
+        android:id="@+id/c022_lly_BotonesControl_v2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/c022_fab_Opciones_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foregroundTint="@color/alerta"
+            app:backgroundTint="@color/verde"
+            app:srcCompat="@drawable/i_list" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/etfab_NuevoRegistroEvaluacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="@color/verde"
+            app:srcCompat="@drawable/i_add" />
+    </LinearLayout>
+</FrameLayout>

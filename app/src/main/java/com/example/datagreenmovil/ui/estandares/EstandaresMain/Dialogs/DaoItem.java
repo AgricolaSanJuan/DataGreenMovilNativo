@@ -3,6 +3,7 @@ package com.example.datagreenmovil.ui.estandares.EstandaresMain.Dialogs;
 public class DaoItem {
     private String id;
     private String descripcion;
+    
 
     // Constructor
     public DaoItem(String id, String descripcion) {
