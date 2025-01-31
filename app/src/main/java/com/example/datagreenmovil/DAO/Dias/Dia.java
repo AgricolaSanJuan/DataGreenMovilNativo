@@ -3,9 +3,15 @@ package com.example.datagreenmovil.DAO.Dias;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "mst_Dias")
+@Entity(tableName = "mst_Dias",
+        indices = {
+                @Index(name = "index_mst_Dias_Semana", value = {"Semana"}),
+                @Index(name = "index_mst_Dias_Mes", value = {"Mes"}),
+                @Index(name = "index_mst_Dias_Anio", value = {"Anio"})
+        })
 public class Dia {
 
     @PrimaryKey

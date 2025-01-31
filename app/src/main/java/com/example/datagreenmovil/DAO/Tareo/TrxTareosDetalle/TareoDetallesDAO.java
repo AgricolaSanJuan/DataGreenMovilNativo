@@ -11,6 +11,7 @@ import androidx.room.Upsert;
 import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNew;
+import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.DTO.ReporteDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,4 +93,9 @@ public interface TareoDetallesDAO {
 
     @RawQuery
     String obtenerDecripcionConsumidor(SupportSQLiteQuery supportSQLiteQuery);
+
+    //    REPORTERÍA REPORTE 1
+    @RawQuery
+    List<ReporteDTO> obtenerReporte(SupportSQLiteQuery supportSQLiteQuery);
+//    REPORTERÍA REPORTE 1
 }

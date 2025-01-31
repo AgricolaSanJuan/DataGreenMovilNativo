@@ -46,7 +46,7 @@ import com.example.datagreenmovil.Migrations.Migrations;
                 Turno.class,
                 Tareo.class,
                 TareoDetalles.class
-        }, version = 2, exportSchema = true)
+        }, version = 3, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
 
     // Método para crear la instancia de la base de datos
@@ -59,6 +59,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(DataGreenApp.getAppContext(), AppDatabase.class, "DataGreenMovil.db")
                             .createFromAsset("DataGreenMovil.db")
                             .addMigrations(Migrations.MIGRATION_1_2)
+                            .addMigrations(Migrations.MIGRATION_2_3)
                             .addCallback(new RoomDatabase.Callback() {
                                 @Override
                                 public void onOpen(@NonNull SupportSQLiteDatabase db) {

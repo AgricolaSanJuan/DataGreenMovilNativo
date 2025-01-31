@@ -68,14 +68,13 @@ public class Migrations extends RoomDatabase.Callback {
         }
     };
 
-//    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
-//
-//        @Override
-//        public void migrate(@NonNull SupportSQLiteDatabase database) {
-//            SharedPreferences sharedPreferences = DataGreenApp.getAppContext().getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
-//            sharedPreferences.edit().putString("VERSION_DB_DISPONIBLE", String.valueOf(database.getVersion())).apply();
-//        }
-//    };
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            SharedPreferences sharedPreferences = DataGreenApp.getAppContext().getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+            sharedPreferences.edit().putString("VERSION_DB_DISPONIBLE", String.valueOf(database.getVersion())).apply();
+        }
+    };
 
 //    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
 //        @Override

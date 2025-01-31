@@ -5,7 +5,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 
-@Entity(tableName = "mst_Usuarios", primaryKeys = {"IdEmpresa", "Id"}, indices = {@Index(value = {"Id"}, unique = true)}
+@Entity(tableName = "mst_Usuarios", primaryKeys = {"IdEmpresa", "Id"},
+        indices = {
+            @Index(value = {"Id"}, unique = true),
+            @Index(value = {"IdEmpresa"}),
+            @Index(value = {"NroDocumento"})
+        }
 )
 public class Usuario {
 

@@ -4,12 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 
 import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.DAO.Tareo.TrxTareo.Tareo;
 import com.example.datagreenmovil.DataGreenApp;
 
-@Entity(tableName = "trx_Tareos_Detalle", primaryKeys = {"IdTareo", "Item"})
+@Entity(tableName = "trx_Tareos_Detalle", primaryKeys = {"IdTareo", "Item"},
+        indices = {
+                @Index(value = {"Dni"}),
+                @Index(value = {"IdPlanilla"}),
+                @Index(value = {"IdConsumidor"}),
+                @Index(value = {"IdCultivo"}),
+                @Index(value = {"IdVariedad"}),
+                @Index(value = {"IdActividad"}),
+                @Index(value = {"IdLabor"})
+        })
 public class TareoDetalles {
     @ColumnInfo(name = "IdEmpresa")
     private String idEmpresa;

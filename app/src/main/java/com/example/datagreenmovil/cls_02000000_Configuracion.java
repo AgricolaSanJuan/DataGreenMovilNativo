@@ -364,7 +364,6 @@ public class cls_02000000_Configuracion extends AppCompatActivity implements Vie
     private boolean registrarDispositivo() {
         try {
             clAux.set("ID_DISPOSITIVO", cnAux.registrarEquipo(objConfLocal));
-            //clAux.actualizarConfiguraciones(cnAux.obtenerConfiguracionesDispositivoMovil());
             return true;
         } catch (Exception ex) {
             Funciones.mostrarError(this, ex);

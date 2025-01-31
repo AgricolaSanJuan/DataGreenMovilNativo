@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.datagreenmovil.Conexiones.AppDatabase;
@@ -13,7 +14,6 @@ import com.example.datagreenmovil.DAO.Estados.Estado;
 import com.example.datagreenmovil.DAO.Turnos.Turno;
 import com.example.datagreenmovil.DAO.Usuarios.Usuario;
 import com.example.datagreenmovil.DataGreenApp;
-import com.example.datagreenmovil.Logica.Funciones;
 
 @Entity(
         tableName = "trx_Tareos",
@@ -48,6 +48,14 @@ import com.example.datagreenmovil.Logica.Funciones;
                         parentColumns = "Id",
                         childColumns = "IdUsuarioActualiza"
                 )
+        },
+        indices = {
+                @Index(value = {"IdEmpresa"}),
+                @Index(value = {"Fecha"}),
+                @Index(value = {"IdTurno"}),
+                @Index(value = {"IdEstado"}),
+                @Index(value = {"IdUsuarioCrea"}),
+                @Index(value = {"IdUsuarioActualiza"})
         }
 )
 public class Tareo {

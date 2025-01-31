@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -163,7 +164,44 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
 
         settingsScroll.setOnTouchListener(this::onTouch);
 
+
+//        VALIDAMOS LOS PERMISOS
+        validarPermisosAndroid();
+//        VALIDAMOS LOS PERMISOS
+
+
         return root;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void validarPermisosAndroid() {
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.READ_PHONE_STATE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+
+        };
+        if (!tienePermisos(getActivity(), PERMISSIONS)) {
+            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_ALL);
+        }
+    }
+
+    public static boolean tienePermisos(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
