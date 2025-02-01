@@ -406,6 +406,14 @@
                     android:onClick="onClick"
                     android:text="Guardar" />
 
+                <Button
+                    android:id="@+id/btnRegistrarDispositivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/verde"
+                    android:fontFamily="@font/vmr"
+                    android:text="GUARDAR IMEI / MAC" />
+
 
             </LinearLayout>
         </ScrollView>

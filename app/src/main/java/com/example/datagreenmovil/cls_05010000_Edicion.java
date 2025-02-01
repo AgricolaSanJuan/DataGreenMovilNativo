@@ -1415,6 +1415,11 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                     tareoEnFuncion.setTotalHoras(totalHoras);
                     tareoEnFuncion.setTotalDetalles(totalDetalles);
                     tareoDAO.guardarTareo(tareoEnFuncion);
+                    try {
+                        objSqlite.ActualizarCorrelativos(objConfLocal,"trx_Tareos",tareoEnFuncion.getId());
+                    } catch (Exception e) {
+                        Toast.makeText(ctx, "No se han podido actualizar los correlativos", Toast.LENGTH_LONG).show();
+                    }
 //                    reemplazamos la función de guardado
 //                    tareoDetallesDAO.insertarDetalleMasivo(tareoDetalleList);
                     tareoDetallesDAO.sincronizarDetalles(tareoDetalleList, IdDocumentoActual);
