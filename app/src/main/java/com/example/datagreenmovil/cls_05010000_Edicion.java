@@ -36,6 +36,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.Conexiones.ConexionBD;
@@ -181,7 +183,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             tareoDetallesDAO = db.tareoDetallesDAO();
 //        SETEAMOS EL TAREO EXISTENTE O CREAMOS UNO NUEVO
             if (IdDocumentoActual == null) {
-                String last = tareoDAO.getLastId();
+//                String last = tareoDAO.getLastId();
+                String last = obtenerUltimoIdDesdeCorrelativo();
+//                EDITAR AQUÍ
                 String nuevoId = Funciones.siguienteCorrelativo(last, 'A');
                 if (nuevoId.length() == 9) {
                     nuevoId = sharedPreferences.getString("ID_DISPOSITIVO", "!ID_DISPOSITIVO") + nuevoId;
@@ -340,6 +344,16 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 obtenerUltimaData();
             }
         });
+    }
+
+    public String obtenerUltimoIdDesdeCorrelativo(){
+        String mac, imei;
+        mac = sharedPreferences.getString("MAC", "!MAC");
+        imei = sharedPreferences.getString("IMEI", "!IMEI");
+        String query = "select COALESCE(Correlativo, '000000000') Correlativo from trx_correlativos where MacDispositivoMovil = '"+mac+"' AND ImeiDispositivoMovil = '"+imei+"'";
+        SupportSQLiteQuery supportSQLiteQuery = new SimpleSQLiteQuery(query);
+
+        return tareoDAO.getLasIdFromCorrelativos(supportSQLiteQuery);
     }
 
     private void generarNuevoDetalle(String nuevoId) {
@@ -1411,15 +1425,20 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
                     int totalDetalles = tareoDetalleList.size();
 
+                    int existeTareo = tareoDAO.existeTareo(tareoEnFuncion.getId());
+
+                    if(existeTareo == 0){
+                        try {
+                            objSqlite.ActualizarCorrelativos(objConfLocal,"trx_Tareos",tareoEnFuncion.getId());
+                        } catch (Exception e) {
+                            Toast.makeText(ctx, "No se han podido actualizar los correlativos", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
                     tareoEnFuncion.setTotalRendimientos(totalRendimientos);
                     tareoEnFuncion.setTotalHoras(totalHoras);
                     tareoEnFuncion.setTotalDetalles(totalDetalles);
                     tareoDAO.guardarTareo(tareoEnFuncion);
-                    try {
-                        objSqlite.ActualizarCorrelativos(objConfLocal,"trx_Tareos",tareoEnFuncion.getId());
-                    } catch (Exception e) {
-                        Toast.makeText(ctx, "No se han podido actualizar los correlativos", Toast.LENGTH_LONG).show();
-                    }
 //                    reemplazamos la función de guardado
 //                    tareoDetallesDAO.insertarDetalleMasivo(tareoDetalleList);
                     tareoDetallesDAO.sincronizarDetalles(tareoDetalleList, IdDocumentoActual);

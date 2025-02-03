@@ -5,9 +5,14 @@ import androidx.room.Query;
 import androidx.room.RawQuery;
 import androidx.room.Transaction;
 import androidx.room.Upsert;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 @Dao
 public interface TareoDAO {
+
+    @Query("SELECT COUNT(*) FROM trx_Tareos WHERE id = :id")
+    int existeTareo(String id);
 
     @Upsert
     void guardarTareo(Tareo tareo);
@@ -26,6 +31,9 @@ public interface TareoDAO {
 
     @Query("UPDATE trx_tareos_detalle SET IdTareo = :nuevoId WHERE IdTareo = :id")
     void actualizarIdTareosDetalle(String id, String nuevoId);
+
+    @RawQuery
+    String getLasIdFromCorrelativos(SupportSQLiteQuery query);
 
     @Transaction
     default void actualizarIdTareo(String id, String nuevoId) {

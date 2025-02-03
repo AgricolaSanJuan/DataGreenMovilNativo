@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
@@ -173,7 +176,8 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
                                                         String idTareo = tareos.getString(tareos.getColumnIndex("Id"));
                                                         AppDatabase db = DataGreenApp.getAppDatabase();
                                                         TareoDAO tareoDAO = db.tareoDAO();
-                                                        String last = tareoDAO.getLastId();
+                                                        String last = obtenerUltimoIdDesdeCorrelativo();
+//                                                        String last = tareoDAO.getLastId();
                                                         String nuevoId = Funciones.siguienteCorrelativo(last, 'A');
                                                         tareoDAO.actualizarIdTareo(idTareo, nuevoId);
                                                         ConexionSqlite objSqlite = new ConexionSqlite(Context, DataGreenApp.DB_VERSION());
@@ -264,6 +268,18 @@ public class cls_05000100_Item_RecyclerView extends RecyclerView.Adapter<cls_050
     private void actualizarTextos(MyViewHolder holder, Cursor tareos) {
         tareos.moveToPosition(holder.getAdapterPosition());
 
+    }
+
+    public String obtenerUltimoIdDesdeCorrelativo(){
+        SharedPreferences sharedPreferences = Context.getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
+        TareoDAO tareoDAO = DataGreenApp.getAppDatabase().tareoDAO();
+        String mac, imei;
+        mac = sharedPreferences.getString("MAC", "!MAC");
+        imei = sharedPreferences.getString("IMEI", "!IMEI");
+        String query = "select COALESCE(Correlativo, '000000000') Correlativo from trx_correlativos where MacDispositivoMovil = '"+mac+"' AND ImeiDispositivoMovil = '"+imei+"'";
+        SupportSQLiteQuery supportSQLiteQuery = new SimpleSQLiteQuery(query);
+
+        return tareoDAO.getLasIdFromCorrelativos(supportSQLiteQuery);
     }
 
     @Override
