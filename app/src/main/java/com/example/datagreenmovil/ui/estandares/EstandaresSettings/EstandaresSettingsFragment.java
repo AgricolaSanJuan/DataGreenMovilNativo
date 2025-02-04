@@ -24,6 +24,7 @@ import com.example.datagreenmovil.DAO.Estandares.MstTiposEstandar.MstTiposEstand
 import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNew;
 import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNewDAO;
 import com.example.datagreenmovil.DataGreenApp;
+import com.example.datagreenmovil.Helpers.SQLMapper;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.databinding.FragmentEstandaresSettingsBinding;
 
@@ -241,38 +242,7 @@ public class EstandaresSettingsFragment extends Fragment {
                 ConexionBD sql = new ConexionBD(ctx);
                 ResultSet rsEstandares = sql.doItBaby("SELECT x.* FROM DataGreenMovil..trx_estandares_new x", null);
                 List<TrxEstandaresNew> estandaresNewList = new ArrayList<>();
-                while (rsEstandares.next()) {
-                    //                    DEFINIMOS UN NUEVO MODELO DE ESTANDAR
-                    TrxEstandaresNew estandaresNew = new TrxEstandaresNew();
-
-                    estandaresNew.setId(rsEstandares.getInt("ID"));
-                    estandaresNew.setIdEmpresa(rsEstandares.getString("idempresa"));
-                    estandaresNew.setIdTipoEstandar(rsEstandares.getString("IdTipoEstandar"));
-                    estandaresNew.setIdActividad(rsEstandares.getString("idactividad"));
-                    estandaresNew.setIdLabor(rsEstandares.getString("idlabor"));
-                    estandaresNew.setPeriodo(rsEstandares.getString("periodo"));
-                    estandaresNew.setFechaInicio(rsEstandares.getString("fecha_inicio"));
-                    estandaresNew.setFechaFinal(rsEstandares.getString("fecha_final"));
-                    estandaresNew.setIdMedidaEstandar(rsEstandares.getInt("IdMedidaEstandar"));
-                    estandaresNew.setCantidad(rsEstandares.getDouble("cantidad"));
-                    estandaresNew.setPrecio(rsEstandares.getDouble("precio"));
-                    estandaresNew.setBase(rsEstandares.getDouble("base"));
-                    estandaresNew.setPrecioBase(rsEstandares.getDouble("precio_base"));
-                    estandaresNew.setIdTipoBonoEstandar(rsEstandares.getInt("IdTipoBonoEstandar"));
-                    estandaresNew.setValMinExcedente(rsEstandares.getDouble("valmin_excedente"));
-                    estandaresNew.setHoras(rsEstandares.getDouble("HORAS"));
-                    estandaresNew.setIdTipoCostoEstandar(rsEstandares.getInt("IdTipoCostoEstandar"));
-                    estandaresNew.setIdConsumidor(rsEstandares.getString("IDCONSUMIDOR"));
-                    estandaresNew.setPorcentajeValidExcedente(rsEstandares.getDouble("porcentajevalid_excedente"));
-                    estandaresNew.setFactorPrecio(rsEstandares.getDouble("factor_precio"));
-                    estandaresNew.setDniUsuarioCrea(rsEstandares.getString("DniUsuarioCrea"));
-                    estandaresNew.setFechaHoraCrea(rsEstandares.getString("FechaHoraCrea"));
-                    estandaresNew.setDniUsuarioActualiza(rsEstandares.getString("DniUsuarioActualiza"));
-                    estandaresNew.setFechaHoraActualiza(rsEstandares.getString("FechaHoraActualiza"));
-
-                    estandaresNewList.add(estandaresNew);
-                }
-
+                estandaresNewList = SQLMapper.mapResultSetToList(rsEstandares, TrxEstandaresNew.class);
                 estandaresNewDAO.sincronizarEstandares(estandaresNewList);
 //                Swal.info(ctx, "Bien!", "Se han insertado " + estandaresNewList.size() + " nuevos registros.", 5000);
             } catch (Exception e) {
