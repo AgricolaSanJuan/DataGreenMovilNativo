@@ -49,7 +49,7 @@ public class DataGreenApp extends Application {
         super.onCreate();
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         //        INICIAMOS EL SERVICIO QUE NOS INDICA SI LA APLICACION TIENE UNA ACTUALIZACIÓN
-        startService(new Intent(this, DataGreenUpdateService.class).putExtra("activity_context", this.getClass().getName()));
+//        startService(new Intent(this, DataGreenUpdateService.class).putExtra("activity_context", this.getClass().getName()));
         AndroidThreeTen.init(this);
         appContext = getApplicationContext();
 

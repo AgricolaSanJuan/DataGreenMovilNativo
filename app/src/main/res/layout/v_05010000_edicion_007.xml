@@ -634,14 +634,43 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <Switch
-                            android:id="@+id/swTipoTareo"
+                            android:id="@+id/swAsistencia"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="INGRESO"
-                            android:textOff="INGRESO"
-                            android:textOn="SALIDA"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txvAsistencia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/auxiliar_02"
+                            android:text="INGRESO"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/swAsistencia"
+                            app:layout_constraintStart_toEndOf="@+id/swAsistencia"
+                            app:layout_constraintTop_toTopOf="@+id/swAsistencia" />
+
+                        <Switch
+                            android:id="@+id/swTarear"
+                            style="SwitchTextRightStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/swAsistencia" />
+
+                        <TextView
+                            android:id="@+id/txvTarear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/auxiliar_02"
+                            android:text="TAREAR"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/swTarear"
+                            app:layout_constraintStart_toEndOf="@+id/swTarear"
+                            app:layout_constraintTop_toTopOf="@+id/swTarear" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/Last"
@@ -674,13 +703,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_margin="2dp"
-                            android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_redondeado_gris_transparente"
                             android:orientation="horizontal"
                             android:paddingStart="7dp"
                             android:paddingEnd="7dp"
-                            app:layout_constraintTop_toBottomOf="@+id/swTipoTareo"
+                            app:layout_constraintTop_toBottomOf="@+id/swTarear"
                             tools:layout_editor_absoluteX="2dp">
 
                             <TextView
@@ -773,7 +801,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/c007_rvw_Detalle_v"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="true"
                 app:layout_constraintBottom_toTopOf="@+id/c007_lly_Controles_v"
@@ -788,6 +816,7 @@
         android:id="@+id/c007_lly_Controles_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toTopOf="@+id/c007_lly_StatusInferior_v"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -807,7 +836,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/c007_fab_Guardar_v"
-            android:layout_width="wrap_content"
+            android:layout_width="1px"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:visibility="invisible"
@@ -839,7 +868,7 @@
             android:src="@drawable/edit"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/c007_fab_Guardar_v"
+            app:layout_constraintEnd_toStartOf="@+id/c007_fab_Duplicar_v"
             app:layout_constraintTop_toTopOf="parent"
             app:maxImageSize="25dp" />
 

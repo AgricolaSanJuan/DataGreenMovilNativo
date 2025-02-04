@@ -870,8 +870,10 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       doItBaby("PRAGMA FOREIGN_KEYS=1;", null, "WRITE");
 
       String query = "UPDATE trx_tareos SET ID='"+ newId +"' where ID = '"+oldId+"'";
+      String queryDetails = "UPDATE trx_tareos_detalle SET IDTareo='"+ newId +"' where IDTareo = '"+oldId+"'";
 
       doItBaby(query, null, "WRITE");
+      doItBaby(queryDetails, null, "WRITE");
 
       doItBaby("PRAGMA FOREIGN_KEYS=0;", null, "WRITE");
       return true;

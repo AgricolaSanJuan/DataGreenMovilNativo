@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "fe5e89cd4e1b44e648948314baedd24a",
+    "identityHash": "1ad36ea13298733089974cca0090672f",
     "entities": [
       {
         "tableName": "mst_tipos_estandar",
@@ -303,66 +303,42 @@
         "foreignKeys": []
       },
       {
-        "tableName": "trx_Tareos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idEmpresa` TEXT, `id` TEXT NOT NULL, `idUsuario` TEXT, `fecha` TEXT, `idTurno` TEXT, `idEstado` TEXT, `totalDetalles` INTEGER NOT NULL, `totalHoras` REAL NOT NULL, `totalRdtos` REAL NOT NULL, `observaciones` TEXT, PRIMARY KEY(`id`))",
+        "tableName": "mst_Estados",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `Dex` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`Id`))",
         "fields": [
           {
-            "fieldPath": "idEmpresa",
-            "columnName": "idEmpresa",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
             "fieldPath": "id",
-            "columnName": "id",
+            "columnName": "Id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "idUsuario",
-            "columnName": "idUsuario",
+            "fieldPath": "dex",
+            "columnName": "Dex",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "fecha",
-            "columnName": "fecha",
+            "fieldPath": "idUsuarioCrea",
+            "columnName": "IdUsuarioCrea",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "idTurno",
-            "columnName": "idTurno",
+            "fieldPath": "fechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "idEstado",
-            "columnName": "idEstado",
+            "fieldPath": "idUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "totalDetalles",
-            "columnName": "totalDetalles",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "totalHoras",
-            "columnName": "totalHoras",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "totalRdtos",
-            "columnName": "totalRdtos",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "observaciones",
-            "columnName": "observaciones",
+            "fieldPath": "fechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -370,127 +346,770 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "Id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_mst_Estados_IdUsuarioCrea",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioCrea"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Estados_IdUsuarioCrea` ON `${TABLE_NAME}` (`IdUsuarioCrea`)"
+          },
+          {
+            "name": "index_mst_Estados_IdUsuarioActualiza",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioActualiza"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Estados_IdUsuarioActualiza` ON `${TABLE_NAME}` (`IdUsuarioActualiza`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
-        "tableName": "trx_Tareos_Detalle",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idEmpresa` TEXT, `idTareo` TEXT NOT NULL, `item` INTEGER NOT NULL, `dni` TEXT, `idPlanilla` TEXT, `nombres` TEXT, `idCultivo` TEXT, `cultivo` TEXT, `idVariedad` TEXT, `variedad` TEXT, `idConsumidor` TEXT, `consumidor` TEXT, `idActividad` TEXT, `actividad` TEXT, `idLabor` TEXT, `labor` TEXT, `rdtos` REAL, `horas` REAL, `observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`idTareo`, `item`))",
+        "tableName": "mst_Dias",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Dia` TEXT NOT NULL, `Semana` INTEGER NOT NULL, `Mes` INTEGER NOT NULL, `Anio` TEXT, `NombreDia` TEXT, `NombreDiaCorto` TEXT, `NombreMes` TEXT, `SemanaNisira` TEXT, `Periodo` TEXT, `InicioSemanaNisira` TEXT, `FinSemanaNisira` TEXT, `InicioPeriodo` TEXT, `FinPeriodo` TEXT, PRIMARY KEY(`Dia`))",
         "fields": [
           {
-            "fieldPath": "idEmpresa",
-            "columnName": "idEmpresa",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "idTareo",
-            "columnName": "idTareo",
+            "fieldPath": "dia",
+            "columnName": "Dia",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "item",
-            "columnName": "item",
+            "fieldPath": "semana",
+            "columnName": "Semana",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "dni",
-            "columnName": "dni",
+            "fieldPath": "mes",
+            "columnName": "Mes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "anio",
+            "columnName": "Anio",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "idPlanilla",
-            "columnName": "idPlanilla",
+            "fieldPath": "nombreDia",
+            "columnName": "NombreDia",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreDiaCorto",
+            "columnName": "NombreDiaCorto",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreMes",
+            "columnName": "NombreMes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "semanaNisira",
+            "columnName": "SemanaNisira",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "periodo",
+            "columnName": "Periodo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "inicioSemanaNisira",
+            "columnName": "InicioSemanaNisira",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "finSemanaNisira",
+            "columnName": "FinSemanaNisira",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "inicioPeriodo",
+            "columnName": "InicioPeriodo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "finPeriodo",
+            "columnName": "FinPeriodo",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Dia"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mst_Dias_Semana",
+            "unique": false,
+            "columnNames": [
+              "Semana"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Dias_Semana` ON `${TABLE_NAME}` (`Semana`)"
+          },
+          {
+            "name": "index_mst_Dias_Mes",
+            "unique": false,
+            "columnNames": [
+              "Mes"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Dias_Mes` ON `${TABLE_NAME}` (`Mes`)"
+          },
+          {
+            "name": "index_mst_Dias_Anio",
+            "unique": false,
+            "columnNames": [
+              "Anio"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Dias_Anio` ON `${TABLE_NAME}` (`Anio`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_Empresas",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `NombreCorto` TEXT, `RazonSocial` TEXT, `Ruc` TEXT, `Direccion` TEXT, `Email` TEXT, `Telefono` TEXT, `IdEstado` TEXT, `FechaHoraCreacion` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nombreCorto",
+            "columnName": "NombreCorto",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "razonSocial",
+            "columnName": "RazonSocial",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ruc",
+            "columnName": "Ruc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "direccion",
+            "columnName": "Direccion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "Email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "telefono",
+            "columnName": "Telefono",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mst_Empresas_IdEstado",
+            "unique": false,
+            "columnNames": [
+              "IdEstado"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Empresas_IdEstado` ON `${TABLE_NAME}` (`IdEstado`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mst_Usuarios",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT NOT NULL, `Id` TEXT NOT NULL, `NombreUsuario` TEXT, `NroDocumento` TEXT, `Nombres` TEXT, `Paterno` TEXT, `Materno` TEXT, `FechaNacimiento` TEXT, `Suma` TEXT, `Permisos` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`IdEmpresa`, `Id`))",
+        "fields": [
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "IdEmpresa",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nombreUsuario",
+            "columnName": "NombreUsuario",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nroDocumento",
+            "columnName": "NroDocumento",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "nombres",
-            "columnName": "nombres",
+            "columnName": "Nombres",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "idCultivo",
-            "columnName": "idCultivo",
+            "fieldPath": "paterno",
+            "columnName": "Paterno",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "cultivo",
-            "columnName": "cultivo",
+            "fieldPath": "materno",
+            "columnName": "Materno",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "idVariedad",
-            "columnName": "idVariedad",
+            "fieldPath": "fechaNacimiento",
+            "columnName": "FechaNacimiento",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "variedad",
-            "columnName": "variedad",
+            "fieldPath": "suma",
+            "columnName": "Suma",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "permisos",
+            "columnName": "Permisos",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idUsuarioCrea",
+            "columnName": "IdUsuarioCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdEmpresa",
+            "Id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mst_Usuarios_Id",
+            "unique": true,
+            "columnNames": [
+              "Id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_mst_Usuarios_Id` ON `${TABLE_NAME}` (`Id`)"
+          },
+          {
+            "name": "index_mst_Usuarios_IdEmpresa",
+            "unique": false,
+            "columnNames": [
+              "IdEmpresa"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Usuarios_IdEmpresa` ON `${TABLE_NAME}` (`IdEmpresa`)"
+          },
+          {
+            "name": "index_mst_Usuarios_NroDocumento",
+            "unique": false,
+            "columnNames": [
+              "NroDocumento"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Usuarios_NroDocumento` ON `${TABLE_NAME}` (`NroDocumento`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_Turnos",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT NOT NULL, `Id` TEXT NOT NULL, `Dex` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, PRIMARY KEY(`IdEmpresa`, `Id`))",
+        "fields": [
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "IdEmpresa",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idUsuarioCrea",
+            "columnName": "IdUsuarioCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdEmpresa",
+            "Id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mst_Turnos_Id",
+            "unique": true,
+            "columnNames": [
+              "Id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_mst_Turnos_Id` ON `${TABLE_NAME}` (`Id`)"
+          },
+          {
+            "name": "index_mst_Turnos_IdEmpresa",
+            "unique": false,
+            "columnNames": [
+              "IdEmpresa"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Turnos_IdEmpresa` ON `${TABLE_NAME}` (`IdEmpresa`)"
+          },
+          {
+            "name": "index_mst_Turnos_IdEstado",
+            "unique": false,
+            "columnNames": [
+              "IdEstado"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Turnos_IdEstado` ON `${TABLE_NAME}` (`IdEstado`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "trx_Tareos",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT, `Id` TEXT NOT NULL, `Fecha` TEXT, `IdTurno` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, `FechaHoraTransferencia` TEXT, `TotalHoras` REAL, `TotalRendimientos` REAL, `TotalDetalles` INTEGER, `Observaciones` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEmpresa`) REFERENCES `mst_Empresas`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`Fecha`) REFERENCES `mst_Dias`(`Dia`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdTurno`) REFERENCES `mst_Turnos`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioCrea`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "IdEmpresa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fecha",
+            "columnName": "Fecha",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTurno",
+            "columnName": "IdTurno",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idUsuarioCrea",
+            "columnName": "IdUsuarioCrea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraCreacion",
+            "columnName": "FechaHoraCreacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraActualizacion",
+            "columnName": "FechaHoraActualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fechaHoraTransferencia",
+            "columnName": "FechaHoraTransferencia",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalHoras",
+            "columnName": "TotalHoras",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalRendimientos",
+            "columnName": "TotalRendimientos",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalDetalles",
+            "columnName": "TotalDetalles",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "observaciones",
+            "columnName": "Observaciones",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_trx_Tareos_IdEmpresa",
+            "unique": false,
+            "columnNames": [
+              "IdEmpresa"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdEmpresa` ON `${TABLE_NAME}` (`IdEmpresa`)"
+          },
+          {
+            "name": "index_trx_Tareos_Fecha",
+            "unique": false,
+            "columnNames": [
+              "Fecha"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Fecha` ON `${TABLE_NAME}` (`Fecha`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdTurno",
+            "unique": false,
+            "columnNames": [
+              "IdTurno"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdTurno` ON `${TABLE_NAME}` (`IdTurno`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdEstado",
+            "unique": false,
+            "columnNames": [
+              "IdEstado"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdEstado` ON `${TABLE_NAME}` (`IdEstado`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdUsuarioCrea",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioCrea"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdUsuarioCrea` ON `${TABLE_NAME}` (`IdUsuarioCrea`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdUsuarioActualiza",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioActualiza"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdUsuarioActualiza` ON `${TABLE_NAME}` (`IdUsuarioActualiza`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "mst_Empresas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEmpresa"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Dias",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "Fecha"
+            ],
+            "referencedColumns": [
+              "Dia"
+            ]
+          },
+          {
+            "table": "mst_Turnos",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdTurno"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioCrea"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trx_Tareos_Detalle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT, `IdTareo` TEXT NOT NULL, `Item` INTEGER NOT NULL, `Dni` TEXT, `IdPlanilla` TEXT, `IdConsumidor` TEXT, `IdCultivo` TEXT, `IdVariedad` TEXT, `IdActividad` TEXT, `IdLabor` TEXT, `SubTotalHoras` REAL, `SubTotalRendimiento` REAL, `Observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`IdTareo`, `Item`))",
+        "fields": [
+          {
+            "fieldPath": "idEmpresa",
+            "columnName": "IdEmpresa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idTareo",
+            "columnName": "IdTareo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "item",
+            "columnName": "Item",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dni",
+            "columnName": "Dni",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idPlanilla",
+            "columnName": "IdPlanilla",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idConsumidor",
-            "columnName": "idConsumidor",
+            "columnName": "IdConsumidor",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "consumidor",
-            "columnName": "consumidor",
+            "fieldPath": "idCultivo",
+            "columnName": "IdCultivo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idVariedad",
+            "columnName": "IdVariedad",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idActividad",
-            "columnName": "idActividad",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "actividad",
-            "columnName": "actividad",
+            "columnName": "IdActividad",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idLabor",
-            "columnName": "idLabor",
+            "columnName": "IdLabor",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "labor",
-            "columnName": "labor",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "rdtos",
-            "columnName": "rdtos",
+            "fieldPath": "subTotalHoras",
+            "columnName": "SubTotalHoras",
             "affinity": "REAL",
             "notNull": false
           },
           {
-            "fieldPath": "horas",
-            "columnName": "horas",
+            "fieldPath": "subTotalRendimiento",
+            "columnName": "SubTotalRendimiento",
             "affinity": "REAL",
             "notNull": false
           },
           {
             "fieldPath": "observacion",
-            "columnName": "observacion",
+            "columnName": "Observacion",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -516,18 +1135,82 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "idTareo",
-            "item"
+            "IdTareo",
+            "Item"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_trx_Tareos_Detalle_Dni",
+            "unique": false,
+            "columnNames": [
+              "Dni"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_Dni` ON `${TABLE_NAME}` (`Dni`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdPlanilla",
+            "unique": false,
+            "columnNames": [
+              "IdPlanilla"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdPlanilla` ON `${TABLE_NAME}` (`IdPlanilla`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdConsumidor",
+            "unique": false,
+            "columnNames": [
+              "IdConsumidor"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdConsumidor` ON `${TABLE_NAME}` (`IdConsumidor`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdCultivo",
+            "unique": false,
+            "columnNames": [
+              "IdCultivo"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdCultivo` ON `${TABLE_NAME}` (`IdCultivo`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdVariedad",
+            "unique": false,
+            "columnNames": [
+              "IdVariedad"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdVariedad` ON `${TABLE_NAME}` (`IdVariedad`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdActividad",
+            "unique": false,
+            "columnNames": [
+              "IdActividad"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdActividad` ON `${TABLE_NAME}` (`IdActividad`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdLabor",
+            "unique": false,
+            "columnNames": [
+              "IdLabor"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdLabor` ON `${TABLE_NAME}` (`IdLabor`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fe5e89cd4e1b44e648948314baedd24a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1ad36ea13298733089974cca0090672f')"
     ]
   }
 }

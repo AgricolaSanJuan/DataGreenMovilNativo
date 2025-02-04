@@ -1,45 +1,71 @@
 package com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 
 import com.example.datagreenmovil.Conexiones.AppDatabase;
 import com.example.datagreenmovil.DAO.Tareo.TrxTareo.Tareo;
 import com.example.datagreenmovil.DataGreenApp;
 
-@Entity(tableName = "trx_Tareos_Detalle", primaryKeys = {"idTareo", "item"})
+@Entity(tableName = "trx_Tareos_Detalle", primaryKeys = {"IdTareo", "Item"},
+        indices = {
+                @Index(value = {"Dni"}),
+                @Index(value = {"IdPlanilla"}),
+                @Index(value = {"IdConsumidor"}),
+                @Index(value = {"IdCultivo"}),
+                @Index(value = {"IdVariedad"}),
+                @Index(value = {"IdActividad"}),
+                @Index(value = {"IdLabor"})
+        })
 public class TareoDetalles {
+    @ColumnInfo(name = "IdEmpresa")
     private String idEmpresa;
     @NonNull
+    @ColumnInfo(name = "IdTareo")
     private String idTareo;
     @NonNull
+    @ColumnInfo(name = "Item")
     private int item;
+    @ColumnInfo(name = "Dni")
     private String dni;
+    @ColumnInfo(name = "IdPlanilla")
     private String idPlanilla;
+    @ColumnInfo(name = "IdConsumidor")
     private String idConsumidor;
     @Ignore
     private String consumidor;
     @Ignore
     private String nombres;
+    @ColumnInfo(name = "IdCultivo")
     private String idCultivo;
     @Ignore
     private String cultivo;
+    @ColumnInfo(name = "IdVariedad")
     private String idVariedad;
     @Ignore
     private String variedad;
-
+    @ColumnInfo(name = "IdActividad")
     private String idActividad;
     @Ignore
     private String actividad;
+    @ColumnInfo(name = "IdLabor")
     private String idLabor;
     @Ignore
     private String labor;
+    @ColumnInfo(name = "SubTotalHoras")
     private Double subTotalHoras;
+    @ColumnInfo(name = "SubTotalRendimiento")
     private Double subTotalRendimiento;
+    @ColumnInfo(name = "Observacion")
     private String observacion;
+    @ColumnInfo(name = "ingreso")
     private String ingreso;
+    @ColumnInfo(name = "salida")
     private String salida;
+    @ColumnInfo(name = "homologar")
     private int homologar;
 
     @Ignore
@@ -47,6 +73,31 @@ public class TareoDetalles {
 
     public TareoDetalles() {
         db = DataGreenApp.getAppDatabase();
+    }
+
+    public TareoDetalles(TareoDetalles detalle){
+        this.idEmpresa = detalle.idEmpresa;
+        this.idTareo = detalle.idTareo;
+        this.item = detalle.item;
+        this.dni = detalle.dni;
+        this.idPlanilla = detalle.idPlanilla;
+        this.idConsumidor = detalle.idConsumidor;
+        this.consumidor = detalle.consumidor;
+        this.nombres = detalle.nombres;
+        this.idCultivo = detalle.idCultivo;
+        this.cultivo = detalle.cultivo;
+        this.idVariedad = detalle.idVariedad;
+        this.variedad = detalle.variedad;
+        this.idActividad = detalle.idActividad;
+        this.actividad = detalle.actividad;
+        this.idLabor = detalle.idLabor;
+        this.labor = detalle.labor;
+        this.subTotalHoras = detalle.subTotalHoras;
+        this.subTotalRendimiento = detalle.subTotalRendimiento;
+        this.observacion = detalle.observacion;
+        this.ingreso = detalle.ingreso;
+        this.salida = detalle.salida;
+        this.homologar = detalle.homologar;
     }
 
 //    public TareoDetalles(String idTareo) {

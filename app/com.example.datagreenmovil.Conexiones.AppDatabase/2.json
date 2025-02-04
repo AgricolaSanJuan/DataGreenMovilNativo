@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "2a5ed5e8d0c48d6a2393c4ca3555d0e5",
+    "identityHash": "bf8eec076e8253f9a4181575efc93643",
     "entities": [
       {
         "tableName": "mst_tipos_estandar",
@@ -720,19 +720,19 @@
       },
       {
         "tableName": "trx_Tareos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `IdEmpresa` TEXT, `Fecha` TEXT, `IdTurno` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, `FechaHoraTransferencia` TEXT, `TotalHoras` REAL, `TotalRendimientos` REAL, `TotalDetalles` INTEGER, `Observaciones` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEmpresa`) REFERENCES `mst_Empresas`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`Fecha`) REFERENCES `mst_Dias`(`Dia`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdTurno`) REFERENCES `mst_Turnos`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioCrea`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT, `Id` TEXT NOT NULL, `Fecha` TEXT, `IdTurno` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, `FechaHoraTransferencia` TEXT, `TotalHoras` REAL, `TotalRendimientos` REAL, `TotalDetalles` INTEGER, `Observaciones` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEmpresa`) REFERENCES `mst_Empresas`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`Fecha`) REFERENCES `mst_Dias`(`Dia`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdTurno`) REFERENCES `mst_Turnos`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioCrea`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "Id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "idEmpresa",
             "columnName": "IdEmpresa",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "fecha",
@@ -885,83 +885,83 @@
       },
       {
         "tableName": "trx_Tareos_Detalle",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idEmpresa` TEXT, `idTareo` TEXT NOT NULL, `item` INTEGER NOT NULL, `dni` TEXT, `idPlanilla` TEXT, `idConsumidor` TEXT, `idCultivo` TEXT, `idVariedad` TEXT, `idActividad` TEXT, `idLabor` TEXT, `subTotalHoras` REAL, `subTotalRendimiento` REAL, `observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`idTareo`, `item`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT, `IdTareo` TEXT NOT NULL, `Item` INTEGER NOT NULL, `Dni` TEXT, `IdPlanilla` TEXT, `IdConsumidor` TEXT, `IdCultivo` TEXT, `IdVariedad` TEXT, `IdActividad` TEXT, `IdLabor` TEXT, `SubTotalHoras` REAL, `SubTotalRendimiento` REAL, `Observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`IdTareo`, `Item`))",
         "fields": [
           {
             "fieldPath": "idEmpresa",
-            "columnName": "idEmpresa",
+            "columnName": "IdEmpresa",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idTareo",
-            "columnName": "idTareo",
+            "columnName": "IdTareo",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "item",
-            "columnName": "item",
+            "columnName": "Item",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "dni",
-            "columnName": "dni",
+            "columnName": "Dni",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idPlanilla",
-            "columnName": "idPlanilla",
+            "columnName": "IdPlanilla",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idConsumidor",
-            "columnName": "idConsumidor",
+            "columnName": "IdConsumidor",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idCultivo",
-            "columnName": "idCultivo",
+            "columnName": "IdCultivo",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idVariedad",
-            "columnName": "idVariedad",
+            "columnName": "IdVariedad",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idActividad",
-            "columnName": "idActividad",
+            "columnName": "IdActividad",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idLabor",
-            "columnName": "idLabor",
+            "columnName": "IdLabor",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "subTotalHoras",
-            "columnName": "subTotalHoras",
+            "columnName": "SubTotalHoras",
             "affinity": "REAL",
             "notNull": false
           },
           {
             "fieldPath": "subTotalRendimiento",
-            "columnName": "subTotalRendimiento",
+            "columnName": "SubTotalRendimiento",
             "affinity": "REAL",
             "notNull": false
           },
           {
             "fieldPath": "observacion",
-            "columnName": "observacion",
+            "columnName": "Observacion",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -987,8 +987,8 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "idTareo",
-            "item"
+            "IdTareo",
+            "Item"
           ]
         },
         "indices": [],
@@ -998,7 +998,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2a5ed5e8d0c48d6a2393c4ca3555d0e5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bf8eec076e8253f9a4181575efc93643')"
     ]
   }
 }

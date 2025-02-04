@@ -24,6 +24,7 @@ import com.example.datagreenmovil.DAO.Estandares.MstTiposCostoEstandar.MstTiposC
 import com.example.datagreenmovil.DAO.Estandares.MstTiposEstandar.MstTiposEstandarDAO;
 import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNew;
 import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNewDAO;
+import com.example.datagreenmovil.DAO.Evaluaciones.MstAlas.MstAlas;
 import com.example.datagreenmovil.DataGreenApp;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
@@ -104,6 +105,14 @@ public class DialogEstandaresForm extends DialogFragment {
         binding.cboTipoCosto.setOnItemClickListener((parent, view, position, id) -> {
             DaoItem selectedItem = (DaoItem) parent.getItemAtPosition(position);
             estandarActual.setIdTipoCostoEstandar(Integer.parseInt(selectedItem.getId()));
+        });
+
+//       ADAPTADOR PARA COMBOS DE ALAS
+        DaoAdapter AlasAdapter = new DaoAdapter(context, listaAlas);
+        setAdapterInArray(binding.etAla, AlasAdapter);
+        binding.etAla.setOnItemClickListener((parent, view, position, id) -> {
+            DaoItem selectedItem = (DaoItem) parent.getItemAtPosition(position);
+            estandarActual.setIdTipoBonoEstandar(Integer.parseInt(selectedItem.getId()));
         });
 
         estandarActual.setId(11);
@@ -211,8 +220,6 @@ public class DialogEstandaresForm extends DialogFragment {
             int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
             int bottom = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
             dialogView.setPadding(left, top, right, bottom);
-
-
         });
 
         return dialog;

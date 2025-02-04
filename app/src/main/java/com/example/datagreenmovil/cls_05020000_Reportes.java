@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,11 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -30,16 +27,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.datagreenmovil.Conexiones.ConexionBD;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
+import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.DTO.ReporteDTO;
+import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.ReportesHelper;
 import com.example.datagreenmovil.Entidades.ClaveValor;
 import com.example.datagreenmovil.Entidades.ConfiguracionLocal;
 import com.example.datagreenmovil.Entidades.PopUpCalendario;
 import com.example.datagreenmovil.Entidades.Tabla;
 import com.example.datagreenmovil.Logica.Funciones;
+import com.example.datagreenmovil.Logica.Swal;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -74,19 +75,20 @@ public class cls_05020000_Reportes extends AppCompatActivity {
 
 
     DatePickerDialog.OnDateSetListener setListener;
+    private ReportesHelper reportesHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_05020000_reportes_008);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Log.i("AEA", "CREATE");
         //@Jota:2023-05-27 -> INICIO DE LINEAS DE CODIGO COMUNES PARA TODAS LAS ACTIVIDADES
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         ctx = this;
-        try{
-            if(getIntent().getExtras()!=null){
-                objConfLocal=(ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
+        try {
+            if (getIntent().getExtras() != null) {
+                objConfLocal = (ConfiguracionLocal) getIntent().getSerializableExtra("ConfiguracionLocal");
             }
             objSql = new ConexionBD(this);
             objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
@@ -209,6 +211,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
             });
 
             miConsumidor.setOnClickListener(menuItem -> {
+
                 bnvReporte.setSelectedItemId(R.id.miConsumidor);
 
                 //                SIMULAMOS LA SELECCIÓN
@@ -259,8 +262,8 @@ public class cls_05020000_Reportes extends AppCompatActivity {
             //METER CODIGO PROPIO DE CADA ACTIVIDAD DESPUES DE ESTA LINEA
             //...
 
-        }catch (Exception ex){
-            Funciones.mostrarError(this,ex);
+        } catch (Exception ex) {
+            Funciones.mostrarError(this, ex);
         }
     }
 
@@ -305,6 +308,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
         miConsumidor = findViewById(R.id.miConsumidor);
         miActividad = findViewById(R.id.miActividad);
     }
+
     public void mostrarMenuUsuario(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this::onMenuItemClick);
@@ -313,18 +317,17 @@ public class cls_05020000_Reportes extends AppCompatActivity {
     }
 
     public boolean onMenuItemClick(MenuItem item) {
-        try{
+        try {
             int idControlClickeado = item.getItemId();
-            if (idControlClickeado==R.id.opc_00000001_cambiar_clave_usuario_v){
-                dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this,objConfLocal,objSqlite,this);
+            if (idControlClickeado == R.id.opc_00000001_cambiar_clave_usuario_v) {
+                dlg_PopUp = Funciones.obtenerDialogParaCambiarClave(this, objConfLocal, objSqlite, this);
                 dlg_PopUp.show();
-            } else if (idControlClickeado==R.id.opc_00000001_cerrar_sesion_v) {
-                dlg_PopUp = Funciones.obtenerDialogParaCerrarSesion(this,objConfLocal,objSqlite,this);
+            } else if (idControlClickeado == R.id.opc_00000001_cerrar_sesion_v) {
+                dlg_PopUp = Funciones.obtenerDialogParaCerrarSesion(this, objConfLocal, objSqlite, this);
                 dlg_PopUp.show();
-            }
-            else return false;
-        }catch(Exception ex){
-            Funciones.mostrarError(this,ex);
+            } else return false;
+        } catch (Exception ex) {
+            Funciones.mostrarError(this, ex);
             return false;
         }
         return true;
@@ -333,7 +336,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
     public void onClick(View view) {
         try {
             int idControlClickeado = view.getId();
-            if (idControlClickeado == R.id.c008_txv_PushTituloVentana_v){
+            if (idControlClickeado == R.id.c008_txv_PushTituloVentana_v) {
                 Funciones.popUpTablasPendientesDeEnviar(this);
             } else if (idControlClickeado == R.id.c008_txv_PushRed_v) {
                 objSql.probarConexion(objConfLocal);
@@ -359,7 +362,7 @@ public class cls_05020000_Reportes extends AppCompatActivity {
 //            }
             else throw new IllegalStateException("Click sin programacion: " + view.getId());
         } catch (Exception ex) {
-            Funciones.mostrarError(this,ex);
+            Funciones.mostrarError(this, ex);
         }
     }
     //@Jota:
@@ -389,13 +392,13 @@ public class cls_05020000_Reportes extends AppCompatActivity {
                     List<String> p = new ArrayList<>();
                     p.add(sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA"));
                     p.add(s_ListarDesde);
-                    Tabla t = new Tabla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER SUPERVISORES X DIA"),p,"READ"));
-                    if(t.Filas.size()>0){
-                        Funciones.cargarSpinner(cls_05020000_Reportes.this,spi_TareosReportesActivity_Supervisores,t,0,1);
-                        if(t.Filas.size() > 0){
+                    Tabla t = new Tabla(objSqlite.doItBaby(objSqlite.obtQuery("OBTENER SUPERVISORES X DIA"), p, "READ"));
+                    if (t.Filas.size() > 0) {
+                        Funciones.cargarSpinner(cls_05020000_Reportes.this, spi_TareosReportesActivity_Supervisores, t, 0, 1);
+                        if (t.Filas.size() > 0) {
                             spi_TareosReportesActivity_Supervisores.setSelection(0);
                         }
-                    }else{
+                    } else {
                         spi_TareosReportesActivity_Supervisores.setAdapter(null);
                         rcv_TareosReportes_RCV1.setAdapter(null);
                         rcv_TareosReportes_RCV2.setAdapter(null);
@@ -418,90 +421,100 @@ public class cls_05020000_Reportes extends AppCompatActivity {
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int anio, int mes, int dia) {
-                try{
+                try {
                     mes = mes + 1;
-                    diaSeleccionado =dia;
-                    mesSeleccionado =mes;
-                    anioSeleccionado =anio;
+                    diaSeleccionado = dia;
+                    mesSeleccionado = mes;
+                    anioSeleccionado = anio;
                     //String fec =  (dia  < 10 ? "0" + dia : dia) + "/" + (mes < 10 ? "0" + mes : mes) + "/" + anio; //  day + "/" + month + "/" + year;
-                    fechaSeleccionada = (dia  < 10 ? "0" + dia : dia) + "/" + (mes < 10 ? "0" + mes : mes) + "/" + anio; //  day + "/" + month + "/" + year;
+                    fechaSeleccionada = (dia < 10 ? "0" + dia : dia) + "/" + (mes < 10 ? "0" + mes : mes) + "/" + anio; //  day + "/" + month + "/" + year;
 //                    rad_TareosReportesActivity_Fecha.setText(fechaSeleccionada);
-                    fechaSeleccionada = "2023-12-26" ;
-                }catch (Exception ex){
-                    Funciones.mostrarError(cls_05020000_Reportes.super.getBaseContext(),ex);
+                    fechaSeleccionada = "2023-12-26";
+                } catch (Exception ex) {
+                    Funciones.mostrarError(cls_05020000_Reportes.super.getBaseContext(), ex);
                 }
             }
         };
     }
 
     private void setearSpinnerSupervisoresDisponibles() {
-        try{
-            spi_TareosReportesActivity_Supervisores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        try {
+            spi_TareosReportesActivity_Supervisores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
-                    try{
-                        ClaveValor obj = (ClaveValor)(parent.getItemAtPosition(position));
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        ClaveValor obj = (ClaveValor) (parent.getItemAtPosition(position));
                         idSupervisorSeleccionado = obj.getClave();
                         nombreSupervisorSeleccionado = obj.getValor();
                         obtenerReporte();
-                    }catch (Exception ex){
-                        Funciones.mostrarError(cls_05020000_Reportes.super.getBaseContext(),ex);
+                    } catch (Exception ex) {
+                        Funciones.mostrarError(cls_05020000_Reportes.super.getBaseContext(), ex);
                     }
                 }
+
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {}
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             });
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+        } catch (Exception ex) {
+            Funciones.mostrarError(this, ex);
         }
     }
 
     private void obtenerReporte() {
-        try{
-            String idUsuarioActual = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
-            List<String> p = new ArrayList<>();
-            p.add(sharedPreferences.getString("ID_EMPRESA","!ID_EMPRESA"));
-            p.add(fechaSeleccionada);
-            p.add(idUsuarioActual);
-            Log.i("query1",  objSqlite.obtQuery("TAREOS REPORTE RESUMEN 1"));
-            Cursor c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 1"),p,"READ");
-            inflarRecyclerView1(c);
-            c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 2"),p,"READ");
-            inflarRecyclerView2(c);
-            c = objSqlite.doItBaby(objSqlite.obtQuery("TAREOS REPORTE RESUMEN 3"),p,"READ");
-            inflarRecyclerView3(c);
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+
+//        INICIALIZAMOS LOS HELPER DE LOS REPORTES
+        String idUsuarioActual = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
+        String idEmpresa = sharedPreferences.getString("ID_EMPRESA", "!ID_EMPRESA");
+        String fecha = fechaSeleccionada;
+        reportesHelper = new ReportesHelper(idEmpresa, idUsuarioActual, fecha);
+//        INICIALIZAMOS LOS HELPER DE LOS REPORTES
+        try {
+            inflarRecyclerView1();
+            inflarRecyclerView2();
+            inflarRecyclerView3();
+        }catch (Exception e){
+            Log.e("ERRORMIGRATE", e.toString());
+            Swal.error(ctx, "error", e.toString(), 15000);
         }
     }
 
-    private void inflarRecyclerView3(Cursor c) {
-        try{
-            cls_05020300_Resumen3 adaptadorRcv = new cls_05020300_Resumen3(this,c);
-            rcv_TareosReportes_RCV3.setAdapter(adaptadorRcv);
-            rcv_TareosReportes_RCV3.setLayoutManager(new LinearLayoutManager(this));
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+    private void inflarRecyclerView3() {
+        String query = "";
+        try {
+            query = objSqlite.obtQuery("TAREOS REPORTE RESUMEN 3");
+        } catch (Exception e) {
+            Swal.error(ctx, "info", e.toString(), 5000);
         }
+        List<ReporteDTO> reporte3 = reportesHelper.obtenerReporteTareos(query);
+        cls_05020300_Resumen3 adaptadorRcv = new cls_05020300_Resumen3(ctx, reporte3);
+        rcv_TareosReportes_RCV3.setAdapter(adaptadorRcv);
+        rcv_TareosReportes_RCV3.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void inflarRecyclerView2(Cursor c) {
-        try{
-            cls_05020200_Resumen2 adaptadorRcv = new cls_05020200_Resumen2(this,c);
-            rcv_TareosReportes_RCV2.setAdapter(adaptadorRcv);
-            rcv_TareosReportes_RCV2.setLayoutManager(new LinearLayoutManager(this));
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+    private void inflarRecyclerView2() {
+        String query = "";
+        try {
+            query = objSqlite.obtQuery("TAREOS REPORTE RESUMEN 2");
+        } catch (Exception e) {
+            Swal.error(ctx, "info", e.toString(), 5000);
         }
+        List<ReporteDTO> reporte2 = reportesHelper.obtenerReporteTareos(query);
+        cls_05020200_Resumen2 adaptadorRcv = new cls_05020200_Resumen2(ctx, reporte2);
+        rcv_TareosReportes_RCV2.setAdapter(adaptadorRcv);
+        rcv_TareosReportes_RCV2.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void inflarRecyclerView1(Cursor c) {
-        try{
-            cls_05020100_Resumen1 adaptadorRcv = new cls_05020100_Resumen1(this,c);
-            rcv_TareosReportes_RCV1.setAdapter(adaptadorRcv);
-            rcv_TareosReportes_RCV1.setLayoutManager(new LinearLayoutManager(this));
-        }catch (Exception ex){
-             Funciones.mostrarError(this,ex);
+    private void inflarRecyclerView1() {
+        String query = "";
+        try {
+            query = objSqlite.obtQuery("TAREOS REPORTE RESUMEN 1");
+        } catch (Exception e) {
+            Swal.error(ctx, "info", e.toString(), 5000);
         }
+        List<ReporteDTO> reporte1 = reportesHelper.obtenerReporteTareos(query);
+        cls_05020100_Resumen1 adaptadorRcv = new cls_05020100_Resumen1(ctx, reporte1);
+        rcv_TareosReportes_RCV1.setAdapter(adaptadorRcv);
+        rcv_TareosReportes_RCV1.setLayoutManager(new LinearLayoutManager(this));
     }
 }

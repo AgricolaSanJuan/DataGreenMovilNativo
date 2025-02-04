@@ -1,5 +1,6 @@
 package com.example.datagreenmovil;
 
+import android.content.Context;
 import android.database.Cursor;
 import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -9,46 +10,48 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.DTO.ReporteDTO;
+
+import java.util.List;
+
 public class cls_05020300_Resumen3 extends RecyclerView.Adapter<cls_05020300_Resumen3.MyViewHolder> {
 
-    android.content.Context Context;
-    Cursor cursorData;
-    //ConfiguracionLocal objConfLocal;
+    List<ReporteDTO> reporteDTO;
+    Context ctx;
 
-    public cls_05020300_Resumen3(android.content.Context ct, Cursor data){
-        Context = ct;
-        cursorData = data;
-        // objConfLocal= cl;
+    public cls_05020300_Resumen3(Context ctx, List<ReporteDTO> reporteDTO) {
+        this.ctx = ctx;
+        this.reporteDTO = reporteDTO;
     }
 
     @NonNull
     @Override
     public cls_05020300_Resumen3.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(Context);
+        LayoutInflater inflater=LayoutInflater.from(ctx);
         View view=inflater.inflate(R.layout.v_05020300_resumen3_013,parent,false);
         return new cls_05020300_Resumen3.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull cls_05020300_Resumen3.MyViewHolder holder, int position) {
-        cursorData.moveToPosition(position);
-        holder.txv_IdSupervisor.setText(cursorData.getString(0));
-        holder.txv_Fecha.setText(cursorData.getString(1));
-        holder.txv_Consumidor.setText(cursorData.getString(2));
-        holder.txv_Actividad.setText(cursorData.getString(3));
-        holder.txv_Labor.setText(cursorData.getString(4));
-        holder.txv_Horas.setText(cursorData.getString(5));
-        holder.txv_Rdtos.setText(cursorData.getString(6));
-        holder.txv_Personas.setText(cursorData.getString(7));
-        holder.txv_Jornales.setText(cursorData.getString(8));
-        holder.txv_Promedio.setText(cursorData.getString(9));
-        holder.txv_Items.setText(cursorData.getString(10));
+        ReporteDTO itemDTO = reporteDTO.get(position);
+        holder.txv_IdSupervisor.setText(itemDTO.getNombreUsuario());
+        holder.txv_Fecha.setText(itemDTO.getFecha());
+        holder.txv_Consumidor.setText(itemDTO.getConsumidor());
+        holder.txv_Actividad.setText(itemDTO.getActividad());
+        holder.txv_Labor.setText(itemDTO.getLabor());
+        holder.txv_Horas.setText(itemDTO.getHoras());
+        holder.txv_Rdtos.setText(itemDTO.getRendimientos());
+        holder.txv_Personas.setText(String.valueOf(itemDTO.getPersonas()));
+        holder.txv_Jornales.setText(itemDTO.getJornales());
+        holder.txv_Promedio.setText(itemDTO.getPromedio());
+        holder.txv_Items.setText(String.valueOf(itemDTO.getItems()));
     }
 
     @Override
     public int getItemCount()
     {
-        return cursorData.getCount();
+        return reporteDTO.size();
     }
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {

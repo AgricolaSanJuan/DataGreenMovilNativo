@@ -2,8 +2,6 @@ package com.example.datagreenmovil.ui.TareosMain.Dialogs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,12 +18,9 @@ import androidx.fragment.app.DialogFragment;
 import com.example.datagreenmovil.Conexiones.ConexionSqlite;
 import com.example.datagreenmovil.DAO.Tareo.TrxTareosDetalle.TareoDetalles;
 import com.example.datagreenmovil.DataGreenApp;
-import com.example.datagreenmovil.Entidades.ClaveValor;
 import com.example.datagreenmovil.Entidades.PopUpBuscarEnLista;
 import com.example.datagreenmovil.Entidades.PopUpBuscarEnLista_Item;
 import com.example.datagreenmovil.Entidades.Tabla;
-import com.example.datagreenmovil.Entidades.Tareo;
-import com.example.datagreenmovil.Entidades.TareoDetalle;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.databinding.DialogDetalleTareoBinding;
@@ -42,7 +37,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -78,6 +75,15 @@ public class DialogDetalleTareo extends DialogFragment {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        bindtwo.cbActividad.setVisibility(View.GONE);
+        bindtwo.cbLabor.setVisibility(View.GONE);
+        bindtwo.cbRendimientos.setVisibility(View.GONE);
+        bindtwo.cbHoras.setVisibility(View.GONE);
+        bindtwo.cbConsumidor.setVisibility(View.GONE);
+
+        bindtwo.txtInfo.setText("Elija los nuevos datos para duplicar a las personas seleccionadas");
+
         bindtwo.fabConfirm.setOnClickListener(view -> {
 
             boolean success = false;
@@ -166,11 +172,11 @@ public class DialogDetalleTareo extends DialogFragment {
 //        bindtwo.llyPrincipalActividad.setVisibility(View.GONE);
 //        bindtwo.llyddtActividad.setVisibility(View.GONE);
 
-        if (hideHours) {
-            bindtwo.llyPrincipalHoras.setVisibility(View.GONE);
-        } else {
-            bindtwo.llyPrincipalHoras.setVisibility(View.VISIBLE);
-        }
+//        if (hideHours) {
+//            bindtwo.llyPrincipalHoras.setVisibility(View.GONE);
+//        } else {
+//            bindtwo.llyPrincipalHoras.setVisibility(View.VISIBLE);
+//        }
 
 //        bindtwo.llyddtActividad.setVisibility(View.GONE);
 //        bindtwo.llyPrincipalLabor.setVisibility(View.GONE);
@@ -183,8 +189,8 @@ public class DialogDetalleTareo extends DialogFragment {
         bindtwo.cbLabor.setOnCheckedChangeListener((buttonView, isChecked) -> bindtwo.cbActividad.setChecked(isChecked));
 
         bindtwo.fabConfirm.setOnClickListener(view -> {
-            boolean success = false;
-            String message = "";
+            AtomicBoolean success = new AtomicBoolean(false);
+            AtomicReference<String> message = new AtomicReference<>("");
             String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
             Double horasEditar = Double.valueOf(!bindtwo.txvddtHoras.getText().toString().isEmpty() ? bindtwo.txvddtHoras.getText().toString() : "0.00");
             String idActividadEditar = bindtwo.txvddtActividad.getText().toString();
@@ -194,58 +200,64 @@ public class DialogDetalleTareo extends DialogFragment {
             String idConsumidorEditar = bindtwo.txvddtConsumidor.getText().toString();
             String consumidorEditar = bindtwo.lblddtConsumidor.getText().toString();
             Double rendimientosEditar = Double.valueOf(!bindtwo.txvddtRendimientos.getText().toString().isEmpty() ? bindtwo.txvddtRendimientos.getText().toString() : "0.00");
-            ;
-            for (int itemEditar : listaTrabajadores) {
-                TareoDetalles detalleActual = listaDetalles.get(itemEditar - 1);
-//                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
-//                ACTIVIDAD
-                if (bindtwo.cbActividad.isChecked()) {
-                    if (!bindtwo.txvddtActividad.getText().toString().equals(".") || !bindtwo.txvddtLabor.getText().toString().equals(".")) {
-                        detalleActual.setIdActividad(idActividadEditar);
-                        detalleActual.setActividad(actividadEditar);
-                        detalleActual.setIdLabor(idLaborEditar);
-                        detalleActual.setLabor(laborEditar);
-                    }
-                }
-//                LABOR
-//                if(bindtwo.cbLabor.isChecked()){
-////                    bindtwo.cbActividad.setChecked(bindtwo.cbLabor.isChecked());
-//
-//                }
+//            NUEVO MÉTODO
+            try {
+                listaDetalles.stream()
+                        .filter(detalle -> listaTrabajadores.contains(detalle.getItem()))
+                        .forEach(detalleActual -> {
+                            //                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
+//                ACTIVIDAD -- LABOR
+                            if (bindtwo.cbActividad.isChecked()) {
+                                if (!bindtwo.txvddtActividad.getText().toString().equals(".") || !bindtwo.txvddtLabor.getText().toString().equals(".")) {
+                                    detalleActual.setIdActividad(idActividadEditar);
+                                    detalleActual.setActividad(actividadEditar);
+                                    detalleActual.setIdLabor(idLaborEditar);
+                                    detalleActual.setLabor(laborEditar);
+                                }
+                            }
 //                CONSUMIDOR
-                if (bindtwo.cbConsumidor.isChecked()) {
-                    if (!bindtwo.txvddtConsumidor.getText().toString().equals(".")) {
-                        detalleActual.setIdConsumidor(idConsumidorEditar);
-                        detalleActual.setConsumidor(consumidorEditar);
-                    } else {
-                        Swal.warning(ctx, "Cuidado!", "Llene todos los datos antes de continuar.", 2000);
-                    }
-                }
+                            if (bindtwo.cbConsumidor.isChecked()) {
+                                if (!bindtwo.txvddtConsumidor.getText().toString().equals(".")) {
+                                    detalleActual.setIdConsumidor(idConsumidorEditar);
+                                    detalleActual.setConsumidor(consumidorEditar);
+                                } else {
+                                    Swal.warning(ctx, "Cuidado!", "Llene todos los datos antes de continuar.", 2000);
+                                }
+                            }
 //                HORAS
-                if (bindtwo.cbHoras.isChecked()) {
-                    detalleActual.setSubTotalHoras(horasEditar);
-                }
+                            if (bindtwo.cbHoras.isChecked()) {
+                                detalleActual.setSubTotalHoras(horasEditar);
+                            }
 //                RENDIMIENTOS
-                if (bindtwo.cbRendimientos.isChecked()) {
-                    detalleActual.setSubTotalRendimiento(rendimientosEditar);
+                            if (bindtwo.cbRendimientos.isChecked()) {
+                                detalleActual.setSubTotalRendimiento(rendimientosEditar);
 
-                }
-
-//                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
-//                try {
-//                    detalleActual.guardar(objSqlite, idUsuario);
-////                    sweetAlertDialog.dismissWithAnimation();
-//                    success = true;
-//                    message = "Se han editado correctamente los detalles.";
-//                } catch (Exception e) {
-//                    Log.e("ERROR", e.toString());
-//                    message = "Ha ocurrido un error al editar los detalles: " + e.toString();
-//                }
+                            }
+                            success.set(true);
+                            message.set("Se han editado correctamente los detalles.");
+                        });
+//            NUEVO MÉTODO
+//            for (int itemEditar : listaTrabajadores) {
+//                TareoDetalles detalleActual = listaDetalles.get(itemEditar - 1);
+//
+////                PROCESAMOS SOLO LA DATA QUE TIENE EL CHECK SELECCIONADO PARA PODER REALIZAR LA EDICIÓN DE LO NECESARIO
+////                try {
+////                    detalleActual.guardar(objSqlite, idUsuario);
+//////                    sweetAlertDialog.dismissWithAnimation();
+////                    success = true;
+////                    message = "Se han editado correctamente los detalles.";
+////                } catch (Exception e) {
+////                    Log.e("ERROR", e.toString());
+////                    message = "Ha ocurrido un error al editar los detalles: " + e.toString();
+////                }
+//            }
+            } catch (Exception e) {
+                message.set("Hubo un error");
             }
 
-            if (message != null) {
+            if (message.get() != null) {
 //                actionResult.onActionResult("result", sweetAlertDialog);
-                dismissDialog.onDismissDialog(success, message, sweetAlertDialog);
+                dismissDialog.onDismissDialog(success.get(), message.get(), sweetAlertDialog);
             }
 
         });
@@ -315,136 +327,84 @@ public class DialogDetalleTareo extends DialogFragment {
 
     }
 
-    private static List<TareoDetalles> duplicateWorkers(List<TareoDetalles> listaDetalles, ArrayList<Integer> listaTrabajadores, Context ctx, DialogDetalleTareoBinding bindtwo) throws JSONException {
-        SQLiteDatabase database;
-        database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
-        TareoDetalles detalleDuplicado = new TareoDetalles();
+    private static List<TareoDetalles> duplicateWorkers(
+            List<TareoDetalles> listaDetalles,
+            ArrayList<Integer> listaTrabajadores,
+            Context ctx,
+            DialogDetalleTareoBinding bindtwo
+    ) throws JSONException {
 
-        String idUsuario = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
-        Calendar calendar = Calendar.getInstance();
-        for (int itemDuplicar : listaTrabajadores
-        ) {
-            // Obtener la fecha y hora actual
-            // Formatear la fecha y hora actual
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            String fechaHoraFormateada = sdf.format(calendar.getTime());
-            String nombres = "";
-            String dniDuplicar = listaDetalles.get(itemDuplicar - 1).getDni();
-            String observacionDuplicar = listaDetalles.get(itemDuplicar - 1).getObservacion();
-            String idPlanillaDuplicar = "";
+        // NUEVO MÉTODO
+        TareoDetalles ultimaEntidad = listaDetalles.get(listaDetalles.size() - 1);
+        AtomicInteger nuevoItem = new AtomicInteger(ultimaEntidad.getItem() + 1);
+        String fechaHoraFormateada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                .format(Calendar.getInstance().getTime());
+        boolean SALIDA_AUTOMATICA = sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false);
 
+        List<TareoDetalles> nuevosDetalles = new ArrayList<>();
 
-            boolean SALIDA_AUTOMATICA = sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false);
-//            AGREGAR SALIDA
-            if (SALIDA_AUTOMATICA) {
-                Cursor cVerificarSinSalida;
-
-                //                        MARCAR LA SALIDA Y HACER RECURSIVIDAD PARA LUEGO MARCAR SU ENTRADA:
-//                String[] selectionArgs = {tareo.getId(), dniDuplicar};
-//                cVerificarSinSalida = database.rawQuery("SELECT * FROM TRX_TAREOS_DETALLE WHERE Idtareo = ? AND Dni = ? AND salida = ''", selectionArgs);
-
-                List<TareoDetalles> resultadosSinSalida = listaDetalles.stream()
-                        .filter(t -> dniDuplicar.equals(t.getDni()) && (t.getSalida() == null || t.getSalida().isEmpty()))
-                        .collect(Collectors.toList());
-//                if (cVerificarSinSalida.getCount() > 0) {
-                if (!resultadosSinSalida.isEmpty()) {
-//                    cVerificarSinSalida.moveToFirst();
-                    int itemIndex;
-                    TareoDetalles detalleDuplicar = resultadosSinSalida.get(0);
-                    detalleDuplicado = detalleDuplicar;
-                    detalleDuplicado.setItem(listaDetalles.get(listaDetalles.size() - 1).getItem() + 1);
-//                    itemIndex = detalleDuplicar.getItem();
-                    String itemIndexU;
-//                    itemIndexU = cVerificarSinSalida.getString(itemIndex);
-//                    Optional<TareoDetalle> resultado = tareo.getDetalle().stream().filter(detalle -> detalle.getItem() == Integer.parseInt(itemIndexU)).findFirst();
-                    Date date1 = null;
-                    Date date2 = null;
+        listaDetalles.stream()
+                .filter(detalle -> listaTrabajadores.contains(detalle.getItem()))
+                .forEach(detalleActual -> {
                     try {
-                        date1 = sdf.parse(detalleDuplicar.getIngreso());
-                        date2 = sdf.parse(fechaHoraFormateada);
-                    } catch (ParseException e) {
-                        Swal.error(ctx, "Error", "No se ha podido convertir la fecha", 2000);
+                        // Crear un nuevo detalle duplicado
+                        TareoDetalles nuevoDetalle = new TareoDetalles(detalleActual);
+
+                        // Asignar nuevos valores
+                        nuevoDetalle.setItem(nuevoItem.getAndIncrement());
+                        nuevoDetalle.setIdActividad(bindtwo.txvddtActividad.getText().toString());
+                        nuevoDetalle.setIdLabor(bindtwo.txvddtLabor.getText().toString());
+                        nuevoDetalle.setIngreso(fechaHoraFormateada);
+                        nuevoDetalle.setIdConsumidor(bindtwo.txvddtConsumidor.getText().toString());
+                        nuevoDetalle.setSalida("");
+                        nuevoDetalle.setSubTotalHoras(
+                                Double.valueOf(bindtwo.txvddtHoras.getText().toString())
+                        );
+                        nuevoDetalle.setSubTotalRendimiento(
+                                Double.valueOf(bindtwo.txvddtRendimientos.getText().toString())
+                        );
+
+                        // Manejo de salida automática
+                        if (SALIDA_AUTOMATICA) {
+                            listaDetalles.stream()
+                                    .filter(t -> detalleActual.getDni().equals(t.getDni()) &&
+                                            (t.getSalida() == null || t.getSalida().isEmpty()))
+                                    .findFirst()
+                                    .ifPresent(itemActual -> {
+                                        try {
+                                            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                                                    .parse(itemActual.getIngreso());
+                                            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                                                    .parse(fechaHoraFormateada);
+
+                                            // Calcular la diferencia en horas
+                                            long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+                                            double horas = diferenciaMilisegundos / 3600000.00;
+                                            BigDecimal horasRedondeadas = new BigDecimal(horas)
+                                                    .setScale(2, RoundingMode.HALF_UP);
+
+                                            itemActual.setSalida(fechaHoraFormateada);
+                                            itemActual.setSubTotalHoras(horasRedondeadas.doubleValue());
+                                        } catch (ParseException e) {
+                                            Swal.error(ctx, "Error", "No se ha podido convertir la fecha", 2000);
+                                        }
+                                    });
+                        }
+
+                        // Agregar a la lista temporal
+                        nuevosDetalles.add(nuevoDetalle);
+
+                    } catch (NumberFormatException e) {
+                        Swal.error(ctx, "Error", "Formato inválido en los valores numéricos", 2000);
                     }
-                    // Calcular la diferencia en milisegundos
-                    long diferenciaMilisegundos = date2.getTime() - date1.getTime();
-                    // Convertir la diferencia de milisegundos a horas
-                    detalleDuplicado.setSalida(fechaHoraFormateada);
-                    double horas = diferenciaMilisegundos / 3600000.00;
-                    BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
-                    detalleDuplicado.setSubTotalHoras(horasRedondeadas.doubleValue());
-                } else {
-                    Swal.warning(ctx, "Cuidado", "No se encuentra un tareo de ingreso de este trabajador, pruebe a guardar el tareo y volver a intentar.", 2000);
-                }
+                });
 
-//                try {
-//                    tareo.guardarDetalle(objSqlite);
-//                } catch (Exception e) {
-//                    Swal.error(ctx, "Error", "Error al guardar el detalle", 5000);
-//                }
+        // Agregar nuevos detalles a la lista principal
+        listaDetalles.addAll(nuevosDetalles);
 
-
-//                try {
-//                    if (!tareo.getIdEstado().equals("TR")) {
-//
-//                        if (tareo.guardar(objSqlite, null)) {
-//                            objSqlite.ActualizarDataPendiente(null);
-//                        }
-//                    } else {
-//                        Funciones.notificar(ctx, "El tareo no cuenta con el estado PENDIENTE, imposible actualizar.");
-//                    }
-//                } catch (Exception ex) {
-//                    Funciones.mostrarError(ctx, ex);
-//                }
-            }
-//            FIN AGREGAR SALIDA
-
-
-            List<String> p = new ArrayList<>();
-            p.add("01");
-            p.add(dniDuplicar);
-
-            try {
-                nombres = ClaveValor.obtenerValorDesdeClave(dniDuplicar, ClaveValor.getArrayClaveValor(hmTablas.get("PERSONAS"), 0, 2));
-                idPlanillaDuplicar = objSqlite.doItBaby(objSqlite.obtQuery("OBTENER PLANILLA"), p, "READ", "");
-            } catch (Exception e) {
-                Log.e("ERROR", "ERROR AL OBTENER NOMBRES");
-            }
-
-            String laborDuplicar = bindtwo.txvddtLabor.getText().toString();
-            String actividadDuplicar = bindtwo.txvddtActividad.getText().toString();
-            String consumidorDuplicar = bindtwo.txvddtConsumidor.getText().toString();
-            Double horasDuplicar = Double.valueOf(bindtwo.txvddtHoras.getText().toString());
-            Double rendimientosDuplicar = Double.valueOf(bindtwo.txvddtRendimientos.getText().toString());
-//            TareoDetalle detalleActual = new TareoDetalle();
-//            detalleActual.setItem(tareo.getTotalDetalles() + 1);
-            detalleDuplicado.setIdEmpresa(listaDetalles.get(0).getIdEmpresa());
-            detalleDuplicado.setDni(dniDuplicar);
-            detalleDuplicado.setNombres(nombres);
-            detalleDuplicado.setIdPlanilla(idPlanillaDuplicar);
-            detalleDuplicado.setIdActividad(actividadDuplicar);
-            detalleDuplicado.setIdLabor(laborDuplicar);
-            detalleDuplicado.setIdConsumidor(consumidorDuplicar);
-            detalleDuplicado.setSubTotalHoras(horasDuplicar);
-            detalleDuplicado.setIngreso(fechaHoraFormateada);
-            detalleDuplicado.setSalida("");
-            detalleDuplicado.setSubTotalRendimiento(rendimientosDuplicar);
-            detalleDuplicado.setIdTareo(listaDetalles.get(0).getIdTareo());
-            detalleDuplicado.setObservacion(observacionDuplicar);
-
-            listaDetalles.add(detalleDuplicado);
-
-//            try {
-//                detalleDuplicado.guardar(objSqlite, idUsuario);
-//                tareo.agregarDetalle(detalleDuplicado, ctx);
-////                tareo.setTotalDetalles(tareo.getTotalDetalles() + 1);
-//                tareo.guardar(objSqlite, null);
-//            } catch (Exception e) {
-//                Log.e("ERORRDETALLE", e.toString());
-//            }
-
-        }
         return listaDetalles;
     }
+
 
     @Nullable
     @Override

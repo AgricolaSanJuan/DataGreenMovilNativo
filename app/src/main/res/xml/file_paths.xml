@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
+<paths>
+    <!-- Directorio interno privado para bases de datos -->
     <files-path
         name="databases"
         path="databases/" />
-    <external-path name="external_files" path="."/>
+
+    <!-- Directorio externo específico: Descargas -->
+    <external-path
+        name="downloads"
+        path="Download/" />
+
+    <external-path
+        name="external_files"
+        path="Download/" />
+
 
 </paths>

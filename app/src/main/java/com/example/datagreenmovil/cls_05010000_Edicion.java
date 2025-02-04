@@ -66,21 +66,23 @@ import org.json.JSONObject;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.net.HttpCookie;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 public class cls_05010000_Edicion extends AppCompatActivity implements View.OnClickListener, ScaleGestureDetector.OnScaleGestureListener, cls_05010200_RecyclerViewAdapter.OnDataChangeListener {
 
+    private static boolean MOSTRAR_TAREO_ASISTENCIA = false;
     static ConexionSqlite objSqlite;
     private static boolean AGREGAR_SOLO_CAMARA_TAREOS = false;
     private static boolean REPRODUCIR_SONIDO_TAREOS = false;
@@ -91,11 +93,11 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     private static int ITEMS_PER_PAGE = 10;
     public String s_Fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); //--desde, hasta, estado;);
     public LinearLayout c007_lly_Turno, c007_lly_Actividad, c007_lly_Labor, c007_lly_Consumidor, c007_lly_Cabecera, c007_lly_Actividad_Val, c007_lly_Labor_Val, c007_lly_Consumidor_Val, c007_lly_Observacion, c007_lly_Detalle2;
-    public Switch switchTipoMarcacion;
+    public Switch switchTipoMarcacion, switchTarear;
     public ConstraintLayout layoutHoras, layoutRendimientos;
     ConexionBD objSql;
     ConfiguracionLocal objConfLocal;
-    TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador;
+    TextView txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador, txvAsistencia, txvTarear;
     Dialog dlg_PopUp;
     SharedPreferences sharedPreferences;
     HashMap<String, Tabla> hmTablas = new HashMap<>();
@@ -135,6 +137,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     private MediaPlayer mediaPlayer;
     private boolean VALIDAR_TRABAJADOR_REPETIDO;
     private String ID_USUARIO_ACTUAL;
+    private SimpleDateFormat sdf;
 
 //    REFACTORIZACIÓN
 
@@ -148,6 +151,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
         detallesSeleccionados = new ArrayList<>();
 
+        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
         sharedPreferences = this.getSharedPreferences("objConfLocal", MODE_PRIVATE);
         db = DataGreenApp.getAppDatabase();
         ITEMS_PER_PAGE = sharedPreferences.getInt("ITEMS_PER_PAGE_TAREOS", 20);
@@ -157,6 +162,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         REPRODUCIR_SONIDO_TAREOS = sharedPreferences.getBoolean("REPRODUCIR_SONIDO_TAREOS", false);
         SALIDA_AUTOMATICA = sharedPreferences.getBoolean("SALIDA_AUTOMATICA", false);
         MOSTRAR_ENTRADA_SALIDA = sharedPreferences.getBoolean("MOSTRAR_ENTRADA_SALIDA", false);
+        MOSTRAR_TAREO_ASISTENCIA = sharedPreferences.getBoolean("MOSTRAR_TAREO_ASISTENCIA", false);
 
         ID_USUARIO_ACTUAL = sharedPreferences.getString("ID_USUARIO_ACTUAL", "!ID_USUARIO_ACTUAL");
 
@@ -194,16 +200,17 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 tareoEnFuncion = tareoDAO.obtenerTareoPorId(IdDocumentoActual);
                 Log.i("IDTAREO", "existente");
             }
-            generarNuevoDetalle(IdDocumentoActual);
 //        SETEAMOS EL TAREO EXISTENTE O CREAMOS UNO NUEVO
             tareoDetalleList = tareoDetallesDAO.obtenerDetalles(IdDocumentoActual);
 //        REFACTORIZANDO
+            generarNuevoDetalle(IdDocumentoActual);
 
             objSql = new ConexionBD(objConfLocal);
             objSqlite = new ConexionSqlite(this, DataGreenApp.DB_VERSION());
             referenciarControles();
 
-            switchTipoMarcacion = findViewById(R.id.swTipoTareo);
+            switchTipoMarcacion = findViewById(R.id.swAsistencia);
+            switchTarear = findViewById(R.id.swTarear);
             txvPagination = findViewById(R.id.txvPagination);
             layoutHoras = findViewById(R.id.layoutHoras);
             layoutRendimientos = findViewById(R.id.layoutRendimientos);
@@ -224,17 +231,20 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 fabAgregar.setVisibility(View.INVISIBLE);
             }
 
-            if (MOSTRAR_ENTRADA_SALIDA) {
+            if (!MOSTRAR_ENTRADA_SALIDA) {
                 switchTipoMarcacion.setVisibility(View.GONE);
+            }
 
+            if (!MOSTRAR_TAREO_ASISTENCIA) {
+                switchTarear.setVisibility(View.GONE);
             }
 
             if (switchTipoMarcacion != null) {
                 switchTipoMarcacion.setOnCheckedChangeListener((compoundButton, b) -> {
                     if (!b) {
-                        switchTipoMarcacion.setText("INGRESO");
+                        txvAsistencia.setText("INGRESO");
                     } else {
-                        switchTipoMarcacion.setText("SALIDA");
+                        txvAsistencia.setText("SALIDA");
                     }
                 });
             }
@@ -269,7 +279,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 return false;
             }
         });
-        tareoEnFuncion.setFecha(Funciones.arreglarFecha(c007_txv_Fecha.getText().toString()));
+
 
         qrCodeScannerView = findViewById(R.id.scannerView);
         qrCodeScannerView.setImagesParams(75, 50, 210, 20, 5);
@@ -295,7 +305,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 new Handler().postDelayed(() -> {
                     qrCodeScannerView.startCamera();
                 }, DELAY_POR_LECTURA);
-            }else {
+            } else {
                 if (result.length() == 10 && !(String.valueOf(result.charAt(0)).equals("S"))) {
                     try {
                         resultadoDesencriptado = CryptorSJ.desencriptarCadena(result);
@@ -312,6 +322,22 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 c007_atv_NroDocumento.setText(resultadoDesencriptado);
 
                 c007_atv_NombreTrabajador.setText(personaHelper.obtenerNombreTrabajador());
+            }
+        });
+
+        tareoEnFuncion.setFecha(Funciones.arreglarFecha(c007_txv_Fecha.getText().toString()));
+        switchTarear.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                txvTarear.setText("TOMAR ASISTENCIA");
+                c007_txv_Actividad_Key.setText(".");
+                c007_txv_Actividad_Val.setText("");
+                c007_txv_Labor_Key.setText(".");
+                c007_txv_Labor_Val.setText("");
+                c007_txv_Consumidor_Key.setText(".");
+                c007_txv_Consumidor_Val.setText("");
+            }else {
+                txvTarear.setText("TAREAR");
+                obtenerUltimaData();
             }
         });
     }
@@ -393,7 +419,14 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             // Calcular el inicio y el fin de la lista para la paginación
             startIndex = currentPage * ITEMS_PER_PAGE;
             endIndex = Math.min(startIndex + ITEMS_PER_PAGE, tareoDetalleList.size());
-            txvPagination.setText("Del: " + (startIndex + 1) + " Al: " + endIndex);
+            int initIndex = startIndex;
+            if(tareoDetalleList.isEmpty()){
+                initIndex = 0;
+            }else{
+                initIndex += 1;
+            }
+
+            txvPagination.setText("Del: " + initIndex + " Al: " + endIndex);
             List<TareoDetalles> detallesPaginados = tareoDetalleList.subList(startIndex, endIndex);
 
             adaptadorLista = new cls_05010200_RecyclerViewAdapter(this, detallesPaginados, db, IdDocumentoActual);
@@ -407,20 +440,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                     int valorComoInteger = Integer.parseInt(item);
                     detallesSeleccionados.remove((Integer) valorComoInteger);
                 }
-            });
-
-            adaptadorLista.setOnButtonClickListener((texto) -> {
-                Swal.customDialog(ctx, "duplicar", tareoDetalleList, detallesSeleccionados, /*(result, sweetAlertDialog1) -> {
-                },*/ (success, message, sweetAlertDialog) -> {
-                    if (success) {
-                        Swal.success(ctx, "Correcto!", message, 1500);
-                        actualizarDatos();
-                        detallesSeleccionados = new ArrayList<>();
-                    } else {
-                        Swal.error(ctx, "Oops!", message, 1500);
-                        detallesSeleccionados = new ArrayList<>();
-                    }
-                });
             });
 
             c007_rvw_Detalle.setAdapter(adaptadorLista);
@@ -532,8 +551,6 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 //    }
 
     public void resultado(String barcodeValue) {
-        Log.i("ESCANER", barcodeValue);
-
         if (isRequiredFieldsFilled()) {
             try {
                 boolean modoPacking = sharedPreferences.getBoolean("MODO_PACKING", false);
@@ -544,7 +561,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 if (switchTipoMarcacion != null && !switchTipoMarcacion.isChecked() && !dni.isEmpty()) {
                     handleEntradaSalida(barcodeValue, modoPacking, fechaHoraFormateada);
                 } else {
-                    handleSoloSalida(fechaHoraFormateada);
+                    handleSoloSalida(fechaHoraFormateada, modoPacking);
                 }
 
             } catch (Exception e) {
@@ -559,7 +576,13 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
     }
 
     private boolean isRequiredFieldsFilled() {
-        return c007_txv_Consumidor_Key.length() > 0 && c007_txv_Actividad_Key.length() > 0 && c007_txv_Labor_Key.length() > 0;
+        if(switchTarear.isChecked()){
+            return true;
+        }
+        return
+                (c007_txv_Consumidor_Val.length() > 0 || c007_txv_Consumidor_Key.length() > 0)
+                && (c007_txv_Actividad_Val.length() > 0 || c007_txv_Actividad_Key.length() > 0)
+                && (c007_txv_Labor_Val.length() > 0 || c007_txv_Labor_Key.length() > 0);
     }
 
     private String getCurrentFormattedDate() {
@@ -575,11 +598,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
         if (!resultadosSinSalida.isEmpty() && modoPacking) {
             if (SALIDA_AUTOMATICA) {
-                try {
-                    marcarSalidaYRecursividad(resultadosSinSalida, fechaHoraFormateada, barcodeValue);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
+                marcarSalidaYRecursividad(resultadosSinSalida, fechaHoraFormateada, barcodeValue);
             } else {
                 Swal.warning(this, "Cuidado", "El trabajador tiene un tareo sin salida, registra su salida y vuelve a intentarlo.", 5000);
             }
@@ -599,7 +618,8 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void handleSoloSalida(String fechaHoraFormateada) throws ParseException {
+    private void handleSoloSalida(String fechaHoraFormateada, boolean modoPacking) {
+
         String dniBusqueda = c007_atv_NroDocumento.getText().toString();
         List<TareoDetalles> resultadosSinSalida = tareoDetalleList.stream()
                 .filter(t -> dniBusqueda.equals(t.getDni()) && (t.getSalida() == null || t.getSalida().isEmpty()))
@@ -607,15 +627,40 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
         if (resultadosSinSalida.size() > 0) {
             resultadosSinSalida.get(0).setSalida(fechaHoraFormateada);
+            if (modoPacking) {
+                try {
+                    Date date1 = sdf.parse(resultadosSinSalida.get(0).getIngreso());
+                    Date date2 = sdf.parse(fechaHoraFormateada);
+                    long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+                    double horas = diferenciaMilisegundos / 3600000.00;
+                    BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
+                    resultadosSinSalida.get(0).setSubTotalHoras(horasRedondeadas.doubleValue());
+                } catch (ParseException e) {
+                    Swal.error(ctx, "Error horas", "Error al obtener las horas", 2000);
+                }
+            }
+            String textoSalida = "Se ha agregado una salida a";
+            Swal.info(ctx, "Salida agregada", String.join(" ", textoSalida, resultadosSinSalida.get(0).getNombres()), 2000);
+            actualizarDatos();
         } else {
             Swal.warning(this, "Cuidado", "No se encuentra un tareo de ingreso de este trabajador. Guarde el tareo e intente nuevamente.", 2000);
         }
     }
 
-    private void marcarSalidaYRecursividad(List<TareoDetalles> resultadosSinSalida, String fechaHoraFormateada, String barcodeValue) throws ParseException {
+    private void marcarSalidaYRecursividad(List<TareoDetalles> resultadosSinSalida, String fechaHoraFormateada, String barcodeValue) {
 
         if (!resultadosSinSalida.isEmpty()) {
             resultadosSinSalida.get(0).setSalida(fechaHoraFormateada);
+            try {
+                Date date1 = sdf.parse(resultadosSinSalida.get(0).getIngreso());
+                Date date2 = sdf.parse(fechaHoraFormateada);
+                long diferenciaMilisegundos = date2.getTime() - date1.getTime();
+                double horas = diferenciaMilisegundos / 3600000.00;
+                BigDecimal horasRedondeadas = new BigDecimal(horas).setScale(2, RoundingMode.HALF_UP);
+                resultadosSinSalida.get(0).setSubTotalHoras(horasRedondeadas.doubleValue());
+            } catch (ParseException e) {
+                Swal.error(ctx, "Error horas", "Error al obtener las horas", 2000);
+            }
         }
 
         guardarTareoCompleto(barcodeValue);
@@ -689,7 +734,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 try {
                     arl_Labores = objSqlite.arrayParaXaPopUpBuscarEnLista(objSqlite.doItBaby(objSqlite.obtQuery("CLAVE VALOR mst_Labores"), p, "READ"));
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+//                    throw new RuntimeException(e);
+                    Swal.error(ctx, "ERROR*", String.join("\n", "ERROR AL CAMBIAR LA ACTIVIDAD", e.toString()),2000);
+
                 }
                 c007_txv_Labor_Key.setText("");
                 c007_txv_Labor_Val.setText("");
@@ -761,6 +808,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         txv_PushVersionDataBase = findViewById(R.id.c007_txv_PushVersionDataBase_v);
         txv_PushIdentificador = findViewById(R.id.c007_txv_PushIdentificador_v);
 
+        txvAsistencia = findViewById(R.id.txvAsistencia);
+        txvTarear = findViewById(R.id.txvTarear);
+
         TotalRendimientos = findViewById(R.id.c007_txv_TotalRendimientosView);
         TotalTrabajadores = findViewById(R.id.c007_txv_TotalTrabajadoresView);
 
@@ -824,7 +874,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 try {
                     scannerViewModel.setScannedCode(null);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+//                    throw new RuntimeException(e);
+                    Swal.error(ctx, "ERROR*", String.join("\n","ERROR AL OBTENER EL CÓDIGO", e.toString()),2000);
+
                 }
 
             }
@@ -836,31 +888,38 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
 
         fabEliminar.setOnClickListener(view -> {
-            if (detallesSeleccionados.size() > 0) {
-                Swal.confirm(ctx, "¿Estás seguro?", "Estás seguro que deseas eliminar los tareos seleccionados?").setConfirmClickListener(sweetAlertDialog -> {
-                    sweetAlertDialog.dismissWithAnimation();
-                    String whereIn = "(";
-                    for (int i = 0; i < detallesSeleccionados.size(); i++) {
-                        if (i == detallesSeleccionados.size() - 1) {
-                            whereIn += "'" + detallesSeleccionados.get(i) + "')";
-                            Log.i("CANTIDAD - 1", String.valueOf(i));
-                        } else {
-                            whereIn += "'" + detallesSeleccionados.get(i) + "',";
-                        }
-                    }
-                    detallesSeleccionados.sort(Collections.reverseOrder());
-                    for (Integer item : detallesSeleccionados) {
-                        TareoDetalles resultadoEliminar = tareoDetalleList.stream()
-                                .filter(t -> item == t.getItem())
-                                .collect(Collectors.toList()).get(0);
-                        tareoDetalleList.remove(resultadoEliminar);
-                    }
-                    actualizarDatos();
 
-                }).setCancelClickListener(SweetAlertDialog::dismissWithAnimation);
-            } else {
-                Swal.warning(ctx, "¡Cuidado!", "Selecciona al menos un trabajador antes.", 2000);
-            }
+            List<TareoDetalles> detallesEliminar = tareoDetalleList.stream()
+                    .filter(tareoDetalles -> detallesSeleccionados.contains(tareoDetalles.getItem()))
+                    .collect(Collectors.toList());
+
+            tareoDetalleList.removeAll(detallesEliminar);
+
+//            if (detallesSeleccionados.size() > 0) {
+//                Swal.confirm(ctx, "¿Estás seguro?", "Estás seguro que deseas eliminar los tareos seleccionados?").setConfirmClickListener(sweetAlertDialog -> {
+//                    sweetAlertDialog.dismissWithAnimation();
+//                    String whereIn = "(";
+//                    for (int i = 0; i < detallesSeleccionados.size(); i++) {
+//                        if (i == detallesSeleccionados.size() - 1) {
+//                            whereIn += "'" + detallesSeleccionados.get(i) + "')";
+//                            Log.i("CANTIDAD - 1", String.valueOf(i));
+//                        } else {
+//                            whereIn += "'" + detallesSeleccionados.get(i) + "',";
+//                        }
+//                    }
+//                    detallesSeleccionados.sort(Collections.reverseOrder());
+//                    for (Integer item : detallesSeleccionados) {
+//                        TareoDetalles resultadoEliminar = tareoDetalleList.stream()
+//                                .filter(t -> item == t.getItem())
+//                                .collect(Collectors.toList()).get(0);
+//                        tareoDetalleList.remove(resultadoEliminar);
+//                    }
+            actualizarDatos();
+//
+//                }).setCancelClickListener(SweetAlertDialog::dismissWithAnimation);
+//            } else {
+//                Swal.warning(ctx, "¡Cuidado!", "Selecciona al menos un trabajador antes.", 2000);
+//            }
 
         });
 
@@ -906,7 +965,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         });
 
         fabDuplicar.setOnClickListener(view -> {
-            if (detallesSeleccionados.size() > 0) {
+            if (!detallesSeleccionados.isEmpty()) {
                 Swal.customDialog(ctx, "duplicar", tareoDetalleList, detallesSeleccionados, /*(result, sweetAlertDialog1) -> {
                 },*/ (success, message, sweetAlertDialog) -> {
                     if (success) {
@@ -943,6 +1002,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                 layoutEscaner.setVisibility(View.GONE);
             }
         });
+
     }
 
     public void navigateToQR() {
@@ -1054,9 +1114,18 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 //        VALIDACION DE EXISTENCIA
         for (TareoDetalles td : tareoDetalleList) {
             boolean existeTrabajador = td.getDni().equals(nuevoDetalle.getDni());
-            boolean existeActividad = td.getIdActividad().equals(nuevoDetalle.getIdActividad());
-            boolean existeLabor = td.getIdLabor().equals(nuevoDetalle.getIdLabor());
-            boolean existeConsumidor = td.getIdConsumidor().equals(nuevoDetalle.getIdConsumidor());
+            boolean existeActividad, existeLabor, existeConsumidor;
+            if (!switchTarear.isChecked()) {
+                existeActividad = td.getIdActividad().equals(nuevoDetalle.getIdActividad());
+                existeLabor = td.getIdLabor().equals(nuevoDetalle.getIdLabor());
+                existeConsumidor = td.getIdConsumidor().equals(nuevoDetalle.getIdConsumidor());
+            } else {
+                existeActividad = false;
+                existeLabor = false;
+                existeConsumidor = false;
+            }
+
+
             if (VALIDAR_TRABAJADOR_REPETIDO && existeTrabajador && existeActividad && existeLabor && existeConsumidor) {
                 marcaExistente = true;
                 break;
@@ -1078,14 +1147,27 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
             nuevoDetalle.setIdPlanilla(personaHelper.obtenerPlanilla());
             nuevoDetalle.setNombres(personaHelper.obtenerNombreTrabajador());
 
-            ActividadHelper actividadHelper = new ActividadHelper(nuevoDetalle.getIdActividad());
-            nuevoDetalle.setActividad(actividadHelper.obtenerDescripcionActividad());
+            if (!switchTarear.isChecked()) {
+                ActividadHelper actividadHelper = new ActividadHelper(nuevoDetalle.getIdActividad());
+                nuevoDetalle.setActividad(actividadHelper.obtenerDescripcionActividad());
 
-            LaborHelper laborHelper = new LaborHelper(nuevoDetalle.getIdLabor(), nuevoDetalle.getIdActividad());
-            nuevoDetalle.setLabor(laborHelper.obtenerDescripcionLabor());
+                LaborHelper laborHelper = new LaborHelper(nuevoDetalle.getIdLabor(), nuevoDetalle.getIdActividad());
+                nuevoDetalle.setLabor(laborHelper.obtenerDescripcionLabor());
 
-            ConsumidorHelper consumidorHelper = new ConsumidorHelper(nuevoDetalle.getIdConsumidor());
-            nuevoDetalle.setConsumidor(consumidorHelper.obtenerDecripcionConsumidor());
+                ConsumidorHelper consumidorHelper = new ConsumidorHelper(nuevoDetalle.getIdConsumidor());
+                nuevoDetalle.setConsumidor(consumidorHelper.obtenerDecripcionConsumidor());
+            } else {
+                nuevoDetalle.setIdActividad(".");
+                nuevoDetalle.setIdLabor(".");
+                nuevoDetalle.setIdConsumidor(".");
+                nuevoDetalle.setActividad(".");
+
+                nuevoDetalle.setLabor(".");
+
+                nuevoDetalle.setConsumidor(".");
+            }
+
+
 //                        INTENSIVO
             if (validarDetalleTareo(nuevoDetalle)) {
                 if (REPRODUCIR_SONIDO_TAREOS) {
@@ -1156,7 +1238,9 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         try {
             nombres = ClaveValor.obtenerValorDesdeClave(dni, ClaveValor.getArrayClaveValor(cv, 0, 2));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            Swal.error(ctx, "ERROR*", String.join("\n", "ERROR AL OBTENER INFORMACIÓN DEL TRABAJADOR", e.toString()),2000);
+
         }
         if (!nombres.isEmpty()) {
             c007_atv_NombreTrabajador.setText(nombres);
@@ -1306,6 +1390,7 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
+
         String value = c007_txv_Turno_Val.getText().toString();
 
         String estadoActual = tareoEnFuncion.getIdEstado();
@@ -1330,17 +1415,23 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
                     tareoEnFuncion.setTotalHoras(totalHoras);
                     tareoEnFuncion.setTotalDetalles(totalDetalles);
                     tareoDAO.guardarTareo(tareoEnFuncion);
-                    tareoDetallesDAO.insertarDetalleMasivo(tareoDetalleList);
+//                    reemplazamos la función de guardado
+//                    tareoDetallesDAO.insertarDetalleMasivo(tareoDetalleList);
+                    tareoDetallesDAO.sincronizarDetalles(tareoDetalleList, IdDocumentoActual);
+//                    reemplazamos la función de guardado
                     Funciones.mostrarEstatusGeneral(this.getBaseContext(), objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
-                    finish();
+//                    finish();
                     sweetAlertDialog.dismissWithAnimation();
+                    super.onBackPressed();
                 }
             }).setCancelClickListener(sweetAlertDialog -> {
-                finish();
+//                finish();
                 sweetAlertDialog.dismissWithAnimation();
+                super.onBackPressed();
             });
         } else {
-            finish();
+//            finish();
+            super.onBackPressed();
         }
     }
 
@@ -1358,7 +1449,15 @@ public class cls_05010000_Edicion extends AppCompatActivity implements View.OnCl
         List<TareoDetalles> nuevosDatos = tareoDetalleList.subList(startIndex, endIndex);
         adaptadorLista.addData(nuevosDatos);
         adaptadorLista.notifyDataChangedExternally();
-        txvPagination.setText("Del: " + (startIndex + 1) + " Al: " + endIndex);
+
+        int initIndex = startIndex;
+        if(initIndex == 0){
+            initIndex = 0;
+        }else{
+            initIndex += 1;
+        }
+
+        txvPagination.setText("Del: " + initIndex + " Al: " + endIndex);
         detallesSeleccionados = new ArrayList<>();
         manejarLayout();
     }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.datagreenmovil.DAO.Estados.Estado;
@@ -14,7 +15,10 @@ import com.example.datagreenmovil.DAO.Estados.Estado;
                 entity = Estado.class,
                 parentColumns = "Id",
                 childColumns = "IdEstado"
-        )
+        ),
+        indices = {
+        @Index(name = "index_mst_Empresas_IdEstado", value = {"IdEstado"})
+}
 )
 public class Empresa {
 

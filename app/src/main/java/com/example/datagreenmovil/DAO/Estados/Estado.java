@@ -3,9 +3,14 @@ package com.example.datagreenmovil.DAO.Estados;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "mst_Estados")
+@Entity(tableName = "mst_Estados",
+        indices = {
+        @Index(name = "index_mst_Estados_IdUsuarioCrea", value = {"IdUsuarioCrea"}),
+        @Index(name = "index_mst_Estados_IdUsuarioActualiza", value = {"IdUsuarioActualiza"})
+})
 public class Estado {
 
     @PrimaryKey

@@ -51,6 +51,9 @@ public class TareosActivity extends AppCompatActivity {
 
 //        PACKINGINTENSIVO
         database = SQLiteDatabase.openDatabase(ctx.getDatabasePath("DataGreenMovil.db").toString(), null, SQLiteDatabase.OPEN_READWRITE);
+
+
+
         boolean columnaIngresoExiste = false;
         boolean columnaSalidaExiste = false;
         boolean columnaHomologarExiste = false;

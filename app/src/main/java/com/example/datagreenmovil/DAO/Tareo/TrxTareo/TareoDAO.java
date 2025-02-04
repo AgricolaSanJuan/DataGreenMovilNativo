@@ -20,3 +20,4 @@ public interface TareoDAO {
     @Query("SELECT COALESCE((SELECT MAX(Id) Id FROM trx_Tareos), '000000000')")
     String getLastId();
 }
+

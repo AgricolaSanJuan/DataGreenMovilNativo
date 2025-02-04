@@ -5,7 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 
-@Entity(tableName = "mst_Turnos", primaryKeys = {"IdEmpresa", "Id"}, indices = {@Index(value = {"Id"}, unique = true)}
+@Entity(tableName = "mst_Turnos", primaryKeys = {"IdEmpresa", "Id"}, indices = {@Index(value = {"Id"}, unique = true),
+        @Index(name = "index_mst_Turnos_IdEmpresa", value = {"IdEmpresa"}),
+        @Index(name = "index_mst_Turnos_IdEstado", value = {"IdEstado"})}
 )
 public class Turno {
 

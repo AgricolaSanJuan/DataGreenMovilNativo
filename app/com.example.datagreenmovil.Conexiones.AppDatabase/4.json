@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "2a5ed5e8d0c48d6a2393c4ca3555d0e5",
+    "identityHash": "97121b4009309d79501a8733c383175e",
     "entities": [
       {
         "tableName": "mst_tipos_estandar",
@@ -349,7 +349,26 @@
             "Id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_mst_Estados_IdUsuarioCrea",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioCrea"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Estados_IdUsuarioCrea` ON `${TABLE_NAME}` (`IdUsuarioCrea`)"
+          },
+          {
+            "name": "index_mst_Estados_IdUsuarioActualiza",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioActualiza"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Estados_IdUsuarioActualiza` ON `${TABLE_NAME}` (`IdUsuarioActualiza`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -441,7 +460,35 @@
             "Dia"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_mst_Dias_Semana",
+            "unique": false,
+            "columnNames": [
+              "Semana"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Dias_Semana` ON `${TABLE_NAME}` (`Semana`)"
+          },
+          {
+            "name": "index_mst_Dias_Mes",
+            "unique": false,
+            "columnNames": [
+              "Mes"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Dias_Mes` ON `${TABLE_NAME}` (`Mes`)"
+          },
+          {
+            "name": "index_mst_Dias_Anio",
+            "unique": false,
+            "columnNames": [
+              "Anio"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Dias_Anio` ON `${TABLE_NAME}` (`Anio`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -515,7 +562,17 @@
             "Id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_mst_Empresas_IdEstado",
+            "unique": false,
+            "columnNames": [
+              "IdEstado"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Empresas_IdEstado` ON `${TABLE_NAME}` (`IdEstado`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "mst_Estados",
@@ -641,6 +698,24 @@
             ],
             "orders": [],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_mst_Usuarios_Id` ON `${TABLE_NAME}` (`Id`)"
+          },
+          {
+            "name": "index_mst_Usuarios_IdEmpresa",
+            "unique": false,
+            "columnNames": [
+              "IdEmpresa"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Usuarios_IdEmpresa` ON `${TABLE_NAME}` (`IdEmpresa`)"
+          },
+          {
+            "name": "index_mst_Usuarios_NroDocumento",
+            "unique": false,
+            "columnNames": [
+              "NroDocumento"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Usuarios_NroDocumento` ON `${TABLE_NAME}` (`NroDocumento`)"
           }
         ],
         "foreignKeys": []
@@ -714,25 +789,43 @@
             ],
             "orders": [],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_mst_Turnos_Id` ON `${TABLE_NAME}` (`Id`)"
+          },
+          {
+            "name": "index_mst_Turnos_IdEmpresa",
+            "unique": false,
+            "columnNames": [
+              "IdEmpresa"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Turnos_IdEmpresa` ON `${TABLE_NAME}` (`IdEmpresa`)"
+          },
+          {
+            "name": "index_mst_Turnos_IdEstado",
+            "unique": false,
+            "columnNames": [
+              "IdEstado"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mst_Turnos_IdEstado` ON `${TABLE_NAME}` (`IdEstado`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "trx_Tareos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `IdEmpresa` TEXT, `Fecha` TEXT, `IdTurno` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, `FechaHoraTransferencia` TEXT, `TotalHoras` REAL, `TotalRendimientos` REAL, `TotalDetalles` INTEGER, `Observaciones` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEmpresa`) REFERENCES `mst_Empresas`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`Fecha`) REFERENCES `mst_Dias`(`Dia`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdTurno`) REFERENCES `mst_Turnos`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioCrea`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT, `Id` TEXT NOT NULL, `Fecha` TEXT, `IdTurno` TEXT, `IdEstado` TEXT, `IdUsuarioCrea` TEXT, `FechaHoraCreacion` TEXT, `IdUsuarioActualiza` TEXT, `FechaHoraActualizacion` TEXT, `FechaHoraTransferencia` TEXT, `TotalHoras` REAL, `TotalRendimientos` REAL, `TotalDetalles` INTEGER, `Observaciones` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEmpresa`) REFERENCES `mst_Empresas`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`Fecha`) REFERENCES `mst_Dias`(`Dia`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdTurno`) REFERENCES `mst_Turnos`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioCrea`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "Id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "idEmpresa",
             "columnName": "IdEmpresa",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "fecha",
@@ -813,7 +906,62 @@
             "Id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_trx_Tareos_IdEmpresa",
+            "unique": false,
+            "columnNames": [
+              "IdEmpresa"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdEmpresa` ON `${TABLE_NAME}` (`IdEmpresa`)"
+          },
+          {
+            "name": "index_trx_Tareos_Fecha",
+            "unique": false,
+            "columnNames": [
+              "Fecha"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Fecha` ON `${TABLE_NAME}` (`Fecha`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdTurno",
+            "unique": false,
+            "columnNames": [
+              "IdTurno"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdTurno` ON `${TABLE_NAME}` (`IdTurno`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdEstado",
+            "unique": false,
+            "columnNames": [
+              "IdEstado"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdEstado` ON `${TABLE_NAME}` (`IdEstado`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdUsuarioCrea",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioCrea"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdUsuarioCrea` ON `${TABLE_NAME}` (`IdUsuarioCrea`)"
+          },
+          {
+            "name": "index_trx_Tareos_IdUsuarioActualiza",
+            "unique": false,
+            "columnNames": [
+              "IdUsuarioActualiza"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_IdUsuarioActualiza` ON `${TABLE_NAME}` (`IdUsuarioActualiza`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "mst_Empresas",
@@ -885,83 +1033,83 @@
       },
       {
         "tableName": "trx_Tareos_Detalle",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idEmpresa` TEXT, `idTareo` TEXT NOT NULL, `item` INTEGER NOT NULL, `dni` TEXT, `idPlanilla` TEXT, `idConsumidor` TEXT, `idCultivo` TEXT, `idVariedad` TEXT, `idActividad` TEXT, `idLabor` TEXT, `subTotalHoras` REAL, `subTotalRendimiento` REAL, `observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`idTareo`, `item`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEmpresa` TEXT, `IdTareo` TEXT NOT NULL, `Item` INTEGER NOT NULL, `Dni` TEXT, `IdPlanilla` TEXT, `IdConsumidor` TEXT, `IdCultivo` TEXT, `IdVariedad` TEXT, `IdActividad` TEXT, `IdLabor` TEXT, `SubTotalHoras` REAL, `SubTotalRendimiento` REAL, `Observacion` TEXT, `ingreso` TEXT, `salida` TEXT, `homologar` INTEGER NOT NULL, PRIMARY KEY(`IdTareo`, `Item`))",
         "fields": [
           {
             "fieldPath": "idEmpresa",
-            "columnName": "idEmpresa",
+            "columnName": "IdEmpresa",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idTareo",
-            "columnName": "idTareo",
+            "columnName": "IdTareo",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "item",
-            "columnName": "item",
+            "columnName": "Item",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "dni",
-            "columnName": "dni",
+            "columnName": "Dni",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idPlanilla",
-            "columnName": "idPlanilla",
+            "columnName": "IdPlanilla",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idConsumidor",
-            "columnName": "idConsumidor",
+            "columnName": "IdConsumidor",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idCultivo",
-            "columnName": "idCultivo",
+            "columnName": "IdCultivo",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idVariedad",
-            "columnName": "idVariedad",
+            "columnName": "IdVariedad",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idActividad",
-            "columnName": "idActividad",
+            "columnName": "IdActividad",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "idLabor",
-            "columnName": "idLabor",
+            "columnName": "IdLabor",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "subTotalHoras",
-            "columnName": "subTotalHoras",
+            "columnName": "SubTotalHoras",
             "affinity": "REAL",
             "notNull": false
           },
           {
             "fieldPath": "subTotalRendimiento",
-            "columnName": "subTotalRendimiento",
+            "columnName": "SubTotalRendimiento",
             "affinity": "REAL",
             "notNull": false
           },
           {
             "fieldPath": "observacion",
-            "columnName": "observacion",
+            "columnName": "Observacion",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -987,18 +1135,794 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "idTareo",
-            "item"
+            "IdTareo",
+            "Item"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_trx_Tareos_Detalle_Dni",
+            "unique": false,
+            "columnNames": [
+              "Dni"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_Dni` ON `${TABLE_NAME}` (`Dni`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdPlanilla",
+            "unique": false,
+            "columnNames": [
+              "IdPlanilla"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdPlanilla` ON `${TABLE_NAME}` (`IdPlanilla`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdConsumidor",
+            "unique": false,
+            "columnNames": [
+              "IdConsumidor"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdConsumidor` ON `${TABLE_NAME}` (`IdConsumidor`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdCultivo",
+            "unique": false,
+            "columnNames": [
+              "IdCultivo"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdCultivo` ON `${TABLE_NAME}` (`IdCultivo`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdVariedad",
+            "unique": false,
+            "columnNames": [
+              "IdVariedad"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdVariedad` ON `${TABLE_NAME}` (`IdVariedad`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdActividad",
+            "unique": false,
+            "columnNames": [
+              "IdActividad"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdActividad` ON `${TABLE_NAME}` (`IdActividad`)"
+          },
+          {
+            "name": "index_trx_Tareos_Detalle_IdLabor",
+            "unique": false,
+            "columnNames": [
+              "IdLabor"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trx_Tareos_Detalle_IdLabor` ON `${TABLE_NAME}` (`IdLabor`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mst_Alas",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `Dex` TEXT NOT NULL, `IdEstado` TEXT NOT NULL, `IdUsuarioRegistra` TEXT NOT NULL, `Registro` TEXT NOT NULL, `IdUsuarioActualiza` TEXT NOT NULL, `Actualizacion` TEXT NOT NULL, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioRegistra`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioRegistra",
+            "columnName": "IdUsuarioRegistra",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Registro",
+            "columnName": "Registro",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Actualizacion",
+            "columnName": "Actualizacion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
           ]
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioRegistra"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mst_Lote",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `Dex` TEXT NOT NULL, `IdEstado` TEXT NOT NULL, `IdUsuarioRegistra` TEXT NOT NULL, `Registro` TEXT NOT NULL, `IdUsuarioActualiza` TEXT NOT NULL, `Actualizacion` TEXT NOT NULL, PRIMARY KEY(`Id`), FOREIGN KEY(`IdUsuarioRegistra`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioRegistra",
+            "columnName": "IdUsuarioRegistra",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Registro",
+            "columnName": "Registro",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Actualizacion",
+            "columnName": "Actualizacion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioRegistra"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mst_ObjetivosEvaluables",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `Dex` TEXT NOT NULL, `IdOrganoPlanta` TEXT, `IdEstado` TEXT NOT NULL, `IdUsuarioRegistra` TEXT NOT NULL, `Registro` TEXT NOT NULL, `IdUsuarioActualiza` TEXT NOT NULL, `Actualizacion` TEXT NOT NULL, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioRegistra`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdOrganoPlanta`) REFERENCES `mst_OrganosPlanta`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdOrganoPlanta",
+            "columnName": "IdOrganoPlanta",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioRegistra",
+            "columnName": "IdUsuarioRegistra",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Registro",
+            "columnName": "Registro",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Actualizacion",
+            "columnName": "Actualizacion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioRegistra"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_OrganosPlanta",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdOrganoPlanta"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mst_OrganosPlanta",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `Dex` TEXT NOT NULL, `IdEstado` TEXT NOT NULL, `IdUsuarioRegistra` TEXT NOT NULL, `Registro` TEXT NOT NULL, `IdUsuarioActualiza` TEXT NOT NULL, `Actualizacion` TEXT NOT NULL, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioRegistra`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioRegistra",
+            "columnName": "IdUsuarioRegistra",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Registro",
+            "columnName": "Registro",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Actualizacion",
+            "columnName": "Actualizacion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioRegistra"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mst_TiposTrampa",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `Dex` TEXT NOT NULL, `IdEstado` TEXT NOT NULL, `IdUsuarioRegistra` TEXT NOT NULL, `Registro` TEXT NOT NULL, `IdUsuarioActualiza` TEXT NOT NULL, `Actualizacion` TEXT NOT NULL, PRIMARY KEY(`Id`), FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioRegistra`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Dex",
+            "columnName": "Dex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioRegistra",
+            "columnName": "IdUsuarioRegistra",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Registro",
+            "columnName": "Registro",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Actualizacion",
+            "columnName": "Actualizacion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioRegistra"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trx_Evaluaciones",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` TEXT NOT NULL, `IdLote` TEXT, `IdTipoEvaluacion` TEXT, `Fecha` TEXT, `Linea` TEXT, `Planta` TEXT, `Cuartel` TEXT, `Inicio` TEXT, `Fin` TEXT, `Transferencia` TEXT, `IdEstado` TEXT, `IdUsuarioRegistra` TEXT, `Registro` TEXT, `IdUsuarioActualiza` TEXT, `Actualizacion` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`IdUsuarioRegistra`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdUsuarioActualiza`) REFERENCES `mst_Usuarios`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdEstado`) REFERENCES `mst_Estados`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdLote`) REFERENCES `mst_Lote`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "Id",
+            "columnName": "Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdLote",
+            "columnName": "IdLote",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdTipoEvaluacion",
+            "columnName": "IdTipoEvaluacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Fecha",
+            "columnName": "Fecha",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Linea",
+            "columnName": "Linea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Planta",
+            "columnName": "Planta",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Cuartel",
+            "columnName": "Cuartel",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Inicio",
+            "columnName": "Inicio",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Fin",
+            "columnName": "Fin",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Transferencia",
+            "columnName": "Transferencia",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdEstado",
+            "columnName": "IdEstado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdUsuarioRegistra",
+            "columnName": "IdUsuarioRegistra",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Registro",
+            "columnName": "Registro",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdUsuarioActualiza",
+            "columnName": "IdUsuarioActualiza",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Actualizacion",
+            "columnName": "Actualizacion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioRegistra"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Usuarios",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdUsuarioActualiza"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Estados",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEstado"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Lote",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdLote"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trx_Evaluaciones_Detalle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdEvaluacion` TEXT NOT NULL, `Item` INTEGER NOT NULL, `IdObjetivoEvaluable` TEXT, `IdAla` TEXT NOT NULL, `NroMuestra` INTEGER NOT NULL, `IdTipoTrampa` TEXT, PRIMARY KEY(`IdEvaluacion`, `Item`), FOREIGN KEY(`IdEvaluacion`) REFERENCES `trx_Evaluaciones`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdObjetivoEvaluable`) REFERENCES `mst_ObjetivosEvaluables`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdAla`) REFERENCES `mst_Alas`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`IdTipoTrampa`) REFERENCES `mst_TiposTrampa`(`Id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "IdEvaluacion",
+            "columnName": "IdEvaluacion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Item",
+            "columnName": "Item",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdObjetivoEvaluable",
+            "columnName": "IdObjetivoEvaluable",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "IdAla",
+            "columnName": "IdAla",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "NroMuestra",
+            "columnName": "NroMuestra",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdTipoTrampa",
+            "columnName": "IdTipoTrampa",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdEvaluacion",
+            "Item"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "trx_Evaluaciones",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdEvaluacion"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_ObjetivosEvaluables",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdObjetivoEvaluable"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_Alas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdAla"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          },
+          {
+            "table": "mst_TiposTrampa",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "IdTipoTrampa"
+            ],
+            "referencedColumns": [
+              "Id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2a5ed5e8d0c48d6a2393c4ca3555d0e5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97121b4009309d79501a8733c383175e')"
     ]
   }
 }
