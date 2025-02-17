@@ -5,7 +5,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Upsert;
 
+import com.example.datagreenmovil.DAO.Estandares.TrxEstandares.TrxEstandaresNew;
 import com.example.datagreenmovil.ui.estandares.EstandaresMain.Dialogs.DaoItem;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public interface MstAlasDAO {
     @Insert
     void insertarMstAlas(MstAlas mstAlas);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
         void sincronizarAlas(List<MstAlas> mstAlasList);
 
     @Query("SELECT * FROM mst_Alas")

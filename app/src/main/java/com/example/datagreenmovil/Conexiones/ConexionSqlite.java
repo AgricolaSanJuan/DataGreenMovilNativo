@@ -1204,6 +1204,7 @@ public class ConexionSqlite extends SQLiteOpenHelper implements Serializable {
       l.add(sharedPreferences.getString("ID_USUARIO_ACTUAL","!ID_USUARIO_ACTUAL"));
       l.add(fechaHora);
       GuardarRegistro("trx_Correlativos", l);
+      Log.i("CORRELATIVO", idCorrelativo);
     } catch (Exception ex) {
       throw ex;
     }

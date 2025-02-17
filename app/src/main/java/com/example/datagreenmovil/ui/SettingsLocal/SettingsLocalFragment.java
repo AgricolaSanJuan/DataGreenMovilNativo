@@ -69,6 +69,17 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
     private GestureDetector gestureDetector;
     private FragmentSettingsLocalBinding binding;
 
+    public static boolean tienePermisos(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
@@ -124,6 +135,42 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         if (getActivity().getIntent().getExtras() != null) {
             objConfLocal = DataGreenApp.getConfiguracionLocal();
         }
+
+//        if(objConfLocal == null){
+//            objSqlite = new ConexionSqlite(context, DataGreenApp.DB_VERSION());
+//            objConfLocal = new ConfiguracionLocal(objSqlite.obtenerConfiguracionLocal());
+//        }
+
+        binding.btnRegistrarDispositivo.setOnClickListener(v -> {
+//            if (registrarDispositivo()) {
+//                SyncDBSQLToSQLite syncDBSQLToSQLite = new SyncDBSQLToSQLite();
+//                objConfLocal = clAux;
+//                objSql = cnAux;
+
+                editor.putString("RED_IMEI", binding.c002EtxImeiV.getText().toString()).apply();
+                editor.putString("IMEI", binding.c002EtxImeiV.getText().toString()).apply();
+                editor.putString("RED_MAC", binding.c002EtxMacV.getText().toString()).apply();
+                editor.putString("MAC", binding.c002EtxMacV.getText().toString()).apply();
+//
+//                try {
+//                    syncDBSQLToSQLite.sincronizarData(context, "trx_correlativos");
+//                } catch (SQLException e) {
+//                    getActivity().runOnUiThread(() -> {
+//                        Toast.makeText(context, "No se pudieron sincronizar los correlativos", Toast.LENGTH_SHORT).show();
+//                    });
+//                }
+//
+//                getActivity().runOnUiThread(() -> {
+//                    Funciones.mostrarEstatusGeneral(context, objConfLocal, txv_PushTituloVentana, txv_PushRed, txv_NombreApp, txv_PushVersionApp, txv_PushVersionDataBase, txv_PushIdentificador);
+////                                Toast.makeText(context, "REGISTRADO", Toast.LENGTH_SHORT).show();
+//                    Swal.success(context, "Registrado!", "El dispositivo se ha registrado correctamente en los servidores.", 5000);
+//                    mostrarValoresDocumentoActual();
+//                });
+//            }
+
+        });
+
+
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,17 +238,6 @@ public class SettingsLocalFragment extends Fragment implements View.OnTouchListe
         if (!tienePermisos(getActivity(), PERMISSIONS)) {
             ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_ALL);
         }
-    }
-
-    public static boolean tienePermisos(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @Override

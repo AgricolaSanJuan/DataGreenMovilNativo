@@ -67,7 +67,7 @@
             app:layout_constraintTop_toTopOf="@+id/tilNroMuestra">
 
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etLote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             app:layout_constraintStart_toEndOf="@+id/tilLote"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etNroMuestra"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView64"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etAla"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilLote"
             app:layout_constraintTop_toBottomOf="@+id/tilLote">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etTipoEvaluacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -173,7 +173,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilTipoEvaluacion"
             app:layout_constraintTop_toBottomOf="@+id/tilTipoEvaluacion">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etLinea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
             app:layout_constraintStart_toEndOf="@+id/tilNroMuestra"
             app:layout_constraintTop_toTopOf="@+id/tilLinea">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etPlanta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
 
 
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etEstado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilEstado"
             app:layout_constraintTop_toBottomOf="@+id/tilEstado">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -296,7 +296,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilItem"
             app:layout_constraintTop_toBottomOf="@+id/tilItem">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etObjetoEvaluable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -315,7 +315,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilObjetoEvaluable"
             app:layout_constraintTop_toBottomOf="@+id/tilObjetoEvaluable">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etObjetoEvaluableDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -346,7 +346,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilObjetoEvaluableDetalle"
             app:layout_constraintTop_toBottomOf="@+id/textView75">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -365,7 +365,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView75"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout3">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etDanadas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -384,7 +384,7 @@
             app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etRatio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -402,7 +402,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilNroMuestra"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout5">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etMedida"
                 android:fontFamily="@font/auxiliar_02"
                 android:inputType="number"
@@ -420,7 +420,7 @@
             app:layout_constraintStart_toStartOf="@+id/tilAla"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout7">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etMuestra"
                 android:fontFamily="@font/auxiliar_02"
                 android:inputType="number"
@@ -439,7 +439,7 @@
             app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etLectura"
                 android:fontFamily="@font/auxiliar_02"
                 android:inputType="text"
@@ -458,7 +458,7 @@
             app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/etCalificacion"
                 android:fontFamily="@font/auxiliar_02"
                 android:inputType="text"

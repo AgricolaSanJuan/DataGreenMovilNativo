@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Evaluaciones.EvaluacionesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        >
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/textView64"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/monoespaciada_principal"
+            android:text="Fecha"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutFechaRegistro"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Registro"
+            app:layout_constraintEnd_toStartOf="@+id/textView64"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView64">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutFechaDormex"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="20dp"
+            android:hint="Dormex"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutFechaRegistro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView64"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutFechaRegistro">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFechaDormex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutFechaPoda"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:hint="Poda"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutFechaRegistro"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutFechaRegistro"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFechaRegistro">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFechaPoda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutFechaInicioFloracion"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:hint="Inicio Floracion"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutFechaDormex"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutFechaDormex"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutFechaPoda">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFechaInicioFloracion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView73"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/monoespaciada_principal"
+            android:text="Evaluacion"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView64"
+            app:layout_constraintStart_toStartOf="@+id/textView64"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFechaPoda" />
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutEvaluacionCultivo"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:hint="Cultivo"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutFechaPoda"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutFechaPoda"
+            app:layout_constraintTop_toBottomOf="@+id/textView73">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCultivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutEvaluacionLote"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:hint="Lote"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutFechaInicioFloracion"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutFechaInicioFloracion"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutEvaluacionCultivo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutEvaluacionEstadfoFenologia"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:hint="Estado Fenología"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutEvaluacionCultivo"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutEvaluacionCultivo"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEvaluacionCultivo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFenologia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutTipoEvaluacion"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:hint="Tipo Evaluacion"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutEvaluacionLote"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutEvaluacionLote"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutEvaluacionEstadfoFenologia">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTipoEvaluacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutObervacion"
+            android:layout_width="353dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="20dp"
+            android:hint="Observacion"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutTipoEvaluacion"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutEvaluacionEstadfoFenologia"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEvaluacionEstadfoFenologia">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etObservacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutNumeroPlanta"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:hint="N° Planta"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutEvaluacionEstadfoFenologia"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutEvaluacionEstadfoFenologia"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutObervacion">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNroPlanta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/textInputLayoutInicioPlanta"
+            android:layout_width="117dp"
+            android:layout_height="46dp"
+            android:hint="Inicio Pinta"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutTipoEvaluacion"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutTipoEvaluacion"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutNumeroPlanta">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInicioPinta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/auxiliar_02"
+                android:inputType="date"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonCancelar"
+            style="@style/buttonDanger"
+            android:layout_width="142dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="Cancelar"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutObervacion"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNumeroPlanta" />
+
+        <Button
+            android:id="@+id/buttonAgregar"
+            style="@style/buttonSuccess"
+            android:layout_width="142dp"
+            android:layout_height="48dp"
+            android:text="Agregar"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutObervacion"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayoutObervacion"
+            app:layout_constraintTop_toTopOf="@+id/buttonCancelar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+

@@ -107,13 +107,6 @@ public class DialogEstandaresForm extends DialogFragment {
             estandarActual.setIdTipoCostoEstandar(Integer.parseInt(selectedItem.getId()));
         });
 
-//       ADAPTADOR PARA COMBOS DE ALAS
-        DaoAdapter AlasAdapter = new DaoAdapter(context, listaAlas);
-        setAdapterInArray(binding.etAla, AlasAdapter);
-        binding.etAla.setOnItemClickListener((parent, view, position, id) -> {
-            DaoItem selectedItem = (DaoItem) parent.getItemAtPosition(position);
-            estandarActual.setIdTipoBonoEstandar(Integer.parseInt(selectedItem.getId()));
-        });
 
         estandarActual.setId(11);
         estandarActual.setIdEmpresa("001");

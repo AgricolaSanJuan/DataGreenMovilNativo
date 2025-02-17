@@ -15,6 +15,20 @@
             app:destination="@id/navigation_home" />
     </fragment>
 
+    <!-- Aqui empieza el codigo del tercer fragment -->
+
+<!--    <fragment-->
+<!--        android:id="@+id/Evaluaciones_seleccion"-->
+<!--        android:name="com.example.datagreenmovil.ui.Evaluaciones.EvaluacionesMain.EvaluacionesMainFragmentSeleccion"-->
+<!--        android:label="@string/title_home"-->
+<!--        tools:layout="@layout/fragment_evaluaciones_main" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_home_main_to_navigation_home"-->
+<!--            app:destination="@id/navigation_home" />-->
+<!--    </fragment>-->
+
+    <!-- Aqui termina el codigo del tercer fragment -->
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.datagreenmovil.ui.Evaluaciones.EvaluacionesFragment"

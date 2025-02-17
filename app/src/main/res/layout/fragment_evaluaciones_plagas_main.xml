@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_principal"
-    tools:context=".ui.TransportesMain.TransportesMainFragment" ><!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
+    tools:context=".ui.Evaluaciones.EvaluacionesFragment" ><!-- CAMBIAR EL CONTEXTO PARA ACTIVIDAD DIFERENTE-->
 
     <LinearLayout
         android:id="@+id/c022_lly_StatusSuperior_v"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vmr"
-            android:text="\\Servicios de Transporte" />
+            android:text="\\Servicios de Evaluaciones - PLAGAS" />
 
         <Space
             android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/c022_rcv_Reciclador_v"
+                android:id="@+id/c022_rcv_RecicladorEvaluacionesSeleccion"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusableInTouchMode="true">
@@ -228,13 +228,13 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                    android:id="@+id/c022_fab_Volver_v"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:clickable="true"-->
-<!--                    app:backgroundTint="@color/verde"-->
-<!--                    app:srcCompat="@drawable/i_keyboard_backspace" />-->
+                <!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+                <!--                    android:id="@+id/c022_fab_Volver_v"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:clickable="true"-->
+                <!--                    app:backgroundTint="@color/verde"-->
+                <!--                    app:srcCompat="@drawable/i_keyboard_backspace" />-->
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/c022_fab_Opciones_v"
@@ -242,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:foregroundTint="@color/alerta"
-                    app:backgroundTint="@color/verde"
+                    app:backgroundTint="@color/azulOscuro"
                     app:srcCompat="@drawable/i_list" />
 
                 <Space

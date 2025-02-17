@@ -51,6 +51,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.8.5'
     implementation 'androidx.navigation:navigation-ui:2.8.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:9.4.0.jre8'
 
 //    tableview
 //    implementation 'com.evrencoskun.library:tableview:0.8.9.4'
@@ -81,6 +82,7 @@ dependencies {
 //    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.4.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
 //    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.7'
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
 
@@ -100,6 +102,7 @@ dependencies {
 
 //    LOCATION SERVICES
     implementation 'com.google.android.gms:play-services-location:21.3.0'
+    implementation 'com.github.lumod97:CustomViews:2.0.7'
 
 //    IMPLEMENTAMOS SQLITE
     implementation "androidx.room:room-runtime:2.6.1"

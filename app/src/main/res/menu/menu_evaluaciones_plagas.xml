@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_configuracion_fenologia_main"
+            android:icon="@drawable/ic_agriculture"
+            android:iconTint="@color/black"
+            android:title="CONFIGURACION FENOLOGIA" />
+        <item
+            android:id="@+id/nav_resumen_general_evaluaciones_settings"
+            android:icon="@drawable/resumen_2_evaluaciones"
+            android:iconTint="@color/black"
+            android:title="RESUMEN GENERAL" />
+
+        <item
+            android:id="@+id/nav_resumen_lineas_evaluaciones_settings"
+            android:icon="@drawable/resumen_evaluaciones"
+            android:iconTint="@color/black"
+            android:title="RESUMEN DE LINEAS" />
+    </group>
+</menu>

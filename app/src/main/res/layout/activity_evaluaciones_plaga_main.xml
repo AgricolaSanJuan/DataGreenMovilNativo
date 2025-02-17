@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <!-- Sección de información -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="space_between"
+        android:layout_marginBottom="16dp">
+
+        <!-- Etiquetas alineadas horizontalmente -->
+        <TextView
+            android:id="@+id/item_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Item: X"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:padding="8dp"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/plant_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Planta: Y"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:padding="8dp"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/line_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Línea: Z"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:padding="8dp"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/quantity_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cantidad: 5"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:padding="8dp"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <!-- Sección de ingreso de datos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
+
+        <!-- Spinner para seleccionar evaluador -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar evaluador:"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <Spinner
+            android:id="@+id/spinner_evaluador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <!-- Spinner para seleccionar opciones dinámicas -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar opción:"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner_opciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+</LinearLayout>

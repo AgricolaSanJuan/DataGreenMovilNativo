@@ -34,16 +34,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataGreenMovilLight">
         <activity
-            android:name=".EvaluacionesActivity"
-            android:exported="true"
-            android:label="@string/title_activity_evaluaciones" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            </activity>
-        <activity
             android:name=".QRViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
@@ -167,7 +157,7 @@
             android:name=".cls_06000000_Eficiencias"
             android:exported="false" />
         <activity
-            android:name="cls_05000000_Tareos"
+            android:name=".cls_05000000_Tareos"
             android:exported="false" >
         </activity>
         <activity
@@ -192,20 +182,30 @@
         <activity
             android:name=".cls_01000000_Commutador"
             android:exported="true">
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
         <activity
             android:name=".ui.estandares.EstandaresActivity"
             android:exported="true"
             android:label="@string/title_activity_estandares"
             android:theme="@style/Theme.DataGreenMovilLight.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EvaluacionesActivity"
+            android:exported="true"
+            android:label="@string/title_activity_evaluaciones" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
     </application>
 

@@ -34,12 +34,12 @@ public class ActividadHelper {
         return tareoDetallesDAO.obtenerDescripcionActividad(supportSQLiteQuery);
     }
 
-    public List<DaoItem> obtenerActivdadesParaLista(){
-        String query ="SELECT Id id, Dex descripcion FROM MST_ACTIVIDADES " ;
-        SupportSQLiteQuery supportSQLiteQuery= new SimpleSQLiteQuery(query);
-
-        return tareoDAO.obtenerActividadLista(supportSQLiteQuery);
-    }
+//    public List<DaoItem> obtenerActivdadesParaLista(){
+//        String query ="SELECT Id id, Dex descripcion FROM MST_ACTIVIDADES " ;
+//        SupportSQLiteQuery supportSQLiteQuery= new SimpleSQLiteQuery(query);
+//
+//        return tareoDAO.obtenerActividadLista(supportSQLiteQuery);
+//    }
 
 //    public List<DaoItem> obtenerLoteParaLista(){
 //        String query="";

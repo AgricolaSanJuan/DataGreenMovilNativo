@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/c023_cly_Principal_v"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="0dp"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:paddingStart="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            style="@style/textoSecundarioDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ID: "/>
+
+                        <TextView
+                            android:id="@+id/c023_txv_Id_v"
+                            style="@style/textoDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="."/>
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            style="@style/textoSecundarioDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FECHA: "
+                            android:textAlignment="textEnd" />
+
+                        <TextView
+                            android:id="@+id/c023_txv_Fecha_v"
+                            style="@style/textoDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="."/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            style="@style/textoSecundarioDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="HORA: "/>
+
+                        <TextView
+                            android:id="@+id/c023_txv_Hora"
+                            style="@style/textoDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="."/>
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            style="@style/textoSecundarioDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CONSUMIDOR: " />
+
+                        <TextView
+                            android:id="@+id/c023_txv_IdConsumidor"
+                            style="@style/textoDetallesCardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="."/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView34"
+                    style="@style/textoSecundarioDetallesCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PITS: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/c023_txv_Pits"
+                    style="@style/textoDetallesCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="."
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView34" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView35"
+                    style="@style/textoSecundarioDetallesCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ESTADO: " />
+
+                <TextView
+                    android:id="@+id/c023_txv_Estado"
+                    style="@style/textoDetallesCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="." />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    style="@style/buttonPrimary"
+                    android:id="@+id/c023_btn_transferirEvaluacion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Transferir"/>
+
+                <Button
+                    style="@style/buttonDanger"
+                    android:id="@+id/c023_btn_eliminarEvaluacion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ELIMINAR" />
+
+                <Button
+                    android:id="@+id/btnAddEvaluacion"
+                    style="@style/buttonSuccess"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="EVALUAR" />
+
+                <CheckBox
+                    android:id="@+id/c023_cbx_Seleccionado_v"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
