@@ -8,8 +8,6 @@ import com.example.datagreenmovil.DAO.Estandares.ConsumidoresTaller.Consumidores
 import com.example.datagreenmovil.DAO.Estandares.ConsumidoresTaller.ConsumidoresTallerDAO;
 import com.example.datagreenmovil.DAO.Estandares.Implemento.Implemento;
 import com.example.datagreenmovil.DAO.Estandares.Implemento.ImplementoDAO;
-import com.example.datagreenmovil.DAO.Estandares.Maquinaria.Maquinaria;
-import com.example.datagreenmovil.DAO.Estandares.Maquinaria.MaquinariaDAO;
 import com.example.datagreenmovil.DAO.Estandares.MstMedidasEstandares.MstMedidasEstandares;
 import com.example.datagreenmovil.DAO.Estandares.MstMedidasEstandares.MstMedidasEstandaresDAO;
 import com.example.datagreenmovil.DAO.Estandares.MstTiposBonoEstandar.MstTiposBonoEstandar;
@@ -39,7 +37,7 @@ import com.example.datagreenmovil.Migrations.Migrations;
             TrxEstandaresNew.class,
                 TrxParteMaquinaria.class,
                 TrxDParteMaquinaria.class,
-                Maquinaria.class,
+
                 Implemento.class,
                 Operario.class,
                 ConsumidoresTaller.class
@@ -78,7 +76,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract TrxDParteMaquinariaDAO trxDParteMaquinariaDAO();
 
-    public abstract MaquinariaDAO maquinariaDAO();
+
 
     public abstract ImplementoDAO implementoDAO();
 

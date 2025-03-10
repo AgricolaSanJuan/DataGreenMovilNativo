@@ -19,10 +19,10 @@ public class OperarioTallerAdapter extends BaseAdapter implements SpinnerAdapter
     private AppDatabase database;
     private List<Operario> data;
 
-    public OperarioTallerAdapter() {
+    public OperarioTallerAdapter(List<Operario> operarios) {
         database = AppDatabase.getDatabase();
 
-        this.data = database.operarioDAO().obtenerOperario();
+        this.data = database.operarioDAO().obtenerOperarios();
     }
 
     @Override

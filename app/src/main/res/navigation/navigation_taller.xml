@@ -5,36 +5,63 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_taller_main">
 
+    <!-- Fragment Principal (RecyclerView con datos registrados) -->
     <fragment
         android:id="@+id/nav_taller_main"
         android:name="com.example.datagreenmovil.ui.TallerMain.TallerMainFragment"
         android:label="MAQUINARIA"
-        tools:layout="@layout/fragment_taller_main" >
+        tools:layout="@layout/fragment_taller_main">
+
+        <!-- Acción para ir al registro de Operarios -->
         <action
-            android:id="@+id/action_nav_taller_main_to_nav_taller_maquinaria_detalle3"
-            app:destination="@id/nav_taller_maquinaria_detalle" />
-        <action
-            android:id="@+id/action_nav_taller_main_to_nav_taller_maquinaria_crear"
-            app:destination="@id/nav_taller_maquinaria_crear"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            android:id="@+id/action_nav_taller_main_to_nav_taller_operario"
+            app:destination="@id/nav_taller_operario" />
     </fragment>
 
+    <!-- Fragment de Configuración -->
     <fragment
         android:id="@+id/nav_taller_settings"
         android:name="com.example.datagreenmovil.ui.TallerSettings.TallerSettingsFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_taller_settings" />
 
-<!--    detalles-->
+    <!-- Registro de Operarios -->
     <fragment
-        android:id="@+id/nav_taller_maquinaria_detalle"
-        android:name="com.example.datagreenmovil.ui.TallerMain.Maquinaria.TallerMaquinariaDetalleFragment"
-        android:label="MAQUINARIA"
-        tools:layout="@layout/fragment_taller_maquinaria_detalle" />
+        android:id="@+id/nav_taller_operario"
+        android:name="com.example.datagreenmovil.ui.TallerOperario.OperarioFragment"
+        android:label="Operario"
+        tools:layout="@layout/fragment_operadores">
+
+        <!-- Acción para ir a Consumidor -->
+        <action
+            android:id="@+id/action_nav_taller_operario_to_nav_taller_consumidor"
+            app:destination="@id/nav_taller_consumidor" />
+    </fragment>
+
+    <!-- Registro de Consumidores -->
     <fragment
-        android:id="@+id/nav_taller_maquinaria_crear"
-        android:name="com.example.datagreenmovil.ui.TallerMain.Maquinaria.CRUD.CrearRegistroOperadoresFragment"
-        android:label="MAQUINARIA"
-        tools:layout="@layout/fragment_taller_maquinaria_crear_registro_operadores" />
+        android:id="@+id/nav_taller_consumidor"
+        android:name="com.example.datagreenmovil.ui.notifications.ParronFragment"
+        android:label="Consumidor"
+        tools:layout="@layout/fragment_parron">
+
+        <!-- Acción para ir a Maquinaria -->
+        <action
+            android:id="@+id/action_nav_taller_consumidor_to_nav_taller_maquinaria"
+            app:destination="@id/nav_taller_maquinaria" />
+    </fragment>
+
+    <!-- Registro de Maquinaria (Botón de Registrar aquí) -->
+    <fragment
+        android:id="@+id/nav_taller_maquinaria"
+        android:name="com.example.datagreenmovil.ui.dashboard.MaquinariaFragment"
+        android:label="Maquinaria"
+        tools:layout="@layout/fragment_maquinaria">
+
+        <!-- Acción para volver al Main después de registrar -->
+        <action
+            android:id="@+id/action_nav_taller_maquinaria_to_nav_taller_main"
+            app:destination="@id/nav_taller_main" />
+    </fragment>
+
 </navigation>

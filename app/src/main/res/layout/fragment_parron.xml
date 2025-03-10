@@ -24,13 +24,15 @@
             android:layout_gravity="center_vertical" />
 
         <EditText
-            android:id="@+id/et_fecha"
+            android:id="@+id/et_fecha_parron"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
+            android:clickable="false"
             android:inputType="none"
             android:layout_marginStart="8dp"
-            android:hint="Fecha del dia" />
+            android:hint="Fecha del día" />
+
     </LinearLayout>
 
 
@@ -38,27 +40,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Consumidores:"
+        android:text="Implementos:"
         android:textSize="16sp"/>
 
     <Spinner
-        android:id="@+id/sp_consumidores"
+        android:id="@+id/sp_implementos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"/>
 
     <!-- Horas -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="386dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="7dp"
             android:layout_height="wrap_content"
-            android:text="H. Inicial:"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="H. Inicial:" />
 
         <EditText
             android:id="@+id/et_hora_inicial"
@@ -68,32 +70,32 @@
             android:inputType="time" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
-            android:text="H. Final:"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"/>
+            android:text="H. Final:" />
 
         <EditText
             android:id="@+id/et_hora_final"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="time"/>
+            android:inputType="time" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="22dp"
             android:layout_height="wrap_content"
-            android:text="H. Trab:"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"/>
+            android:text="H. Trab:" />
 
         <EditText
             android:id="@+id/et_hora_trabajada"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="time"/>
+            android:inputType="time" />
     </LinearLayout>
 
     <!-- Campo Combustible -->

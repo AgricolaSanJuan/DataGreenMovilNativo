@@ -25,4 +25,6 @@ public class Implemento {
     public void setDescripcion(String descripcion) {
         Descripcion = descripcion;
     }
+
+
 }

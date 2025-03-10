@@ -21,7 +21,7 @@ public interface OperarioDAO {
     void sincronizarOperario(List<Operario> OperarioList);
 
     @Query("SELECT * from Operario")
-    List<Operario> obtenerOperario();
+    List<Operario> obtenerOperarios();
 
     @Delete
     void eliminarOperario(List<Operario> Operario);

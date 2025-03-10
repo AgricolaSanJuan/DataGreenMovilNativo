@@ -2,7 +2,6 @@ package com.example.datagreenmovil.ui.TallerMain;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,18 +9,15 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -29,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,13 +41,8 @@ import com.example.datagreenmovil.Entidades.Rex;
 import com.example.datagreenmovil.Logica.Funciones;
 import com.example.datagreenmovil.Logica.Swal;
 import com.example.datagreenmovil.R;
-import com.example.datagreenmovil.TallerActivity;
-import com.example.datagreenmovil.TransportesActivity;
 import com.example.datagreenmovil.cls_08000100_RecyclerViewAdapter;
-import com.example.datagreenmovil.cls_08010000_Edicion;
 import com.example.datagreenmovil.databinding.FragmentTallerMainBinding;
-import com.example.datagreenmovil.ui.TallerMain.Maquinaria.CRUD.CrearRegistroOperadoresFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.internal.NavigationMenuItemView;
 
 import org.json.JSONArray;
@@ -94,8 +84,8 @@ public class TallerMainFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        TallerMainViewModel tallerMainViewModel =
-                new ViewModelProvider(this).get(TallerMainViewModel.class);
+//        TallerMainViewModel tallerMainViewModel =
+//                new ViewModelProvider(this).get(TallerMainViewModel.class);
 
 //        newThemeValue = sharedPreferences.getBoolean("THEME_LIGTH", false);
 //
@@ -180,16 +170,16 @@ public class TallerMainFragment extends Fragment {
         binding.talmaiFabNuevoRegistroV.setOnClickListener(view -> {
 //            Funciones.abrirActividad(ctx, CrearRegistroOperadoresFragment.class, objConfLocal, s_IdRex);
             // Navega utilizando la acción definida en tu gráfico de navegación
-            navController = Navigation.findNavController(view);
-            navController.navigate(R.id.action_nav_taller_main_to_nav_taller_maquinaria_crear);
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_nav_taller_main_to_nav_taller_operario);
         });
         binding.talmaiFabOpcionesV.setOnClickListener(view -> {
-            TallerActivity tallerActivity = (TallerActivity) getActivity();
-            if(tallerActivity.obtenerDrawer() != null){
-                DrawerLayout dl = tallerActivity.obtenerDrawer();
-                dl.openDrawer(GravityCompat.START);
-                NavigationMenuItemView itemSync = dl.findViewById(R.id.nav_item_transferir);
-            }
+//            TallerActivity tallerActivity = (TallerActivity) getActivity();
+//            if(tallerActivity.obtenerDrawer() != null){
+//                DrawerLayout dl = tallerActivity.obtenerDrawer();
+//                dl.openDrawer(GravityCompat.START);
+//                NavigationMenuItemView itemSync = dl.findViewById(R.id.nav_item_transferir);
+//            }
 //            editor.putBoolean("THEME_LIGTH", !newThemeValue).apply();
 //            ((DataGreenApp) getActivity().getApplication()).setDarkTheme(getActivity());
 //            getActivity().recreate();

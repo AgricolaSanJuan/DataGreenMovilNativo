@@ -12,7 +12,7 @@ import com.example.datagreenmovil.DAO.Estandares.Implemento.Implemento;
 import java.util.List;
 
 @Dao
-public interface ConsumidoresTallerDAO {
+public interface ConsumidoresTallerDAO{
 
     @Insert
     void insertarConsumidoresTaller(com.example.datagreenmovil.DAO.Estandares.ConsumidoresTaller.ConsumidoresTaller ConsumidoresTaller);

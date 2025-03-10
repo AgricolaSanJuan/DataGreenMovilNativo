@@ -9,36 +9,26 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.datagreenmovil.DAO.Estandares.TrxDParteMaquinaria.TrxDParteMaquinaria;
-import com.example.datagreenmovil.NewTallerActivity;
 import com.example.datagreenmovil.databinding.FragmentMaquinariaBinding;
-import com.example.datagreenmovil.ui.notifications.Parron;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.datagreenmovil.viewModel.SharedViewModel;
 
 public class CabeceraTaller extends Fragment {
-
     private FragmentMaquinariaBinding binding;
+    private SharedViewModel sharedViewModel;
 
-    private NewTallerActivity activity;
-    private List<TrxDParteMaquinaria> listParteMaquinaria=new ArrayList<>();
-    private String idParteMaquinariaActual ="";
-
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Parron notificationsViewModel =
-                new ViewModelProvider(this).get(Parron.class);
-        activity=(NewTallerActivity) getActivity();
-
-        if(activity !=null){
-            listParteMaquinaria=activity.listaDParteMaquinaria;
-            idParteMaquinariaActual=activity.getIdParteMaquinaria();
-        }
-
+        // Obtener instancia del SharedViewModel
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         binding = FragmentMaquinariaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // Ejemplo: Observar cambios en la maquinaria seleccionada
+        sharedViewModel.getMaquinariaSeleccionada().observe(getViewLifecycleOwner(), maquinaria -> {
+            // Aquí puedes actualizar la UI con la maquinaria seleccionada
+        });
 
         return root;
     }

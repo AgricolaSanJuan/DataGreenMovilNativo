@@ -10,13 +10,23 @@ public class ConsumidoresTaller {
     String Descripcion;
     String Tipo;
 
+    // Constructor vacío (requerido por Room)
+    public ConsumidoresTaller() {}
+
+    // Constructor completo
+    public ConsumidoresTaller(@NonNull String idConsumidor, String descripcion, String tipo) {
+        this.IdConsumidor = idConsumidor;
+        this.Descripcion = descripcion;
+        this.Tipo = tipo;
+    }
+
     @NonNull
     public String getIdConsumidor() {
         return IdConsumidor;
     }
 
     public void setIdConsumidor(@NonNull String idConsumidor) {
-        IdConsumidor = idConsumidor;
+        this.IdConsumidor = idConsumidor;
     }
 
     public String getDescripcion() {
@@ -24,7 +34,7 @@ public class ConsumidoresTaller {
     }
 
     public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+        this.Descripcion = descripcion;
     }
 
     public String getTipo() {
@@ -32,6 +42,7 @@ public class ConsumidoresTaller {
     }
 
     public void setTipo(String tipo) {
-        Tipo = tipo;
+        this.Tipo = tipo;
     }
+
 }

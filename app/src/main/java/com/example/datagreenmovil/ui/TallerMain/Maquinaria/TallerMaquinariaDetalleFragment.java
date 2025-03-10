@@ -16,7 +16,7 @@ import com.example.datagreenmovil.R;
 
 public class TallerMaquinariaDetalleFragment extends Fragment {
 
-    private TallerMaquinariaDetalleViewModel mViewModel;
+//    private TallerMaquinariaDetalleViewModel mViewModel;
 
     public static TallerMaquinariaDetalleFragment newInstance() {
         return new TallerMaquinariaDetalleFragment();
@@ -31,7 +31,7 @@ public class TallerMaquinariaDetalleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(TallerMaquinariaDetalleViewModel.class);
+//        mViewModel = new ViewModelProvider(this).get(TallerMaquinariaDetalleViewModel.class);
         // TODO: Use the ViewModel
     }
 

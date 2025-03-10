@@ -9,35 +9,26 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.datagreenmovil.DAO.Estandares.TrxDParteMaquinaria.TrxDParteMaquinaria;
-import com.example.datagreenmovil.NewTallerActivity;
 import com.example.datagreenmovil.databinding.FragmentParronBinding;
-import com.example.datagreenmovil.ui.notifications.Parron;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.datagreenmovil.viewModel.SharedViewModel;
 
 public class DetalleTaller extends Fragment {
-
-    private NewTallerActivity activity;
-    private List<TrxDParteMaquinaria> listParteMaquinaria=new ArrayList<>();
-    private String idParteMaquinariaActual ="";
-
     private FragmentParronBinding binding;
+    private SharedViewModel sharedViewModel;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Parron notificationsViewModel =
-                new ViewModelProvider(this).get(Parron.class);
-        activity=(NewTallerActivity) getActivity();
-
-        if(activity !=null){
-            listParteMaquinaria=activity.listaDParteMaquinaria;
-            idParteMaquinariaActual=activity.getIdParteMaquinaria();
-        }
+        // Obtener instancia del SharedViewModel
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         binding = FragmentParronBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // Observar cambios en la lista de detalles de maquinaria
+        sharedViewModel.getListaParteMaquinaria().observe(getViewLifecycleOwner(), detalles -> {
+            // Aquí puedes actualizar un RecyclerView con los detalles
+        });
 
         return root;
     }

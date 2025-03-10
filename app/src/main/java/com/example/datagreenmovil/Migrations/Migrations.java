@@ -27,7 +27,7 @@ public class Migrations extends RoomDatabase.Callback {
             database.execSQL("CREATE TABLE IF NOT EXISTS `trx_DParteMaquinaria` (`IdParteMaquinaria` TEXT NOT NULL, `Item` TEXT, `IdConsumidor` TEXT, `TotalHoras` REAL, `HorometroInicial` REAL, `HorometroFinal` REAL, `IdImplemento` TEXT, `IdActividad` TEXT, `IdLabor` TEXT, `IdCombustible` TEXT, `Cantidad` REAL, PRIMARY KEY(`IdParteMaquinaria`))");
             database.execSQL("CREATE TABLE IF NOT EXISTS `Maquinaria` (`IdMaquinaria` TEXT NOT NULL, `Descripcion` TEXT, PRIMARY KEY(`IdMaquinaria`))");
             database.execSQL("CREATE TABLE IF NOT EXISTS `Implemento` (`IdImplemento` TEXT NOT NULL, `Descripcion` TEXT, PRIMARY KEY(`IdImplemento`))");
-            database.execSQL("CREATE TABLE IF NOT EXISTS `Operario` (`IdOperario` TEXT NOT NULL, `NombreCompleto` TEXT, `NroDocumento` TEXT, PRIMARY KEY(`IdOperario`))");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Operario` (`idOperario` TEXT NOT NULL, `nombreCompleto` TEXT, `nroDocumento` TEXT, PRIMARY KEY(`idOperario`))");
             database.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
             SharedPreferences sharedPreferences = DataGreenApp.getAppContext().getSharedPreferences("objConfLocal", Context.MODE_PRIVATE);
             sharedPreferences.edit().putString("VERSION_DB_DISPONIBLE", String.valueOf(database.getVersion())).apply();

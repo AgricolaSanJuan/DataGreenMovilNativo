@@ -26,6 +26,7 @@ public interface TrxParteMaquinariaDAO {
     List<TrxParteMaquinaria> obtenerParteMaquinaria();
 
     @Delete
+
     void eliminarParteMaquinaria(List<TrxParteMaquinaria> trxParteMaquinariaList);
 
     @Update

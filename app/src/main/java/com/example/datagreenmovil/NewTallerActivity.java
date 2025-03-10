@@ -2,10 +2,8 @@ package com.example.datagreenmovil;
 
 import android.os.Bundle;
 
-import com.example.datagreenmovil.DAO.Estandares.Maquinaria.Maquinaria;
 import com.example.datagreenmovil.DAO.Estandares.TrxDParteMaquinaria.TrxDParteMaquinaria;
 import com.example.datagreenmovil.DAO.Estandares.TrxParteMaquinaria.TrxParteMaquinaria;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.datagreenmovil.Helpers.Sincronizacion;
 import com.example.datagreenmovil.databinding.ActivityNewTallerBinding;
 
 import java.util.ArrayList;
@@ -21,12 +20,9 @@ import java.util.List;
 public class NewTallerActivity extends AppCompatActivity {
 
     public TrxParteMaquinaria maquinaria = new TrxParteMaquinaria();
-    public List<TrxDParteMaquinaria>  listaDParteMaquinaria = new ArrayList<>();
-
-
-
+    public List<TrxDParteMaquinaria> listaDParteMaquinaria = new ArrayList<>();
+    Sincronizacion sincronizacion;
     private ActivityNewTallerBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +44,10 @@ public class NewTallerActivity extends AppCompatActivity {
 //        NavigationUI.setupWithNavController(navView, navController);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
-
-    public String getIdParteMaquinaria(){
+    public String getIdParteMaquinaria() {
         return maquinaria.getIdMaquinaria();
     }
-
-    public int getCantidadDParteMaquinaria(){
+    public int getCantidadDParteMaquinaria() {
         return listaDParteMaquinaria.size();
     }
-
 }

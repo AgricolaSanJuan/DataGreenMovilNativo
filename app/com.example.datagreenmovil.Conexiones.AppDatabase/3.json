@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "75b2c7a9c88d52ce19fabd02ba801c54",
+    "identityHash": "e36da0ec64ec587f9ba1814b9f07f936",
     "entities": [
       {
         "tableName": "mst_tipos_estandar",
@@ -445,32 +445,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Maquinaria",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdMaquinaria` TEXT NOT NULL, `Descripcion` TEXT, PRIMARY KEY(`IdMaquinaria`))",
-        "fields": [
-          {
-            "fieldPath": "IdMaquinaria",
-            "columnName": "IdMaquinaria",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "Descripcion",
-            "columnName": "Descripcion",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "IdMaquinaria"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "Implemento",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdImplemento` TEXT NOT NULL, `Descripcion` TEXT, PRIMARY KEY(`IdImplemento`))",
         "fields": [
@@ -498,23 +472,23 @@
       },
       {
         "tableName": "Operario",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdOperario` TEXT NOT NULL, `NombreCompleto` TEXT, `NroDocumento` TEXT, PRIMARY KEY(`IdOperario`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idOperario` TEXT NOT NULL, `nombreCompleto` TEXT, `nroDocumento` TEXT, PRIMARY KEY(`idOperario`))",
         "fields": [
           {
-            "fieldPath": "IdOperario",
-            "columnName": "IdOperario",
+            "fieldPath": "idOperario",
+            "columnName": "idOperario",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "NombreCompleto",
-            "columnName": "NombreCompleto",
+            "fieldPath": "nombreCompleto",
+            "columnName": "nombreCompleto",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "NroDocumento",
-            "columnName": "NroDocumento",
+            "fieldPath": "nroDocumento",
+            "columnName": "nroDocumento",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -522,7 +496,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "IdOperario"
+            "idOperario"
           ]
         },
         "indices": [],
@@ -564,7 +538,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '75b2c7a9c88d52ce19fabd02ba801c54')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e36da0ec64ec587f9ba1814b9f07f936')"
     ]
   }
 }

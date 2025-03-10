@@ -6,32 +6,33 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Operario")
 public class Operario {
-    @PrimaryKey @NonNull private String IdOperario;
-    private String NombreCompleto;
-    private String NroDocumento;
+    @PrimaryKey @NonNull
+    private String idOperario;
+    private String nombreCompleto;
+    private String nroDocumento;
 
     @NonNull
     public String getIdOperario() {
-        return IdOperario;
+        return idOperario;
     }
 
     public void setIdOperario(@NonNull String idOperario) {
-        IdOperario = idOperario;
+        this.idOperario = idOperario;
     }
 
     public String getNombreCompleto() {
-        return NombreCompleto;
+        return nombreCompleto;
     }
 
     public void setNombreCompleto(String nombreCompleto) {
-        NombreCompleto = nombreCompleto;
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getNroDocumento() {
-        return NroDocumento;
+        return nroDocumento;
     }
 
     public void setNroDocumento(String nroDocumento) {
-        NroDocumento = nroDocumento;
+        this.nroDocumento = nroDocumento;
     }
 }
